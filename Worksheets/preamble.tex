@@ -8,7 +8,7 @@
 \usepackage[T1]{fontenc}					% Output-indkodning af tegnsaet (T1)
 \usepackage{ragged2e,anyfontsize}			% Justering af elementer
 %\usepackage{fixltx2e}						% Retter forskellige fejl i LaTeX-kernen
-																			
+
 % ¤¤ Figurer og tabeller (floats) ¤¤ %
 \usepackage{graphicx} 						% Haandtering af eksterne billeder (JPG, PNG, EPS, PDF)
 \usepackage{multirow}                		% Fletning af raekker og kolonner (\multicolumn og \multirow)
@@ -42,13 +42,13 @@
 
 % ¤¤ Matematik funktioner ¤¤				% Sikre alle funktioner står med ordinær skriftype
 	\newcommand{\e}{\text{e}}
-	\newcommand{\dB}{\text{dB}}	
-	\newcommand{\I}{\text{I}}	
+	\newcommand{\dB}{\text{dB}}
+	\newcommand{\I}{\text{I}}
 	\newcommand{\V}{\text{V}}
 	\newcommand{\A}{\text{A}}
 	\newcommand{\W}{\text{W}}
 	\newcommand{\F}{\text{F}}
-	\renewcommand{\S}{\text{S}}	
+	\renewcommand{\S}{\text{S}}
 	\newcommand{\rms}{\text{rms}}
 	\newcommand{\m}{\text{m}}
 	\newcommand{\n}{\text{n}}
@@ -61,22 +61,22 @@
 	\renewcommand{\c}{\text{c}}
 	\newcommand{\T}{\text{T}}
 	\newcommand{\km}{\text{km}}
-	\newcommand{\h}{\text{h}}		
+	\newcommand{\h}{\text{h}}
 	\newcommand{\s}{\text{s}}
 	\newcommand{\cm}{\text{cm}}
 	\newcommand{\ms}{\text{ms}}
 
 
-% ¤¤ Opsætning af enheder ¤¤ % 
+% ¤¤ Opsætning af enheder ¤¤ %
 	\newcommand{\enhed}[1]{\hfill\left[\mathrm{ #1}\right]} 	% Skriv \enhed{"din enhed"} og dem bliver rykket til højre
 
 % ¤¤ Referencer og kilder ¤¤ %
-			
-\usepackage[square, numbers, comma, sort&compress]{natbib}			
+
+\usepackage[square, numbers, comma, sort&compress]{natbib}
 \bibliographystyle{ieeetr}
 % Udseende af litteraturlisten.
 
-% ¤¤ Textlable setup ¤¤ % 
+% ¤¤ Textlable setup ¤¤ %
 \makeatletter
 \newcommand*{\textlabel}[2]{				% Gør \textlabel mulig
   \edef\@currentlabel{#1}					% Set target label
@@ -86,7 +86,7 @@
 % ¤¤ Misc. ¤¤ %
 \usepackage{lipsum}							% Dummy text \lipsum[..]
 \usepackage[shortlabels]{enumitem}			% Muliggoer enkelt konfiguration af lister
-\usepackage{pdfpages}						% Goer det muligt at inkludere pdf-dokumenter med kommandoen \includepdf[pages={x-y}]{fil.pdf}	
+\usepackage{pdfpages}						% Goer det muligt at inkludere pdf-dokumenter med kommandoen \includepdf[pages={x-y}]{fil.pdf}
 \pdfoptionpdfminorversion=6					% Muliggoer inkludering af pdf dokumenter, af version 1.6 og hoejere
 \pretolerance=2500 							% Justering af afstand mellem ord (hoejt tal, mindre orddeling og mere luft mellem ord)
 
@@ -115,7 +115,7 @@
 \setlist{
   topsep=0pt,								% Vertikal afstand mellem tekst og listen
   itemsep=-1ex,								% Vertikal afstand mellem items
-} 
+}
 
 % ¤¤ Visuelle referencer ¤¤ %
 \usepackage[colorlinks]{hyperref}			% Danner klikbare referencer (hyperlinks) i dokumentet.
@@ -142,9 +142,9 @@
 }
 \captionsetup[lstlisting]{ format=listing, singlelinecheck=false, margin=0pt, font={normalsize} }
 \renewcommand{\lstlistingname}{Code}		% Gør at der står kode og ikke listing i captionnamefont
-		
-% ¤¤ Opsaetning af listings ¤¤ % 
-\definecolor{commentGreen}{RGB}{34,139,24}	% Farver der bliver brugt senere 
+
+% ¤¤ Opsaetning af listings ¤¤ %
+\definecolor{commentGreen}{RGB}{34,139,24}	% Farver der bliver brugt senere
 \definecolor{stringPurple}{RGB}{208,76,239}	% farver der bliver brugt senere
 
 \lstset{language=VHDL,						% Sprog
@@ -164,14 +164,14 @@
 	extendedchars=true, 					% Tillader specielle karakterer
 	columns=flexible,						% Kolonnejustering
 	breaklines, breakatwhitespace=true,		% Bryd lange linjer
-	captionpos=b,							% Sæt caption i bunden 
+	captionpos=b,							% Sæt caption i bunden
 	xleftmargin=14pt,						% Start margin x pt til højre(+) eller venstre(-)
 }
 
 % ¤¤ Navngivning ¤¤ %
 \addto\captionsdanish{
 	\renewcommand\appendixname{Appendix}
-	\renewcommand\contentsname{Table of contest}	
+	\renewcommand\contentsname{Table of contest}
 	\renewcommand\appendixpagename{Appendix}
 	\renewcommand\appendixtocname{Appendix}
 	\renewcommand\cftchaptername{\chaptername~}				% Skriver "Kapitel" foran kapitlerne i indholdsfortegnelsen
@@ -193,7 +193,7 @@
     \noindent
     \ifchapternonum
     \begin{tabularx}{\textwidth}{X}
-    {\let\\\newline\chaptitlefont ##1\par} 
+    {\let\\\newline\chaptitlefont ##1\par}
     \end{tabularx}
     \par\vskip-2.5mm\hrule
     \else
@@ -223,7 +223,7 @@
 \nouppercaseheads											% Ingen Caps oenskes
 
 
-\makeevenhead{AAU}{Group 633}{}{\leftmark}					% Definerer lige siders sidehoved (\makeevenhead{Navn}{Venstre}{Center}{Hoejre})
+\makeevenhead{AAU}{Group 735}{}{\leftmark}					% Definerer lige siders sidehoved (\makeevenhead{Navn}{Venstre}{Center}{Hoejre})
 \makeoddhead{AAU}{\rightmark}{}{Aalborg University}			% Definerer ulige siders sidehoved (\makeoddhead{Navn}{Venstre}{Center}{Hoejre})
 \makeheadrule{AAU}{\textwidth}{0.5pt}						% Tilfoejer en streg under sidehovedets indhold
 \makefootrule{AAU}{\textwidth}{0.5pt}{1mm}					% Tilfoejer en streg under sidefodens indhold
@@ -234,7 +234,7 @@
 \makeheadrule{AAUchap}{\textwidth}{0pt}
 \aliaspagestyle{chapter}{AAUchap}							% Den ny style vaelges til at gaelde for chapters
 															% ... her
-															
+
 \pagestyle{AAU}												% Valg af sidehoved og sidefod
 
 
@@ -259,9 +259,9 @@
 \usepackage{lastpage}
 \usepackage{todonotes}
 \newcommand{\todotom}[1]{\todo[color=red!40, author=Anders]{#1}}
-\graphicspath{{./rapport/Pictures/}}
+\graphicspath{{./rapport/pictures/}}
 \newcommand{\todohusk}[1]{\todo[color=red, author=HUSK:]{#1}}
-\graphicspath{{./rapport/Pictures/}}
+\graphicspath{{./rapport/pictures/}}
 \usepackage{epstopdf}
 
 
