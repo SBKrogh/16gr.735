@@ -1,23 +1,35 @@
 \section{Endowrist}\label{sec:Endowrist}
 
-An Endowrist is a surgical tool which can be manipulated as a human wrist. It is used in surgical procedures such as Laparoscopic surgeries, better known as minimally invasive surgery (MIS), where small incisions in the human body is made under the surgery. Because the incision cuts are small, blood lose under the surgery and the risk of infection is reduced. This has a positive effect on the recovery time for the patient.
+An Endowrist, see \figref{fig:Endo_full} is a surgical tool which can be manipulated as a human wrist. It is used in surgical procedures such as Laparoscopic surgeries, better known as minimally invasive surgery (MIS), where small incisions in the human body is made under the surgery. Because the incision cuts are small, blood lose under the surgery and the risk of infection is reduced. This has a positive effect on the recovery time for the patient.
 
-As mentioned the Endowrist has the ability to be manipulated as a human wrist and thereby has four \gls{DOF}\todo{four right?}, see
 
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{.45\textwidth}
+	\begin{subfigure}{.32\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{Endowrist1.jpg}
-		\caption{An Endowrist.}
-		\label{fig:phantom1}
+		\caption{Full view of a Endowrist\vspace{8.5mm}   }
+		\label{fig:Endo_full}
 	\end{subfigure}
-	\begin{subfigure}{.45\textwidth}
+	\begin{subfigure}{.32\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{haptick2.png}
-		\caption{Overview of the Phantom omni's last three joint}
-		\label{fig:phantom2}
+		\includegraphics[width=\linewidth]{Endowrist2.jpg}
+		\caption{Actuator plates, which can alternate the end effector position}
+		\label{fig:Endo_plates}
 	\end{subfigure}
-\caption{Overview of all the Phantom omni's joints\citep{phantom_omni}}
-\label{fig:phantom_omni}
+	\begin{subfigure}{.32\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{Endowrist3.jpg}
+		\caption{End effector of the Endowrist\newline}
+		\label{fig:Endo_end}
+	\end{subfigure}
+\caption{The Endowrist and how the interaction with it are made}
+\label{fig:endowrits_set}
 \end{figure}
+
+As mentioned the Endowrist has the ability to be manipulated as a human wrist and thereby has four \gls{DOF}, see \figref{fig:Endo_end}.\todo{We have to update the picture so it shows each DOF}. This enables the movement of roll, pitch, yaw and an open closing mechanism that acts as the thumb and index finger of a hand. 
+
+The end effector is manipulated by the four wheels seen on \figref{fig:Endo_plates}\todo{update with numbers}. Each wheel drives a cable inside the Endowrist, which transport the force at one end of the Endowrist to the other. The Endowrist is cable driven, which enables the opportunity of making the Endowrist small but it also makes the system nonlinear as the force acting at one end is not directly transmitted to the other end. 
+
+The different wheels acts on the Endowrist in different way. Wheel one and three defines the movement of the yaw and the closing mechanism. Wheel two moves the pitch and wheel four is for the roll. 
+
