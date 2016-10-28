@@ -1,0 +1,83 @@
+\input{preamble}	
+\raggedbottom
+\begin{document}
+
+%%% Tikz Magic %%%
+\include{tikz_magi}
+
+% Forindhold - Kun romer tal
+
+\frontmatter
+
+%Formalia
+%\include{rapport/introduktion/main} %%%%%%%     <->    Front page, synopsis and preface included in this
+\include{rapport/Start_Templates/The_Four_W}
+\include{rapport/Start_Templates/Test_template}
+
+\tableofcontents*
+
+% Hovedindhold - nummereres fra ''side 1 af sidste side''b
+\mainmatter 
+\makeevenfoot{AAU}{\thepage \text{} of \pageref{LastPage}}{}{}
+\makeoddfoot{AAU}{}{}{\thepage \text{} of \pageref{LastPage}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Delete this before turning in
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Include sections here   %
+
+\include{rapport/Geo_Magic_Kinematic}
+All surgical interventions with the Da Vinci robot require some sort of feedback for the user, in our work we are covering force/haptic feedback.
+This type of feedback translates the forces acting on the surgical instrument to the haptic controller in some manner.
+The haptic controller used in this work is the Phatnom Omni (aka Geomagic Touch) developed by Sensable Technologies.
+It is one of the most cost effective haptic controllers currently on the market.
+
+In order for useful feedback to be created, we need to be able to control the direction of the force created by the Phantom Omni.
+A logical first step would be to derive the relationship between joint coordinates and end-effector position (the end-effector in this case being the point of contact between the user and device). 
+Once we have this, it is possible to develop other constructs such as Jacobian and dynamic equations.
+
+We derive the forward kinematics of the Phantom omni using the DH-algorithm for simplicity. Also, since the actuated joints only control the position, and the orientation joints are concentrated in a small space, we can separate the FK matrices into translational and rotational parts.
+
+\begin{align}
+\begin{tabular}{ |p{2cm}|p{2cm}|p{2cm}|p{2cm}|  }
+ \hline
+ \multicolumn{4}{|c|}{Phantom Omni DH parameters} \\
+ \hline
+ a &d &$\theta$ &$\alpha$ \\
+ \hline
+ 0          & 0   &$q_{1}$&   0\\
+ 0          &   0           & $q_{2}$ &$\frac{\pi}{2}$\\
+ A         & 0   & $q_{3}$    &  0\\
+ 0          & D             & $q_{4}$     & $\frac{\pi}{2}$\\
+ 0& 0 & $q_{5}$ &-$\frac{\pi}{2}$\\
+  0& 0 & $q_{6}$ &$\frac{\pi}{2}$\\
+ \hline
+\end{tabular}
+\end{align}
+
+
+
+\begin{equation}
+\mathbf{T_0^1} =\begin{bmatrix} \cos\theta_{1}& 0 & \sin\theta_{1} & 0\\
+\sin\theta_{1}& 0 & -\cos\theta_{1} & 0\\
+0 & 1 & 0 & d_{1}\\
+0 & 0 & 0 & 1\\
+\end{bmatrix}
+\end{equation}
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Bilag  %
+\appendix
+
+\clearpage
+
+\bibliography{bibliography}
+
+\end{document}

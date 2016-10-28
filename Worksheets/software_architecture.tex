@@ -1,0 +1,25 @@
+\input{preamble}	
+\raggedbottom
+\begin{document}
+Connecting all the system components requires an architecture based on a central ROS node.
+The endohap ROS node connects all the main components of the system using either the internal ROS or external UDP communication..
+
+External communication (with the endowrist test setup) is handled by the boost libraries in the DaVinci ROS package and connected to the endohap node, which transforms the data and propagates it through the system using internal ROS communication protocols (TCP/IP). 
+This has the advantage of gaining more control over the speed of communication with the test setup (which is vital for the control algorithm), while also maintaining the robustness and standardization of the internal ROS communication structure used for controlling the Phantom Omni. The data leaves the ROS via another external connection (to the Phantom Omni) that utilizes the TCP/IP protocol, it is managed by the phantomomni ROS package.
+
+All the calculation required for controlling the endowrist is also done within this node. Forward kinematics of both the endowrist and Phantom Omni are handled by the tf ROS package, which utilizes URDF description files combined with current joint position information published to ROS.
+This consequently allows for other useful features such as visualization in Rviz or various kinematics calculations.
+Forming the node in an object-oriented manner gives the added advantage of modularity, allowing for implementation of additional features as they become necessary. 
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Bilag  %
+\appendix
+
+\clearpage
+
+\bibliography{bibliography}
+
+\end{document}
