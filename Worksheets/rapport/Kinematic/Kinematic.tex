@@ -11,9 +11,7 @@ In the following the \gls{DH} notations are going to be used. This is done becau
 
 furthermore the joints rotates around the z axis where the right hand rule is used.
 
-
-
-\todo{need help to describe the following}
+The \gls{DH} convention is described through the transformation matrix shown in \eqref{equ:DH_trans_matrix}. This matrix is calculated for each joint and gives the transformation and rotation. Note that $sin()$ is denoted as $s$ and $cos()$ is denoted as $c$.
 
 \begin{equation}
 \begin{split}
@@ -24,13 +22,37 @@ A_i  & = Rot_{z,\theta_{i}}Trans_{z,d_{i}}Trans_{x,a_{i}}Rot_{x,\alpha_{i}} \\
       \begin{bmatrix}1& 0& 0& 0\\0& c_{\alpha_{i}}& -s_{\alpha_{i}} & 0\\ 0 & s_{\alpha_{i}} & c_{\alpha_{i}} & 0\\ 0& 0 &0& 1 \end{bmatrix}\\
      & = \begin{bmatrix}c_{\theta_i}& -s_{\theta_i}c_{\alpha_i}& s_{\theta_i}s_{\alpha_i}& a_{i}c_{\theta_i}\\ s_{\theta_i}& c_{\theta_i}c_{\alpha_i} & -c_{\theta_i}s_{\alpha_i}& a_{i}s_{\theta_i}\\ 0 & s_{\alpha_i}& c_{\alpha_i} & d_{i}\\ 0& 0& 0& 1\end{bmatrix}
 \end{split}
+\label{equ:DH_trans_matrix}
 \end{equation}
 
-a is the distance between the axes $z_i$ and $z_{i+1}$ measured along the $x_{i+1}$ axis.\\
-$\alpha$ is the angle between the axis $z_i$ and $z_{i+1}$ measured in a plane normal to $x_{i+1}$\\
-d is the distance between the origin $o_i$ and the intersection of $x_{i+1}$ axis measured along the $z_0$ axis.\\
-$\alpha$ is the angle between $x_i$ and $x_{i+1}$ measured in a plane normal to $z_0$.
 
+\begin{minipage}[t]{0.20\textwidth}
+Where\\
+\hspace*{8mm} $a_i$ \\\\
+\hspace*{8mm} $\alpha_i$ \\\\
+\hspace*{8mm} $d_i$ \\\\
+and \hspace*{0.7mm} $\theta_i$	
+\end{minipage}
+\begin{minipage}[t]{0.68\textwidth}
+\vspace*{2mm}
+is the distance between the axes $z_i$ and $z_{i+1}$ measured along the $x_{i+1}$ axis,\\
+is the angle between the axis $z_i$ and $z_{i+1}$ measured in a plane normal to $x_{i+1}$,\\
+is the distance between the origin $o_i$ and the intersection of $x_{i+1}$ axis measured along the $z_0$ axis,\\
+is the angle between $x_i$ and $x_{i+1}$ measured in a plane normal to $z_0$.
+\end{minipage}
+\begin{minipage}[t]{0.10\textwidth}
+\vspace*{2mm}
+\textcolor{White}{te}$\enhed{m}$\\\\
+\textcolor{White}{te}$\enhed{rad}$\\\\
+\textcolor{White}{te}$\enhed{m}$\\\\
+\textcolor{White}{te}$\enhed{rad}$
+\end{minipage}
+
+
+% a is the distance between the axes $z_i$ and $z_{i+1}$ measured along the $x_{i+1}$ axis.\\
+% $\alpha$ is the angle between the axis $z_i$ and $z_{i+1}$ measured in a plane normal to $x_{i+1}$\\
+% d is the distance between the origin $o_i$ and the intersection of $x_{i+1}$ axis measured along the $z_0$ axis.\\
+% $\theta$ is the angle between $x_i$ and $x_{i+1}$ measured in a plane normal to $z_0$.
 
 
 
