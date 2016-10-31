@@ -1,4 +1,5 @@
-\input{preamble}	
+\input{preamble}
+\include{tikz_magi}	
 \raggedbottom
 \begin{document}
 Connecting all the system components requires an architecture based on a central ROS node.
@@ -11,7 +12,24 @@ All the calculation required for controlling the endowrist is also done within t
 This consequently allows for other useful features such as visualization in Rviz or various kinematics calculations.
 Forming the node in an object-oriented manner gives the added advantage of modularity, allowing for implementation of additional features as they become necessary. 
 
+\begin{figure}
+\center
+\begin{tikzpicture}
+%Peripheral
+\draw (0,0) rectangle (8,10);
+\node [box] (ECOM) at (4.5,6) {Endowrist COM};
+\node [box] (EEST) at (4.5,4) {Endowrist state estimation};
+\node [box] (ECTRL) at (3,2) {Endowrist control};
+\node [box] (REFBK) at (8,2) {Reference and feedback};
 
+\draw[->, ultra thick] (ECOM) -- (EEST);
+\draw[->, ultra thick] (EEST) -- (ECTRL);
+\draw[->, ultra thick] (EEST) -- (REFBK);
+
+
+\end{tikzpicture}%
+\caption{simple Tikz figure}
+\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
