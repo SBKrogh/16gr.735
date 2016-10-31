@@ -4,6 +4,39 @@ As shown on \figref{fig:phantom_omni}, the Phantom omni has 6 joints. The coordi
 The \gls{DH} parameters can then be derived as shown in \tabref{tab:kin_geo}, where the two additional frames are displayed with roman numbers.
 
 
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[H]{.65\textwidth}
+\centering
+\vspace{0pt}
+\includegraphics[width=\textwidth]{Fast_draw_kino2.jpg}
+\caption{Phantom omnis coordinate frames}
+\label{fig:Frame_phantom}
+\end{minipage}\hfill
+\begin{minipage}[H]{.35\textwidth}
+\centering
+\vspace{95pt}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+ $j_i$ 	  & $a_i$    & $d_i$ & $\alpha_i$ 		 & $\theta_i$ 			 \\ \hline
+ 1  	  &  $0$     & $d_1$ & $\frac{\pi}{2}$	 & $q_1$ 			     \\ \hline
+ 2  	  &  $a_2$   & $0$ 	 & $0$ 		 		 & $q_2 + \theta_1$ 	 \\ \hline
+ \rom{1}  &  $0$	 & $0$ 	 & $\frac{\pi}{2}$ 	 & $\frac{\pi}{2} + q_3$ \\ \hline
+ 3  	  &  $0$	 & $d_3$ & $0$ 		 		 & $0$ 					 \\ \hline
+ 4  	  &  $0$	 & $d_4$ & $\frac{\pi}{2}$ 	 & $\pi + q_4$ 			 \\ \hline
+ \rom{2}  &  $0$	 & $0$ 	 & $\frac{\pi}{2}$   & $\pi +q_5$ 			 \\ \hline
+ 5  	  &  $0$	 & $d_5$ & $0$ 		 		 & $0$ 	 				 \\ \hline
+ %6  	  &  $0$	 & $d_6$ & $\theta$ 		 & $q_6$ 				 \\ \hline
+\end{tabular}
+\vspace{0pt}
+\caption{This is the caption for table}
+\label{tab:kin_geo}
+\end{minipage}
+\end{figure}
+\todo{Find solution to caption figure/table problem!}
+
+
 % \begin{figure}[H]
 % 	\centering
 % 	\begin{subfigure}{.49\textwidth}
@@ -40,35 +73,3 @@ The \gls{DH} parameters can then be derived as shown in \tabref{tab:kin_geo}, wh
 % \caption{Tabular which contain the kinematics for the Geomagic touch described in \secref{sec:geo_magic}.The Roman numbers defines the fictional joints}
 % \label{tab:kin_geo}
 % \end{table}
-
-
-\begin{figure}[H]
-\centering
-\begin{minipage}[H]{.65\textwidth}
-\centering
-\vspace{0pt}
-\includegraphics[width=\textwidth]{Fast_draw_kino2.jpg}
-\caption{Phantom omnis coordinate frames}
-\label{fig:Frame_phantom}
-\end{minipage}\hfill
-\begin{minipage}[H]{.35\textwidth}
-\centering
-\vspace{95pt}
-\begin{tabular}{|l|l|l|l|l|}
-\hline
- $j_i$ 	  & $a_i$    & $d_i$ & $\alpha_i$ 		 & $\theta_i$ 			 \\ \hline
- 1  	  &  $0$     & $d_1$ & $\frac{\pi}{2}$	 & $q_1$ 			     \\ \hline
- 2  	  &  $a_2$   & $0$ 	 & $0$ 		 		 & $q_2 + \theta_1$ 	 \\ \hline
- \rom{1}  &  $0$	 & $0$ 	 & $\frac{\pi}{2}$ 	 & $\frac{\pi}{2} + q_3$ \\ \hline
- 3  	  &  $0$	 & $d_3$ & $0$ 		 		 & $0$ 					 \\ \hline
- 4  	  &  $0$	 & $d_4$ & $\frac{\pi}{2}$ 	 & $\pi + q_4$ 			 \\ \hline
- \rom{2}  &  $0$	 & $0$ 	 & $\frac{\pi}{2}$   & $\pi +q_5$ 			 \\ \hline
- 5  	  &  $0$	 & $d_5$ & $0$ 		 		 & $0$ 	 				 \\ \hline
- %6  	  &  $0$	 & $d_6$ & $\theta$ 		 & $q_6$ 				 \\ \hline
-\end{tabular}
-\vspace{0pt}
-\caption{This is the caption for table}
-\label{tab:kin_geo}
-\end{minipage}
-\end{figure}
-\todo{Find solution to caption figure/table problem!}
