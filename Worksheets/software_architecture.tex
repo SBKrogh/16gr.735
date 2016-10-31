@@ -3,12 +3,12 @@
 \raggedbottom
 \begin{document}
 Connecting all the system components requires an architecture based on a central ROS node.
-The endohap ROS node connects all the main components of the system using either the internal ROS or external UDP communication..
+The endohap ROS node connects all the main components of the system using protocols either defined by ROS (TCP/IP) or externally (UDP).
 
-External communication (with the endowrist test setup) is handled by the boost libraries in the DaVinci ROS package and connected to the endohap node, which transforms the data and propagates it through the system using internal ROS communication protocols (TCP/IP). 
-This has the advantage of gaining more control over the speed of communication with the test setup (which is vital for the control algorithm), while also maintaining the robustness and standardization of the internal ROS communication structure used for controlling the Phantom Omni. The data leaves the ROS via another external connection (to the Phantom Omni) that utilizes the TCP/IP protocol, it is managed by the phantomomni ROS package.
+External communication (with the endowrist test setup) is handled by the boost libraries in the DaVinci ROS package and connected to the endohap node, which transforms the data and propagates it through the system using internal ROS communication protocols. 
+This has the advantage of gaining more control over the speed of communication with the test setup (which is vital for the control algorithm), while also maintaining the robustness and standardization of the internal ROS communication structure (where delay isn't an issue). The data leaves the ROS via another external connection (to the Phantom Omni) that utilizes the TCP/IP protocol, it is managed by the phantom omni ROS package.
 
-All the calculation required for controlling the endowrist is also done within this node. Forward kinematics of both the endowrist and Phantom Omni are handled by the tf ROS package, which utilizes URDF description files combined with current joint position information published to ROS.
+All the calculation required for controlling the endowrist and giving force feedback to the phantom omni is also done within the endohap node. Forward kinematics are handled by the tf ROS package, which utilizes URDF description files combined with current joint position information published to ROS.
 This consequently allows for other useful features such as visualization in Rviz or various kinematics calculations.
 Forming the node in an object-oriented manner gives the added advantage of modularity, allowing for implementation of additional features as they become necessary. 
 
@@ -17,10 +17,10 @@ Forming the node in an object-oriented manner gives the added advantage of modul
 \begin{tikzpicture}
 %Peripheral
 \draw (0,0) rectangle (8,10);
-\node [box] (ECOM) at (4.5,6) {Endowrist COM};
-\node [box] (EEST) at (4.5,4) {Endowrist state estimation};
-\node [box] (ECTRL) at (3,2) {Endowrist control};
-\node [box] (REFBK) at (8,2) {Reference and feedback};
+\node [box] (ECOM) at (4.5,8) {Endowrist COM};
+\node [box] (EEST) at (4.5,6) {Endowrist state estimation};
+\node [box] (ECTRL) at (1.8,4) {Endowrist control};
+\node [box] (REFBK) at (5.8,4) {Reference and feedback};
 
 \draw[->, ultra thick] (ECOM) -- (EEST);
 \draw[->, ultra thick] (EEST) -- (ECTRL);
