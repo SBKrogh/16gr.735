@@ -37,7 +37,7 @@
 % ¤¤ Kode indsat i rapport ¤¤ %
 \usepackage{listings}						% Placer kildekode i dokumentet med \begin{lstlisting}...\end{lstlisting}
 
-
+\raggedbottom
 
 
 % ¤¤ Matematik funktioner ¤¤				% Sikre alle funktioner står med ordinær skriftype
@@ -290,13 +290,24 @@
 \usepackage{schemabloc}
 \usetikzlibrary{circuits}
 \usepackage{tikz}
-\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{shapes,arrows,automata,positioning}
 \usepackage{pgfplots}
 \usetikzlibrary{plotmarks}
 \pgfplotsset{compat=newest}
 \pgfplotsset{filter discard warning=false}
 \usepackage[americanresistors,americaninductors,american voltages]{circuitikz}
+\usepackage{pgf}
 
+\tikzset{
+	state/.style={
+		rectangle,
+		rounded corners,
+		draw=black, very thick,
+		minimum height=2em,
+		inner sep=2pt,
+		text centered,
+	},
+}
 
 
 

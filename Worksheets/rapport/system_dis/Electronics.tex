@@ -1,0 +1,135 @@
+\section{Electronics}\label{sec:electronics}
+% Small introduction to tikz figures and its basics, can be found on 
+% http://cremeronline.com/LaTeX/minimaltikz.pdf
+% Under the file tikz_magic.tex all the different boxes can be found!
+%\subsection{Single board reconfigurable I/O}
+
+\todo{Sloth reference}
+The electronic setup contains a Single Board Reconfigurable Input/Output (sbRIO) controller which is responsible for interfacing between the surgical robot and the computer running ROS\todo{maby ref to ROS section}. It reads the sensor measurements, sends them to the PC and controls the motors based on the received reference signals. The sbRIO has built in safety protocols that disable the motors in case of error.
+
+The sbRIO-9636 controller consists of
+\begin{itemize}
+	\item 400 MHz real time processor
+	\item 256 MB of system memory and 512 MB nonvolatile memory
+	\item Reconfigurable Xilinx Spartan-6 LX45 FPGA
+	\item 16 bit analog and digital I/O
+	\item Built in USB, CAN, 10/100 Mb/s Ethernet peripherials
+\end{itemize}
+
+The board is configured through ethernet cable. The programs can be written in Labview, C or C++. We used LabView code to operate the sbRIO. The board is capable of running Real-time code, which is unmatched on the ROS side.
+
+% http://sine.ni.com/nips/cds/view/p/lang/en/nid/210421
+
+\subsection{Hardware setup}
+
+The Endowrists, see \figref{fig:endowrits_set}, is actuated by 4 Maxon DC motors, see \secref{Maxon_Motor}. Each motor is equipped with an ESCON motor controller responsible for the cascade speed and inner loop current control. The control reference is sent through the sbRIO. They also provide current measurements to the sbRIO. Each motor hosts an encoder and a potmeter that provide absolute and relative angular position information to the FPGA built into the sbRIO board. For an graphical illustration of the connection see \figref{electro_setup}.
+ 
+\todo{Complete the diagram}
+\todo{som explanation for the next line UDP, or erase it?}
+The sbRIO communicates with the PC using UDP protocol. 
+\begin{figure}[H]
+\begin{tikzpicture}
+
+\node[state] (Endowrist) 
+{
+	%\parbox[c][2cm][c]{4cm}{\hspace{2.5em} \textbf{Endowrist}}
+	\parbox[c][1.5cm][c]{2cm}{\textbf{Endowrist}}
+};
+
+\node[state,       % layout (defined above)
+node distance=4cm,     
+right of=Endowrist,        % Position is to the right of QUERY
+yshift=+1cm] (Sensors)    % move 3cm in y
+{%                     % posistion relative to the center of the 'box'
+	\parbox[c][1.5cm][c]{2cm}{\textbf{Potmeters \\Encoders}}
+};
+
+\node[state,       % layout (defined above)
+node distance=4cm,     
+text width=4cm,        % max text width
+right of=Endowrist,        % Position is to the right of QUERY
+yshift=-1.5cm] (Escon)    % move 3cm in y
+{%                     % posistion relative to the center of the 'box'
+	\textbf{Escon controller}\\
+	
+	Speed control\\
+	Current control\\
+	Current measurement
+};
+
+\node[state,       % layout (defined above)
+node distance=9.5cm,     
+text width=5cm,        % max text width
+right of=Endowrist,        % Position is to the right of QUERY
+yshift=-0.5cm] (sbRIO)    % move 3cm in y
+{%                     % posistion relative to the center of the 'box'
+	\textbf{sbRIO}\\	
+	 
+	 .\newline\newline\newline
+	
+	Get control reference
+	Get measurement data
+	Communicate with PC\\
+	
+	
+	
+};
+
+\node[state,       % layout (defined above)
+node distance=9.5cm,     
+text width=4cm,        % max text width
+right of=Endowrist
+] (FPGA)    % move 3cm in y
+{%                     % posistion relative to the center of the 'box'
+	\textbf{FPGA}\\
+	
+	Interface with the encoders and potmeters
+	};
+
+% draw the paths and and print some Text below/above the graph
+\path (Endowrist) 	edge[bend left=20]  node[anchor=south,above]{}
+node[anchor=north,below]{} (Sensors)
+(Endowrist)     	edge[bend right=20] node[anchor=south,above]{} (Escon)
+(Escon) edge[bend right=10] node[anchor=south,above]{} (sbRIO)
+(Sensors) edge[bend left=10] node[anchor=south,above]{} (FPGA)
+;
+
+
+\end{tikzpicture}
+\caption{Overwiev of the electronic components}
+\label{electro_setup}
+\end{figure}
+
+
+
+\subsection{Motor}\label{Maxon_Motor}
+The four motors for actuating the Endowrist is sold as a bulk solution which include motor, gear and a position encoder, see \figref{fig:Full_motor _dis}. For further information on data specific see datasheet\todo{include somehow datasheet}.
+The control of these motors are done through the ESCON motor drivers, which are connected to the sbRIO board.
+
+%The ESCON motor controllers are attached to the sbRIO controller and send the control signals through cables. The motor has a nominal torque of 6.96 mNm.
+%4 Maxon motors are used for the actuation of the endowrist. The motors are implemented using a combination gear (Maxon 353816) including the gearing, the servo motor and the sensors. The ESCON motor controllers are attached to the sbRIO controller and send the control signals through cables. The motor has a nominal torque of 6.96 mNm.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{.32\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{motor.jpg}
+		\caption{The Maxon 110160 DC motor \vspace{8.5mm}   }
+		\label{fig:motor}
+	\end{subfigure}
+	\begin{subfigure}{.32\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{motor_gear.jpg}
+		\caption{The planetary gearhead equipped with sleeve bearing}
+		\label{fig:motor_gear}
+	\end{subfigure}
+	\begin{subfigure}{.32\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{motor_sensor.jpg}
+		\caption{The encoder used for getting angular data}
+		\label{fig:motor_sensor}
+	\end{subfigure}
+	\caption{The combination gear disassembled}
+	\label{fig:Full_motor _dis}
+\end{figure}
+

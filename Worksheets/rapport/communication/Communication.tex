@@ -1,0 +1,34 @@
+\chapter{Communication}\label{cha:communication}
+
+The goal of the project is to provide a teleoperated surgical system which makes the surgeon controlling the robot feel as if he was manipulating the end-effector directly. To achieve this, the force delay between the end-effector and the controller should be unnoticeable. The targeted communication frequency of 1 kHz should result in a delay small enough to satisfy this need.
+
+\section{Communication between ROS and the sbRIO board}
+
+In the former system setup the sbRIO board and the computer running ROS communicated through a TCP/IP protocol at a frequency of 100 Hz \cite{System_Overwiew}. This frequency was just enough to finish transmitting the data coming from the sensors. A frequency increase resulted in data collision. To prevent data collision while increasing communication frequency, we can either:
+
+\begin{itemize}
+	\item Find a faster communication protocol
+	\item Compress data
+	\item Implement faster hardware	
+\end{itemize}
+
+
+TCP/IP is a reliable protocol, but the handshaking protocol it uses causes some further latency. By replacing the TCP/IP protocol with the less reliable UDP protocol (User Datagram Protocol), we can reduce the latency of the system. UDP is lacking the handshaking protocol, thus it is more prone to losing packets. However the communication happens between two nodes without any intermediate router, thus the probability of losing packages at a frequency of 1 kHz is rather small.
+
+\section{Data Compression}
+
+Labview's built in UDP write protocol expects an ASCII format string as data input. ASCII encoding was originally a 7 bit encoding format. The need for an extended character set brought an 8 bit version of ASCII encoding, which is included is used by Labview. The former Labview code's message format is as follows:
+
+\begin{verbatim}
+{"p4_primary":{"position":[6,3,2,3],"velocity":[3,2,3,1,0],"effort":[4,1,1,1]}}\n
+\end{verbatim}
+
+To minimize the forwarded data size, first of all we have to get rid of the names of each data. To keep the data readable for the receiver, we can either use a character to separate each segment of data, or we can agree upon a constant size for each segment of data.
+
+The former code encoded each digit of a decimal number as an ASCII character. It means that the number segment only used 10 out of the 256 possible characters. To compress data, we should utilize all the ASCII characters. One way to do it is to make a character store the number as its address in the 8 bit address table. We basically have to convert the numbers to base 256.
+
+We utilized Labview's built in flatten to string node, which basically converts numeric data to the correspondent string. For example, it convert an 8 bit integer to the correspondent ASCII character. If the sbRIO and the PC uses the same encoding, they can basically send bitcode as if it was string then decode it by doing a simple conversion.  \todo{check if the 32 bit float can be substituted with a 16 bit ones}
+ 
+The UDP must send encoder, potmeter and current measurement data from each of the four motors. Each data is represented as a 32 bit float. This adds up to 48 bytes of data to be sent each cycle. The described method sends 48 byte long strings not including the header. The former method sends 67 characters for formatting and naming purposes and 96 bytes of numeric data, assuming each double number is sent in 8 digits. It adds up to 163 bytes.
+
+By removing the names from the string and compressing a data, the string can become 70 shorter, which is a valuable increase in efficiency.
