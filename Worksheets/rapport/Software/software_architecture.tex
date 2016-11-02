@@ -1,5 +1,4 @@
-\section{ROS architecture}\label{ros_architec}
-
+\section{ROS architecture}
 Connecting all the system components requires an architecture based on a central ROS node.
 The endohap ROS node connects all the main components of the system using protocols either defined by ROS (TCP/IP) or externally (UDP).
 
@@ -10,22 +9,22 @@ All the calculation required for controlling the endowrist and giving force feed
 This consequently allows for other useful features such as visualization in Rviz or various kinematics calculations.
 Forming the node in an object-oriented manner gives the added advantage of modularity, allowing for implementation of additional features as they become necessary. 
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+%Peripheral
+\draw (0,0) rectangle (8,10);
+\node [box] (ECOM) at (4.5,8) {Endowrist COM};
+\node [box] (EEST) at (4.5,6) {Endowrist state estimation};
+\node [box] (ECTRL) at (1.8,4) {Endowrist control};
+\node [box] (REFBK) at (5.8,4) {Reference and feedback};
 
-% \begin{figure}
-% \centering
-% \begin{tikzpicture}
-% %Peripheral
-% \draw (0,0) rectangle (8,10);
-% \node [box] (ECOM) at (4.5,8) {Endowrist COM};
-% \node [box] (EEST) at (4.5,6) {Endowrist state estimation};
-% \node [box] (ECTRL) at (1.8,4) {Endowrist control};
-% \node [box] (REFBK) at (5.8,4) {Reference and feedback};
+\draw[->, ultra thick] (ECOM) -- (EEST);
+\draw[->, ultra thick] (EEST) -- (ECTRL);
+\draw[->, ultra thick] (EEST) -- (REFBK);
 
-% \draw[->, ultra thick] (ECOM) -- (EEST);
-% \draw[->, ultra thick] (EEST) -- (ECTRL);
-% \draw[->, ultra thick] (EEST) -- (REFBK);
 
-% \end{tikzpicture}%
-% \caption{simple Tikz figure}
-% \end{figure}
+\end{tikzpicture}%
+\caption{simple Tikz figure}
+\end{figure}
 
