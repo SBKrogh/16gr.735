@@ -402,16 +402,19 @@ The abstract goes here.
 
 \section{Introduction}
 % no \IEEEPARstart
-Over the last couple of decades the use of robotic surgery has incresed, because of its precession and the reduction in tissue damage.
-The operation tools which are incerted into the human body is called an Endowrist. These tools are constructed in shuch a way, that the operator of the tools has the ability to manipulate  it as a human wrist.
+Over the last couple of decades the use of robotic surgery has increased, because of its precession and the reduction in tissue damage.
+The operation tools which are inserted into the human body is called an Endowrist. These tools are constructed in such a way, that the operator of the tools has the ability to manipulate  it as a human wrist.
 
-The feedback to the operator is made from live video transmission of the operation and as direct forcefeedback. The direct forcefeedback is used to simulate the resistance the endeffector meets under the operation to give the surgion the feeling of doing the operation by hand.  This kind of feedback is called haptic feedback and has been proven to be effecient way of douing feedback to the operator as it gives a more clear vison of the force that is applied.
+The feedback to the operator is made from live video transmission of the operation and as direct force feedback. The direct force feedback is used to simulate the resistance the end effector exposed to under the operation to give the surgeon the feeling of doing the operation by hand.  This kind of feedback is called haptic feedback and has been proven to be efficient way of doing feedback to the operator as it gives a more clear vision of the force that is applied.
 
-However the direct force feedback is not  proportional to the actually  resistance force that are applied to the endeffector as the construction of the tool from the endeffector to the actuactors are highly non-linear. It would be possible to solve this problem by implementing a sensor to the endeffector to measure the force but due to the demand of high hygiene the tools has to be distilled at tempurtures over a 100°C which can damage the sensor. Furthermore it is stated by law that each surgical tool has to be disgarded after a few times in use. This means that the cost of the tool has to stay as low as possible. and therefore make the idea of implemting a sensor not ideal.
+However the direct force feedback is not proportional to the actually resistance force that are applied to the end effector as the construction of the tool from the end effector to the actuators are highly non-linear. It would be possible to solve this problem by implementing a sensor to the end effector to measure the force but due to the demand of high hygiene the tools has to be distilled at temperatures over a 100°C which can damage the sensor. Furthermore it is stated by law that each surgical tool has to be discarded after a few times in use. This means that the cost of the tool has to stay as low as possible and therefore make the idea of implementing an expensive sensor not ideal.
 
-Therefore the forcefeedback got to be estimated through the actuactors which gives a high demand for the feedback controller as it has to be precise as possible to feedback the correct force to the operator.
+Therefore the force feedback got to be estimated through the actuators which gives a high demand for the feedback controller as it has to be as precise as possible to feedback the correct force to the operator.
 
-Another important subject is the transparency of the feedback as the operator should have the feeling of doing the operation by hand and not by remote, said in other words, there should be no delay between the operator and the robot. This puts a demand on how fast the communication between the operator and the robot should be.
+Another important subject is the transparency of the feedback as the operator should have the feeling of doing the operation by hand and not remote. This puts a demand on the speed of the feedback loop as the faster the loop runs the more smooth the force feedback to the operator will feel.
+
+
+ %said in other words, there should be no delay between the operator and the robot. This puts a demand on how fast the communication between the operator and the robot should be.
 
 \hfill mds
 
