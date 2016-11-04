@@ -1,6 +1,28 @@
 \section{ROS architecture}
 \todo{small introduction to ROS 3-5 lines, e.g what is a node?}
 
+ROS is an open-source, meta-operating system that handles
+hardware abstraction, low-level device control, implementation
+of commonly-used functionality, message-passing between
+processes, and package management.
+
+ It also provides tools and libraries for obtaining, building, writing, and running code supporting distributed computing. At the file system level, the main organizational component of a ROS system
+is the package. A package may contain executables (nodes),
+libraries, data-sets and configuration files. In a robot control
+system, nodes process data and communicate with each other
+through the Computation Graph.
+
+The Computation Graph is the peer-to-peer network of ROS
+processes that are processing data together. Communication
+is done by nodes subscribing to and publishing standardized
+data structures called messages by way of topics. Topics can
+be seen as a location for a certain type of message to be
+subscribed and published to. Possibly the greatest advantage
+ROS has on other similar projects is the community. Most of
+the packages are community maintained by a large and active
+user base, which makes the process of learning the system
+considerably easier.
+
 Connecting all the system components requires an architecture based on a central ROS node.
 The endohap ROS node connects all the main components of the system using protocols either defined by ROS (TCP/IP) or externally (UDP).
 

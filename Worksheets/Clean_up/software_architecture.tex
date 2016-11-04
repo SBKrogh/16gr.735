@@ -1,4 +1,25 @@
 \section{ROS architecture}\label{ros_architec}
+ROS is an open-source, meta-operating system that handles
+hardware abstraction, low-level device control, implementation
+of commonly-used functionality, message-passing between
+processes, and package management.
+
+ It also provides tools and libraries for obtaining, building, writing, and running code supporting distributed computing. At the file system level, the main organizational component of a ROS system
+is the package. A package may contain executables (nodes),
+libraries, data-sets and configuration files. In a robot control
+system, nodes process data and communicate with each other
+through the Computation Graph.
+
+The Computation Graph is the peer-to-peer network of ROS
+processes that are processing data together. Communication
+is done by nodes subscribing to and publishing standardized
+data structures called messages by way of topics. Topics can
+be seen as a location for a certain type of message to be
+subscribed and published to. Possibly the greatest advantage
+ROS has on other similar projects is the community. Most of
+the packages are community maintained by a large and active
+user base, which makes the process of learning the system
+considerably easier.
 
 Connecting all the system components requires an architecture based on a central ROS node.
 The endohap ROS node connects all the main components of the system using protocols either defined by ROS (TCP/IP) or externally (UDP).
@@ -11,21 +32,21 @@ This consequently allows for other useful features such as visualization in Rviz
 Forming the node in an object-oriented manner gives the added advantage of modularity, allowing for implementation of additional features as they become necessary. 
 
 
-% \begin{figure}
-% \centering
-% \begin{tikzpicture}
-% %Peripheral
-% \draw (0,0) rectangle (8,10);
-% \node [box] (ECOM) at (4.5,8) {Endowrist COM};
-% \node [box] (EEST) at (4.5,6) {Endowrist state estimation};
-% \node [box] (ECTRL) at (1.8,4) {Endowrist control};
-% \node [box] (REFBK) at (5.8,4) {Reference and feedback};
+ \begin{figure}
+ \centering
+ \begin{tikzpicture}
+ %Peripheral
+ \draw (0,0) rectangle (8,10);
+ \node [box] (ECOM) at (4.5,8) {Endowrist COM};
+ \node [box] (EEST) at (4.5,6) {Endowrist state estimation};
+ \node [box] (ECTRL) at (1.8,4) {Endowrist control};
+ \node [box] (REFBK) at (5.8,4) {Reference and feedback};
 
-% \draw[->, ultra thick] (ECOM) -- (EEST);
-% \draw[->, ultra thick] (EEST) -- (ECTRL);
-% \draw[->, ultra thick] (EEST) -- (REFBK);
+ \draw[->, ultra thick] (ECOM) -- (EEST);
+ \draw[->, ultra thick] (EEST) -- (ECTRL);
+ \draw[->, ultra thick] (EEST) -- (REFBK);
 
-% \end{tikzpicture}%
-% \caption{simple Tikz figure}
-% \end{figure}
+ \end{tikzpicture}%
+ \caption{simple Tikz figure}
+ \end{figure}
 
