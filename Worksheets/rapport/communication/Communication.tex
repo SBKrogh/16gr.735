@@ -79,9 +79,10 @@ The middle level driver allows the creation of more than one low level driver. T
 
 The high level driver simply updates the data for the other nodes and transmits the setpoints to be sent.
 
+
 \subsection{The new driver}
 
-In order to increase the speed of the communication it is necessary for us to write a new driver. As previously explained, the new driver should use UDP instead of TCP/IP as we have no use for old data. It should also transmit the actual data without using a JSON Stream so that the size of each packets is reduced. In addition to those objectives we would like to modify as little as possible the current structure of the ROS node so that we don't have to rewrite the entire system. 
+In order to increase the speed of the communication it is necessary for us to write a new driver. As previously explained, the new driver should use UDP instead of TCP/IP as we have no use for old data\todo{if this is not explained before, explains more about the choice}. It should also transmit the actual data without using a JSON Stream so that the size of each packets is reduced. In addition to those objectives we would like to modify as little as possible the current structure of the ROS node so that we don't have to rewrite the entire system. 
 We just defined three goals that need to be fulfilled when writing the new driver. Let's identify those goals with numbers:
 \begin{enumerate}
 	\item Replace TCP by UDP
@@ -137,7 +138,7 @@ The received values must be made available as double for the higher levels by st
 \node at (2.5,-0.5) {\textbf{n floats}};
 \node at (7.5,-0.5) {\textbf{n floats}};
 \node at (12.5,-0.5) {\textbf{n floats}};
-\node at (16,-0.5) {\textbf{n booleans}};
+%\node at (16,-0.5) {\textbf{n booleans}};
 
 \node at (2.5,-1) {n*4 bytes};
 \node at (7.5,-1) {n*4 bytes};
@@ -162,7 +163,7 @@ The structure of the sent packet is shown in figure ~\ref{sent_packet}. To build
 \node at (8.5,0.5) {Enabled};
 
 \node at (3.75,-0.5) {\textbf{n doubles}};
-\node at (8.5,-0.5) {\textbf{n booleans}};
+%\node at (8.5,-0.5) {\textbf{n booleans}};
 
 \node at (3.75,-1) {n*8 bytes};
 \node at (8.5,-1) {1 byte};
