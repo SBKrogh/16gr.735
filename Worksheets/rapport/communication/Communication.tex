@@ -27,7 +27,7 @@ AS the goal is to reduce latency in the communication between the robot and ROS 
 
 % TCP/IP is a reliable protocol, but the handshaking protocol it uses causes some further latency. By replacing the TCP/IP protocol with the less reliable UDP protocol (User Datagram Protocol), we can reduce the latency of the system. UDP is lacking the handshaking protocol, thus it is more prone to losing packets. However the communication happens between two nodes without any intermediate router, thus the probability of losing packages at a frequency of 1 kHz is rather small.
 
-\section{Data Compression}
+\section{Data Compression}\label{data_compress}
 
 Labview's built in UDP write protocol expects an ASCII format string as data input. ASCII encoding was originally a 7 bit encoding format. The need for an extended character set brought an 8 bit version of ASCII encoding, which is included by Labview. The former Labview code's message format is as follows:
 
@@ -53,9 +53,10 @@ By removing the names from the string and compressing a data, the string can bec
 In order to communicate between ROS and the sbRIO board the university created a ROS node called davinci\_driver. This driver is composed of three parts: the low level driver called sbrio\_driver that communicate directly with the sbRIO board, the high level driver called ros\_driver that handle the communication between the other ROS node and the driver and the middle level driver that allow the communication between the low level driver and the high level one.
 
 \subsection{The original driver}
-The low level driver connect to one sbRIO board using a TCP/IP socket and launch a loop in a thread to handle the communication. The data exchange is made using a JSON Stream as described in the previous section. The structure of the code can be seen in figure~\ref{original_driver}.
+The low level driver connect to one sbRIO board using a TCP/IP socket and launch a loop in a thread to handle the communication. The data exchange is made using a JSON Stream as described in the previous section. The structure of the code can be seen in figure\figref{original_driver}.
 
-\begin{figure}
+\begin{figure}[H]
+\centering
 \begin{tikzpicture}
 
 \node[box] (Initialization) at (0,0) {Initialization};
@@ -92,9 +93,10 @@ We just defined three goals that need to be fulfilled when writing the new drive
 
 The modifications that need to be made in order to carry duty 1. and 2. are related to the communication protocol and the format of the transmitted data which are both handled by the low level driver. In order to fulfill goal 3. we should aim to modify the low level driver only without having consequences on the higher level drivers. This means that the public functions should keep the same prototype and that the format of the data available for them should stay the same (i.e vectors of double). We should also try to keep using the boost library used in the original driver to handle threads and mutexes.
 
-The socket initialization for the UDP protocol is very close to the one made for TCP protocol, thanks to this the establishment of the communication with the sbRIO is similar in both the old and new drivers. However, the UDP being connectionless it is not possible to use the same method as before to read incoming data, i.e it is not possible to look if some new data arrived, with UDP it is necessary to constantly be listening for new incoming data. That is why we need to modify the communication loop so that it is always waiting to receive a packet and that it sends data when required. However, if we used the communication loop shown in figure ~\ref{original_driver}, the loop would be blocking if no packet was received. To solve this issue we create a new thread that will wait to receive a packet, handle the packet and start again. The new communication structure is shown in figure ~\ref{new_driver}.
+The socket initialization for the UDP protocol is very close to the one made for TCP protocol, thanks to this the establishment of the communication with the sbRIO is similar in both the old and new drivers. However, the UDP being connectionless it is not possible to use the same method as before to read incoming data, i.e it is not possible to look if some new data arrived, with UDP it is necessary to constantly be listening for new incoming data. That is why we need to modify the communication loop so that it is always waiting to receive a packet and that it sends data when required. However, if we used the communication loop shown in figure \figref{original_driver}, the loop would be blocking if no packet was received. To solve this issue we create a new thread that will wait to receive a packet, handle the packet and start again. The new communication structure is shown in figure \figref{new_driver}.
 
-\begin{figure}
+\begin{figure}[H]
+\centering
 \begin{tikzpicture}
 
 \node[box] (Initialization) at (0,0) {Initialization};
@@ -119,10 +121,11 @@ The socket initialization for the UDP protocol is very close to the one made for
 
 \todo{We still need to define the initialization protocol and the packet loss handling}
 
-As explained in part ~\secref{Data Compression}, when the JSON Stream was removed we decided that we would only send numerical data. And as we keep goal 3. in mind, we need to receive the position, velocity and effort as float and one boolean for each motor and to send a setpoint as a double and a boolean for each motor. 
-The received values must be made available as double for the higher levels by storing them in the vector of doubles. For simplicity we decided that the packet should be following the structure described in figure ~\ref{received_packet}. To reach the desired vectors,the received bitcode is copied in a float variable that we convert in a double and then the value in the vector is updating using this double.
+As explained in \secref{data_compress}, when the JSON Stream was removed we decided that we would only send numerical data. And as we keep goal 3. in mind, we need to receive the position, velocity and effort as float and one boolean for each motor and to send a setpoint as a double and a boolean for each motor. 
+The received values must be made available as double for the higher levels by storing them in the vector of doubles. For simplicity we decided that the packet should be following the structure described in figure \figref{received_packet}. To reach the desired vectors,the received bitcode is copied in a float variable that we convert in a double and then the value in the vector is updating using this double.
 
-\begin{figure}
+\begin{figure}[H]
+\centering
 \begin{tikzpicture}
 
 \draw (0,0) rectangle (17,1);
@@ -153,7 +156,8 @@ The received values must be made available as double for the higher levels by st
 
 The structure of the sent packet is shown in figure ~\ref{sent_packet}. To build the packet, the same logic as before is used. The bitcode of the numerical values is copied into a buffer and the buffer is sent.
 
-\begin{figure}
+\begin{figure}[H]
+\centering
 \begin{tikzpicture}
 
 \draw (0,0) rectangle (10,1);
