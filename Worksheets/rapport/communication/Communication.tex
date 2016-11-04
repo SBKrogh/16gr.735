@@ -4,20 +4,32 @@ The goal of the project is to provide a teleoperated surgical system which makes
 
 \section{Communication between ROS and the sbRIO board}
 
-In the former system setup the sbRIO board and the computer running ROS communicated through a TCP/IP protocol at a frequency of 100 Hz \cite{System_Overwiew}. This frequency was just enough to finish transmitting the data coming from the sensors. A frequency increase resulted in data collision. To prevent data collision while increasing communication frequency, we can either:
+In the former system setup the sbRIO board and the computer running ROS communicated through a TCP/IP protocol. TCP/IP is a connection orientated protocol, which first establish the connection between two devices. After the connection has been established data can be send in both directions. TCP/IP is a reliable protocol which ensure that the data transmitted, will be received. When the data is send, the transmitter waits for an acknowledgment from the receiver that the data has been received. If the data has been corrupted or the acknowledgment is not send, the transmitter will retransmit the package again. If the case of no acknowledgment is happening, a timer is used to define when to retransmit the data again. The data will then be retransmitted a certain amount of times until an acknowledgment has been received or the connection is defined to be disconnected. This means that a copy of the data is stored at the transmitter until it has been correctly received or the connection is taken down.\\ 
+This communication protocol induces delays in the system as the transmitter has to wait on the acknowledgment that the data has been received before loading new data into the sending buffer. If data has been discarded due to error the transmitter has to retransmit the data again if necessary.  
+
+The speed of the communication between the sbRIO board and the computer running ROS is set to 100 Hz. This was done as a trade off between being fast and for avoiding bugs which where bandwidth related\cite{Chris_Surgical}.
+
+% This frequency was just enough to finish transmitting the data coming from the sensors, as a frequency increase resulted in bugs. To prevent data collision while increasing communication frequency, we can either:
+
+The problem with the communication latency can be solved in different way, where some of them are listed below.
 
 \begin{itemize}
-	\item Find a faster communication protocol
-	\item Compress data
-	\item Implement faster hardware	
+	\item Find a faster communication protocol,
+	\item Compress data,
+	\item or implement faster hardware.	
 \end{itemize}
 
+\section*{User datagram protocol}
+UDP communication protocol is a faster way of communicating compared to TCP/IP. It is connectionless which means that it wont establish a connection before sending data. When data is transmitted, new data is loaded into the transmitter buffer and then send when the connection line is free. Thus the UDP protocol does not wait for an acknowledgment and thereby just sends the data as fast as possible to the specified address.
 
-TCP/IP is a reliable protocol, but the handshaking protocol it uses causes some further latency. By replacing the TCP/IP protocol with the less reliable UDP protocol (User Datagram Protocol), we can reduce the latency of the system. UDP is lacking the handshaking protocol, thus it is more prone to losing packets. However the communication happens between two nodes without any intermediate router, thus the probability of losing packages at a frequency of 1 kHz is rather small.
+AS the goal is to reduce latency in the communication between the robot and ROS it has been chosen to go with the UDP protocol as it should be faster than the TCP/IP protocol, however less reliable. Because of the higher data rate, package loss or package error should not become a problem, as a new package is send 
+
+
+% TCP/IP is a reliable protocol, but the handshaking protocol it uses causes some further latency. By replacing the TCP/IP protocol with the less reliable UDP protocol (User Datagram Protocol), we can reduce the latency of the system. UDP is lacking the handshaking protocol, thus it is more prone to losing packets. However the communication happens between two nodes without any intermediate router, thus the probability of losing packages at a frequency of 1 kHz is rather small.
 
 \section{Data Compression}
 
-Labview's built in UDP write protocol expects an ASCII format string as data input. ASCII encoding was originally a 7 bit encoding format. The need for an extended character set brought an 8 bit version of ASCII encoding, which is included is used by Labview. The former Labview code's message format is as follows:
+Labview's built in UDP write protocol expects an ASCII format string as data input. ASCII encoding was originally a 7 bit encoding format. The need for an extended character set brought an 8 bit version of ASCII encoding, which is included by Labview. The former Labview code's message format is as follows:
 
 \begin{verbatim}
 {"p4_primary":{"position":[6,3,2,3],"velocity":[3,2,3,1,0],"effort":[4,1,1,1]}}\n
@@ -32,6 +44,7 @@ We utilized Labview's built in flatten to string node, which basically converts 
 The UDP must send encoder, potmeter and current measurement data from each of the four motors. Each data is represented as a 32 bit float. This adds up to 48 bytes of data to be sent each cycle. The described method sends 48 byte long strings not including the header. The former method sends 67 characters for formatting and naming purposes and 96 bytes of numeric data, assuming each double number is sent in 8 digits. It adds up to 163 bytes.
 
 By removing the names from the string and compressing a data, the string can become 70 shorter, which is a valuable increase in efficiency.
+
 
 
 \section{Rewriting the driver}
