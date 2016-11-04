@@ -32,3 +32,129 @@ We utilized Labview's built in flatten to string node, which basically converts 
 The UDP must send encoder, potmeter and current measurement data from each of the four motors. Each data is represented as a 32 bit float. This adds up to 48 bytes of data to be sent each cycle. The described method sends 48 byte long strings not including the header. The former method sends 67 characters for formatting and naming purposes and 96 bytes of numeric data, assuming each double number is sent in 8 digits. It adds up to 163 bytes.
 
 By removing the names from the string and compressing a data, the string can become 70 shorter, which is a valuable increase in efficiency.
+
+
+\section{Rewriting the driver}
+
+In order to communicate between ROS and the sbRIO board the university created a ROS node called davinci\_driver. This driver is composed of three parts: the low level driver called sbrio\_driver that communicate directly with the sbRIO board, the high level driver called ros\_driver that handle the communication between the other ROS node and the driver and the middle level driver that allow the communication between the low level driver and the high level one.
+
+\subsection{The original driver}
+The low level driver connect to one sbRIO board using a TCP/IP socket and launch a loop in a thread to handle the communication. The data exchange is made using a JSON Stream as described in the previous section. The structure of the code can be seen in figure~\ref{original_driver}.
+
+\begin{figure}
+\begin{tikzpicture}
+
+\node[box] (Initialization) at (0,0) {Initialization};
+\node[box] (Receive) at ($(0,-2)+(Initialization)$) {Read the data \\if some were received};
+\node[box] (Send) at ($(0,-2)+(Receive)$) {Send if the\\ control changed};
+\node[box] (Sleep) at ($(0,-2)+(Send)$) {Sleep};
+\node[box] (Update_State) at ($(5,0)+(Receive)$) {Update the data\\ available for higher\\level processes};
+
+\draw[->, ultra thick] (Initialization) -- (Receive);
+\draw[->, ultra thick] (Receive) -- (Update_State);
+\draw[->, ultra thick] (Receive) -- (Send);
+\draw[->, ultra thick] (Send) -- (Sleep);
+\draw[->, ultra thick] (Sleep.west) -| ++(-2,0) |- (Receive);
+
+\end{tikzpicture}
+\caption{Structure of the original sbRIO driver}
+\label{original_driver}
+\end{figure}
+
+The middle level driver allows the creation of more than one low level driver. Thanks to this it is possible to communicate with more than one arm of the DaVinci Robot at once. It also handles the communication between the high level driver and the low level so that there is no need for the client to acquire mutexes.
+
+The high level driver simply updates the data for the other nodes and transmits the setpoints to be sent.
+
+\subsection{The new driver}
+
+In order to increase the speed of the communication it is necessary for us to write a new driver. As previously explained, the new driver should use UDP instead of TCP/IP as we have no use for old data. It should also transmit the actual data without using a JSON Stream so that the size of each packets is reduced. In addition to those objectives we would like to modify as little as possible the current structure of the ROS node so that we don't have to rewrite the entire system. 
+We just defined three goals that need to be fulfilled when writing the new driver. Let's identify those goals with numbers:
+\begin{enumerate}
+	\item Replace TCP by UDP
+	\item Replace the JSON Stream by the numerical values
+	\item Modify as little as possible the original driver
+\end{enumerate}
+
+The modifications that need to be made in order to carry duty 1. and 2. are related to the communication protocol and the format of the transmitted data which are both handled by the low level driver. In order to fulfill goal 3. we should aim to modify the low level driver only without having consequences on the higher level drivers. This means that the public functions should keep the same prototype and that the format of the data available for them should stay the same (i.e vectors of double). We should also try to keep using the boost library used in the original driver to handle threads and mutexes.
+
+The socket initialization for the UDP protocol is very close to the one made for TCP protocol, thanks to this the establishment of the communication with the sbRIO is similar in both the old and new drivers. However, the UDP being connectionless it is not possible to use the same method as before to read incoming data, i.e it is not possible to look if some new data arrived, with UDP it is necessary to constantly be listening for new incoming data. That is why we need to modify the communication loop so that it is always waiting to receive a packet and that it sends data when required. However, if we used the communication loop shown in figure ~\ref{original_driver}, the loop would be blocking if no packet was received. To solve this issue we create a new thread that will wait to receive a packet, handle the packet and start again. The new communication structure is shown in figure ~\ref{new_driver}.
+
+\begin{figure}
+\begin{tikzpicture}
+
+\node[box] (Initialization) at (0,0) {Initialization};
+\node[box] (Receive) at ($(6,-3)+(Initialization)$) {Asynchronous reading};
+\node[box] (Update_State) at ($(0,-2)+(Receive)$) {Process the data\\and update them for\\ higher level processes};
+\node[box] (Send) at ($(0,-3)+(Initialization)$) {Send if the\\ control changed};
+\node[box] (Sleep) at ($(0,-2)+(Send)$) {Sleep};
+
+
+\draw[->, ultra thick] (Initialization.south) -- ++(0,-0.5) -|  (Receive.north);
+\draw[->, ultra thick] (Initialization) -- (Send);
+\draw[->, ultra thick] (Receive) -- (Update_State);
+\draw[->, ultra thick] (Update_State.west) -| ++(-1,0) |- (Receive);
+\draw[->, ultra thick] (Send) -- (Sleep);
+\draw[->, ultra thick] (Sleep.west) -| ++(-1,0) |- (Send);
+
+
+\end{tikzpicture}
+\caption{Structure of the new sbRIO driver}
+\label{new_driver}
+\end{figure}
+
+\todo{We still need to define the initialization protocol and the packet loss handling}
+
+As explained in part ~\secref{Data Compression}, when the JSON Stream was removed we decided that we would only send numerical data. And as we keep goal 3. in mind, we need to receive the position, velocity and effort as float and one boolean for each motor and to send a setpoint as a double and a boolean for each motor. 
+The received values must be made available as double for the higher levels by storing them in the vector of doubles. For simplicity we decided that the packet should be following the structure described in figure ~\ref{received_packet}. To reach the desired vectors,the received bitcode is copied in a float variable that we convert in a double and then the value in the vector is updating using this double.
+
+\begin{figure}
+\begin{tikzpicture}
+
+\draw (0,0) rectangle (17,1);
+\draw (0,0) rectangle (5,1);
+\draw (0,0) rectangle (10,1);
+\draw (0,0) rectangle (15,1);
+
+\node at (2.5,0.5) {Positions};
+\node at (7.5,0.5) {Velocities};
+\node at (12.5,0.5) {Efforts};
+\node at (16,0.5) {Active};
+
+\node at (2.5,-0.5) {\textbf{n floats}};
+\node at (7.5,-0.5) {\textbf{n floats}};
+\node at (12.5,-0.5) {\textbf{n floats}};
+\node at (16,-0.5) {\textbf{n booleans}};
+
+\node at (2.5,-1) {n*4 bytes};
+\node at (7.5,-1) {n*4 bytes};
+\node at (12.5,-1) {n*4 bytes};
+\node at (16,-1) {1 byte};
+
+\node at (4,-2.5) {\textbf{Size of the payload:} n*12+1 bytes}; %I have no idea why i need to put 4 as a coordinate for it to not mess up the rest of the figure
+\end{tikzpicture}
+\caption{Received packet for n motors}
+\label{received_packet}
+\end{figure}
+
+The structure of the sent packet is shown in figure ~\ref{sent_packet}. To build the packet, the same logic as before is used. The bitcode of the numerical values is copied into a buffer and the buffer is sent.
+
+\begin{figure}
+\begin{tikzpicture}
+
+\draw (0,0) rectangle (10,1);
+\draw (0,0) rectangle (7,1);
+
+\node at (3.75,0.5) {Setpoints};
+\node at (8.5,0.5) {Enabled};
+
+\node at (3.75,-0.5) {\textbf{n doubles}};
+\node at (8.5,-0.5) {\textbf{n booleans}};
+
+\node at (3.75,-1) {n*8 bytes};
+\node at (8.5,-1) {1 byte};
+
+\node at (0,-2.5) {\textbf{Size of the payload:} n*8+1 bytes}; 
+\end{tikzpicture}
+\caption{Sent packet for n motors}
+\label{sent_packet}
+\end{figure}
