@@ -20,9 +20,9 @@ The problem with the communication latency can be solved in different way, where
 \end{itemize}
 
 \section*{User datagram protocol}
-UDP communication protocol is a faster way of communicating compared to TCP/IP. It is connectionless which means that it wont establish a connection before sending data. When data is transmitted, new data is loaded into the transmitter buffer and then send when the connection line is free. Thus the UDP protocol does not wait for an acknowledgment and thereby just sends the data as fast as possible to the specified address.
+UDP communication protocol is a faster way of communicating compared to TCP/IP. It is connectionless which means that it wont establish a connection before sending data. When data is transmitted, new data is loaded into the transmitter buffer and then send when the connection line is free, thus the data is not stored at the transmitter as in TCP/IP. Furthermore the UDP protocol does not wait for an acknowledgment and thereby just sends the data as fast as possible to the specified address.
 
-AS the goal is to reduce latency in the communication between the robot and ROS it has been chosen to go with the UDP protocol as it should be faster than the TCP/IP protocol, however less reliable. Because of the higher data rate, package loss or package error should not become a problem, as a new package is send 
+AS the goal is to reduce latency in the communication between the robot and ROS it has been chosen to go with the UDP protocol as it should be faster than the TCP/IP protocol, however less reliable. Because of the higher data rate, package loss or package error should not become a problem, as a new package is send as soon as possible. Furthermore instead of storing old data at the transmitter which can be obsolete if needed to be resend, as in TCP/IP, UDP will send new data instead.
 
 
 % TCP/IP is a reliable protocol, but the handshaking protocol it uses causes some further latency. By replacing the TCP/IP protocol with the less reliable UDP protocol (User Datagram Protocol), we can reduce the latency of the system. UDP is lacking the handshaking protocol, thus it is more prone to losing packets. However the communication happens between two nodes without any intermediate router, thus the probability of losing packages at a frequency of 1 kHz is rather small.
@@ -32,8 +32,9 @@ AS the goal is to reduce latency in the communication between the robot and ROS 
 Labview's built in UDP write protocol expects an ASCII format string as data input. ASCII encoding was originally a 7 bit encoding format. The need for an extended character set brought an 8 bit version of ASCII encoding, which is included by Labview. The former Labview code's message format is as follows:
 
 \begin{verbatim}
-{"p4_primary":{"position":[6,3,2,3],"velocity":[3,2,3,1,0],"effort":[4,1,1,1]}}\n
+{"p4_primary":{"position":[6,3,2,3],"velocity":[3,2,3,1],"effort":[4,1,1,1]}}
 \end{verbatim}
+This illustrate a read out of four different motor values.
 
 To minimize the forwarded data size, first of all we have to get rid of the names of each data. To keep the data readable for the receiver, we can either use a character to separate each segment of data, or we can agree upon a constant size for each segment of data.
 
