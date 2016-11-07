@@ -1,55 +1,4 @@
 
-%% bare_conf.tex
-%% V1.4b
-%% 2015/08/26
-%% by Michael Shell
-%% See:
-%% http://www.michaelshell.org/
-%% for current contact information.
-%%
-%% This is a skeleton file demonstrating the use of IEEEtran.cls
-%% (requires IEEEtran.cls version 1.8b or later) with an IEEE
-%% conference paper.
-%%
-%% Support sites:
-%% http://www.michaelshell.org/tex/ieeetran/
-%% http://www.ctan.org/pkg/ieeetran
-%% and
-%% http://www.ieee.org/
-
-%%*************************************************************************
-%% Legal Notice:
-%% This code is offered as-is without any warranty either expressed or
-%% implied; without even the implied warranty of MERCHANTABILITY or
-%% FITNESS FOR A PARTICULAR PURPOSE!
-%% User assumes all risk.
-%% In no event shall the IEEE or any contributor to this code be liable for
-%% any damages or losses, including, but not limited to, incidental,
-%% consequential, or any other damages, resulting from the use or misuse
-%% of any information contained here.
-%%
-%% All comments are the opinions of their respective authors and are not
-%% necessarily endorsed by the IEEE.
-%%
-%% This work is distributed under the LaTeX Project Public License (LPPL)
-%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
-%% distributed and modified. A copy of the LPPL, version 1.3, is included
-%% in the base LaTeX documentation of all distributions of LaTeX released
-%% 2003/12/01 or later.
-%% Retain all contribution notices and credits.
-%% ** Modified files should be clearly indicated as such, including  **
-%% ** renaming them and changing author support contact information. **
-%%*************************************************************************
-
-
-% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
-% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
-% *** with production work. The IEEE's font choices and paper sizes can   ***
-% *** trigger bugs that do not appear when using other class files.       ***                          ***
-% The testflow support page is at:
-% http://www.michaelshell.org/tex/testflow/
-
-
 
 \documentclass[conference]{IEEEtran}
 % Some Computer Society conferences also require the compsoc mode option,
@@ -60,7 +9,7 @@
 % \documentclass[conference]{../sty/IEEEtran}
 
 
-
+\usepackage[parfill]{parskip}
 
 
 % Some very useful LaTeX packages include:
@@ -92,7 +41,7 @@
 
 % *** CITATION PACKAGES ***
 %
-%\usepackage{cite}
+\usepackage{cite}
 % cite.sty was written by Donald Arseneau
 % V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
 % \cite{} output to follow that of the IEEE. Loading the cite package will
@@ -159,7 +108,7 @@
 
 % *** MATH PACKAGES ***
 %
-%\usepackage{amsmath}
+\usepackage{amsmath}
 % A popular package from the American Mathematical Society that provides
 % many useful and powerful commands for dealing with mathematics.
 %
@@ -402,12 +351,20 @@ The abstract goes here.
 
 \section{Introduction}
 % no \IEEEPARstart
-Over the last couple of decades the use of robotic surgery has increased, because of its precession and the reduction in tissue damage.
-The operation tools which are inserted into the human body are called an Endowrist\todo{isn't Endowrist a specific model?}. These tools are constructed in such a way, that the operator of the tools has the ability to manipulate  it as a human wrist.
+Over the last couple of decades the use of robotics for minimally invasive surgeries has increased, because of its precession and the reduction in tissue damage\cite{RIGSP}.
+One brand of the operation tools in use is called an Endowrist. These are constructed in such a way, that the operator of the tools has the ability to manipulate  it as a human wrist.
 
-The feedback to the operator is made from live video transmission of the operation and as direct force feedback\todo{sounds like force feedback is already used in real operations}. The direct force feedback is used to simulate the resistance the end effector exposed to under the operation to give the surgeon the feeling of doing the operation by hand.  This kind of feedback is called haptic feedback and has been proven to be efficient way of doing feedback to the operator as it gives a more clear vision of the force that is applied.
+The feedback to the operator right now is only done by live video transmissions. Due to this is the only kind of feedback the operator has to guess on how much force there is applied under the surgery e.g to the skin or organs. In experiments it has been shown that haptic feedback has an huge positive effect for the reduction in surgical error\cite{EOFGFF}. 
 
-However the direct force feedback is not proportional to the actual resistance force that are applied to the end effector as the construction of the tool from the end effector to the actuators are highly non-linear. It would be possible to solve this problem by implementing a sensor to the end effector to measure the force but due to the demand of high hygiene the tools have to be sterilized at temperatures over a 100°C which can damage the sensor. Furthermore it is stated by law that each surgical tool has to be discarded after a few times in use. This means that the cost of the tool has to stay as low as possible and therefore make the idea of implementing an expensive sensor not ideal.
+The purpose of haptic feedback is to feedback the external force applied to the end effector back to the operator. This should simulate the situation of the operator doing the operation by hand instead of remote.
+
+
+% The feedback to the operator is made from live video transmission of the operation and as direct force feedback\todo{sounds like force feedback is already used in real operations}. The direct force feedback is used to simulate the resistance the end effector exposed to under the operation to give the surgeon the feeling of doing the operation by hand.  This kind of feedback is called haptic feedback and has been proven to be efficient way of doing feedback to the operator as it gives a more clear vision of the force that is applied.
+
+The force feedback could be done as direct force feedback calculated from the resistance on the actuators but as the tool is highly non-linear the transparency of the controller will become less transparent.
+It would be possible to solve this problem by implementing a sensor to the end effector to measure the force but due to the demand of high hygiene the tools have to be sterilized at temperatures over a $100^\circ$ C which could damage the sensor(s). Furthermore it is stated by law that each surgical tool has to be discarded after a few times in use. This means that the cost of the tool has to stay as low as possible and therefore make the idea of implementing an expensive sensor not ideal.
+
+% However the direct force feedback is not proportional to the actual resistance force that are applied to the end effector as the construction of the tool from the end effector to the actuators are highly non-linear. It would be possible to solve this problem by implementing a sensor to the end effector to measure the force but due to the demand of high hygiene the tools have to be sterilized at temperatures over a 100°C which can damage the sensor. Furthermore it is stated by law that each surgical tool has to be discarded after a few times in use. This means that the cost of the tool has to stay as low as possible and therefore make the idea of implementing an expensive sensor not ideal.
 
 Therefore the force feedback got to be estimated through the actuators which gives a high demand for the feedback controller as it has to be as precise as possible to feedback the correct force to the operator.
 
@@ -568,9 +525,20 @@ The authors would like to thank...
 % (used to reserve space for the reference number labels box)
 \begin{thebibliography}{1}
 
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+% \bibitem{IEEEhowto:kopka}
+% H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
+%   0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+
+\bibitem{RIGSP}
+Giulianotti, P. C., Coratti, A., Angelini, M., Sbrana, F., Cecconi, S.,
+et al., \emph{Robotics in General Surgery Personal Experience in a Large Community Hospital}\hskip 1em plus
+  0.5em minus 0.4em\relax Archives of Surgery: pp. 777-784.
+
+\bibitem{EOFGFF}
+H.~Kopka and P.~W. Daly, \emph{Effects of haptic and graphical force feedback on teleoperated palpation}\hskip
+  0.5em minus 0.4em\relax  Robotics and Automation: pp. 677 - 682.
+
+  \todo{not sure on the "pp"}
 
 \end{thebibliography}
 
