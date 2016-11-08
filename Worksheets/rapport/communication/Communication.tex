@@ -57,7 +57,7 @@ By removing the names from the string and compressing a data, the string can bec
 In order to communicate between ROS and the sbRIO board the university created a ROS node called davinci\_driver. This driver is composed of three parts: the low level driver called sbrio\_driver that communicate directly with the sbRIO board, the high level driver called ros\_driver that handle the communication between the other ROS node and the driver and the middle level driver that allow the communication between the low level driver and the high level one.
 
 \subsection{The original driver}
-The low level driver connected to one sbRIO board using a TCP/IP socket and launch a loop in a thread to handle the communication. The data exchange is made using a JSON\todo{JSON? first time mentioned?} stream as described in the previous section. The structure of the code can be seen in figure\figref{original_driver}.
+The low level driver connects to one sbRIO board using a TCP/IP socket and launch a loop in a thread to handle the communication. The data exchange is made using a JSON\todo{JSON? first time mentioned?} stream as described in the previous section. The structure of the code can be seen in figure\figref{original_driver}.
 
 \begin{figure}[H]
 \centering
@@ -103,20 +103,32 @@ The socket initialization for the UDP protocol is very close to the one made for
 \centering
 \begin{tikzpicture}
 
-\node[box] (Initialization) at (0,0) {Initialization};
-\node[box] (Receive) at ($(6,-3)+(Initialization)$) {Asynchronous reading};
-\node[box] (Update_State) at ($(0,-2)+(Receive)$) {Process the data\\and update them for\\ higher level processes};
-\node[box] (Send) at ($(0,-3)+(Initialization)$) {Send if the\\ control changed};
-\node[box] (Sleep) at ($(0,-2)+(Send)$) {Sleep};
+\node[box] (Initialization) at (4,0) {Initialization};
+\node[box] (Receive) at ($(4,-3)+(Initialization)$) {Wait to receive\\a packet};
+\node[box] (Update_State1) at ($(0,-3)+(Receive)$) {Convert the bitcode};
+\node[box] (Update_State2) at ($(0,-3)+(Update_State1)$) {Make the data available for\\higher level processes};
+
+\node[box] (Check) at ($(-4,-3)+(Initialization)$) {Check if there is\\a new control signal};
+\node[box] (Send) at ($(0,-3)+(Check)$) {Send};
+\node[box] (Sleep) at ($(0,-3)+(Send)$) {Sleep};
 
 
 \draw[->, ultra thick] (Initialization.south) -- ++(0,-0.5) -|  (Receive.north);
-\draw[->, ultra thick] (Initialization) -- (Send);
-\draw[->, ultra thick] (Receive) -- (Update_State);
-\draw[->, ultra thick] (Update_State.west) -| ++(-1,0) |- (Receive);
-\draw[->, ultra thick] (Send) -- (Sleep);
-\draw[->, ultra thick] (Sleep.west) -| ++(-1,0) |- (Send);
+\draw[->, ultra thick] (Receive) -- (Update_State1);
+\draw[->, ultra thick] (Update_State1) -- (Update_State2);
+\draw[->, ultra thick] (Update_State2.west) -| ++(-1,0) |- (Receive);
 
+\draw[->, ultra thick] (Initialization.south) -- ++(0,-0.5) -| (Check);
+\draw[->, ultra thick] (Check) -- (Send);
+\draw[->, ultra thick] (Check.east) -| ++(0.5,0) |- (Sleep);%($(0,1.5)+(Sleep)$);
+\draw[->, ultra thick] (Send) -- (Sleep);
+\draw[->, ultra thick] (Sleep.west) -| ++(-1.5,0) |- (Check);
+
+\node at ($(0,2.1)+(Check)$) {\textbf{thread1}};
+\node at ($(0,2.1)+(Receive)$) {\textbf{thread2}};
+
+\node at ($(2.1,0.2)+(Check)$) {No};
+\node at ($(0.4,-1)+(Check)$) {Yes};
 
 \end{tikzpicture}
 \caption{Structure of the new sbRIO driver}
@@ -126,7 +138,7 @@ The socket initialization for the UDP protocol is very close to the one made for
 \todo{We still need to define the initialization protocol and the packet loss handling}
 
 As explained in \secref{data_compress}, when the JSON Stream was removed we decided that we would only send numerical data. And as we keep goal 3. in mind, we need to receive the position, velocity and effort as float and one boolean for each motor and to send a setpoint as a double and a boolean for each motor.\todo{you may still compress the data}
-The received values must be made available as double for the higher levels by storing them in the vector of doubles. For simplicity we decided that the packet should be following the structure described in figure \figref{received_packet}. To reach the desired vectors,the received bitcode is copied in a float variable that we convert in a double and then the value in the vector is updating using this double.
+The received values must be made available as double for the higher levels by storing them in the vector of doubles. For simplicity we decided that the packet should be following the structure described in \figref{received_packet}. To reach the desired vectors,the received bitcode is copied in a float variable that we convert in a double and then the value in the vector is updating using this double.
 
 \begin{figure}[H]
 \centering
@@ -142,23 +154,23 @@ The received values must be made available as double for the higher levels by st
 \node at (12.5,0.5) {Efforts};
 \node at (16,0.5) {Active};
 
-\node at (2.5,-0.5) {\textbf{n floats}};
-\node at (7.5,-0.5) {\textbf{n floats}};
-\node at (12.5,-0.5) {\textbf{n floats}};
+\node at (2.5,-0.5) {\textbf{7 floats}};
+\node at (7.5,-0.5) {\textbf{7 floats}};
+\node at (12.5,-0.5) {\textbf{7 floats}};
 %\node at (16,-0.5) {\textbf{n booleans}};
 
-\node at (2.5,-1) {n*4 bytes};
-\node at (7.5,-1) {n*4 bytes};
-\node at (12.5,-1) {n*4 bytes};
+\node at (2.5,-1) {7*4 bytes};
+\node at (7.5,-1) {7*4 bytes};
+\node at (12.5,-1) {7*4 bytes};
 \node at (16,-1) {1 byte};
 
-\node at (4,-2.5) {\textbf{Size of the payload:} n*12+1 bytes}; %I have no idea why i need to put 4 as a coordinate for it to not mess up the rest of the figure
+\node at (4,-2.5) {\textbf{Size of the payload:} 85 bytes}; %I have no idea why i need to put 4 as a coordinate for it to not mess up the rest of the figure
 \end{tikzpicture}
-\caption{Received packet for n}
+\caption{Received packet for one arm}
 \label{received_packet}
 \end{figure}
 
-The structure of the sent packet is shown in figure ~\ref{sent_packet}. To build the packet, the same logic as before is used. The bitcode of the numerical values is copied into a buffer and the buffer is sent.
+The structure of the sent packet is shown in~\figref{sent_packet}. To build the packet, the same logic as before is used. The bitcode of the numerical values is copied into a buffer and the buffer is sent.
 
 \begin{figure}[H]
 \centering
@@ -170,14 +182,14 @@ The structure of the sent packet is shown in figure ~\ref{sent_packet}. To build
 \node at (3.75,0.5) {Setpoints};
 \node at (8.5,0.5) {Enabled};
 
-\node at (3.75,-0.5) {\textbf{n doubles}};
+\node at (3.75,-0.5) {\textbf{7 doubles}};
 %\node at (8.5,-0.5) {\textbf{n booleans}};
 
-\node at (3.75,-1) {n*8 bytes};
+\node at (3.75,-1) {7*8 bytes};
 \node at (8.5,-1) {1 byte};
 
-\node at (0,-2.5) {\textbf{Size of the payload:} n*8+1 bytes}; 
+\node at (0,-2.5) {\textbf{Size of the payload:} 57 bytes}; 
 \end{tikzpicture}
-\caption{Sent packet for n motors}
+\caption{Sent packet for one arm}
 \label{sent_packet}
 \end{figure}
