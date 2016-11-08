@@ -21,8 +21,12 @@ the packages are community maintained by a large and active
 user base, which makes the process of learning the system
 considerably easier.
 
-Connecting all the system components requires an architecture based on a central ROS node.
-The endohap ROS node connects all the main components of the system using protocols either defined by ROS (TCP/IP) or externally (UDP).
+In a high-level overview, our system could structurally be represented in several components.
+The sBRio board controls the actuators on the DaVinci robot arm and the rest of the system communicates with it via drivers contained in the Davinci_ros package. The Phantom Omni communicates with the system via the Open Haptics API, and connects to ROS through the phantom_omni package.
+
+Connecting all the system components requires an architecture based on a central node which handles communication between the two packages and has access to all the other methods required for control.
+We have developed the Endohap package exactly for this purpose.
+The endohap\_ node contained in the package connects all the main system components using protocols either defined by ROS (TCP/IP) or externally (UDP). 
 
 External communication (with the endowrist test setup) is handled by the boost libraries in the DaVinci ROS package and connected to the endohap node, which transforms the data and propagates it through the system using internal ROS communication protocols. 
 This has the advantage of gaining more control over the speed of communication with the test setup (which is vital for the control algorithm), while also maintaining the robustness and standardization of the internal ROS communication structure (where delay isn't an issue). The data leaves the ROS via another external connection (to the Phantom Omni) that utilizes the TCP/IP protocol, it is managed by the phantom omni ROS package.
