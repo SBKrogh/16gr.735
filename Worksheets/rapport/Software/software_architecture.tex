@@ -1,4 +1,5 @@
 \section{Software architecture}
+\todo{rewrite as this is copied from another place}
 ROS is an open-source, meta-operating system that handles
 hardware abstraction, low-level device control, implementation
 of commonly-used functionality, message-passing between
@@ -8,7 +9,7 @@ processes, and package management.
 is the package. A package may contain executables (nodes),
 libraries, data-sets and configuration files. In a robot control
 system, nodes process data and communicate with each other
-through the Computation Graph.
+through the Computation Graph.\todo{Still NO references...}
 
 The Computation Graph is the peer-to-peer network of ROS
 processes that are processing data together. Communication
@@ -22,12 +23,11 @@ user base, which makes the process of learning the system
 considerably easier.
 
 \section*{Structure}
-
 Connecting all the system components requires an architecture based on a central ROS node.
-The endohap ROS node connects all the main components of the system using protocols either defined by ROS (TCP/IP) or externally (UDP).
+The endohap\todo{What is the endohap} ROS node connects all the main components of the system using protocols either defined by ROS (TCP/IP) or externally (UDP).
 
 External communication (with the endowrist test setup) is handled by the boost libraries in the DaVinci ROS package and connected to the endohap node, which transforms the data and propagates it through the system using internal ROS communication protocols. 
-This has the advantage of gaining more control over the speed of communication with the test setup (which is vital for the control algorithm), while also maintaining the robustness and standardization of the internal ROS communication structure (where delay isn't an issue). The data leaves the ROS via another external connection (to the Phantom Omni) that utilizes the TCP/IP protocol, it is managed by the phantom omni ROS package.
+This has the advantage of gaining more control over the speed of communication with the test setup (which is vital for the control algorithm), while also maintaining the robustness and standardization of the internal ROS communication structure (where delay isn't an issue)\todo{Elaborate - you need to describe this in more details}. The data leaves the ROS via another external connection (to the Phantom Omni) that utilizes the TCP/IP protocol, it is managed by the phantom omni ROS package.
 
 All the calculation required for controlling the endowrist and giving force feedback to the phantom omni is also done within the endohap node. Forward kinematics are handled by the tf ROS package, which utilizes URDF description files combined with current joint position information published to ROS.
 This consequently allows for other useful features such as visualization in Rviz or various kinematics calculations.

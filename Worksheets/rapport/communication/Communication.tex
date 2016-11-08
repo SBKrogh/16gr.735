@@ -1,6 +1,6 @@
 \chapter{Communication}\label{cha:communication}
 
-The goal of the project is to provide a teleoperated surgical system which makes the surgeon controlling the robot feel as if he was manipulating the end-effector directly. To achieve this, the time delay of the force between the end-effector and the controller should be unnoticeable. The targeted communication frequency of 1 kHz should result in a delay small enough to satisfy this need.
+The goal of the project is to provide a teleoperated surgical system which makes the surgeon controlling the robot feel as if he was manipulating the end-effector directly. To achieve this, the time delay of the force between the end-effector and the controller should be unnoticeable. The targeted communication frequency of 1 kHz should result in a delay small enough to satisfy this need.\todo{What is the relation between sample rate and delay?}
 
 \section{Communication between ROS and the sbRIO board}
 
@@ -11,7 +11,7 @@ The speed of the communication between the sbRIO board and the computer running 
 
 % This frequency was just enough to finish transmitting the data coming from the sensors, as a frequency increase resulted in bugs. To prevent data collision while increasing communication frequency, we can either:
 
-The problem with the communication latency can be solved in different way, where some of them are listed below.
+The problem with the communication latency can be solved in different way, where some of them are listed below.\todo{More analyses is required}
 
 \begin{itemize}
 	\item Find a faster communication protocol,
@@ -28,13 +28,15 @@ AS the goal is to reduce latency in the communication between the robot and ROS 
 % TCP/IP is a reliable protocol, but the handshaking protocol it uses causes some further latency. By replacing the TCP/IP protocol with the less reliable UDP protocol (User Datagram Protocol), we can reduce the latency of the system. UDP is lacking the handshaking protocol, thus it is more prone to losing packets. However the communication happens between two nodes without any intermediate router, thus the probability of losing packages at a frequency of 1 kHz is rather small.
 
 \section{Data Compression}\label{data_compress}
-
+\todo{this is not data compressing}
 Labview's built in UDP write protocol expects an ASCII format string as data input. ASCII encoding was originally a 7 bit encoding format. The need for an extended character set brought an 8 bit version of ASCII encoding, which is included by Labview. The former Labview code's message format is as follows:
 
 \begin{verbatim}
 {"p4_primary":{"position":[6,3,2,3],"velocity":[3,2,3,1],"effort":[4,1,1,1]}}
 \end{verbatim}
+\todo{? elaborate string}
 This illustrate a read out of four different motor values.
+\todo{In the analysis you need to consider the entire system (robot) and describe the type that are used for the data}
 
 To minimize the forwarded data size, first of all we have to get rid of the names of each data. To keep the data readable for the receiver, we can either use a character to separate each segment of data, or we can agree upon a constant size for each segment of data.
 
@@ -42,6 +44,8 @@ The former code encoded each digit of a decimal number as an ASCII character. It
 
 We utilized Labview's built in flatten to string node, which basically converts numeric data to the correspondent string. For example, it convert an 8 bit integer to the correspondent ASCII character. If the sbRIO and the PC uses the same encoding, they can basically send bitcode as if it was string then decode it by doing a simple conversion.  \todo{check if the 32 bit float can be substituted with a 16 bit ones}
  
+\todo{please specify formally the new and old protocol}
+
 The UDP must send encoder, potmeter and current measurement data from each of the four motors. Each data is represented as a 32 bit float. This adds up to 48 bytes of data to be sent each cycle. The described method sends 48 byte long strings not including the header. The former method sends 67 characters for formatting and naming purposes and 96 bytes of numeric data, assuming each double number is sent in 8 digits. It adds up to 163 bytes.
 
 By removing the names from the string and compressing a data, the string can become 70 shorter, which is a valuable increase in efficiency.
@@ -53,7 +57,7 @@ By removing the names from the string and compressing a data, the string can bec
 In order to communicate between ROS and the sbRIO board the university created a ROS node called davinci\_driver. This driver is composed of three parts: the low level driver called sbrio\_driver that communicate directly with the sbRIO board, the high level driver called ros\_driver that handle the communication between the other ROS node and the driver and the middle level driver that allow the communication between the low level driver and the high level one.
 
 \subsection{The original driver}
-The low level driver connect to one sbRIO board using a TCP/IP socket and launch a loop in a thread to handle the communication. The data exchange is made using a JSON Stream as described in the previous section. The structure of the code can be seen in figure\figref{original_driver}.
+The low level driver connected to one sbRIO board using a TCP/IP socket and launch a loop in a thread to handle the communication. The data exchange is made using a JSON\todo{JSON? first time mentioned?} stream as described in the previous section. The structure of the code can be seen in figure\figref{original_driver}.
 
 \begin{figure}[H]
 \centering
@@ -91,9 +95,9 @@ We just defined three goals that need to be fulfilled when writing the new drive
 	\item Modify as little as possible the original driver
 \end{enumerate}
 
-The modifications that need to be made in order to carry duty 1. and 2. are related to the communication protocol and the format of the transmitted data which are both handled by the low level driver. In order to fulfill goal 3. we should aim to modify the low level driver only without having consequences on the higher level drivers. This means that the public functions should keep the same prototype and that the format of the data available for them should stay the same (i.e vectors of double). We should also try to keep using the boost library used in the original driver to handle threads and mutexes.
+The modifications that need to be made in order to carry duty 1. and 2. are related to the communication protocol and the format of the transmitted data which are both handled by the low level driver. In order to fulfill goal 3. we should aim to modify the low level driver only without having consequences on the higher level drivers. This means that the public functions should keep the same prototype and that the format of the data available for them should stay the same (i.e vectors of double)\todo{is it possible to read the mode of the motor driver from the RIO}. We should also try to keep using the boost library used in the original driver to handle threads and mutexes.
 
-The socket initialization for the UDP protocol is very close to the one made for TCP protocol, thanks to this the establishment of the communication with the sbRIO is similar in both the old and new drivers. However, the UDP being connectionless it is not possible to use the same method as before to read incoming data, i.e it is not possible to look if some new data arrived, with UDP it is necessary to constantly be listening for new incoming data. That is why we need to modify the communication loop so that it is always waiting to receive a packet and that it sends data when required. However, if we used the communication loop shown in figure \figref{original_driver}, the loop would be blocking if no packet was received. To solve this issue we create a new thread that will wait to receive a packet, handle the packet and start again. The new communication structure is shown in figure \figref{new_driver}.
+The socket initialization for the UDP protocol is very close to the one made for TCP protocol, thanks to this the establishment of the communication with the sbRIO is similar in both the old and new drivers. However, the UDP being connectionless it is not possible to use the same method as before to read incoming data, i.e it is not possible to look if some new data arrived, with UDP it is necessary to constantly be listening for new incoming data. That is why we need to modify the communication loop so that it is always waiting to receive a packet and that it sends data when required. However, if we used the communication loop shown in \figref{original_driver}, the loop would be blocking if no packet was received. To solve this issue we create a new thread that will wait to receive a packet, handle the packet and start again. The new communication structure is shown in \figref{new_driver}.
 
 \begin{figure}[H]
 \centering
@@ -118,10 +122,10 @@ The socket initialization for the UDP protocol is very close to the one made for
 \caption{Structure of the new sbRIO driver}
 \label{new_driver}
 \end{figure}
-
+\todo{elaborate the above figure}
 \todo{We still need to define the initialization protocol and the packet loss handling}
 
-As explained in \secref{data_compress}, when the JSON Stream was removed we decided that we would only send numerical data. And as we keep goal 3. in mind, we need to receive the position, velocity and effort as float and one boolean for each motor and to send a setpoint as a double and a boolean for each motor. 
+As explained in \secref{data_compress}, when the JSON Stream was removed we decided that we would only send numerical data. And as we keep goal 3. in mind, we need to receive the position, velocity and effort as float and one boolean for each motor and to send a setpoint as a double and a boolean for each motor.\todo{you may still compress the data}
 The received values must be made available as double for the higher levels by storing them in the vector of doubles. For simplicity we decided that the packet should be following the structure described in figure \figref{received_packet}. To reach the desired vectors,the received bitcode is copied in a float variable that we convert in a double and then the value in the vector is updating using this double.
 
 \begin{figure}[H]
@@ -150,7 +154,7 @@ The received values must be made available as double for the higher levels by st
 
 \node at (4,-2.5) {\textbf{Size of the payload:} n*12+1 bytes}; %I have no idea why i need to put 4 as a coordinate for it to not mess up the rest of the figure
 \end{tikzpicture}
-\caption{Received packet for n motors}
+\caption{Received packet for n}
 \label{received_packet}
 \end{figure}
 
