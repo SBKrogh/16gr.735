@@ -29,10 +29,15 @@ The sBRio board controls the actuators on the DaVinci robot arm and the rest of 
 
 Connecting all the system components requires an architecture based on a central node which handles communication between the two packages and has access to all the other methods required for control.
 We have developed the Endohap package exactly for this purpose.
-The endohap\_ node contained in the package connects all the main system components using protocols either defined by ROS (TCP/IP) or externally (UDP). 
+The endohap\_ node node contained in the package connects all the main system components using protocols either defined by ROS (TCP/IP) or externally (UDP). 
 
-External communication (with the endowrist test setup) is handled by the boost libraries in the DaVinci ROS package and connected to the endohap node, which transforms the data and propagates it through the system using internal ROS communication protocols. 
-This has the advantage of gaining more control over the speed of communication with the test setup (which is vital for the control algorithm), while also maintaining the robustness and standardization of the internal ROS communication structure (where delay isn't an issue)\todo{Elaborate - you need to describe this in more details}. The data leaves the ROS via another external connection (to the Phantom Omni) that utilizes the TCP/IP protocol, it is managed by the phantom omni ROS package.
+Communication with the Endowrist test setup is handled by the boost libraries in the davinci\_ drivers package. 
+The sbrio\_ driver program transforms the data recieved by UDP and propagates it through the system using internal ROS communication protocols and vice versa. 
+More precisely, the motor state data is poblished to the joint\_ states ROS topic, which the central (endohap) node is subscribed to.
+Since this makes it is possible to use a separate (non-ROS) protocol for communicating with the test setup while maintaining ROS protocols for the internal system, we conclude that this approach gives a higher degree of control in terms of communication speed.
+
+The motor state data is then used by the endohap node for Endowrist external force estimation and feedback generation.
+After this is done, the resulting force feedback reference needs to be sent to the phantom\_ omni package, from which the endohap node also recieves the user input for the Endowrist. While the phantom\_ omni package handles hardware communication via external TCP/IP protocols, the endohap node only publishes and subscribes to appropriate topics in order to communicate with that part of the system.
 
 All the calculation required for controlling the endowrist and giving force feedback to the phantom omni is also done within the endohap node. Forward kinematics are handled by the tf ROS package, which utilizes URDF description files combined with current joint position information published to ROS.
 This consequently allows for other useful features such as visualization in Rviz or various kinematics calculations.
@@ -42,15 +47,28 @@ Forming the node in an object-oriented manner gives the added advantage of modul
 \centering
 \begin{tikzpicture}
 %Peripheral
-\draw (0,0) rectangle (8,10);
-\node [box] (ECOM) at (4.5,8) {Endowrist COM};
-\node [box] (EEST) at (4.5,6) {Endowrist state estimation};
-\node [box] (ECTRL) at (1.8,4) {Endowrist control};
-\node [box] (REFBK) at (5.8,4) {Reference and feedback};
+\draw (0,0) rectangle (7.6,10);
+\node [box] (ECOM) at (3.8,8.5) {Endowrist COM};
+\node [box] (EEST) at ($(0,-2) + (ECOM)$) {Endowrist \\ state estimation};
+\node [box] (ECTRL) at ($(-2,-3) + (EEST)$) {Endowrist \\ control};
+\node [box] (REFBK) at ($(2,-3) + (EEST)$) {Reference \\ and feedback};
+\node [box] (OMNI) at ($(4,0) + (REFBK)$) {phantom\_ omni};
+\node [box] (PHANTOM) at ($(0,-2) + (OMNI)$) {Phantom \\ Omni};
+\node [box] (DAVINCI) at ($(6,0) + (ECOM)$) {davinci\_ driver};
+\node [box] (TEST) at ($(0,-2) + (DAVINCI)$) {Test setup};
 
 \draw[->, ultra thick] (ECOM) -- (EEST);
-\draw[->, ultra thick] (EEST) -- (ECTRL);
-\draw[->, ultra thick] (EEST) -- (REFBK);
+\draw[<-, ultra thick] (EEST) -- ($(0,-1.2) + (EEST)$);
+\draw[-, ultra thick] ($(0,-1.2) + (EEST)$) -- ($(-2,-1.2) + (EEST)$);
+\draw[->, ultra thick] ($(-2,-1.2) + (EEST)$) -- (ECTRL);
+\draw[-, ultra thick] ($(0,-1.2) + (EEST)$) -- ($(2,-1.2) + (EEST)$);
+\draw[->, ultra thick] ($(2,-1.2) + (EEST)$) -- (REFBK);
+\draw[->, ultra thick] (REFBK) -- (ECTRL);
+\draw[<->, ultra thick] (REFBK) -- (OMNI);
+\draw[<->, ultra thick] (OMNI) -- (PHANTOM);
+\draw[<->, ultra thick] (ECOM) -- (DAVINCI);
+\draw[<->, ultra thick] (DAVINCI) -- (TEST);
+%\draw[->, ultra thick] (helper) -- (REFBK);
 
 
 \end{tikzpicture}%
