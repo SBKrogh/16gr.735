@@ -4,8 +4,6 @@ The goal of the project is to provide a teleoperated surgical system which makes
 
 \section{Communication between ROS and the sbRIO board in the current system}
 
--> TCP		(Simon's part)\\
--> JSON		(Daniel's part)\\
 
 In the former system setup the sbRIO board and the computer running ROS are communicating through an ethernet cable using the TCP/IP protocol. TCP/IP is a connection orientated protocol, which first establish the connection between two devices. After the connection has been established data can be send in both directions. TCP/IP is a reliable protocol which ensure that the data transmitted, will be received. When the data is send, the transmitter waits for an acknowledgment from the receiver that the data has been received. If the data has been corrupted or the acknowledgment is not send, the transmitter will retransmit the package again. If the case of no acknowledgment is happening, a timer is used to define when to retransmit the data again. The data will then be retransmitted a certain amount of times until an acknowledgment has been received or the connection is defined to be disconnected. This means that a copy of the data is stored at the transmitter until it has been correctly received or the connection is taken down.
 This communication protocol induces delays in the system as the transmitter has to wait on the acknowledgment that the data has been received before loading new data into the sending buffer. If data has been discarded due to error the transmitter has to retransmit the data again if necessary.  
@@ -14,9 +12,9 @@ The speed of the communication between the sbRIO board and the computer running 
 
 
 
-In the former system the data exchanged through the TCP/IP connection follow the JSON (JavaScript Object Notation)\todo{add it to glossary} format. JSON is a "text format for the serialization of structured data"\cite{JSON} which mean that it defines a syntax and a structure that can be used to exchange data. The structure used by JSON associate a name to a value. The value can be a number, a string, an array, an object, a boolean or null. It is also worth mentioning that a JSON file only contains characters, if a decimal number is to be sent, each digit will be represented by a character instead of having the bitcode representation of a double or a float for example. The former message from the sbRIO to ROS that would contain the information regarding the Endowrist followed this structure:
+In the former system the data exchanged through the TCP/IP connection follow the \gls{JSON} format. \gls{JSON} is a "text format for the serialization of structured data"\cite{JSON_IETF} which mean that it defines a syntax and a structure that can be used to exchange data. The structure used by \gls{JSON} associate a name to a value. The value can be a number, a string, an array, an object, a boolean or null. It is also worth mentioning that a \gls{JSON} file only contains characters, if a decimal number is to be sent, each digit will be represented by a character instead of having the bitcode representation of a double or a float for example. The former message from the sbRIO to ROS that would contain the information regarding the Endowrist followed this structure:
 
-\begin{verbatim}
+\begin{lstlisting}
 {
 	"p4_primary":{
 			"position":[6,3,2,3],
@@ -24,23 +22,20 @@ In the former system the data exchanged through the TCP/IP connection follow the
 			"effort":[4,1,1,1]
 	}
 }
-\end{verbatim}
+\end{lstlisting}
 
 As we can see in this example, the structure associate another structure to the element called "p4\_primary" which designates the Endowrist. This second structure contains an array of positions, an array of velocities and an array of efforts with a value for each of the motors of the Endowrist in each array.
 
 Let's now look at the way this communication was implemented in ROS and on the sbRIO
+
 \subsection{ROS}
--> 3 drivers\\
--> Low level driver description\\
-	-Structure / interactions with higher levels\\
-	-boost?\\
 
 In order to communicate between ROS and the sbRIO board the university created a ROS node called davinci\_driver. This driver is composed of three parts: the low level driver called sbrio\_driver that communicate directly with the sbRIO board, the high level driver called ros\_driver that handle the communication with the other ROS nodes and the middle level driver that allow the communication between the low level driver and the high level one.
 
 
 The high level driver simply updates the data for the other nodes and transmits the setpoints to the low level driver. The name "setpoint" is used to designate the next position a motor should take.
 
-The low level driver connects to one sbRIO board using a TCP/IP socket and launch a loop in a thread to handle the communication. The data exchange is made using a JSON files as previously explained. The structure of the code can be seen in figure\figref{original_driver}.
+The low level driver connects to one sbRIO board using a TCP/IP socket and launch a loop in a thread to handle the communication. The data exchange is made using a \gls{JSON} files as previously explained. The structure of the code can be seen in figure\figref{original_driver}.
 
 \begin{figure}[H]
 \centering
@@ -69,9 +64,6 @@ The middle level driver allows the creation of more than one low level driver. T
 \subsection{sbRIO}
 
 \section{Improvements: What, Why and How}
-
--> TCP replaced by UDP			(Simon's part)\\
--> JSON replaced by bitcode		(Daniel's part)\\
 
 As it was previously stated, the current communication is set to run at a frequency of 100Hz and to do a force feedback we need more than 300Hz. Which means that it is required to find a way to speed up the communication in order to do a force feedback. Speeding up the communication could be done by three different ways:
 
@@ -161,15 +153,11 @@ Those improvements need to be implemented on both ROS's and sbRIO's side
 
 \subsection{ROS side}
 
--> We want to modify as little as possible so we aimed to modify only the lowest level driver
--> UDP : code structure (2 threads), initialization, safety issue
--> bitcode : convertion from char containing bitcode to the actual data available to higher levels
-
-In order to implement in ROS the improvements described to increase the speed of the communication it is necessary for us to write a new driver. As previously explained, the new driver should use UDP instead of TCP/IP. It should also transmit the actual data without using a JSON Stream so that the size of each packets is reduced. In addition to those objectives we would like to modify as little as possible the current structure of the ROS node so that we don't have to rewrite the entire system. 
+In order to implement in ROS the improvements described to increase the speed of the communication it is necessary for us to write a new driver. As previously explained, the new driver should use UDP instead of TCP/IP. It should also transmit the actual data without using a \gls{JSON} Stream so that the size of each packets is reduced. In addition to those objectives we would like to modify as little as possible the current structure of the ROS node so that we don't have to rewrite the entire system. 
 We just defined three goals that need to be fulfilled when writing the new driver. Let's identify those goals with numbers:
 \begin{enumerate}
 	\item Replace TCP by UDP
-	\item Replace the JSON Stream by the numerical values
+	\item Replace the \gls{JSON} Stream by the numerical values
 	\item Modify as little as possible the original driver
 \end{enumerate}
 
@@ -177,7 +165,7 @@ The modifications that need to be made in order to carry duty 1. and 2. are rela
 
 The socket initialization for the UDP protocol is very close to the one made for TCP protocol, thanks to this the establishment of the communication with the sbRIO is similar in both the old and new drivers. However, the UDP being connectionless it is not possible to use the same method as before to read incoming data, i.e it is not possible to look if some new data arrived, with UDP it is necessary to constantly be listening for new incoming data. That is why we need to modify the communication loop so that it is always waiting to receive a packet and that it sends data when required. However, if we used the communication loop shown in \figref{original_driver}, the loop would be blocking if no packet was received. To solve this issue we create a new thread that will wait to receive a packet, handle the packet and start again. The new communication structure is shown in \figref{new_driver}.
 
-As explained before, when the JSON Stream was removed we decided that we would only send numerical data. And as we keep goal 3. in mind, we need to receive the position, velocity and effort as float and one boolean for each motor and to send a setpoint as a double and a boolean for each motor. The received values must be made available as double for the higher levels by storing them in the vector of doubles. For simplicity we decided that the packet should be following the structure described in \figref{received_packet}. To reach the desired vectors, the received bitcode stored in an array of char is copied in a float variable that we convert in a double and then the value in the vector is updated using this double.
+As explained before, when the \gls{JSON} Stream was removed we decided that we would only send numerical data. And as we keep goal 3. in mind, we need to receive the position, velocity and effort as float and one boolean for each motor and to send a setpoint as a double and a boolean for each motor. The received values must be made available as double for the higher levels by storing them in the vector of doubles. For simplicity we decided that the packet should be following the structure described in \figref{received_packet}. To reach the desired vectors, the received bitcode stored in an array of char is copied in a float variable that we convert in a double and then the value in the vector is updated using this double.
 
 The structure of the sent packet is shown in~\figref{sent_packet}. To build the packet, the same logic as before is used. The bitcode of the numerical values is copied into an array and the array is sent.
 In regards to the boolean values, we store them in a byte with 1 bit per value which is possible only because the number of motors for one arm cannot go above 7.
