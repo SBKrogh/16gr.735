@@ -232,10 +232,10 @@ The driver described is functional, however there is one feature of the TCP/IP t
 \node[box] (Update_State2) at ($(0,-3)+(Update_State1)$) {Make the data available for\\higher level processes};
 
 \node[box] (Check) at ($(-4,-3)+(Initialization)$) {Check if there is\\a new control signal};
-\node[box] (Send) at ($(0,-3)+(Check)$) {Send};
-\node[box] (Increment) at ($(0,-3)+(Send)$) {Increment the counter};
-\node[box] (Connection_Timeout) at ($(0,-3)+(Increment)$) {if counter > 10\\throw an error};
-\node[box] (Sleep) at ($(0,-3)+(Connection_Timeout)$) {Sleep};
+\node[box] (Send) at ($(0,-2.5)+(Check)$) {Send};
+\node[box] (Increment) at ($(0,-2.5)+(Send)$) {Increment the counter};
+\node[box] (Connection_Timeout) at ($(0,-2.5)+(Increment)$) {if counter > 10\\throw an error};
+\node[box] (Sleep) at ($(0,-2.5)+(Connection_Timeout)$) {Sleep};
 
 
 \draw[->, ultra thick] (Initialization.south) -- ++(0,-0.5) -|  (Receive.north);
