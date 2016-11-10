@@ -15,24 +15,21 @@ The geomagic touch is a haptic feedback device, which has the ability to manipul
 		\caption{Overview of the Phantom omni's last three joint}
 		\label{fig:phantom2}
 	\end{subfigure}
-\caption{Overview of all the Phantom omni's joints\citep{phantom_omni}}
+\caption{Overview of all the Phantom omni's joints\cite{phantom_omni}}
 \label{fig:phantom_omni}
 \end{figure}
 
-As mentioned the Phantom omni has the ability to generate resistance for the user. In other words, when moved in a specific direction it can create a counter force in respect to a certain position. On \figref{fig:phantom_omni}, it can be seen that the omni has six \gls{DOF}, where only the first three are actuated, see \figref{fig:phantom1}. This means that the device only has the ability to generate force feedback with three \gls{DOF}, in this case roll, pitch and yaw.
+As mentioned the Phantom omni has the ability to generate resistance for the user. In other words, when moved in a specific direction it can create a counter force in respect to a certain position. On \figref{fig:phantom_omni}, it can be seen that the omni has six \gls{DOF}, where only the first three can be actuated, see \figref{fig:phantom1}. This means that the device only has the ability to generate force feedback with three \gls{DOF}, in this case roll, pitch and yaw.
 
-The connection to the omni can either be made directly through a ethernet cable or through ethernet cabel to a usb converter into a computer. For programming the omni an API is included, which enables the connection to the omni. The programming of the omni happens through the languages C++. \todo{include what can edited in c++, what do we have available}
+The connection to the omni can either be made directly through a ethernet cable or through ethernet cable to a usb converter into a computer. For programming the omni an API is included, which enables the connection to the omni. The Phantom omni has a lot of features which can be programmed through the language C++, where some of them are listed below
+\todo{to include what you can program in c++}
+\begin{itemize} 
+\item Force rendering 
+\item Get end 
+\item 
+\end{itemize} 
 
-\subsection*{Installation of the Phantom omni}
-\todo{copy some place else or erase!}
-The Phantom omni can be installed on both Windows, and Linux, embedded systems. 
-Use the provided installation guides on\\
-\url{http://dsc.sensable.com/viewforum.php?f=15}
-
-\textbf{Note to the linux system:} If this installation is running on a non-US version of Linux, a readout of the different joint positions can be corrupted. This is because of the difference in the EU and US compiling, where the ',' and '.' is read different.\\
-To solve this problem, follow the solution given on\\
-\url{http://dsc.sensable.com/viewtopic.php?t=5644#top}
-
+\url{http://www.geomagic.com/files/9913/4858/2409/OpenHaptics_datasheet_hi.pdf}
 
 % \begin{figure}[H]
 % \centering
