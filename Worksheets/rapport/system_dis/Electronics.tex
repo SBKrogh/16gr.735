@@ -27,10 +27,10 @@ The Endowrists, see \figref{fig:endowrits_set}, is actuated by 4 Maxon DC motors
 \todo{Complete the diagram}
 \todo{som explanation for the next line UDP, or erase it?}
 The sbRIO communicates with the PC using UDP protocol. 
+
 \input{rapport/system_dis/Eletronic_component.tex}
 
 \todo{elaborate this picture, what do the different boxes do?}
-
 
 \subsection{Motor}\label{Maxon_Motor}
 The four motors for actuating the Endowrist is sold as a bulk solution which include motor\cite{motor_motor}, gear\cite{motor_gear} and a position encoder\cite{motor_encoder}, see \figref{fig:Full_motor _dis}.
@@ -64,4 +64,26 @@ The control of these motors are done through the ESCON motor drivers, which are 
 	\caption{The combination gear disassembled}
 	\label{fig:Full_motor _dis}
 \end{figure}
+\todo{should we include a ref for the pictures?}
 
+\subsection{ESCON 50/5 motor controller}
+\todo{include picture}
+For driving the motors described in \secref{Maxon_motor} there has been implemented four ESCON motor driver of the type 50/5 (part number 438725)\cite{ESCON_motor_controller}, one for each motor. These are controllers for permanent magnet-activated bushed DC motors an can deliver a power up to 250 Watt for the motor connected to the controller. 
+
+It has three operating modes
+
+\begin{itemize}
+\item Current controller
+\item Speed controller (open loop)
+\item Speed controller (closed loop)
+\end{itemize}
+
+asd
+
+
+
+
+
+
+
+\todo{Nice picture of the entire setup at the button } 
