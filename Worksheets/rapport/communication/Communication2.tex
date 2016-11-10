@@ -177,7 +177,7 @@ The modifications that need to be made in order to carry duty 1. and 2. are rela
 
 The socket initialization for the UDP protocol is very close to the one made for TCP protocol, thanks to this the establishment of the communication with the sbRIO is similar in both the old and new drivers. However, the UDP being connectionless it is not possible to use the same method as before to read incoming data, i.e it is not possible to look if some new data arrived, with UDP it is necessary to constantly be listening for new incoming data. That is why we need to modify the communication loop so that it is always waiting to receive a packet and that it sends data when required. However, if we used the communication loop shown in \figref{original_driver}, the loop would be blocking if no packet was received. To solve this issue we create a new thread that will wait to receive a packet, handle the packet and start again. The new communication structure is shown in \figref{new_driver}.
 
-As explained in \secref{data_compress}, when the JSON Stream was removed we decided that we would only send numerical data. And as we keep goal 3. in mind, we need to receive the position, velocity and effort as float and one boolean for each motor and to send a setpoint as a double and a boolean for each motor. The received values must be made available as double for the higher levels by storing them in the vector of doubles. For simplicity we decided that the packet should be following the structure described in \figref{received_packet}. To reach the desired vectors, the received bitcode stored in an array of char is copied in a float variable that we convert in a double and then the value in the vector is updated using this double.
+As explained before, when the JSON Stream was removed we decided that we would only send numerical data. And as we keep goal 3. in mind, we need to receive the position, velocity and effort as float and one boolean for each motor and to send a setpoint as a double and a boolean for each motor. The received values must be made available as double for the higher levels by storing them in the vector of doubles. For simplicity we decided that the packet should be following the structure described in \figref{received_packet}. To reach the desired vectors, the received bitcode stored in an array of char is copied in a float variable that we convert in a double and then the value in the vector is updated using this double.
 
 The structure of the sent packet is shown in~\figref{sent_packet}. To build the packet, the same logic as before is used. The bitcode of the numerical values is copied into an array and the array is sent.
 In regards to the boolean values, we store them in a byte with 1 bit per value which is possible only because the number of motors for one arm cannot go above 7.
@@ -219,6 +219,49 @@ In regards to the boolean values, we store them in a byte with 1 bit per value w
 \end{figure}
 \todo{We still need to define the initialization protocol and the packet loss handling}
 
+The driver described is functional, however there is one feature of the TCP/IP that was usefull to our system and that we lost by switching to UDP: the connection timeout detection. As safety is essential in this system, it is necessary to implement some kind of connection timeout on both side of the communication. On the ROS side, it is only necessary to alarm the user of the connection timeout. In order to do so, we decided to add a counter to the current driver. Everytime the thread1 check if some data should be sent, the counter is increased by one. And everytime a packet is received, the counter is reset to 0. In addition to incrementing the counter the thread1 will test the value, if it is superior to 10 (arbitrary value), a message is sent to indicate the packet loss. If the value is superior to 20, a message is sent to indicate connection timeout and the system on ROS is shut down. The new code structure is shown in ~\figref{new_safe_driver}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+
+\node[box] (Initialization) at (4,0) {Initialization};
+\node[box] (Receive) at ($(4,-3)+(Initialization)$) {Wait to receive\\a packet};
+\node[box] (Reset_Counter) at ($(0,-3)+(Receive)$) {Reset the counter};
+\node[box] (Update_State1) at ($(0,-3)+(Reset_Counter)$) {Convert the bitcode};
+\node[box] (Update_State2) at ($(0,-3)+(Update_State1)$) {Make the data available for\\higher level processes};
+
+\node[box] (Check) at ($(-4,-3)+(Initialization)$) {Check if there is\\a new control signal};
+\node[box] (Send) at ($(0,-3)+(Check)$) {Send};
+\node[box] (Increment) at ($(0,-3)+(Send)$) {Increment the counter};
+\node[box] (Connection_Timeout) at ($(0,-3)+(Increment)$) {if counter > 10\\throw an error};
+\node[box] (Sleep) at ($(0,-3)+(Connection_Timeout)$) {Sleep};
+
+
+\draw[->, ultra thick] (Initialization.south) -- ++(0,-0.5) -|  (Receive.north);
+\draw[->, ultra thick] (Receive) -- (Reset_Counter);
+\draw[->, ultra thick] (Reset_Counter) -- (Update_State1);
+\draw[->, ultra thick] (Update_State1) -- (Update_State2);
+\draw[->, ultra thick] (Update_State2.west) -| ++(-1,0) |- (Receive);
+
+\draw[->, ultra thick] (Initialization.south) -- ++(0,-0.5) -| (Check);
+\draw[->, ultra thick] (Check) -- (Send);
+\draw[->, ultra thick] (Check.east) -| ++(0.75,0) |- (Increment);%($(0,1.5)+(Sleep)$);
+\draw[->, ultra thick] (Send) -- (Increment);
+\draw[->, ultra thick] (Increment) -- (Connection_Timeout);
+\draw[->, ultra thick] (Connection_Timeout) -- (Sleep);
+\draw[->, ultra thick] (Sleep.west) -| ++(-1.5,0) |- (Check);
+
+\node at ($(0,2.1)+(Check)$) {\textbf{thread1}};
+\node at ($(0,2.1)+(Receive)$) {\textbf{thread2}};
+
+\node at ($(2.1,0.2)+(Check)$) {No};
+\node at ($(0.4,-1)+(Check)$) {Yes};
+
+\end{tikzpicture}
+\caption{Structure of the new sbRIO driver with connection timeout detection}
+\label{new_safe_driver}
+\end{figure}
 
 \subsection{sbRiO side}
 
