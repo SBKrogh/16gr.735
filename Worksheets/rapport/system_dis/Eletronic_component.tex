@@ -1,0 +1,72 @@
+\begin{figure}[H]
+\begin{tikzpicture}
+
+\node[state] (Endowrist) 
+{
+	%\parbox[c][2cm][c]{4cm}{\hspace{2.5em} \textbf{Endowrist}}
+	\parbox[c][1.5cm][c]{2cm}{\textbf{Endowrist}}
+};
+
+\node[state,       % layout (defined above)
+node distance=4cm,     
+right of=Endowrist,        % Position is to the right of QUERY
+yshift=+1cm] (Sensors)    % move 3cm in y
+{%                     % posistion relative to the center of the 'box'
+	\parbox[c][1.5cm][c]{2cm}{\textbf{Potmeters \\Encoders}}
+};
+
+\node[state,       % layout (defined above)
+node distance=4cm,     
+text width=4cm,        % max text width
+right of=Endowrist,        % Position is to the right of QUERY
+yshift=-1.5cm] (Escon)    % move 3cm in y
+{%                     % posistion relative to the center of the 'box'
+	\textbf{Escon controller}\\
+	
+	Speed control\\
+	Current control\\
+	Current measurement
+};
+
+\node[state,       % layout (defined above)
+node distance=9.5cm,     
+text width=5cm,        % max text width
+right of=Endowrist,        % Position is to the right of QUERY
+yshift=-0.5cm] (sbRIO)    % move 3cm in y
+{%                     % posistion relative to the center of the 'box'
+	\textbf{sbRIO}\\	
+	 
+	 .\newline\newline\newline
+	
+	Get control reference
+	Get measurement data
+	Communicate with PC\\
+	
+	
+	
+};
+
+\node[state,       % layout (defined above)
+node distance=9.5cm,     
+text width=4cm,        % max text width
+right of=Endowrist
+] (FPGA)    % move 3cm in y
+{%                     % posistion relative to the center of the 'box'
+	\textbf{FPGA}\\
+	
+	Interface with the encoders and potmeters
+	};
+
+% draw the paths and and print some Text below/above the graph
+\path (Endowrist) 	edge[bend left=20]  node[anchor=south,above]{}
+node[anchor=north,below]{} (Sensors)
+(Endowrist)     	edge[bend right=20] node[anchor=south,above]{} (Escon)
+(Escon) edge[bend right=10] node[anchor=south,above]{} (sbRIO)
+(Sensors) edge[bend left=10] node[anchor=south,above]{} (FPGA)
+;
+
+
+\end{tikzpicture}
+\caption{Overwiev of the electronic components}
+\label{electro_setup}
+\end{figure}
