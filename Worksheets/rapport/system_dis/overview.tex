@@ -1,0 +1,18 @@
+\section{Overview}
+As mentioned before , a fully featured DaVinci robot has 7 degrees of freedom on the Endowrist instrument.
+Since the robot has 4 arms, there are 4 instruments.
+Although our setup controls only 4 motors, in funcionality it is equivalent to one DaVinci arm.
+
+As mentioned before, the sbRio board controls the test setup and as such represents the onboard computer on the DaVinci robot.
+In order to perform higher level functions such as force feedback control, it is necessary to remotely handle data and send high-level commands.
+This is handled by an external computer system that is connected to the Phantom omni device.
+
+The sbRio board communicates with the computer using UDP communication protocols, while the Phantom Omni does so using TCP/IP.
+The computer also performs force estimation using a dynamical model of the test setup (or Endowrist, more precisely), this is vital for force feedback.
+In order to connect software components responsible for communicating with hardware and the ones responsible for the control algorithm and estimation.
+For this purpose we use the Robot Operating System (ROS), which uses a network architecture to share data between components via data streams.
+
+\input{rapport/pictures/First_feedback_block}
+
+
+
