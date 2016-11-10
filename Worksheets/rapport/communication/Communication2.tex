@@ -14,7 +14,7 @@ The speed of the communication between the sbRIO board and the computer running 
 
 
 
-In the former system the data exchanged through the TCP/IP connection follow the JSON (JavaScript Object Notation)\todo{add it to glossary} format. JSON is a "text format for the serialization of structured data"\todo{ref to http://rfc7159.net/rfc7159} which mean that it defines a syntax and a structure that can be used to exchange data. The structure used by JSON associate a name to a value. The value can be a number, a string, an array, an object, a boolean or null. It is also worth mentioning that a JSON file only contains characters, if a decimal number is to be sent, each digit will be represented by a character instead of having the bitcode representation of a double or a float for example. The former message from the sbRIO to ROS that would contain the information regarding the Endowrist followed this structure:
+In the former system the data exchanged through the TCP/IP connection follow the JSON (JavaScript Object Notation)\todo{add it to glossary} format. JSON is a "text format for the serialization of structured data"\cite{JSON} which mean that it defines a syntax and a structure that can be used to exchange data. The structure used by JSON associate a name to a value. The value can be a number, a string, an array, an object, a boolean or null. It is also worth mentioning that a JSON file only contains characters, if a decimal number is to be sent, each digit will be represented by a character instead of having the bitcode representation of a double or a float for example. The former message from the sbRIO to ROS that would contain the information regarding the Endowrist followed this structure:
 
 \begin{verbatim}
 {
