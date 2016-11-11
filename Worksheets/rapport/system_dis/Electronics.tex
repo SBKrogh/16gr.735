@@ -5,7 +5,7 @@
 %\subsection{Single board reconfigurable I/O}
 
 \todo{Sloth reference}
-The electronic setup contains a \textbf{\textit{Single Board Reconfigurable Input/Output 9636}} (sbRIO) controller which is responsible for interfacing between the surgical robot and the computer running ROS\todo{maby ref to ROS section}. It reads the sensor measurements, sends them to the PC and controls the motors based on the received reference signals. The sbRIO has built in safety protocols that disable the motors in case of error.
+The electronic setup contains a \textbf{Single Board Reconfigurable Input/Output 9636} (sbRIO) controller which is responsible for interfacing between the surgical robot and the computer running ROS\todo{maby ref to ROS section}. It reads the sensor measurements, sends them to the PC and controls the motors based on the received reference signals. The sbRIO has built in safety protocols that disable the motors in case of error.
 
 The controller consists of
 \begin{itemize}
@@ -68,7 +68,7 @@ The control of these motors are done through the ESCON motor drivers, which are 
 
 \subsection{ESCON 50/5 motor controller}
 \todo{include picture}
-For driving the motors described in \secref{Maxon_motor} there has been implemented four ESCON motor driver of the type 50/5 (part number 438725)\cite{ESCON_motor_controller}, one for each motor. These are controllers for permanent magnet-activated bushed DC motors an can deliver a power up to 250 Watt for the motor connected to the controller. 
+For driving the motors, there has been implemented four ESCON motor driver of the type 50/5 (part number 438725)\cite{ESCON_motor_controller}, one for each motor. These are controllers for permanent magnet-activated bushed DC motors an can deliver a power up to 250 Watt for the motor connected to the controller. 
 
 It has three operating modes
 
