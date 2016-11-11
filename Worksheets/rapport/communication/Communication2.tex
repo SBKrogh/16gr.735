@@ -17,12 +17,13 @@ In the former system the data exchanged through the TCP/IP connection follow the
 \begin{lstlisting}
 {
 	"p4_primary":{
-			"position":[6,3,2,3],
-			"velocity":[3,2,3,1],
-			"effort":[4,1,1,1]
+			"position":[0,0.00013089955609757453203,-0.00012667699775192886591,0],
+			"velocity":[0,0.0015707947313785552979,0.0015707947313785552979,0],
+			"effort":[-0.48593282699584960938,-0.31835031509399414063,
+			-0.36891269683837890625,-0.39591121673583984375]
 	}
 }
-\end{lstlisting}
+\end{lstlisting} \todo{do we use the real numbers to show how long it is or do we just put integers?}
 
 As we can see in this example, the structure associate another structure to the element called "p4\_primary" which designates the Endowrist. This second structure contains an array of positions, an array of velocities and an array of efforts with a value for each of the motors of the Endowrist in each array.
 
@@ -75,7 +76,7 @@ As it was previously stated, the current communication is set to run at a freque
 \todo{More analyses is required}
 
 Implementing faster hardware does not match with the goals of our project one of them being to use only the existing hardware. 
-However, finding a communication protocol faster than TCP/IP is possible as the safeties in the protocol tend to slow down the overall speed of the communication. In addition, retransmitting data is useless in our case as the data will be deprecated anyway. The new protocol we chose is the UDP (User Datagram Protocol)\todo{glossary?}.
+However, finding a communication protocol faster than TCP/IP is possible as the safeties in the protocol tend to slow down the overall speed of the communication. Furthermore, some of the safeties like congestion control are irrelevant in our case since we are directly connected to the destination. Flow control is not necessary as the need for flow control implies that a delay is created on the receiving side which would induce delay in the entire system. Reliable transport and ordered delivery are a problem for us since retransmitting data is useless in our case as the data will be deprecated. Instead, it is much more interesting to receive the new data instead. For those reasons, the new protocol we chose is the UDP (User Datagram Protocol)\todo{glossary?} which does not implement those tools.
 
 \section*{User datagram protocol}
 UDP communication protocol is a faster way of communicating compared to TCP/IP. It is connectionless which means that it wont establish a connection before sending data. When data is transmitted, new data is loaded into the transmitter buffer and then send when the connection line is free, thus the data is not stored at the transmitter as in TCP/IP. Furthermore the UDP protocol does not wait for an acknowledgment and thereby just sends the data as fast as possible to the specified address.
@@ -88,7 +89,7 @@ To minimize the forwarded data size, first of all we have to get rid of the name
 
 The former code encoded each digit of a decimal number as an ASCII character. It means that the number segment only used 10 out of the 256 possible characters. To compress data, we should utilize all the ASCII characters. One way to do it is to make a character store the number as its address in the 8 bit address table. We basically have to convert the numbers to base 256.
 
-We utilized Labview's\todo{maybe we should move it to implementation} built in flatten to string node, which basically converts numeric data to the correspondent string. For example, it convert an 8 bit integer to the correspondent ASCII character. If the sbRIO and the PC uses the same encoding, they can basically send bitcode as if it was string then decode it by doing a simple conversion.
+We utilized Labview's \todo{maybe we should move it to implementation} built in flatten to string node, which basically converts numeric data to the correspondent string. For example, it convert an 8 bit integer to the correspondent ASCII character. If the sbRIO and the PC uses the same encoding, they can basically send bitcode as if it was string then decode it by doing a simple conversion.
  
 \todo{please specify formally the new and old protocol}
 
@@ -254,7 +255,7 @@ The driver described is functional, however there is one feature of the TCP/IP t
 \label{new_safe_driver}
 \end{figure}
 
-\subsection{sbRiO side}
+\subsection{sbRIO side}
 
 connecting some boxes
 
