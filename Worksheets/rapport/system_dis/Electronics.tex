@@ -5,7 +5,7 @@
 %\subsection{Single board reconfigurable I/O}
 
 \todo{Sloth reference}
-The electronic setup contains a \textbf{Single Board Reconfigurable Input/Output 9636} (sbRIO) controller which is responsible for interfacing between the surgical robot and the computer running ROS\todo{maby ref to ROS section}. It reads the sensor measurements, sends them to the PC and controls the motors based on the received reference signals. The sbRIO has built in safety protocols that disable the motors in case of error.
+The electronic setup contains a \textbf{Single Board Reconfigurable Input/Output 9636} (sbRIO) controller which is responsible for interfacing between the surgical robot and the computer running ROS\todo{maby ref to ROS section}\secref{sec:ros}. It reads the sensor measurements, sends them to the PC and controls the motors based on the received reference signals. The sbRIO has built in safety protocols that disable the motors in case of error.
 
 The controller consists of
 \begin{itemize}
@@ -35,7 +35,7 @@ The sbRIO communicates with the PC using UDP protocol.
 \subsection{Motor}\label{Maxon_Motor}
 The four motors for actuating the Endowrist is sold as a bulk solution which include motor\cite{motor_motor}, gear\cite{motor_gear} and a position encoder\cite{motor_encoder}, see \figref{fig:Full_motor _dis}.
 
-The control of these motors are done through the ESCON motor drivers, which are connected to the sbRIO board.\todo{ESCON motor driver needed!}
+The control of these motors are done through the ESCON motor drivers, which are connected to the sbRIO board.\todo{What can the motor handle voltage current wattage, what is the gearing and what about the encoder}
 
 %The ESCON motor controllers are attached to the sbRIO controller and send the control signals through cables. The motor has a nominal torque of 6.96 mNm.
 %4 Maxon motors are used for the actuation of the endowrist. The motors are implemented using a combination gear (Maxon 353816) including the gearing, the servo motor and the sensors. The ESCON motor controllers are attached to the sbRIO controller and send the control signals through cables. The motor has a nominal torque of 6.96 mNm.
@@ -56,6 +56,7 @@ The control of these motors are done through the ESCON motor drivers, which are 
 		\label{fig:motor_gear}
 	\end{subfigure}
 	\begin{subfigure}{.32\textwidth}
+	\hspace{5pt}
 		\centering
 		\includegraphics[width=\linewidth]{motor_sensor.jpg}
 		\caption{The encoder used for getting angular data}
@@ -66,9 +67,19 @@ The control of these motors are done through the ESCON motor drivers, which are 
 \end{figure}
 \todo{should we include a ref for the pictures?}
 
+
 \subsection{ESCON 50/5 motor controller}
-\todo{include picture}
-For driving the motors, there has been implemented four ESCON motor driver of the type 50/5 (part number 438725)\cite{ESCON_motor_controller}, one for each motor. These are controllers for permanent magnet-activated bushed DC motors an can deliver a power up to 250 Watt for the motor connected to the controller. 
+For driving the motors, there has been implemented four ESCON motor driver of the type 50/5 (part number 438725), see \figref{fig:ESCON505}. 
+
+\begin{figure}[H]
+	\centering
+		\centering
+		\includegraphics[width=0.7\linewidth]{ESCON505.jpg}
+		\caption{ESCON 50/5 DC motor controller\cite{ESCON_motor_controller}}
+		\label{fig:ESCON505}
+\end{figure}
+
+These are controllers for permanent magnet-activated bushed DC motors an can deliver a power up to 250 Watt for the motor connected to the controller. 
 
 It has three operating modes
 
@@ -78,12 +89,8 @@ It has three operating modes
 \item Speed controller (closed loop)
 \end{itemize}
 
-asd
+\todo{We need to decide what type of controller we are going with and why?}
 
 
 
-
-
-
-
-\todo{Nice picture of the entire setup at the button } 
+\input{rapport/system_dis/Mechanical_testsetup.tex}

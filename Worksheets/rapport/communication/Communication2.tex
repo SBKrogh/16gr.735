@@ -29,7 +29,7 @@ As we can see in this example, the structure associate another structure to the 
 
 Let's now look at the way this communication was implemented in ROS and on the sbRIO
 
-\subsection{ROS}
+\subsection{ROS}\label{sec:ros}
 
 In order to communicate between ROS and the sbRIO board the university created a ROS node called davinci\_driver. This driver is composed of three parts: the low level driver called sbrio\_driver that communicate directly with the sbRIO board, the high level driver called ros\_driver that handle the communication with the other ROS nodes and the middle level driver that allow the communication between the low level driver and the high level one.
 
