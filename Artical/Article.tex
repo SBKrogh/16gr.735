@@ -1,13 +1,21 @@
 
-
 \documentclass[conference]{IEEEtran}
+\usepackage{graphicx} 						% Haandtering af eksterne billeder (JPG, PNG, EPS, PDF)
+\usepackage{multirow}                		% Fletning af raekker og kolonner (\multicolumn og \multirow)
+\usepackage{multicol}         	        	% Muliggoer output i spalter
+\usepackage{rotating}						% Rotation af tekst med \begin{sideways}...\end{sideways}
+\usepackage{colortbl} 						% Farver i tabeller (fx \columncolor og \rowcolor)
+\usepackage[table]{xcolor}					% Definer farver med \definecolor. Se mere: http://en.wikibooks.org/wiki/LaTeX/Colors
+\usepackage{xcolor}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,automata,positioning,calc}
 % Some Computer Society conferences also require the compsoc mode option,
 % but others use the standard conference format.
 %
 % If IEEEtran.cls has not been installed into the LaTeX system files,
 % manually specify the path to it like:
 % \documentclass[conference]{../sty/IEEEtran}
-
 
 \usepackage[parfill]{parskip}
 
@@ -269,6 +277,8 @@
 % not capitalized unless they are the first or last word of the title.
 % Linebreaks \\ can be used within to get better formatting as desired.
 % Do not put math or special symbols in the title.
+\graphicspath{ {../Worksheets/rapport/pictures/} }
+
 \title{Bare Demo of IEEEtran.cls\\ for IEEE Conferences}
 
 
@@ -336,7 +346,9 @@ The various constraints are adressed individually in each section.
 \end{abstract}
 
 % no keywords
+\hfill mds
 
+\hfill August 26, 2015
 
 
 
@@ -379,18 +391,77 @@ Finally,  we present (the expected) experimental results in section four and and
  %said in other words, there should be no delay between the operator and the robot. This puts a demand on how fast the communication between the operator and the robot should be.
  
  \section{System overview}
-Our proposed system
+In out proposed system, the surgeon uses the Geomagic Touch joystick to control an Endowrist tool on one of the arms of the DaVinci surgical robot.
+It is imortant for the surgeon to have a feeling of resistance the tool is experiencing in order to adjust the position and grip strength and thus prevent damage to the patients tissue.
+To achieve this, we use the Geomagics force feedback feature in order to project the forces acting on the Endowrist to the surgeon. 
+The communication between system components is done through the ROS operating system.
+
+\subsection{Endowrist}
+An Endowrist, see \ref{fig:Endo_plates} is a surgical tool which can be manipulated as a human wrist. It is used in surgical procedures such as Laparoscopic surgeries, better known as minimally invasive surgery (MIS), where small incisions in the human body is made under the surgery. Because the incision cuts are small, blood lose under the surgery and the risk of infection is reduced. This has a positive effect on the recovery time for the patient.
+
+\begin{figure}
+	\centering
+	\begin{subfigure}{.22\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{Endowrist2.jpg}
+		\caption{Actuator plates, which can alternate the end effector position}
+		\label{fig:Endo_plates}
+	\end{subfigure}
+	\begin{subfigure}{.22\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{Endowrist3.jpg}
+		\caption{End effector of the Endowrist\newline}
+		\label{fig:Endo_end}
+	\end{subfigure}
+\caption{The Endowrist and it's end-effector}
+\label{fig:endowrits_set}
+\end{figure}
+
+As mentioned the Endowrist has the ability to be manipulated as a human wrist and thereby has four DOF, see \ref{fig:Endo_end}. This enables the movement of roll, pitch, yaw and an open closing mechanism that acts as the thumb and index finger of a hand. 
+
+The end effector is manipulated by the four wheels seen on \ref{fig:Endo_plates}. Wheel one and three define the movement of the yaw and the closing mechanism. Wheel two and four moves the pitch and roll. The Endowrist is cable driven, which enables the opportunity of making the Endowrist small but it also makes the system nonlinear as the force acting at one end is not directly transmitted to the other end due to friction. 
+
+\subsection{Geomagic touch}
+The geomagic touch is a haptic feedback device, which has the ability to manipulate its joints in such a way that the user feels resistance when moving the pin in a certain direction or way. The geomagic touch described in this section is the model Phantom omni and can be seen on \ref{fig:phantom_omni}.
+
+\begin{figure}
+	\centering
+	\begin{subfigure}{.22\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{haptick1.jpg}
+		\caption{Overview of the Phantom omni's first three joints.}
+		\label{fig:phantom1}
+	\end{subfigure}
+	\begin{subfigure}{.22\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{haptick2.png}
+		\caption{Overview of the Phantom omni's last three joint}
+		\label{fig:phantom2}
+	\end{subfigure}
+\caption{Overview of all the Phantom omni's joints\cite{phantom_omni}}
+\label{fig:phantom_omni}
+\end{figure}
+
+As mentioned the Phantom omni has the ability to generate resistance for the user. In other words, when moved in a specific direction it can create a counter force in respect to a certain position. On \ref{fig:phantom_omni}, it can be seen that the omni has six DOF, where only the first three can be actuated, see \ref{fig:phantom1}. This means that the device only has the ability to generate force feedback with three DOF, in this case roll, pitch and yaw.
+
+The connection to the omni can either be made directly through a ethernet cable or through ethernet cable to a usb converter into a computer. For programming the omni an API is included, which enables the connection to the omni. The Phantom omni has a lot of features which can be programmed through the language C++, e.g force rendering or drawing graphics.
 
 
+\subsection{Overview}
+As mentioned before , a fully featured DaVinci robot has 7 degrees of freedom on the Endowrist instrument.
+Since the robot has 4 arms, there are 4 instruments.
+Although our setup controls only 4 motors, in funcionality it is equivalent to one DaVinci arm.
 
+As mentioned before, the sbRio board controls the test setup and as such represents the onboard computer on the DaVinci robot.
+In order to perform higher level functions such as force feedback control, it is necessary to remotely handle data and send high-level commands.
+This is handled by an external computer system that is connected to the Phantom omni device.
 
-\hfill mds
-
-\hfill August 26, 2015
-
-\subsection{Subsection Heading Here}
-Subsection text here.
-
+The sbRio board communicates with the computer using UDP communication protocols, while the Phantom Omni does so using TCP/IP.
+The computer also performs force estimation using a dynamical model of the test setup (or Endowrist, more precisely), this is vital for force feedback.
+In order to connect software components responsible for communicating with hardware and the ones responsible for the control algorithm and estimation.
+For this purpose we use the Robot Operating System (ROS), which uses a network architecture to share data between components via data streams.
+\input{../Worksheets/Clean_up/tikz_magi}
+\input{../Worksheets/rapport/pictures/First_feedback_block}
 
 \subsubsection{Subsubsection Heading Here}
 Subsubsection text here.
