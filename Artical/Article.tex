@@ -279,7 +279,7 @@
 % Do not put math or special symbols in the title.
 \graphicspath{ {../Worksheets/rapport/pictures/} }
 
-\title{Bare Demo of IEEEtran.cls\\ for IEEE Conferences}
+\title{Teleoperation of surgical robot using force feedback}
 
 
 % author names and affiliations
@@ -364,12 +364,18 @@ The various constraints are adressed individually in each section.
 
 \section{Introduction}
 % no \IEEEPARstart
-Over the last couple of decades the use of robotics for minimally invasive surgeries has increased, because of its precession and the reduction in tissue damage\cite{RIGSP}.
-One brand of the operation tools in use is called an Endowrist. These are constructed in such a way, that the operator of the tools has the ability to manipulate  it as a human wrist.
+Over the last couple of decades the use of robots for minimally invasive surgeries has increased.
+This is mainly due to it's precision and the reduction in tissue damage\cite{RIGSP}.
+Robot used in these surgical procedures have an attached end-effector that is used as a surgical tool.
+One such tool is the Endowrist. 
+The main advantage of the Endowrist lies in it's construction, as it is made to be manipulated in a similar manner to a human wrist.
 
-The feedback to the operator right now is only done by live video transmissions. Due to this is the only kind of feedback the operator has to guess on how much force there is applied under the surgery e.g to the skin or organs. In experiments it has been shown that haptic feedback has an huge positive effect for the reduction in surgical error\cite{EOFGFF}. 
+Currently the only feedback operators get is visual, using live video transmissions of the surgery. 
+The problem with the operator having exclusively visual feedback lies in the fact that he has to guess how much force is applied to skin and organs in every single manoeuvre made. 
+It has been shown experimentally that haptic feedback has a considerably positive effect on the reduction in surgical error\cite{EOFGFF}. 
 
-The purpose of haptic feedback is to feedback the external force applied to the end effector back to the operator. This should simulate the situation of the operator doing the operation by hand instead of remote.
+The purpose of haptic or force feedback is to apply force that resist the operators movement in such a way that it reperesents some information about the environment or situation.
+In theory, this should mage teleoperated surgical procedures a lot more realistic to the operator and thus reduce accidents.
 
 
 % The feedback to the operator is made from live video transmission of the operation and as direct force feedback\todo{sounds like force feedback is already used in real operations}. The direct force feedback is used to simulate the resistance the end effector exposed to under the operation to give the surgeon the feeling of doing the operation by hand.  This kind of feedback is called haptic feedback and has been proven to be efficient way of doing feedback to the operator as it gives a more clear vision of the force that is applied.
@@ -379,9 +385,7 @@ It would be possible to solve this problem by implementing a sensor to the end e
 
 % However the direct force feedback is not proportional to the actual resistance force that are applied to the end effector as the construction of the tool from the end effector to the actuators are highly non-linear. It would be possible to solve this problem by implementing a sensor to the end effector to measure the force but due to the demand of high hygiene the tools have to be sterilized at temperatures over a 100°C which can damage the sensor. Furthermore it is stated by law that each surgical tool has to be discarded after a few times in use. This means that the cost of the tool has to stay as low as possible and therefore make the idea of implementing an expensive sensor not ideal.
 
-Therefore the force feedback got to be estimated through the actuators which gives a high demand for the feedback controller as it has to be as precise as possible to feedback the correct force to the operator.
-
-Another important subject is the transparency of the feedback as the operator should have the feeling of doing the operation by hand and not remote. This puts a demand on the speed of the feedback loop as the faster the loop runs the more smooth the force feedback to the operator will feel.
+Therefore the force feedback has to be estimated through the actuators which gives a high demand for the feedback controller as it has to be as precise as possible to feedback the correct force to the operator. Another important subject is the transparency of the feedback as the operator should have the feeling of doing the operation by hand and not remote. This puts a demand on the speed of the feedback loop as the faster the loop runs the more smooth the force feedback to the operator will feel.
 
 In the first section we will take an overview of our proposed control system as a whole, briefly presenting each of the components and their interaction.
 The second section will cover methods used to create a dynamic model of the Endowrist and proposed methods of translating the estimated force to actual force fed back to the operator.
@@ -444,8 +448,26 @@ The geomagic touch is a haptic feedback device, which has the ability to manipul
 
 As mentioned the Phantom omni has the ability to generate resistance for the user. In other words, when moved in a specific direction it can create a counter force in respect to a certain position. On \ref{fig:phantom_omni}, it can be seen that the omni has six DOF, where only the first three can be actuated, see \ref{fig:phantom1}. This means that the device only has the ability to generate force feedback with three DOF, in this case roll, pitch and yaw.
 
-The connection to the omni can either be made directly through a ethernet cable or through ethernet cable to a usb converter into a computer. For programming the omni an API is included, which enables the connection to the omni. The Phantom omni has a lot of features which can be programmed through the language C++, e.g force rendering or drawing graphics.
+The connection to the omni can either be made directly through a ethernet cable or through ethernet cable to a usb converter into a computer. For programming the omni an API is included, which enables the connection to the omni. The Geomagic Touch has a lot of features which can be programmed through the language C++, e.g force rendering or drawing graphics.
 
+\subsection{ROS}
+The ROS is an open source software development tool for implementing robotics software. It provides the opportunity of hardware abstraction, low level device control, implementation of commonly used functionalities, messages between different processes and package management.%{\cite{wiki_ros}}
+ It provide tools and libraries which utilize the the opportunity of communicating between disturbed computers, obtaining, writing and running codes.
+ 
+ROS has three different levels of concepts\cite{Wiki_ros_concepts}
+
+\begin{itemize}
+\item \textbf{The file system level}
+
+Handles the main unit for a ROS system which is packages. A package may include data sets, ROS dependent libraries, configure files etc. to define a ROS process. In ROS a process is denoted as a node. 
+\item \textbf{The computation graph level}
+
+Handles the communication of the peer to peer network of the system in which data is processed. Through the computation graph level, the different nodes can communicate with each other by messages. When a node is sending data it is said to be publishing a topic. The different nodes can then subscribe to this topic to get the information that is published.
+\item \textbf{The Community level}
+
+ROS has a huge community which contain distribution of software installations, repositories and documentation of ROS. It also has a question and answer section with ROS related topics.
+This community makes the process of learning the system considerably easier.
+\end{itemize}
 
 \subsection{Overview}
 As mentioned before , a fully featured DaVinci robot has 7 degrees of freedom on the Endowrist instrument.
@@ -456,17 +478,36 @@ As mentioned before, the sbRio board controls the test setup and as such represe
 In order to perform higher level functions such as force feedback control, it is necessary to remotely handle data and send high-level commands.
 This is handled by an external computer system that is connected to the Phantom omni device.
 
-The sbRio board communicates with the computer using UDP communication protocols, while the Phantom Omni does so using TCP/IP.
+The sbRio board communicates with the computer using UDP communication protocols, while the Geomagic Touch does so using TCP/IP.
 The computer also performs force estimation using a dynamical model of the test setup (or Endowrist, more precisely), this is vital for force feedback.
 In order to connect software components responsible for communicating with hardware and the ones responsible for the control algorithm and estimation.
 For this purpose we use the Robot Operating System (ROS), which uses a network architecture to share data between components via data streams.
 \input{../Worksheets/Clean_up/tikz_magi}
-\input{../Worksheets/rapport/pictures/First_feedback_block}
+\begin{figure}
+\begin{tikzpicture}[ transform canvas={scale=0.7}]
+\node[box] (Opt) at (0,0) {Operator};
+\node[box] (Geo) at ($(3,0) + (Opt)$) {Geomagic\\touch};
+\node[box] (ros) at ($(3,0) + (Geo)$) {ROS};
+\node[box] (davin) at ($(3,0) + (ros)$) {Da Vinci\\robot};
+\node[box] (end) at ($(3,0) + (davin)$) {Endowrist};
 
-\subsubsection{Subsubsection Heading Here}
-Subsubsection text here.
+
+\draw[->, ultra thick] ([yshift=0.3cm]Opt.east) -- ([yshift=0.3cm]Geo.west);
+\draw[->, ultra thick] ([yshift=0.3cm]Geo.east) -- ([yshift=0.3cm]ros.west);
+\draw[->, ultra thick] ([yshift=0.3cm]ros.east) -- ([yshift=0.3cm]davin.west);
+\draw[->, ultra thick] ([yshift=0.3cm]davin.east) -- ([yshift=0.3cm]end.west);
 
 
+\draw[<-, ultra thick] ([yshift=-0.3cm]Opt.east) -- ([yshift=-0.3cm]Geo.west);
+\draw[<-, ultra thick] ([yshift=-0.3cm]Geo.east) -- ([yshift=-0.3cm]ros.west);
+\draw[<-, ultra thick] ([yshift=-0.3cm]ros.east) -- ([yshift=-0.3cm]davin.west);
+\draw[<-, ultra thick] ([yshift=-0.3cm]davin.east) -- ([yshift=-0.3cm]end.west);
+\end{tikzpicture}
+\caption{Overall view of the system}
+\end{figure}
+\section{Force estimation}
+\section{Communication}
+\section{Results}
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
 % For figures, \caption should occur after the \includegraphics.
@@ -560,8 +601,6 @@ Subsubsection text here.
 % Note that, LaTeX2e, unlike IEEE journals/conferences, places
 % footnotes above bottom floats. This can be corrected via the
 % \fnbelowfloat command of the stfloats package.
-
-
 
 
 \section{Conclusion}
