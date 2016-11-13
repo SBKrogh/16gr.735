@@ -1,0 +1,71 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+%\draw (-1.5,-1.5) rectangle (13.5,1.5);
+
+\draw (-2.8,3.1) rectangle (2.8,-12.8);
+\node at (0,2.5) {\textbf{sbRIO}};
+
+
+\draw (-2.5,2) rectangle (2.5,-4.2);
+\node at (0,1.5) {\textbf{Micro processor}};
+\node[box] (datlog) at (0,0.3) {Data logging};
+\node[box] (ethcommu) at ($(0,-1.7) + (datlog)$) {Ethernet communication};
+\node[box] (shuterr) at ($(0,-1.7) + (ethcommu)$) {Shutdown:\\Communication error};
+
+
+\draw (-2.5,-4.7) rectangle (2.5,-12.6);
+\node at (0,-5.2) {\textbf{FPGA}};
+\node[box] (poscon) at ($(0,-3.3) + (shuterr)$) {Position control};
+\node[box] (enco) at ($(0,-1.7) + (poscon)$) {Encoder counter};
+\node[box] (PWM) at ($(0,-1.7) + (enco)$) {PWM control};
+\node[box] (dataES) at ($(0,-1.7) + (PWM)$) {Read data: ESCON};
+
+
+\draw (-9,-6) rectangle (-4,-12.6);
+\node[box] (spcon) at (-6.5,-8) {Speed control\\with inner current\\control};
+\node at ($(spcon) + (0,1.5)$) {\textbf{ESCON}};
+\node at ($(spcon) + (0,1.2)$) {\textbf{motor controller}};
+\node[box] (limcu) at ($(0,-1.7) + (spcon)$) {Limit output\\current};
+\node[box] (reen) at ($(0,-1.7) + (limcu)$) {Read encoder\\ticks};
+
+
+\draw (-9,-5.5) rectangle (-4,-4);
+\node at (-6.5,-4.75) {\textbf{Motor}};
+
+
+\draw (-9,-3.5) rectangle (-4,3.1);
+\node at (-6.5,2.5) {\textbf{ROS computer}};
+
+%\node[fill = {rgb:red,1;green,2;blue,5},box] (Opt) at (0,0) {Operator};
+%\node[fill = {rgb:red,1;green,2;blue,5},box] (Geo) at ($(3,0) + (Opt)$) {};
+%\node[fill = {rgb:red,1;green,2;blue,5},box] (ros) at ($(3,0) + (Geo)$) {Robotic\\operating\\system};
+%\node[fill = {rgb:red,1;green,2;blue,5},box] (davin) at ($(3,0) + (ros)$) {Da Vinci\\robot};
+%\node[fill = {rgb:red,1;green,2;blue,5},box] (end) at ($(3,0) + (davin)$) {Endowrist};
+
+
+%\draw[->, ultra thick] ([yshift=0.3cm]Opt.east) -- ([yshift=0.3cm]Geo.west);
+%\draw[->, ultra thick] ([yshift=0.3cm]Geo.east) -- ([yshift=0.3cm]ros.west);
+%\draw[->, ultra thick] ([yshift=0.3cm]ros.east) -- ([yshift=0.3cm]davin.west);
+%\draw[->, ultra thick] ([yshift=0.3cm]davin.east) -- ([yshift=0.3cm]end.west);
+
+
+%\draw[<-, ultra thick] ([yshift=-0.3cm]Opt.east) -- ([yshift=-0.3cm]Geo.west);
+%\draw[<-, ultra thick] ([yshift=-0.3cm]Geo.east) -- ([yshift=-0.3cm]ros.west);
+%\draw[<-, ultra thick] ([yshift=-0.3cm]ros.east) -- ([yshift=-0.3cm]davin.west);
+%\draw[<-, ultra thick] ([yshift=-0.3cm]davin.east) -- ([yshift=-0.3cm]end.west);
+
+%\node at (1.5,1) {Position};
+% \node at (4.5,1) {Position};
+% \node at (7.5,1) {yes};
+% \node at (10.5,1) {yes};
+
+%\node at (1.5,-1) {Force};
+% \node at (4.5,1) {Position};
+% \node at (7.5,1) {yes};
+% \node at (10.5,1) {yes};
+\end{tikzpicture}
+\caption{Overall system with feedback in both direction}
+\end{figure}
+
+
