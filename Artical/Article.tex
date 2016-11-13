@@ -329,7 +329,10 @@ Fax: (888) 555--1212}}
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
 \begin{abstract}
-The abstract goes here.
+Currently force feedback in teleoperation is subject to numerous constraints on time delay and accuracy.
+Nonetheless, results show that implementing this type of feedback in teleoperated robotic surgery gives vastly better results.
+In this paper we propose a new method of teleoperating the DaVinci surgical robot using force feedback.
+The various constraints are adressed individually in each section.
 \end{abstract}
 
 % no keywords
@@ -346,8 +349,6 @@ The abstract goes here.
 % For peerreview papers, this IEEEtran command inserts a page break and
 % creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
-
-
 
 \section{Introduction}
 % no \IEEEPARstart
@@ -370,8 +371,18 @@ Therefore the force feedback got to be estimated through the actuators which giv
 
 Another important subject is the transparency of the feedback as the operator should have the feeling of doing the operation by hand and not remote. This puts a demand on the speed of the feedback loop as the faster the loop runs the more smooth the force feedback to the operator will feel.
 
+In the first section we will take an overview of our proposed control system as a whole, briefly presenting each of the components and their interaction.
+The second section will cover methods used to create a dynamic model of the Endowrist and proposed methods of translating the estimated force to actual force fed back to the operator.
+The third section contains descriptions of various problems pertaining the requirement of transparency and explanations of methods used to address them.
+Finally,  we present (the expected) experimental results in section four and and draw a short conclusion in section five.
 
  %said in other words, there should be no delay between the operator and the robot. This puts a demand on how fast the communication between the operator and the robot should be.
+ 
+ \section{System overview}
+Our proposed system
+
+
+
 
 \hfill mds
 
