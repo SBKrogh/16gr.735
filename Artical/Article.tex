@@ -11,6 +11,8 @@
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows,automata,positioning,calc}
 \usepackage[utf8]{inputenc}
+\usepackage{url}
+
 % Some Computer Society conferences also require the compsoc mode option,
 % but others use the standard conference format.
 %
@@ -373,13 +375,8 @@ It has been shown experimentally that haptic feedback has a considerably positiv
 The purpose of haptic feedback is to apply force that resist the operators movement in such a way that it reperesents some information about the environment or situation.
 In theory, this should mage teleoperated surgical procedures a lot more realistic to the operator and thus reduce accidents.
 
-
-% The feedback to the operator is made from live video transmission of the operation and as direct force feedback\todo{sounds like force feedback is already used in real operations}. The direct force feedback is used to simulate the resistance the end effector exposed to under the operation to give the surgeon the feeling of doing the operation by hand.  This kind of feedback is called haptic feedback and has been proven to be efficient way of doing feedback to the operator as it gives a more clear vision of the force that is applied.
-
 The haptic feedback could be done as direct force feedback calculated from the resistance on the actuators but as the tool is highly non-linear the transparency of the controller will become less transparent.
 It would be possible to solve this problem by implementing a sensor to the end effector to measure the force but due to the demand of high hygiene the tools have to be sterilized at temperatures over a $100^\circ$ C which could damage the sensor(s). Furthermore it is stated by law that each surgical tool has to be discarded after a few times in use. This means that the cost of the tool has to stay as low as possible and therefore make the idea of implementing an expensive sensor not ideal.
-
-% However the direct force feedback is not proportional to the actual resistance force that are applied to the end effector as the construction of the tool from the end effector to the actuators are highly non-linear. It would be possible to solve this problem by implementing a sensor to the end effector to measure the force but due to the demand of high hygiene the tools have to be sterilized at temperatures over a 100°C which can damage the sensor. Furthermore it is stated by law that each surgical tool has to be discarded after a few times in use. This means that the cost of the tool has to stay as low as possible and therefore make the idea of implementing an expensive sensor not ideal.
 
 Therefore the force feedback has to be estimated through the actuators which gives a high demand for the feedback controller as it has to be as precise as possible to feedback the correct force to the operator. Another important subject is the transparency of the feedback as the operator should have the feeling of doing the operation by hand and not remote. This puts a demand on the speed of the feedback loop as the faster the loop runs the more smooth the force feedback to the operator will feel. This will set demands on communication frequency since we need to keep time delay to a minimum.
 
@@ -387,8 +384,6 @@ In the section II we will take an overview of our proposed control system as a w
 Section III will cover methods used to create a dynamic model of the Endowrist and proposed methods of translating the estimated force to actual force fed back to the operator.
 Section IV contains descriptions of various problems pertaining the requirement of transparency and explanations of methods used to address them.
 Finally,  we present (the expected) experimental results in section V and and draw a short conclusion in section VI.
-
- %said in other words, there should be no delay between the operator and the robot. This puts a demand on how fast the communication between the operator and the robot should be.
  
  \section{System overview}
 In out proposed system, the surgeon uses the Geomagic Touch joystick to control an Endowrist tool on one of the arms of the DaVinci surgical robot.
@@ -498,20 +493,18 @@ For this purpose we use the Robot Operating System (ROS), which uses a network a
     \node [block, right of=ROS, node distance=3.3cm] (DaVinci) {DaVinci};
     % We draw an edge between the controller and system block to 
     % calculate the coordinate u. We need it to place the measurement block. 
-    \draw [<->] (Geomagic) -- node[label=above:TCP/IP] {} (ROS);
-    \draw [<->] (ROS) -- node [label=above:UDP] {} (DaVinci);
+    \draw [<->] (Geomagic) -- node[label=above:\small{TCP/IP}] {} (ROS);
+    \draw [<->] (ROS) -- node [label=above:\small{UDP}] {} (DaVinci);
 \end{tikzpicture}
 \caption{Block diagram representing the system.}
 \end{figure}
 
-
-
 \section{Force estimation}
-In order to have a representation of force on the Endowrist, we need a way to measure it in some way.
-Because of the reasons mentioned in section II, we cannot measure it directly using sensors and thus have to rely on estimation based on 
-mathematical models and torque measurements.
+In order to have a representation of the reaction force on the Endowrist, we must resort to estimation.
+Because of the reasons mentioned in section II, we cannot measure it directly using sensors and thus have to rely on mathematical models as functions of torque measurements.
 
-The main challenge we face in making a model lies in the fact that the pulley system on the Endowrist is highly non-linear, and thus cannot be modeled simply.
+The main challenge we face in making a model lies in the fact that the pulley system on the Endowrist is non-linear, and thus it's full dynamics cannot be modeled in a simple manner.
+Regardless, a physical model for grip force can be derived \cite{kim2014dynamic}, which serves as a good starting point for parameter estimation.
 
 \section{Communication}
 \section{Results}
@@ -651,24 +644,28 @@ The authors would like to thank...
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
-\begin{thebibliography}{1}
+\medskip
+\bibliographystyle{IEEEtran}
+\bibliography{Bibliography}
+
+%\begin{thebibliography}{1}
 
 % \bibitem{IEEEhowto:kopka}
 % H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
 %   0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
 
-\bibitem{RIGSP}
-Giulianotti, P. C., Coratti, A., Angelini, M., Sbrana, F., Cecconi, S.,
-et al., \emph{Robotics in General Surgery Personal Experience in a Large Community Hospital}\hskip 1em plus
-  0.5em minus 0.4em\relax Archives of Surgery: pp. 777-784.
+%\bibitem{RIGSP}
+%Giulianotti, P. C., Coratti, A., Angelini, M., Sbrana, F., Cecconi, S.,
+%et al., \emph{Robotics in General Surgery Personal Experience in a Large Community Hospital}\hskip 1em plus
+%  0.5em minus 0.4em\relax Archives of Surgery: pp. 777-784.
 
-\bibitem{EOFGFF}
-H.~Kopka and P.~W. Daly, \emph{Effects of haptic and graphical force feedback on teleoperated palpation}\hskip
-  0.5em minus 0.4em\relax  Robotics and Automation: pp. 677 - 682.
+%\bibitem{EOFGFF}
+%H.~Kopka and P.~W. Daly, \emph{Effects of haptic and graphical force feedback on teleoperated palpation}\hskip
+%  0.5em minus 0.4em\relax  Robotics and Automation: pp. 677 - 682.
 
-  \todo{not sure on the "pp"}
+%  \todo{not sure on the "pp"}
 
-\end{thebibliography}
+%\end{thebibliography}
 
 
 

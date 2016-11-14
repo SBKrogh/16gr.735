@@ -1,0 +1,120 @@
+  %% Copy past the uncommented section under this text and fill in the right information. This will
+
+  @misc{DCmotor,
+  author    = {Tom S. Pedersen},
+  title     = {Permanent Magnet Direct Current Motor},
+  note      = {Lecture slides from the course "MODELLING AND CONTROL" at Aalborg University},
+  year      = {2015}}
+
+
+  @misc{phantom_omni,
+  	author ={Sigverse},
+  	title ={Using Phantom Omni Haptik Device},
+  	howpublished={\url{http://www.sigverse.org/wiki/en/index.php?Using%20Phantom%20Omni%20Haptik%20Device}},
+  	year ={2014},
+  	note ={Downloadet: 21-10-2016}
+  }
+
+  @misc{Chris_Surgical,
+    author ={Karl Damkjær Hansen, Simon Jensen, Christoffer Soth, Rafal Wisniewski},
+    title ={Instrumentation of the da Vinci Robotic Surgical System},
+    howpublished={\url{http://vbn.aau.dk/files/224392713/The_3rd_AAU_Workshop_on_Robotics_2014.pdf}},
+    year ={2015},
+    note ={Downloadet: 04-11-2016}
+  }
+
+  @misc{JSON_IETF,
+    author ={T. Bray, Ed.},
+    title ={The JavaScript Object Notation (JSON) Data Interchange Format},
+    howpublished={\url{https://www.rfc-editor.org/info/rfc7159}},
+    year ={2014},
+    note ={Accessed: 09-11-2016}
+  }
+
+  @misc{UDT,
+    author ={lilyco},
+    title ={A UDP-based Reliable Data Transfer Library},
+    howpublished={\url{http://www.codeproject.com/Articles/11046/A-UDP-based-Reliable-Data-Transfer-Library}},
+    year ={2006},
+    note ={Accessed: 09-11-2016}
+  }
+
+    @misc{ENet,
+    author ={Lee Salzman},
+    title ={Reliable UDP networking library},
+    howpublished={\url{https://github.com/lsalzman/enet}},
+    year ={2012},
+    note ={Accessed: 09-11-2016}
+  }
+
+  @misc{ESCON_motor_controller,
+    title ={ESCON Module 50/5, 4-Q Servocontroller for DC/EC motors, 5/15 A, 10 - 50 VDC},
+    howpublished={\url{http://www.maxonmotor.com/maxon/view/product/control/4-Q-Servokontroller/438725}},
+    note ={Accessed: 09-11-2016}
+  }
+  
+%dsa
+  @misc{motor_encoder,
+    author ={Maxon Motor},
+    title ={Encoder MR, Typ M, 512 CPT, 2 Channels, with Line Driver},
+    howpublished={\url{http://www.maxonmotor.com/maxon/view/product/sensor/encoder/Encoder-MR-TypM-128-512imp-2-3Kanal/201937}},
+    note ={Downloadet: 04-11-2016}
+    }
+
+  @misc{motor_gear,
+    author ={Maxon Motor},
+    title ={Planetary Gearhead GP 22 B Ø22 mm, 0.1 - 0.3 Nm, Sleeve Bearing},
+    howpublished={\url{http://www.maxonmotor.com/maxon/view/product/gear/planetary/gp22/110356?etcc_cu=onsite&etcc_med=Header%20Suche&etcc_cmp=mit%20Ergebnis&etcc_ctv=Layer&query=110356}},
+    note ={Downloadet: 04-11-2016}
+    }
+
+      @misc{motor_motor,
+    author ={Maxon Motor},
+    title ={A-max 22 Ø22 mm, Graphite Brushes, 6 Watt, with terminals},
+    howpublished={\url{http://www.maxonmotor.com/maxon/view/product/motor/dcmotor/amax/amax22/110160?etcc_cu=onsite&etcc_med=Header%20Suche&etcc_cmp=mit%20Ergebnis&etcc_ctv=Layer&query=110160}},
+    note ={Downloadet: 04-11-2016}
+    }
+
+
+      @misc{OpenHaptic,
+    author ={3D Systems},
+    title ={OpenHaptic Toolkit},
+    howpublished={\url{http://www.geomagic.com/files/8014/3932/7904/OpenHaptics_ProgGuide.pdf}},
+    note ={Accessed: 11-11-2016}
+    }
+
+    
+      @misc{Wiki_ros,
+    author ={Robotic operating system},
+    title ={ROS/ Introduction},
+    howpublished={\url{http://wiki.ros.org/ROS/Introduction}},
+    note ={Accessed: 13-11-2016}
+    }
+
+      @misc{Wiki_ros_concepts,
+    author ={Robotic operating system},
+    title ={ROS/ Concepts},
+    howpublished={\url{http://wiki.ros.org/ROS/Concepts}},
+    note ={Accessed: 13-11-2016}
+    }
+
+@article{RIGSP,
+  title={Robotics in general surgery: personal experience in a large community hospital},
+  author={Giulianotti, Pier Cristoforo and Coratti, Andrea and Angelini, Marta and Sbrana, Fabio and Cecconi, Simone and Balestracci, Tommaso and Caravaglios, Giuseppe},
+  journal={Archives of surgery},
+  volume={138},
+  number={7},
+  pages={777--784},
+  year={2003},
+  publisher={American Medical Association}
+}
+
+@inproceedings{EOFGFF,
+  title={Effects of haptic and graphical force feedback on teleoperated palpation},
+  author={Gwilliam, James C and Mahvash, Mohsen and Vagvolgyi, Balazs and Vacharat, Alexander and Yuh, David D and Okamura, Allison M},
+  booktitle={Robotics and Automation, 2009. ICRA'09. IEEE International Conference on},
+  pages={677--682},
+  year={2009},
+  organization={IEEE}
+}
+
