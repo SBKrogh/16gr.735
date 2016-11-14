@@ -1,0 +1,37 @@
+\section*{Measurement of the connection's speed} % \label{app:...}
+
+\subsection*{Purpose:}
+
+Determine which of the protocol is the faster in the current setup.
+
+\subsection*{Test equipment:}
+
+The sbRIO 9636 is connected to a computer running Ubuntu 14.04 LTS via an Ethernet cable of 1 gpbs\todo{check the speed}. The computer runs the ROS nodes that are used for the project, thus it communicates with both the Geomagic Touch and the sbRIO and it sends random setpoints to the sbRIO\todo{It would be better to have some kind of real setpoints}. The sbRIO uses the entire code of the project but is not connected to the motors for safety reason. 
+Wireshark is used on the computer to take measurements. The data obtained through Wireshark are then exported to a CSV file to be analyzed.
+
+\subsection*{Procedure:}
+
+First, Wireshark is set up to record traffic on the Ethernet interface and to filter only the packets that use TCP/IP. The ROS node is started on the computer and then the sbRIO is switched on. The system is run for at least 10 seconds and then stopped.
+
+The same operation is repeated using UDP instead of TCP/IP.
+
+\subsection*{Measuring data:}
+
+The data are recorded using Wireshark and exported to a CSV file so they can be analyzed using other softwares. The CSV file contains all information about the packets that were recorded by Wireshark. Only the packets that arrived during the first 10 seconds are kept.
+
+\subsection*{Results:}
+
+\begin{array}{l|ccccc}
+	Protocol & Average & Standard deviation & Variance & Max & Min\\
+	\hline
+	TCP/IP & 4 & 2 & 4 & 6 & 2 \\
+	UDP & 2 & 1 & 1 & 4 & 1
+\end{array} 
+
+\subsection*{Uncertainties of measurement:}
+
+??
+
+\subsection*{Conclusion:}
+
+Hopefully UDP is faster.
