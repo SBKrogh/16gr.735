@@ -7,7 +7,7 @@ Determine which of the protocol is the faster in the current setup.
 \subsection*{Test equipment:}
 
 The sbRIO 9636 is connected to a computer running Ubuntu 14.04 LTS via an Ethernet cable of 1 gpbs\todo{check the speed}. The computer runs the ROS nodes that are used for the project, thus it communicates with both the Geomagic Touch and the sbRIO and it sends random setpoints to the sbRIO\todo{It would be better to have some kind of real setpoints}. The sbRIO uses the entire code of the project but is not connected to the motors for safety reason. 
-Wireshark is used on the computer to take measurements. The data obtained through Wireshark are then exported to a CSV file to be analyzed.
+Wireshark is used on the computer to take measurements.%The data obtained through Wireshark are then exported to a CSV file to be analyzed.
 
 \subsection*{Procedure:}
 
@@ -17,16 +17,20 @@ The same operation is repeated using UDP instead of TCP/IP.
 
 \subsection*{Measuring data:}
 
-The data are recorded using Wireshark and exported to a CSV file so they can be analyzed using other softwares. The CSV file contains all information about the packets that were recorded by Wireshark. Only the packets that arrived during the first 10 seconds are kept.
+The times at which a packet was received are measured on both the sbRIO and the computer.
+On the computer, data are recorded using Wireshark and exported to a CSV file so they can be analyzed using other softwares. The CSV file contains all information about the packets that were recorded by Wireshark.
+On the sbRIO, the data are stored in the memory and retrieved later.
+Then the data from both end are combined to be analyzed.
+Only the packets that arrived during the first 10 seconds are kept.
 
 \subsection*{Results:}
 
-\begin{array}{l|ccccc}
-	Protocol & Average & Standard deviation & Variance & Max & Min\\
+$\begin{array}{c|ccc}
+	Protocol & \text{Average delay} & Jitter & \text{Error rate}\\
 	\hline
-	TCP/IP & 4 & 2 & 4 & 6 & 2 \\
-	UDP & 2 & 1 & 1 & 4 & 1
-\end{array} 
+	TCP/IP & 4 & 4 & 1 \\
+	UDP & 2 & 1 & 4 
+\end{array}$
 
 \subsection*{Uncertainties of measurement:}
 
