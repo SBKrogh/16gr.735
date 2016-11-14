@@ -1,41 +1,41 @@
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-%\draw (-1.5,-1.5) rectangle (13.5,1.5);
+% \begin{figure}[H]
+% \centering
+% \begin{tikzpicture}
+% %\draw (-1.5,-1.5) rectangle (13.5,1.5);
 
-\draw (-2.8,3.1) rectangle (2.8,-12.8);
-\node at (0,2.5) {\textbf{sbRIO}};
-
-
-\draw (-2.5,2) rectangle (2.5,-4.2);
-\node at (0,1.5) {\textbf{Micro processor}};
-\node[box] (datlog) at (0,0.3) {Data logging};
-\node[box] (ethcommu) at ($(0,-1.7) + (datlog)$) {Ethernet communication};
-\node[box] (shuterr) at ($(0,-1.7) + (ethcommu)$) {Shutdown:\\Communication error};
+% \draw (-2.8,3.1) rectangle (2.8,-12.8);
+% \node at (0,2.5) {\textbf{sbRIO}};
 
 
-\draw (-2.5,-4.7) rectangle (2.5,-12.6);
-\node at (0,-5.2) {\textbf{FPGA}};
-\node[box] (poscon) at ($(0,-3.3) + (shuterr)$) {Position control};
-\node[box] (enco) at ($(0,-1.7) + (poscon)$) {Encoder counter};
-\node[box] (PWM) at ($(0,-1.7) + (enco)$) {PWM control};
-\node[box] (dataES) at ($(0,-1.7) + (PWM)$) {Read data: ESCON};
+% \draw (-2.5,2) rectangle (2.5,-4.2);
+% \node at (0,1.5) {\textbf{Micro processor}};
+% \node[box] (datlog) at (0,0.3) {Data logging};
+% \node[box] (ethcommu) at ($(0,-1.7) + (datlog)$) {Ethernet communication};
+% \node[box] (shuterr) at ($(0,-1.7) + (ethcommu)$) {Shutdown:\\Communication error};
 
 
-\draw (-9,-6) rectangle (-4,-12.6);
-\node[box] (spcon) at (-6.5,-8) {Speed control\\with inner current\\control};
-\node at ($(spcon) + (0,1.5)$) {\textbf{ESCON}};
-\node at ($(spcon) + (0,1.2)$) {\textbf{motor controller}};
-\node[box] (limcu) at ($(0,-1.7) + (spcon)$) {Limit output\\current};
-\node[box] (reen) at ($(0,-1.7) + (limcu)$) {Read encoder\\ticks};
+% \draw (-2.5,-4.7) rectangle (2.5,-12.6);
+% \node at (0,-5.2) {\textbf{FPGA}};
+% \node[box] (poscon) at ($(0,-3.3) + (shuterr)$) {Position control};
+% \node[box] (enco) at ($(0,-1.7) + (poscon)$) {Encoder counter};
+% \node[box] (PWM) at ($(0,-1.7) + (enco)$) {PWM control};
+% \node[box] (dataES) at ($(0,-1.7) + (PWM)$) {Read data: ESCON};
 
 
-\draw (-9,-5.5) rectangle (-4,-4);
-\node at (-6.5,-4.75) {\textbf{Motor}};
+% \draw (-9,-6) rectangle (-4,-12.6);
+% \node[box] (spcon) at (-6.5,-8) {Speed control\\with inner current\\control};
+% \node at ($(spcon) + (0,1.5)$) {\textbf{ESCON}};
+% \node at ($(spcon) + (0,1.2)$) {\textbf{motor controller}};
+% \node[box] (limcu) at ($(0,-1.7) + (spcon)$) {Limit output\\current};
+% \node[box] (reen) at ($(0,-1.7) + (limcu)$) {Read encoder\\ticks};
 
 
-\draw (-9,-3.5) rectangle (-4,3.1);
-\node at (-6.5,2.5) {\textbf{ROS computer}};
+% \draw (-9,-5.5) rectangle (-4,-4);
+% \node at (-6.5,-4.75) {\textbf{Motor}};
+
+
+% \draw (-9,-3.5) rectangle (-4,3.1);
+% \node at (-6.5,2.5) {\textbf{ROS computer}};
 
 %\node[fill = {rgb:red,1;green,2;blue,5},box] (Opt) at (0,0) {Operator};
 %\node[fill = {rgb:red,1;green,2;blue,5},box] (Geo) at ($(3,0) + (Opt)$) {};
@@ -64,8 +64,80 @@
 % \node at (4.5,1) {Position};
 % \node at (7.5,1) {yes};
 % \node at (10.5,1) {yes};
+%\end{tikzpicture}
+%\caption{Overall system with feedback in both direction}
+%\end{figure}
+
+
+
+\begin{figure}[H]
+\centering
+\tikzset{dataset/.style = {rectangle, draw, text width = 5.5cm, minimum height=3cm}}
+\begin{tikzpicture}
+
+\node [dataset] (mpro) at (0,3) {\textbf{Micro processor}
+\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt]
+\item Data logging
+\item Ethernet communication
+\item Shutdown: Communication error \\
+\end{itemize}};
+
+\node [dataset, below of=mpro, node distance=6.5cm] (FPGA) {\textbf{FPGA}
+\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
+\item Position contron
+\item Encoder counter
+\item PWM control
+\item Read data: Escon 
+\end{itemize}};
+
+\node [dataset, left of=FPGA, node distance=7cm] (emc) {\textbf{ESCON motor controller}
+\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
+\item Speed controll with intter current control
+\item Limit output current
+\item Read encoder ticks 
+\end{itemize}};
+
+\tikzset{dataset/.style = {rectangle, draw, text width = 6cm, minimum height=10.5cm}}
+\node [dataset, above of=FPGA, node distance=3.5cm] (motor) {\textbf{sbRIO}
+\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=260pt] % Edit the last number to fit title 
+\item[]  %  This line is necessary!!
+\end{itemize}};
+
+
+\tikzset{dataset/.style = {rectangle, draw, text width = 5.5cm, minimum height=1cm}}
+\node [dataset, above of=emc, node distance=2.5cm] (motor) {\textbf{Motor}};
+
+\tikzset{dataset/.style = {rectangle, draw, text width = 5.5cm, minimum height=5cm}} % This edits the size of the Ros computer box 
+\node [dataset, above of=motor, node distance=3.75cm] (emc) {\textbf{Ros computer}
+\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
+\item 1
+\item 2
+\item 3 
+\end{itemize}};
 \end{tikzpicture}
-\caption{Overall system with feedback in both direction}
+\caption{Say somthing cool- "\textit{Somthing cool!}"}
 \end{figure}
 
+\todo{Include arrow, label anc new caption}
 
+% \begin{figure}[htb]
+% \tikzset{dataset/.style = {rectangle, draw, text width = 5cm, minimum height=1in}}
+% \begin{tikzpicture}[auto, font={\scriptsize}]
+%     % Place nodes
+%     \node [dataset] (tm) {Data 1 
+%                             \begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt]   %% this added.
+%                                 \item{\# Adults } 
+%                                 \item{\# Children} 
+%                                 \item{Income}
+%                                 \item{Ethnicity}
+%                             \end{itemize}\par};
+%     \node [dataset, right of=tm, node distance=3in] (dmv) {Data 2 
+%                             \begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
+%                                 \item{Data 2} 
+%                             \end{itemize}\par};
+%     % draw links
+%     \path [<->] (tm) edge node[above, sloped] {Address} (dmv);
+% \end{tikzpicture}
+%     \caption{Analysis dataset assembly.}
+%     \label{fig:dataset}
+% \end{figure}
