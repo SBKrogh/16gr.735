@@ -10,6 +10,7 @@
 \usepackage{subcaption}
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows,automata,positioning,calc}
+\usepackage[utf8]{inputenc}
 % Some Computer Society conferences also require the compsoc mode option,
 % but others use the standard conference format.
 %
@@ -278,6 +279,7 @@
 % Linebreaks \\ can be used within to get better formatting as desired.
 % Do not put math or special symbols in the title.
 \graphicspath{ {../Worksheets/rapport/pictures/} }
+\input{../Worksheets/Clean_up/tikz_magi}
 
 \title{Teleoperation of surgical robot using force feedback}
 
@@ -285,22 +287,14 @@
 % author names and affiliations
 % use a multiple column layout for up to three different
 % affiliations
-\author{\IEEEauthorblockN{Michael Shell}
-\IEEEauthorblockA{School of Electrical and\\Computer Engineering\\
-Georgia Institute of Technology\\
-Atlanta, Georgia 30332--0250\\
-Email: http://www.michaelshell.org/contact.html}
+\author{\IEEEauthorblockN{Daniel Bolgar}
 \and
-\IEEEauthorblockN{Homer Simpson}
-\IEEEauthorblockA{Twentieth Century Fox\\
-Springfield, USA\\
-Email: homer@thesimpsons.com}
+\IEEEauthorblockN{Simon Korgh}
 \and
-\IEEEauthorblockN{James Kirk\\ and Montgomery Scott}
-\IEEEauthorblockA{Starfleet Academy\\
-San Francisco, California 96678--2391\\
-Telephone: (800) 555--1212\\
-Fax: (888) 555--1212}}
+\IEEEauthorblockN{Filip Marić}
+\and
+\IEEEauthorblockN{Nicolas Silvani}
+}
 
 % conference papers do not typically use \thanks and this command
 % is locked out in conference mode. If really needed, such as for
@@ -339,15 +333,17 @@ Fax: (888) 555--1212}}
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
 \begin{abstract}
-Currently force feedback in teleoperation is subject to numerous constraints on time delay and accuracy.
+Haptic feedback is a form of transferring information to the user via the sense of touch, usually through some sort of input device the user gives commands with.
+This makes it ideal for teleoperating tasks requiring precision in applied force, robotic surgery being a prime example.
+Currently, haptic feedback in teleoperation is subject to numerous constraints on time delay and accuracy.
 Nonetheless, results show that implementing this type of feedback in teleoperated robotic surgery gives vastly better results.
-In this paper we propose a new method of teleoperating the DaVinci surgical robot using force feedback.
-The various constraints are adressed individually in each section.
+In this paper we propose a new method of teleoperating the DaVinci surgical robot using haptic feedback.
+The method involves using a state-of-the-art haptic device to control a surgical tool serving as the robots end-effector.
+Since the dynamics of the surgical tool are strongly non-linear, estimation techniques are used to calculate reaction forces on the device.
+Changes are made to existing communication protocols in order to reduce time delay, which is an important factor.
+The various constraints and challenges are adressed individually in each section.
 \end{abstract}
-
 % no keywords
-\hfill mds
-
 \hfill August 26, 2015
 
 
@@ -374,34 +370,36 @@ Currently the only feedback operators get is visual, using live video transmissi
 The problem with the operator having exclusively visual feedback lies in the fact that he has to guess how much force is applied to skin and organs in every single manoeuvre made. 
 It has been shown experimentally that haptic feedback has a considerably positive effect on the reduction in surgical error\cite{EOFGFF}. 
 
-The purpose of haptic or force feedback is to apply force that resist the operators movement in such a way that it reperesents some information about the environment or situation.
+The purpose of haptic feedback is to apply force that resist the operators movement in such a way that it reperesents some information about the environment or situation.
 In theory, this should mage teleoperated surgical procedures a lot more realistic to the operator and thus reduce accidents.
 
 
 % The feedback to the operator is made from live video transmission of the operation and as direct force feedback\todo{sounds like force feedback is already used in real operations}. The direct force feedback is used to simulate the resistance the end effector exposed to under the operation to give the surgeon the feeling of doing the operation by hand.  This kind of feedback is called haptic feedback and has been proven to be efficient way of doing feedback to the operator as it gives a more clear vision of the force that is applied.
 
-The force feedback could be done as direct force feedback calculated from the resistance on the actuators but as the tool is highly non-linear the transparency of the controller will become less transparent.
+The haptic feedback could be done as direct force feedback calculated from the resistance on the actuators but as the tool is highly non-linear the transparency of the controller will become less transparent.
 It would be possible to solve this problem by implementing a sensor to the end effector to measure the force but due to the demand of high hygiene the tools have to be sterilized at temperatures over a $100^\circ$ C which could damage the sensor(s). Furthermore it is stated by law that each surgical tool has to be discarded after a few times in use. This means that the cost of the tool has to stay as low as possible and therefore make the idea of implementing an expensive sensor not ideal.
 
 % However the direct force feedback is not proportional to the actual resistance force that are applied to the end effector as the construction of the tool from the end effector to the actuators are highly non-linear. It would be possible to solve this problem by implementing a sensor to the end effector to measure the force but due to the demand of high hygiene the tools have to be sterilized at temperatures over a 100°C which can damage the sensor. Furthermore it is stated by law that each surgical tool has to be discarded after a few times in use. This means that the cost of the tool has to stay as low as possible and therefore make the idea of implementing an expensive sensor not ideal.
 
-Therefore the force feedback has to be estimated through the actuators which gives a high demand for the feedback controller as it has to be as precise as possible to feedback the correct force to the operator. Another important subject is the transparency of the feedback as the operator should have the feeling of doing the operation by hand and not remote. This puts a demand on the speed of the feedback loop as the faster the loop runs the more smooth the force feedback to the operator will feel.
+Therefore the force feedback has to be estimated through the actuators which gives a high demand for the feedback controller as it has to be as precise as possible to feedback the correct force to the operator. Another important subject is the transparency of the feedback as the operator should have the feeling of doing the operation by hand and not remote. This puts a demand on the speed of the feedback loop as the faster the loop runs the more smooth the force feedback to the operator will feel. This will set demands on communication frequency since we need to keep time delay to a minimum.
 
-In the first section we will take an overview of our proposed control system as a whole, briefly presenting each of the components and their interaction.
-The second section will cover methods used to create a dynamic model of the Endowrist and proposed methods of translating the estimated force to actual force fed back to the operator.
-The third section contains descriptions of various problems pertaining the requirement of transparency and explanations of methods used to address them.
-Finally,  we present (the expected) experimental results in section four and and draw a short conclusion in section five.
+In the section II we will take an overview of our proposed control system as a whole, briefly presenting each of the components and their interaction.
+Section III will cover methods used to create a dynamic model of the Endowrist and proposed methods of translating the estimated force to actual force fed back to the operator.
+Section IV contains descriptions of various problems pertaining the requirement of transparency and explanations of methods used to address them.
+Finally,  we present (the expected) experimental results in section V and and draw a short conclusion in section VI.
 
  %said in other words, there should be no delay between the operator and the robot. This puts a demand on how fast the communication between the operator and the robot should be.
  
  \section{System overview}
 In out proposed system, the surgeon uses the Geomagic Touch joystick to control an Endowrist tool on one of the arms of the DaVinci surgical robot.
-It is imortant for the surgeon to have a feeling of resistance the tool is experiencing in order to adjust the position and grip strength and thus prevent damage to the patients tissue.
-To achieve this, we use the Geomagics force feedback feature in order to project the forces acting on the Endowrist to the surgeon. 
-The communication between system components is done through the ROS operating system.
+It is important for the operator to have a feeling of resistance the tool is experiencing in order to adjust the position and grip strength and thus prevent damage to the patients tissue.
+To achieve this, we use the Geomagics haptic feedback feature in order to project the reaction forces acting on the Endowrist to the operator. 
+The communication between system components is done through the Robot Operating System (ROS).
 
 \subsection{Endowrist}
-An Endowrist, see \ref{fig:Endo_plates} is a surgical tool which can be manipulated as a human wrist. It is used in surgical procedures such as Laparoscopic surgeries, better known as minimally invasive surgery (MIS), where small incisions in the human body is made under the surgery. Because the incision cuts are small, blood lose under the surgery and the risk of infection is reduced. This has a positive effect on the recovery time for the patient.
+An Endowrist, see \ref{fig:Endo_plates} is a surgical tool which can be manipulated as a human wrist. 
+It is used in surgical procedures such as Laparoscopic surgeries, better known as minimally invasive surgery (MIS), where small incisions in the human body is made under the surgery. 
+Because the incision cuts are small, blood lose under the surgery and the risk of infection is reduced. This has a positive effect on the recovery time for the patient.
 
 \begin{figure}
 	\centering
@@ -423,10 +421,11 @@ An Endowrist, see \ref{fig:Endo_plates} is a surgical tool which can be manipula
 
 As mentioned the Endowrist has the ability to be manipulated as a human wrist and thereby has four DOF, see \ref{fig:Endo_end}. This enables the movement of roll, pitch, yaw and an open closing mechanism that acts as the thumb and index finger of a hand. 
 
-The end effector is manipulated by the four wheels seen on \ref{fig:Endo_plates}. Wheel one and three define the movement of the yaw and the closing mechanism. Wheel two and four moves the pitch and roll. The Endowrist is cable driven, which enables the opportunity of making the Endowrist small but it also makes the system nonlinear as the force acting at one end is not directly transmitted to the other end due to friction. 
+The end-effector is manipulated by the four wheels seen on \ref{fig:Endo_plates}. Wheel one and three define the movement of the yaw and the closing mechanism. Wheel two and four moves the pitch and roll. The Endowrist is cable driven, which enables the opportunity of making the Endowrist small but it also makes the system nonlinear as the force acting at one end is not directly transmitted to the other end due to friction. 
 
 \subsection{Geomagic touch}
-The geomagic touch is a haptic feedback device, which has the ability to manipulate its joints in such a way that the user feels resistance when moving the pin in a certain direction or way. The geomagic touch described in this section is the model Phantom omni and can be seen on \ref{fig:phantom_omni}.
+The geomagic touch is a haptic feedback device, which has the ability to manipulate its joints in such a way that the user feels resistance when moving the pin in a certain direction or way. 
+The geomagic touch described in this section is the model Phantom omni and can be seen on \ref{fig:phantom_omni}.
 
 \begin{figure}
 	\centering
@@ -474,6 +473,13 @@ As mentioned before , a fully featured DaVinci robot has 7 degrees of freedom on
 Since the robot has 4 arms, there are 4 instruments.
 Although our setup controls only 4 motors, in funcionality it is equivalent to one DaVinci arm.
 
+\begin{figure}
+		\centering
+		\includegraphics[width=0.4\linewidth]{Test_setup4.jpg}
+		\caption{Full view of the mechanical test setup}
+		\label{fig:Mec_d}
+\end{figure}
+
 As mentioned before, the sbRio board controls the test setup and as such represents the onboard computer on the DaVinci robot.
 In order to perform higher level functions such as force feedback control, it is necessary to remotely handle data and send high-level commands.
 This is handled by an external computer system that is connected to the Phantom omni device.
@@ -481,31 +487,27 @@ This is handled by an external computer system that is connected to the Phantom 
 The sbRio board communicates with the computer using UDP communication protocols, while the Geomagic Touch does so using TCP/IP.
 The computer also performs force estimation using a dynamical model of the test setup (or Endowrist, more precisely), this is vital for force feedback.
 In order to connect software components responsible for communicating with hardware and the ones responsible for the control algorithm and estimation.
-For this purpose we use the Robot Operating System (ROS), which uses a network architecture to share data between components via data streams.
-\input{../Worksheets/Clean_up/tikz_magi}
-\begin{figure}
-\begin{tikzpicture}[ transform canvas={scale=0.7}]
-\node[box] (Opt) at (0,0) {Operator};
-\node[box] (Geo) at ($(3,0) + (Opt)$) {Geomagic\\touch};
-\node[box] (ros) at ($(3,0) + (Geo)$) {ROS};
-\node[box] (davin) at ($(3,0) + (ros)$) {Da Vinci\\robot};
-\node[box] (end) at ($(3,0) + (davin)$) {Endowrist};
+For this purpose we use the Robot Operating System (ROS), which uses a network architecture to share data between components via data streams.\\
 
-
-\draw[->, ultra thick] ([yshift=0.3cm]Opt.east) -- ([yshift=0.3cm]Geo.west);
-\draw[->, ultra thick] ([yshift=0.3cm]Geo.east) -- ([yshift=0.3cm]ros.west);
-\draw[->, ultra thick] ([yshift=0.3cm]ros.east) -- ([yshift=0.3cm]davin.west);
-\draw[->, ultra thick] ([yshift=0.3cm]davin.east) -- ([yshift=0.3cm]end.west);
-
-
-\draw[<-, ultra thick] ([yshift=-0.3cm]Opt.east) -- ([yshift=-0.3cm]Geo.west);
-\draw[<-, ultra thick] ([yshift=-0.3cm]Geo.east) -- ([yshift=-0.3cm]ros.west);
-\draw[<-, ultra thick] ([yshift=-0.3cm]ros.east) -- ([yshift=-0.3cm]davin.west);
-\draw[<-, ultra thick] ([yshift=-0.3cm]davin.east) -- ([yshift=-0.3cm]end.west);
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+    % We start by placing the blocks
+    \node [block] (Geomagic) {\small{Geomagic Touch}};
+    \node [block, right of=Geomagic, node distance = 3.4cm] (ROS) {ROS};
+    \node [block, right of=ROS, node distance=3.3cm] (DaVinci) {DaVinci};
+    % We draw an edge between the controller and system block to 
+    % calculate the coordinate u. We need it to place the measurement block. 
+    \draw [<->] (Geomagic) -- node[label=above:TCP/IP] {} (ROS);
+    \draw [<->] (ROS) -- node [label=above:UDP] {} (DaVinci);
 \end{tikzpicture}
-\caption{Overall view of the system}
+\caption{Block diagram representing the system.}
 \end{figure}
+
+
+
 \section{Force estimation}
+In order to have some sort of measure of force 
 \section{Communication}
 \section{Results}
 % An example of a floating figure using the graphicx package.
