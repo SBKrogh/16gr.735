@@ -487,7 +487,7 @@ This is handled by an external computer system that is connected to the Phantom 
 The sbRio board communicates with the computer using UDP communication protocols, while the Geomagic Touch does so using TCP/IP.
 The computer also performs force estimation using a dynamical model of the test setup (or Endowrist, more precisely), this is vital for force feedback.
 In order to connect software components responsible for communicating with hardware and the ones responsible for the control algorithm and estimation.
-For this purpose we use the Robot Operating System (ROS), which uses a network architecture to share data between components via data streams.\\
+For this purpose we use the Robot Operating System (ROS), which uses a network architecture to share data between components via data streams.
 
 \begin{figure}[h]
 \centering
@@ -507,7 +507,12 @@ For this purpose we use the Robot Operating System (ROS), which uses a network a
 
 
 \section{Force estimation}
-In order to have some sort of measure of force 
+In order to have a representation of force on the Endowrist, we need a way to measure it in some way.
+Because of the reasons mentioned in section II, we cannot measure it directly using sensors and thus have to rely on estimation based on 
+mathematical models and torque measurements.
+
+The main challenge we face in making a model lies in the fact that the pulley system on the Endowrist is highly non-linear, and thus cannot be modeled simply.
+
 \section{Communication}
 \section{Results}
 % An example of a floating figure using the graphicx package.
