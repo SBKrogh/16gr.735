@@ -90,12 +90,18 @@
 \item Read data: Escon 
 \end{itemize}};
 
+\draw[->, ultra thick] ([xshift=-1cm]mpro.south) -- ([xshift=-1cm]FPGA.north);
+\draw[<-, ultra thick] ([xshift=1cm]mpro.south) -- ([xshift=1cm]FPGA.north);
+
 \node [dataset, left of=FPGA, node distance=7cm] (emc) {\textbf{ESCON motor controller}
 \begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
 \item Speed controll with intter current control
 \item Limit output current
 \item Read encoder ticks 
 \end{itemize}};
+
+\draw[->, ultra thick] ([yshift=-1cm]emc.east) -- ([yshift=-1cm]FPGA.west);
+\draw[<-, ultra thick] ([yshift=1cm]emc.east) -- ([yshift=1cm]FPGA.west);
 
 \tikzset{dataset/.style = {rectangle, draw, text width = 6cm, minimum height=10.5cm}}
 \node [dataset, above of=FPGA, node distance=3.5cm] (motor) {\textbf{sbRIO}
@@ -107,13 +113,26 @@
 \tikzset{dataset/.style = {rectangle, draw, text width = 5.5cm, minimum height=1cm}}
 \node [dataset, above of=emc, node distance=2.5cm] (motor) {\textbf{Motor}};
 
+\draw[->, ultra thick] ([xshift=-1cm]motor.south) -- ([xshift=-1cm]emc.north);
+\draw[<-, ultra thick] ([xshift=1cm]motor.south) -- ([xshift=1cm]emc.north);
+
 \tikzset{dataset/.style = {rectangle, draw, text width = 5.5cm, minimum height=5cm}} % This edits the size of the Ros computer box 
-\node [dataset, above of=motor, node distance=3.75cm] (emc) {\textbf{Ros computer}
+\node [dataset, above of=motor, node distance=3.75cm] (ROS) {\textbf{Ros computer}
 \begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
 \item 1
 \item 2
 \item 3 
 \end{itemize}};
+
+\draw[->, ultra thick] ([yshift=-1cm]mpro.west) -- ([yshift=-1cm]ROS.east); % ([yshift=-1cm]ROS.west) should probaly be edited!!!
+\draw[<-, ultra thick] ([yshift=1cm]mpro.west) -- ([yshift=1cm]ROS.east);
+
+% \draw [->,ultra thick] (-1,1.5) -- (-1,-2); %Micro to FPGA
+% \draw [<-,ultra thick] (1,1.5) -- (1,-2);
+
+% \draw [->,ultra thick] (-3,-3) -- (-4,-3);
+% \draw [<-,ultra thick] (-3,-4) -- (-4,-4);
+
 \end{tikzpicture}
 \caption{Say somthing cool- "\textit{Somthing cool!}"}
 \end{figure}
