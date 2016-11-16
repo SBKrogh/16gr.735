@@ -536,7 +536,8 @@ This is the model we will perform parameter identification on.
 Parameter identification is performed using the Matlab parameter identification toolbox.
 For us to tune the model parameters, it is necessary for us to perform experiments for input-output measurement datasets.
 
-We do this by applying a known force $F$ to the gripper.
+We do this by applying a known force $F$ to the gripper and measuring efforts on the actuators.
+The goal here is to get a fully parametrized state space model which we can then use for grip force estimation with a Kalman filter.
 
 \section{Communication}
 \section{Results}
