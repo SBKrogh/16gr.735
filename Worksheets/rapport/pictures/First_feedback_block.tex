@@ -3,11 +3,11 @@
 \draw (-1.5,-1.5) rectangle (13.5,1.5);
 
 
-\node[fill = {rgb:red,1;green,2;blue,5},box] (Opt) at (0,0) {Operator};
-\node[fill = {rgb:red,1;green,2;blue,5},box] (Geo) at ($(3,0) + (Opt)$) {Geomagic\\touch};
-\node[fill = {rgb:red,1;green,2;blue,5},box] (ros) at ($(3,0) + (Geo)$) {Robotic\\operating\\system};
-\node[fill = {rgb:red,1;green,2;blue,5},box] (davin) at ($(3,0) + (ros)$) {Da Vinci\\robot};
-\node[fill = {rgb:red,1;green,2;blue,5},box] (end) at ($(3,0) + (davin)$) {Endowrist};
+\node[box] (Opt) at (0,0) {Operator};
+\node[box] (Geo) at ($(3,0) + (Opt)$) {Geomagic\\touch};
+\node[box] (ros) at ($(3,0) + (Geo)$) {Robotic\\operating\\system};
+\node[box] (davin) at ($(3,0) + (ros)$) {Da Vinci\\robot};
+\node[box] (end) at ($(3,0) + (davin)$) {Endowrist};
 
 
 \draw[->, ultra thick] ([yshift=0.3cm]Opt.east) -- ([yshift=0.3cm]Geo.west);
