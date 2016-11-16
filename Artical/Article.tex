@@ -1,4 +1,3 @@
-
 \documentclass[conference]{IEEEtran}
 \usepackage{graphicx} 						% Haandtering af eksterne billeder (JPG, PNG, EPS, PDF)
 \usepackage{multirow}                		% Fletning af raekker og kolonner (\multicolumn og \multirow)
@@ -506,6 +505,38 @@ Because of the reasons mentioned in section II, we cannot measure it directly us
 \subsection{Mathematical model}
 The main challenge we face in making a model lies in the fact that the pulley system on the Endowrist is non-linear, and thus it's full dynamics cannot be modeled in a simple manner.
 Regardless, a physical model for grip force can be derived \cite{kim2014dynamic}, which serves as a good starting point for parameter estimation.
+This model only calculates grip force, which we consider acceptable since it is the arguably the most important variable to feedback to the operator.
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{pulleys.pdf}
+\caption{The pulley system of the Endowrist gripper modeled by equations (\ref{eq:dyn_1})-(\ref{eq:dyn_5}).}
+\end{figure}
+
+\begin{align}\label{eq:dyn_1}
+J_m\ddot{{\theta}_m} + B_m \dot{{\theta}_m} + R_m T_{m1}(R_m {\theta}_m - R_1 {\theta}_1) = u_m
+\end{align}
+\begin{align}\label{eq:dyn_2}
+J_L\ddot{{\theta}_L} + B_L \dot{{\theta}_L} + R_L T_{L3}(R_L {\theta}_L - R_3 {\theta}_3) = u_L
+\end{align}
+\begin{multline}\label{eq:dyn_3}
+J_1\ddot{{\theta}_1}+ B_1 \dot{{\theta}_1} + R_1 T_{12}(R_1{\theta_1} - R_1{\theta}_3 - R_2{\theta_2})\\ = R_1 T_m(R_m{\theta}_m - R_1{\theta}_1)
+\end{multline}
+\begin{align}\label{eq:dyn_4}
+J_2\ddot{{\theta}_2}+ B_2 \dot{{\theta}_2} + LF = R_2 T_{12}(R_1{\theta_1} - R_1{\theta}_3 - R_2{\theta_2})
+\end{align}
+\begin{multline}\label{eq:dyn_5}
+J_3\ddot{{\theta}_3}+ B_3 \dot{{\theta}_3} + R_1 T_{12}(R_1{\theta_1} - R_1{\theta}_3 - R_2{\theta_2})\\ = R_3 T_{L3}(R_L{\theta}_L - R_3{\theta}_3)
+\end{multline}
+
+From equations \ref{eq:dyn_1}-\ref{eq:dyn_5} it is visible that this system can be converted to a linear state space model.
+Moreover, simplifying the equations by replacing physical coefficients with general ones results in a 10th order state space model with 31 parameters.
+This is the model we will perform parameter identification on.
+
+\subsection{Parameter identification}
+Parameter identification is performed using the Matlab parameter identification toolbox.
+For us to tune the model parameters, it is necessary for us to perform experiments for input-output measurement datasets.
+
+We do this by applying a known force $F$ to the gripper.
 
 \section{Communication}
 \section{Results}
