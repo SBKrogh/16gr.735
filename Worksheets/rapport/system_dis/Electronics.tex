@@ -5,7 +5,16 @@
 %\subsection{Single board reconfigurable I/O}
 
 \todo{Sloth reference}
-The electronic setup contains a \textbf{Single Board Reconfigurable Input/Output 9636} (sbRIO) controller which is responsible for interfacing between the surgical robot and the computer running ROS\todo{maby ref to ROS section}\secref{sec:ros}. It reads the sensor measurements, sends them to the PC and controls the motors based on the received reference signals. The sbRIO has built in safety protocols that disable the motors in case of error.
+The electronic setup contains a \textbf{Single Board Reconfigurable Input/Output 9636} (sbRIO) controller, see \figref{fig:sbRIO9636}, which is responsible for interfacing between the surgical robot and the computer running ROS\todo{maby ref to ROS section}\secref{sec:ros}. It reads the sensor measurements, sends them to the PC and controls the motors based on the received reference signals. The sbRIO has built in safety protocols that disable the motors in case of error.
+
+\begin{figure}[H]
+	\centering
+		\centering
+		\includegraphics[width=0.7\linewidth]{sbRIO9636.jpg}
+		\caption{The sbRIO 9636 board\cite{sbRIO9636Pic}}
+		\label{fig:sbRIO9636}
+\end{figure}
+
 
 The controller consists of
 \begin{itemize}
