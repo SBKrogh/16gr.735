@@ -5,7 +5,7 @@
 %\subsection{Single board reconfigurable I/O}
 
 \todo{Sloth reference}
-The electronic setup contains a \textbf{Single Board Reconfigurable Input/Output 9636} (sbRIO) controller, see \figref{fig:sbRIO9636}, which is responsible for interfacing between the surgical robot and the computer running ROS\todo{maby ref to ROS section}\secref{sec:ros}. It reads the sensor measurements, sends them to the PC and controls the motors based on the received reference signals. The sbRIO has built in safety protocols that disable the motors in case of error.
+The electronic setup contains a \textbf{Single Board Reconfigurable Input/Output 9636} (sbRIO) controller, see \figref{fig:sbRIO9636}, which is responsible for interfacing between the surgical robot and the computer running ROS, see \secref{sec:ros}. It reads the sensor measurements, sends them to the PC and controls the motors based on the received reference signals. The sbRIO has built in safety protocols that disable the motors in case of error.
 
 \begin{figure}[H]
 	\centering
@@ -41,9 +41,9 @@ The sbRIO communicates with the PC using UDP protocol.
 
 
 \subsection{Motor}\label{Maxon_Motor}
-The four motors for actuating the Endowrist is sold as a bulk solution which include motor\cite{motor_motor}, gear\cite{motor_gear} and a position encoder\cite{motor_encoder}, see \figref{fig:Full_motor _dis}.
+The four motors for actuating the Endowrist is sold as a bulk solution which include motor, gear and a position encoder, see \figref{fig:Full_motor _dis}.
 
-The control of these motors are done through the ESCON motor drivers, which are connected to the sbRIO board.\todo{Somehow we need to include the datasheets within the worksheets}
+The control of these motors are done through the ESCON motor drivers, which are connected to the sbRIO board. The datasheet for the motor parts can be found on \path{CD:/Datasheets/Motor/}\todo{(Datasheet) Don't know if this is necessary - Maby we don't have to turne in a physical paper??}
 
 %The ESCON motor controllers are attached to the sbRIO controller and send the control signals through cables. The motor has a nominal torque of 6.96 mNm.
 %4 Maxon motors are used for the actuation of the endowrist. The motors are implemented using a combination gear (Maxon 353816) including the gearing, the servo motor and the sensors. The ESCON motor controllers are attached to the sbRIO controller and send the control signals through cables. The motor has a nominal torque of 6.96 mNm.
@@ -54,27 +54,25 @@ The control of these motors are done through the ESCON motor drivers, which are 
 		\vspace{0pt}
 		\centering
 		\includegraphics[width=\linewidth]{motor.jpg}
-		\caption{The Maxon 110160 \newline DC motor}
+		\caption{The Maxon 110160 \newline DC motor\cite{motor_motor}}
 		\label{fig:motor}
 	\end{subfigure}
 	\begin{subfigure}{.32\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{motor_gear.jpg}
-		\caption{The planetary gearhead equipped with sleeve bearing}
+		\caption{The planetary gearhead equipped with sleeve bearing\cite{motor_gear}}
 		\label{fig:motor_gear}
 	\end{subfigure}
 	\begin{subfigure}{.32\textwidth}
 	\hspace{5pt}
 		\centering
 		\includegraphics[width=\linewidth]{motor_sensor.jpg}
-		\caption{The encoder used for getting angular data}
+		\caption{The encoder used for getting angular data\cite{motor_encoder}}
 		\label{fig:motor_sensor}
 	\end{subfigure}
 	\caption{The combination gear disassembled}
 	\label{fig:Full_motor _dis}
 \end{figure}
-\todo{should we include a ref for the pictures?}
-
 
 
 
