@@ -2,35 +2,43 @@
 
 \subsection*{Purpose:}
 
-Determine which of the protocol is the faster in the current setup.
+To determine the maximum frequency that can be used with the TCP/IP protocol. To do so, we will measure the round time trip delay and jitter and look at those values as a function of the delay used in the sending loop.
 
 \subsection*{Test equipment:}
 
-The sbRIO 9636 is connected to a computer running Ubuntu 14.04 LTS via an Ethernet cable of 1 gpbs\todo{check the speed}. The computer runs the ROS nodes that are used for the project, thus it communicates with both the Geomagic Touch and the sbRIO and it sends random setpoints to the sbRIO\todo{It would be better to have some kind of real setpoints}. The sbRIO uses the entire code of the project but is not connected to the motors for safety reason. 
-Wireshark is used on the computer to take measurements.%The data obtained through Wireshark are then exported to a CSV file to be analyzed.
+The sbRIO 9636 is connected to a computer running Ubuntu 14.04 LTS via an Ethernet cable of 1 gpbs\todo{check the speed}. The computer runs the ROS nodes that are used for the project, thus it communicates with both the Geomagic Touch and the sbRIO and it sends random setpoints to the sbRIO. The sbRIO uses the entire code of the project.
 
 \subsection*{Procedure:}
 
-First, Wireshark is set up to record traffic on the Ethernet interface and to filter only the packets that use TCP/IP. The ROS node is started on the computer and then the sbRIO is switched on. The system is run for at least 10 seconds and then stopped.
+\begin{enumerate}
+	\item The sbRIO is started and connected to the computer.
+	\item The ROS node is started and ran for at least 60 seconds. 
+	\item The log files are retrieved to be analyzed using Matlab.
+\end{enumerate}
+Those steps are repeated for the following settings: 10 ms, 5 ms, 3 ms, 2.5 ms, 2 ms, 1.5 ms and 1 ms.
 
-The same operation is repeated using UDP instead of TCP/IP.
 
 \subsection*{Measuring data:}
 
-The times at which a packet was received are measured on both the sbRIO and the computer.
-On the computer, data are recorded using Wireshark and exported to a CSV file so they can be analyzed using other softwares. The CSV file contains all information about the packets that were recorded by Wireshark.
-On the sbRIO, the data are stored in the memory and retrieved later.
-Then the data from both end are combined to be analyzed.
-Only the packets that arrived during the first 10 seconds are kept.
+The times at which a packet was received or sent are recorded in files through the sbRIO driver on the computer.
 
 \subsection*{Results:}
 
-$\begin{array}{c|ccc}
-	Protocol & \text{Average delay} & Jitter & \text{Error rate}\\
-	\hline
-	TCP/IP & 4 & 4 & 1 \\
-	UDP & 2 & 1 & 4 
-\end{array}$
+\begin{center}
+	$\begin{tabular}{c|ccccc}
+		Delay & \text{Sending frequency} & \text{Receiving frequency} & \text{Average delay} & Jitter & \text{Error rate}\\
+		\hline
+		10ms & 4 & 4 & 1 & 1 & 1 \\
+		5ms & 2 & 1 & 4 & 1 & 1 \\
+		3ms & 4 & 4 & 1 & 1 & 1 \\
+		2.5ms & 4 & 4 & 1 & 1 & 1 \\
+		2ms & 4 & 4 & 1 & 1 & 1 \\
+		1.5ms & 4 & 4 & 1 & 1 & 1 \\
+		1ms & 4 & 4 & 1 & 1 & 1 \\
+	\end{tabular}$
+	\captionof{table}{TCP}
+\end{center}
+
 
 \subsection*{Uncertainties of measurement:}
 

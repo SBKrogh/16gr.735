@@ -23,12 +23,11 @@ In the former system the data exchanged through the TCP/IP connection follow the
 			-0.36891269683837890625,-0.39591121673583984375]
 	}
 }
-\end{lstlisting} \todo{do we use the real numbers to show how long it is or do we just put integers?}
+\end{lstlisting}
 
-As we can see in this example, the structure associate another structure to the element called "p4\_primary" which designates the Endowrist. This second structure contains an array of positions, an array of velocities and an array of efforts with a value for each of the motors of the Endowrist in each array.
+As it can be seen in this example, the structure associate another structure to the element called "p4\_primary" which designates the Endowrist. This second structure contains an array of positions, an array of velocities and an array of efforts with a value for each of the motors of the Endowrist in each array.
 
-Let's now look at the way this communication was implemented in ROS and on the sbRIO
-
+The communication that was implemented is described in \secref{sec:ros} and \secref{sec:sbrio}
 \subsection{ROS}\label{sec:ros}
 
 In order to communicate between ROS and the sbRIO board the university created a ROS node called davinci\_driver. This driver is composed of three parts: the low level driver called sbrio\_driver that communicate directly with the sbRIO board, the high level driver called ros\_driver that handle the communication with the other ROS nodes and the middle level driver that allow the communication between the low level driver and the high level one.
@@ -36,7 +35,7 @@ In order to communicate between ROS and the sbRIO board the university created a
 
 The high level driver simply updates the data for the other nodes and transmits the setpoints to the low level driver. The name "setpoint" is used to designate the next position a motor should take.
 
-The low level driver connects to one sbRIO board using a TCP/IP socket and launch a loop in a thread to handle the communication. The data exchange is made using a \gls{JSON} files as previously explained. The structure of the code can be seen in figure\figref{original_driver}.
+The low level driver connects to one sbRIO board using a TCP/IP socket and launch a loop in a thread to handle the communication. The data exchange is made using a \gls{JSON} files as previously explained. The structure of the code can be seen in\figref{fig:original_driver}.
 
 \begin{figure}[H]
 \centering
@@ -56,19 +55,19 @@ The low level driver connects to one sbRIO board using a TCP/IP socket and launc
 
 \end{tikzpicture}
 \caption{Structure of the original sbRIO driver}
-\label{original_driver}
+\label{fig:original_driver}
 \end{figure}
 
 The middle level driver allows the creation of more than one low level driver. Thanks to this it is possible to communicate with more than one arm of the DaVinci Robot at once. It also handles the communication between the high level driver and the low level so that there is no need for the client to acquire mutexes.
 
 
-\subsection{sbRIO}
+\subsection{sbRIO}\label{sec:sbrio}
 
 \input{rapport/communication/Min_speed.tex}
 
-\section{Improvements: What, Why and How}
+\section{Improvements}\label{sec:improvements}
 
-As it was previously stated, the current communication is set to run at a frequency of 100Hz and to do a force feedback we need more than 300Hz. Which means that it is required to find a way to speed up the communication in order to do a force feedback. Speeding up the communication could be done by three different ways:
+As stated in \secref{sec:min_speed}, the current communication is set to run at a frequency of 100Hz and to do a force feedback we need more than 300Hz. This means that it is required to find a way to speed up the communication in order to do a force feedback. Speeding up the communication could be done by three different ways:
 
 \begin{itemize}
 	\item Find a faster communication protocol,
@@ -78,7 +77,7 @@ As it was previously stated, the current communication is set to run at a freque
 \todo{More analyses is required}
 
 Implementing faster hardware does not match with the goals of our project one of them being to use only the existing hardware. 
-However, finding a communication protocol faster than TCP/IP is possible as the safeties in the protocol tend to slow down the overall speed of the communication. Furthermore, some of the safeties like congestion control are irrelevant in our case since we are directly connected to the destination. Flow control is not necessary as the need for flow control implies that a delay is created on the receiving side which would induce delay in the entire system. Reliable transport and ordered delivery are a problem for us since retransmitting data is useless in our case as the data will be deprecated. Instead, it is much more interesting to receive the new data instead. For those reasons, the new protocol we chose is the \gls{UDP} which does not implement those tools.
+However, finding a communication protocol faster than TCP/IP is possible as the safeties in the protocol tend to slow down the overall speed of the communication. Furthermore, some of the safeties like congestion control are irrelevant in our case since we are directly connected to the destination. Flow control is not necessary as the need for flow control implies that a delay is created on the receiving side which would induce delay in the entire system. Reliable transport and ordered delivery are a problem for us since retransmitting data is useless in our case as the data will be deprecated. Instead, it is much more interesting to receive the new data. For those reasons, the new protocol we chose is the \gls{UDP} which does not implement those tools.
 
 \section*{User datagram protocol}
 \gls{UDP} communication protocol is a faster way of communicating compared to TCP/IP. It is connectionless which means that it wont establish a connection before sending data. When data is transmitted, new data is loaded into the transmitter buffer and then send when the connection line is free, thus the data is not stored at the transmitter as in TCP/IP. Furthermore the \gls{UDP} protocol does not wait for an acknowledgment and thereby just sends the data as fast as possible to the specified address.
@@ -152,26 +151,26 @@ By removing the names from the string and compressing a data, the string can bec
 \end{figure}
 
 \section{Implementation}
-Those improvements need to be implemented on both ROS's and sbRIO's side
+The improvements described in \secref{sec:improvements} need to be implemented on both ROS's and sbRIO's side
 
 \subsection{ROS side}
 
-In order to implement in ROS the improvements described to increase the speed of the communication it is necessary for us to write a new driver. As previously explained, the new driver should use \gls{UDP} instead of TCP/IP. It should also transmit the actual data without using a \gls{JSON} Stream so that the size of each packets is reduced. In addition to those objectives we would like to modify as little as possible the current structure of the ROS node so that we don't have to rewrite the entire system. 
-We just defined three goals that need to be fulfilled when writing the new driver. Let's identify those goals with numbers:
+In order to implement in ROS the improvements described to increase the speed of the communication it is necessary to write a new driver. As previously explained, the new driver should use \gls{UDP} instead of TCP/IP. It should also transmit the actual data without using a \gls{JSON} Stream so that the size of each packets is reduced. In addition to those objectives it would be better to modify as little as possible the current structure of the ROS node so that it does not have to be fully rewritten. 
+Three goals that need to be fulfilled when writing the new driver were defined. The goals are stated below:
 \begin{enumerate}
 	\item Replace TCP by UDP
 	\item Replace the \gls{JSON} Stream by the numerical values
 	\item Modify as little as possible the original driver
 \end{enumerate}
 
-The modifications that need to be made in order to carry duty 1. and 2. are related to the communication protocol and the format of the transmitted data which are both handled by the low level driver. In order to fulfill goal 3. we should aim to modify the low level driver only without having consequences on the higher level drivers. This means that the public functions should keep the same prototype and that the format of the data available for them should stay the same (i.e vectors of double)\todo{is it possible to read the mode of the motor driver from the RIO}. We should also try to keep using the boost library used in the original driver to handle threads and mutexes.
+The modifications that need to be made in order to carry duty 1. and 2. are related to the communication protocol and the format of the transmitted data which are both handled by the low level driver. In order to fulfill goal 3. only the low level driver should be modified without having consequences on the higher level drivers. This means that the public functions should keep the same prototype and that the format of the data available for them should stay the same (i.e vectors of double)\todo{is it possible to read the mode of the motor driver from the RIO}. The boost library should be used as it was in the original driver, to handle threads and mutexes.
 
-The socket initialization for the \gls{UDP} protocol is very close to the one made for TCP protocol, thanks to this the establishment of the communication with the sbRIO is similar in both the old and new drivers. However, the \gls{UDP} being connectionless it is not possible to use the same method as before to read incoming data, i.e it is not possible to look if some new data arrived, with \gls{UDP} it is necessary to constantly be listening for new incoming data. That is why we need to modify the communication loop so that it is always waiting to receive a packet and that it sends data when required. However, if we used the communication loop shown in \figref{original_driver}, the loop would be blocking if no packet was received. To solve this issue we create a new thread that will wait to receive a packet, handle the packet and start again. The new communication structure is shown in \figref{new_driver}.
+The socket initialization for the \gls{UDP} protocol is very close to the one made for TCP protocol, thanks to this the establishment of the communication with the sbRIO is similar in both the old and new drivers. However, the \gls{UDP} being connectionless it is not possible to use the same method as before to read incoming data, i.e it is not possible to look if some new data arrived, with \gls{UDP} it is necessary to constantly be listening for new incoming data. That is why the communication loop is to be modified so that it is always waiting to receive a packet and that it sends data when required. However, if the communication loop shown in \figref{original_driver} was used, the loop would be blocking if no packet was received. To solve this issue a new thread is created that will wait to receive a packet, handle the packet and start again. This new communication structure is shown in \figref{new_driver}.
 
-As explained before, when the \gls{JSON} Stream was removed we decided that we would only send numerical data. And as we keep goal 3. in mind, we need to receive the position, velocity and effort as float and one boolean for each motor and to send a setpoint as a double and a boolean for each motor. The received values must be made available as double for the higher levels by storing them in the vector of doubles. For simplicity we decided that the packet should be following the structure described in \figref{received_packet}. To reach the desired vectors, the received bitcode stored in an array of char is copied in a float variable that we convert in a double and then the value in the vector is updated using this double. As the endianness of the sbRIO is not the same as the one used on most computer, when the bitcode is copied to the float variable the order of the bytes is reversed (the first byte become the last one).
+As explained before, when the \gls{JSON} Stream was removed it was decided that only send numerical data would be sent. And as goal 3. is kept in mind, it is needed to receive the position, velocity and effort as float and one boolean for each motor and to send a setpoint as a double and a boolean for each motor. The received values must be made available as double for the higher levels by storing them in the vector of doubles. For simplicity it was decided that the packet should be following the structure described in \figref{received_packet}. To reach the desired vectors, the received bitcode stored in an array of char is copied in a float variable that is converted in a double and then the value in the vector is updated using this double. As the endianness of the sbRIO is not the same as the one used on most computer, when the bitcode is copied to the float variable the order of the bytes is reversed (the first byte become the last one).
 
 The structure of the sent packet is shown in~\figref{sent_packet}. To build the packet, the same logic as before is used. The bitcode of the numerical values is copied into an array and the array is sent.
-In regards to the boolean values, we store them in a byte with 1 bit per value which is possible only because the number of motors for one arm is 7 (i.e inferior to 8).
+In regards to the boolean values, they are stored in a byte with 1 bit per value which is possible only because the number of motors for one arm is 7 (i.e inferior to 8 which is the maximum amount of booleans that could be stored in 1 byte).
 
 \begin{figure}[H]
 \centering
@@ -213,7 +212,7 @@ In regards to the boolean values, we store them in a byte with 1 bit per value w
 The driver described is functional, however there is one feature of the TCP/IP that was usefull to our system and that we lost by switching to UDP: the connection timeout detection. As safety is essential in this system, it is necessary to implement an additional layer to the communication to make it more reliable. To implement this safety we have two options: using a free library or implement our own safety protocol. The free librairies that can be found include UDT\cite{UDT} \todoc{the author doesn't give his real name, is that ok?} and ENet\cite{ENet}. Those librairies provide a reliable option for long distances communication by adding a number of features. However on the ROS side, it is only necessary to alarm the user of the connection timeout. For such a simple purpose, the free librairies would add to many features that are useless for us and thus slow down the communication. That is why we chose to implement our own safety protocol.
 
 
- In order to do so, we decided to add a counter to the current driver. Everytime the thread1 check if some data should be sent, the counter is increased by one. And everytime a packet is received, the counter is reset to 0. In addition to incrementing the counter the thread1 will test the value, if it is superior to 10 (arbitrary value), a message is sent to indicate the packet loss. If the value is superior to 20, a message is sent to indicate connection timeout and the system on ROS is shut down. The new code structure is shown in ~\figref{new_safe_driver}
+ In order to do so, we decided to add a counter to the current driver. Everytime the thread1 check if some data should be sent, the counter is increased by one. Everytime a packet is received, the counter is reset to 0 in thread2. In addition to incrementing the counter the thread1 will test the value, if it is superior to 10 (arbitrary value), a message is sent to indicate the packet loss. If the value is superior to 20, a message is sent to indicate connection timeout and the system on ROS is shut down. The new code structure is shown in ~\figref{new_safe_driver}
 
 \begin{figure}[H]
 \centering

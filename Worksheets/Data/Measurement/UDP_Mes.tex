@@ -1,1 +1,62 @@
 \section{UDP measurements}\label{sec_udp_mes}
+
+\subsection*{Purpose:}
+
+To determine the maximum frequency that can be used with the UDP protocol. To do so, we will measure the round time trip delay and jitter and look at those values as a function of the delay used in the sending loop. For the UDP protocol we take measurements for two configurations: one with the sending and receiving serialized on the sbRIO and one with both done in parallel using separate threads. 
+
+\subsection*{Test equipment:}
+
+The sbRIO 9636 is connected to a computer running Ubuntu 14.04 LTS via an Ethernet cable of 1 gpbs\todo{check the speed}. The computer runs the ROS nodes that are used for the project, thus it communicates with both the Geomagic Touch and the sbRIO and it sends random setpoints to the sbRIO. The sbRIO uses the entire code of the project.
+
+\subsection*{Procedure:}
+
+\begin{enumerate}
+	\item The sbRIO is started and connected to the computer.
+	\item The ROS node is started and ran for at least 60 seconds. 
+	\item The log files are retrieved to be analyzed using Matlab.
+\end{enumerate}
+Those steps are repeated for both the serial and parallel case for the following settings: 10 ms, 5 ms, 3 ms, 2.5 ms, 2 ms, 1.5 ms and 1 ms.
+
+
+\subsection*{Measuring data:}
+
+The times at which a packet was received or sent are recorded in files through the sbRIO driver on the computer.
+
+\subsection*{Results:}
+\begin{center}
+	$\begin{tabular}{c|ccccc}
+		Delay & \text{Sending frequency} & \text{Receiving frequency} & \text{Average delay} & Jitter & \text{Error rate}\\
+		\hline
+		10ms & 4 & 4 & 1 & 1 & 1 \\
+		5ms & 2 & 1 & 4 & 1 & 1 \\
+		3ms & 4 & 4 & 1 & 1 & 1 \\
+		2.5ms & 4 & 4 & 1 & 1 & 1 \\
+		2ms & 4 & 4 & 1 & 1 & 1 \\
+		1.5ms & 4 & 4 & 1 & 1 & 1 \\
+		1ms & 4 & 4 & 1 & 1 & 1 \\
+	\end{tabular}$
+	\captionof{table}{Serialized UDP}
+\end{center}
+
+\begin{center}
+	$\begin{tabular}{c|ccccc}
+		Delay & \text{Sending frequency} & \text{Receiving frequency} & \text{Average delay} & Jitter & \text{Error rate}\\
+		\hline
+		10ms & 4 & 4 & 1 & 1 & 1 \\
+		5ms & 2 & 1 & 4 & 1 & 1 \\
+		3ms & 4 & 4 & 1 & 1 & 1 \\
+		2.5ms & 4 & 4 & 1 & 1 & 1 \\
+		2ms & 4 & 4 & 1 & 1 & 1 \\
+		1.5ms & 4 & 4 & 1 & 1 & 1 \\
+		1ms & 4 & 4 & 1 & 1 & 1 \\
+	\end{tabular}$
+	\captionof{table}{Parallel UDP}
+\end{center}
+
+\subsection*{Uncertainties of measurement:}
+
+??
+
+\subsection*{Conclusion:}
+
+Hopefully UDP is faster.
