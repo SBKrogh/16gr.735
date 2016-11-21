@@ -391,7 +391,7 @@ To achieve this, we use the Geomagics haptic feedback feature in order to projec
 The communication between system components is done through the Robot Operating System (ROS).
 
 \subsection{Endowrist}
-An Endowrist, see \ref{fig:Endo_plates}\todo{figref?} is a surgical tool which can be manipulated as a human wrist. 
+An Endowrist, see \ref{fig:Endo_plates} \todo{figref?} is a surgical tool which can be manipulated as a human wrist. 
 It is used in surgical procedures such as Laparoscopic surgeries, better known as minimally invasive surgery (MIS), where small incisions in the human body is made during the surgery. 
 Because the incision cuts are small, blood lose\todo{blood loss?} during the surgery and the risk of infection is reduced. This has a positive effect on the recovery time for the patient.
 
@@ -527,6 +527,8 @@ J_2\ddot{{\theta}_2}+ B_2 \dot{{\theta}_2} + LF = R_2 T_{12}(R_1{\theta_1} - R_1
 \begin{multline}\label{eq:dyn_5}
 J_3\ddot{{\theta}_3}+ B_3 \dot{{\theta}_3} + R_1 T_{12}(R_1{\theta_1} - R_1{\theta}_3 - R_2{\theta_2})\\ = R_3 T_{L3}(R_L{\theta}_L - R_3{\theta}_3)
 \end{multline}
+
+\todo{we should include what each variable corresponds to (T, J, R, F, theta)}
 
 From equations \ref{eq:dyn_1}-\ref{eq:dyn_5} it is visible that this system can be converted to a linear state space model.
 Moreover, simplifying the equations by replacing physical coefficients with general ones results in a 10th order state space model with 31 parameters.
