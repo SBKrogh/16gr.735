@@ -3,42 +3,74 @@
 As the Endowrist tool is highly nonlinear, measurement of how the end effector responds to external force should be made.
 
 \subsection*{Purpose:}
-To measure how external force/resistance to the end effector acts on the current consumption to the motors to contain the same position as required.
+To measure the relationship between the current and the force at the end-effector.
+
+This test was made from engineering a simple setup where force could be measured. Therefore it should be noted that this test is not ideal as a load cell would have been preferable but it was not available. However it was possible to get a rough estimate of the relationship between current and force. 
+
+The test setup can be seen on \figref{fig:Overview_force} 
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{.45\textwidth}
+		\centering
+		\vspace{24pt}
+		\includegraphics[width=\linewidth]{overall_force.jpg}
+		\caption{The entire test setup. From the right, a scale for measuring the downwards force, a piece of wood for stiffening the Endowrist and keeping it it place and the Endowrist holder with motors.}
+		\label{fig:entire_force_testsetup}
+	\end{subfigure}
+	\begin{subfigure}{.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{endeffector_force.jpg}
+		\caption{A 3D printed case which made it possible to make an orthogonal force from the end-effector to the scale.}
+		\label{fig:endeffector_force}
+	\end{subfigure}
+\caption{Test setup for the force estimation of the end-effector.}
+\label{fig:Overview_force}
+\end{figure}
 
 \subsection*{Test equipment:}
 \begin{itemize}
 \item Endowrist model 420093 (AAU number: \#4).
-\item One liter water bottle with string attached.
 \item Maxon 110160 motor with attached Maxon gearhead 110356 and Maxon encoder 201937.
-\item Weight scale: Kern FCB 12K1 (AAU number: 86759)
-\item ESCON Studio 2.2: to measure current consumption.
+\item Weight scale: Kern FCB 12K1 (AAU number: 86759).
+\item Labview for measuring the current.
+\item 3D printed case
 \end{itemize}
 
 \subsection*{Procedure:}
-The following procedure is made tree times for three different angles of the end effector on the Endowrist. The angles is chosen to be $-90^\circ$, $-0^\circ$ and $90^\circ$.
+The following procedure was made for the force estimation:
 \begin{enumerate}
-\item The water bottle is filled with water until a total of a 100 grams are reached. 
-\item The water bottle is attached to the end of the Endowrist and the current for holding it is measured.
-\item The water bottles weight is increased with 100 grams of water and the current is measured.\\
-Step three and four is repeated until a total of 1000 grams is reached.
-
-
+\item The end-effector is set to an angle of $0^\circ$.
+\item The end-effector was directly connected to the 3D printed case and taped to the scale.
+\item The scale is reset to zero.
+\item Current is increased to the motor which control the yaw of the end-effector, until first force measurement was available and noted.
+\item Current is increased with approx. 50 - 100 mA and the force is noted in respect to the current until a current of 1 ampere is reached.
 \end{enumerate}
 
+
 \subsection*{Measuring data:}
+The data from the measurements can be seen on \figref{das}. A linear expression is made from the 340 mA sample and up and can be seen on \eqref{eq:linear_force_endo}.
 
+\begin{equation}
+\text{y} = 0.0028 \cdot \text{x} -0.8259 
+\label{eq:linear_force_endo}
+\end{equation} 
 
-\todo{Include picture of measurement (Matlab)}
 
 
 \subsection*{Results:}
+It can be seen from the graph on \figref{asd} that the force on the end-effector is highly nonlinear. The friction from the gearing and the Endowrist does that the force first begins to show around 200 mA due to the friction.
 
 \subsection*{Uncertainties of measurement:}
 \begin{itemize}
-\item Weight calibrated.
-\item The attachment of the string between the end effector and the water bottle was not at the end of the end effector.
-\item ESCON studio 2.2 software error.
+\item Weight calibration.
+\item Not 100 \% orthogonal force to the scale.
+\item Elasticity of the 3D printed case, which made it possible for the end-effector to move a bit and get a slightly different angle than $0^\circ$. 
+\item Movement of the entire setup when the elasticity of the 3D printed case reached a certain point.
 \end{itemize}
 
 \subsection*{Conclusion:}
+It can be seen that the force on the end-effector has an exponential growth and is therefore not linear.
+An estimation of a linear force increase is made from the 340 mA sample and up.\\
+This test setup made it possible to make a rough estimate of the force at the end-effector. However this is not an ideal setup.
 
