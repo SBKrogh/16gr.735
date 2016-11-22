@@ -541,6 +541,34 @@ For us to tune the model parameters, it is necessary for us to perform experimen
 We do this by applying a known force $F$ to the gripper and measuring efforts on the actuators.
 The goal here is to get a fully parametrized state space model which we can then use for grip force estimation with a Kalman filter.
 
+At the time of wiriting this article, we are stil in the process of developing a full setup for fitting the state space model.
+As a working model we are currently using an linear approximation based on torque and output downwards force measurement.
+
+\begin{figure}
+	\centering
+	\begin{subfigure}{.45\linewidth}
+		\centering
+		\vspace{24pt}
+		\includegraphics[width=\linewidth]{overall_force.jpg}
+		\caption{The entire test setup. From the right, a scale for measuring the downwards force, a piece of wood for stiffening the Endowrist and keeping it it place and the Endowrist holder with motors.}
+		\label{fig:entire_force_testsetup}
+	\end{subfigure}
+	\begin{subfigure}{.45\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{endeffector_force.jpg}
+		\caption{A 3D printed case which made it possible to make an orthogonal force from the end-effector to the scale.}
+		\label{fig:endeffector_force}
+	\end{subfigure}
+\caption{Test setup for the force estimation of the end-effector.}
+\label{fig:Overview_force}
+\end{figure}
+
+A piecewise linear expression is made from the 340 mA sample and up and can be seen on \eqref{eq:linear_force_endo}.
+
+\begin{equation}
+\text{y} = 0.0028 \cdot \text{x} -0.8259 
+\label{eq:linear_force_endo}
+\end{equation} 
 \section{Communication}
 \section{Results}
 % An example of a floating figure using the graphicx package.
