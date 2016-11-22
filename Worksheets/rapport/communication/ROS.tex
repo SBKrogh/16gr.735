@@ -1,0 +1,36 @@
+\subsection{ROS}\label{sec:ros}
+
+In order to communicate between ROS and the sbRIO board the university created a ROS node called davinci\_driver. This driver is composed of three parts:
+
+\begin{itemize}
+\item Low level driver
+\item Middel level driver
+\item High level driver
+\end{itemize}
+
+The low level driver, called sbrio\_driver, communicate directly with the sbRIO board. The high level driver, called ros\_driver, handled the communication between ROS nodes. It updates the data for the nodes and transmits the setpoints to the low level driver through the middel driver. The name "setpoint" is used to designate the next position a motor should take.\\
+The middle level driver handled the communication between the low level driver and the high level driver.\\
+The low level driver connects to one sbRIO board using a TCP/IP socket and launch a loop in a thread to handle the communication. The data exchange is made using a \gls{JSON} files as previously explained. The structure of the code can be seen in\figref{fig:original_driver}.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+
+\node[box] (Initialization) at (0,0) {Initialization};
+\node[box] (Receive) at ($(0,-2)+(Initialization)$) {Read the data \\if some were received};
+\node[box] (Send) at ($(0,-2)+(Receive)$) {Send if the\\ control changed};
+\node[box] (Sleep) at ($(0,-2)+(Send)$) {Sleep};
+\node[box] (Update_State) at ($(5,0)+(Receive)$) {Update the data\\ available for higher\\level processes};
+
+\draw[->, ultra thick] (Initialization) -- (Receive);
+\draw[->, ultra thick] (Receive) -- (Update_State);
+\draw[->, ultra thick] (Receive) -- (Send);
+\draw[->, ultra thick] (Send) -- (Sleep);
+\draw[->, ultra thick] (Sleep.west) -| ++(-2,0) |- (Receive);
+
+\end{tikzpicture}
+\caption{Structure of the original sbRIO driver}
+\label{fig:original_driver}
+\end{figure}
+
+The middle level driver allows the creation of more than one low level driver. Due to this it is possible to communicate with more than one arm of the DaVinci Robot at once. It also handles the communication between the high level driver and the low level so that there is no need for the client to acquire mutexes.\todo{last sentence - half of it is double confetti}
