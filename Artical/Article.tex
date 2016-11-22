@@ -12,6 +12,9 @@
 \usepackage[utf8]{inputenc}
 \usepackage{url}
 
+
+
+
 % Some Computer Society conferences also require the compsoc mode option,
 % but others use the standard conference format.
 %
@@ -260,6 +263,12 @@
 
 \usepackage{todonotes}
 
+% nomenclature
+  \usepackage{nomencl}
+  \makenomenclature
+  \setlength{\nomlabelwidth}{1cm}
+  \setlength{\nomitemsep}{-\parsep}
+
 % *** Do not adjust lengths that control margins, column widths, etc. ***
 % *** Do not use packages that alter fonts (such as pslatex).         ***
 % There should be no need to do such things with IEEEtran.cls V1.6 and later.
@@ -267,12 +276,14 @@
 % to submit to, of course. )
 
 
+
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 
 
 \begin{document}
-%
+\input{nomenclature.tex}
+
 % paper title
 % Titles are generally capitalized except for words such as a, an, and, as,
 % at, but, by, for, in, nor, of, on, or, the, to and up, which are usually
@@ -334,6 +345,7 @@
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
 \begin{abstract}
+
 Haptic feedback is a form of transferring information to the user via the sense of touch, usually through some sort of input device the user gives commands with.
 This makes it ideal for teleoperating tasks requiring precision in applied force, robotic surgery being a prime example.
 Currently, haptic feedback in teleoperation is subject to numerous constraints on time delay and accuracy.
@@ -347,7 +359,7 @@ The various constraints and challenges are adressed individually in each section
 % no keywords
 \hfill August 26, 2015
 
-
+\printnomenclature
 
 % For peer review papers, you can put extra information on the cover
 % page as needed:
