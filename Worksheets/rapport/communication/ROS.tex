@@ -8,9 +8,11 @@ In order to communicate between ROS and the sbRIO board the university created a
 \item High level driver
 \end{itemize}
 
-The low level driver, called sbrio\_driver, communicate directly with the sbRIO board. The high level driver, called ros\_driver, handled the communication between ROS nodes. It updates the data for the nodes and transmits the setpoints to the low level driver through the middel driver. The name "setpoint" is used to designate the next position a motor should take.\\
-The middle level driver handled the communication between the low level driver and the high level driver.\\
-The low level driver connects to one sbRIO board using a TCP/IP socket and launch a loop in a thread to handle the communication. The data exchange is made using a \gls{JSON} files as previously explained. The structure of the code can be seen in\figref{fig:original_driver}.
+The low level driver communicate directly with the sbRIO board. The high level driver handled the communication between ROS nodes. It updates the data for the nodes and transmits the setpoints to the low level driver through the middel driver. The name "setpoint" is used to designate the next position a motor should take.
+
+The middle level driver handles the creation(s) of the low lever driver(s) and communication between the low and high level driver, so there is no need for the client to acquire mutexes. Due to the opportunity of creating more than one low lever driver it is possible to communicate with more than one arm of the DaVinci robot.\todor{Just this column of text}
+
+The low level driver connects to one sbRIO board using a TCP/IP socket and launch a loop in a thread to handle the communication. The data exchange is made using \gls{JSON} files, see \secref{subsec:JSON}. The structure of the code can be seen in\figref{fig:original_driver}.
 
 \begin{figure}[H]
 \centering
@@ -32,5 +34,6 @@ The low level driver connects to one sbRIO board using a TCP/IP socket and launc
 \caption{Structure of the original sbRIO driver}
 \label{fig:original_driver}
 \end{figure}
+\todo{Figure is still unclear, make 5 lines of text describing the flow}
 
-The middle level driver allows the creation of more than one low level driver. Due to this it is possible to communicate with more than one arm of the DaVinci Robot at once. It also handles the communication between the high level driver and the low level so that there is no need for the client to acquire mutexes.\todo{last sentence - half of it is double confetti}
+% The middle level driver allows the creation of more than one low level driver. Due to this it is possible to communicate with more than one arm of the DaVinci Robot at once. It also handles the communication between the high level driver and the low level so that there is no need for the client to acquire mutexes.\todo{last sentence - half of it is double confetti}
