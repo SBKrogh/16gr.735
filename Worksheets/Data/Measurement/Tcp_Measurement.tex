@@ -6,34 +6,35 @@ To determine the maximum frequency that can be used with the TCP/IP protocol. To
 
 \subsection*{Test equipment:}
 
-The sbRIO 9636 is connected to a computer running Ubuntu 14.04 LTS via an Ethernet cable of 1 gpbs\todo{check the speed}. The computer runs the ROS nodes that are used for the project, thus it communicates with both the Geomagic Touch and the sbRIO and it sends random setpoints to the sbRIO. The sbRIO uses the entire code of the project.
+The sbRIO 9636 is connected to a computer running Ubuntu 14.04 LTS via an Ethernet cable of 1 gpbs. The computer runs the ROS nodes that are used for the project, thus it communicates with both the Geomagic Touch and the sbRIO and it sends random setpoints to the sbRIO. The sbRIO uses the entire code of the project.
 
 \subsection*{Procedure:}
 
 \begin{enumerate}
 	\item The sbRIO is started and connected to the computer.
-	\item The ROS node is started and ran for at least 60 seconds. 
-	\item The log files are retrieved to be analyzed using Matlab.
+	\item The ROS node is started.
+	\item tshark is started.% using this command: tshark -i 1 -f tcp -a duration:20 -w ~/wireshark_capture
+	\item Once the Wireshark recording is done the ROS node is stopped.
+	\item The log files are retrieved to be analyzed using Matlab and Wireshark.
 \end{enumerate}
-Those steps are repeated for the following settings: 10 ms, 2 ms and 0 ms.
+Those steps are repeated for both the serial and parallel case for the following settings: 10 ms, 2 ms and 0 ms.
 
 
 \subsection*{Measuring data:}
 
-The times at which a packet was received or sent are recorded in files through the sbRIO driver on the computer.
-
-\subsection*{Results:}
-
 \begin{center}
 	$\begin{tabular}{c|ccccc}
-		Delay & \text{Sending frequency} & \text{Receiving frequency} & \text{Average delay} & Jitter & \text{Error rate}\\
+		\text{Delay} & \text{Sending frequency (Hz)} & \text{Receiving frequency (Hz)} & \text{Average delay (ms)} & \text{Jitter} & \text{Error rate (\%)}\\
 		\hline
 		10ms & 4 & 4 & 1 & 1 & 1 \\
 		2ms & 4 & 4 & 1 & 1 & 1 \\
-		0ms & 4 & 4 & 1 & 1 & 1 \\
+		0ms & 1 & 1 & 1 & 1 & 15 \\
 	\end{tabular}$
 	\captionof{table}{TCP}
 \end{center}
+
+\subsection*{Results:}
+
 
 
 \subsection*{Uncertainties of measurement:}
