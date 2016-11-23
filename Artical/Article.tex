@@ -600,7 +600,7 @@ To decrease the size of the packets even further the packets could be compressed
 
 \subsection{Communication}
 
- It was stated before that the requirements for our system was to get to at least 600Hz and to reach 1000Hz if possible. As shown in Table \ref{tab:UDPMeasurements}, the connexion can go up to almost 1000Hz using UDP. However, the jitter is high and should not be neglected as in real time operation it may cause unexpected behaviour of the system. Addictional safety precautions should be taken to prevent those behaviour.
+ It was stated before that the requirements for our system was to get to at least 600Hz and to reach 1000Hz if possible. As shown in Table \ref{tab:UDPMeasurements}, the connexion can go up to almost 1000Hz using UDP. However, the jitter should not be neglected as the frequency get closer to 1000Hz the jitter will be high compared to the period and may cause unexpected behaviour in real time operation. This issue will be further discussed in the next section. %Addictional safety precautions should be taken to prevent those behaviour.
 
 
 \begin{table}
@@ -616,9 +616,9 @@ To decrease the size of the packets even further the packets could be compressed
     0ms & 981 & 1.4 & 2.7 & 5.1E-5 \\
     \hline
   \end{tabular}$
-  *Round Time Trip
+  *Round Time Trip\\
   **The number of data set needs to be increased for the final version
-  \caption{UDP}
+  \caption{UDP**}
   \label{tab:UDPMeasurements}
 \end{table}
 
