@@ -1,0 +1,20 @@
+\section{Robotic operating system}\label{sec:def_ROS}
+
+The \gls{ROS} is an open source software development tool for implementing robotics software. It provides the opportunity of hardware abstraction, low level device control, implementation of commonly used functionalities, messages between different processes and package management\cite{wiki_ros}. It provide tools and libraries which utilize the the opportunity of communicating between disturbed computers, obtaining, writing and running codes.
+
+\todoc{When we make a reference to e.g Wiki\_ROS, there is no author available. Is it okay to just write the Author as "Robotic operating systems" or how do we do this?}
+
+\GLS{ROS} has three different levels of concepts\cite{Wiki_ros_concepts}
+
+\begin{itemize}
+\item \textbf{The file system level}
+
+Handles the main unit for a ROS system which is packages. A package may include data sets, \gls{ROS} dependent libraries, configure files etc. to define a \gls{ROS} process. In \gls{ROS} a process is denoted as a node. 
+\item \textbf{The computation graph level}
+
+Handles the communication of the peer to peer network of the system in which data is processed. Through the computation graph level, the different nodes can communicate with each other by messages. When a node is sending data it is said to be publishing a topic. The different nodes can then subscribe to this topic to get the information that is published.
+\item \textbf{The Community level}
+
+ROS has a huge community which contain distribution of software installations, repositories and documentation of ROS. It also has a question and answer section with ROS related topics.\\
+This community makes the process of learning the system considerably easier.
+\end{itemize}
