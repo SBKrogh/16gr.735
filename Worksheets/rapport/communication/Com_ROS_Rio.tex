@@ -1,14 +1,15 @@
-\section{Communication between ROS and the sbRIO board in the current system}
+\section{Communication between the sbRIO and ROS}\label{sec:com_ROS_sbRIO}
 
 
 In the former system setup the sbRIO board and the computer running ROS are communicating through an ethernet cable using the TCP/IP protocol.\\ 
+
 \todom{Introduction to TCP/IP}
 TCP/IP is a connection orientated protocol, which first establish the connection between two devices\cite{TCP_IP_UDP}. After the connection has been established data can be send in both directions. TCP/IP is a reliable protocol which ensure that the data transmitted, will be received. When the data is send, the transmitter waits for an acknowledgment from the receiver that the data has been received. If the data has been corrupted or the acknowledgment is not send, the transmitter will retransmit the package again. If the case of no acknowledgment is happening, a timer is used to define when to retransmit the data again. The data will then be retransmitted a certain amount of times until an acknowledgment has been received or the connection is defined to be disconnected. This means that a copy of the data is stored at the transmitter until it has been correctly received or the connection is taken down.\\
 This communication protocol induces a delays in the system as the transmitter has to wait on the acknowledgment that the data has been received before loading new data into the sending buffer. If data has been discarded due to error the transmitter has to retransmit the data again if necessary.  
 
 The speed of the communication between the sbRIO board and the computer running ROS is set to 100 Hz. This was done as a trade off between being fast and for avoiding bugs which where bandwidth related\cite{Chris_Surgical}.
 
-\subsection*{JavaScript Object Notation}
+\subsection*{JavaScript Object Notation}\label{subsec:JSON}
 In the former system the data exchanged through the TCP/IP connection follow the \gls{JSON} format. \gls{JSON} is a "\textit{text format for the serialization of structured data}"\cite{JSON_IETF} which mean that it defines a syntax and a structure that can be used to exchange data. The structure used by \gls{JSON} associate a name to a value. The value can be a number, string, array, object, boolean or null. It is also worth mentioning that a \gls{JSON} file only contains characters, if a decimal number is to be sent, each digit will be represented by a character instead of having the bitcode representation of a double or a float for example. The former message from the sbRIO to ROS that would contain the information regarding the motors for the Endowrist followed this structure:
 
 \begin{lstlisting}[language=C]
