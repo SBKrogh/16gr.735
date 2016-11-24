@@ -39,16 +39,16 @@ This is done to simplify the process of parameter estimation.
 
 \begin{gather}\label{sspace}
 \begin{align}
-\dot{x_1} &= x_2\\
-\dot{x_2} &= A_1x_1 + A_2x_2 + A_3x_3 + A_5x_5 + A_7x_7\\
-\dot{x_3} &= x_4\\
-\dot{x_4} &= B_1x_1 + B_3x_3 + B_4x_4 + B_5x_5 + B_FF\\
-\dot{x_5} &= x_6\\
-\dot{x_6} &= C_1x_1 + C_3x_3 + C_5x_5 + C_6x_6 + C_9x_9\\
-\dot{x_7} &= x_8\\
-\dot{x_8} &= K_mu_m + M_1x_1 + M_7x_7 + M_8x_8\\
-\dot{x_9} &= x_{10}\\
-\dot{x_{10}} &= K_Lu_L + L_5x_5 + L_9x_9 + L_{10}x_{10}
+\dot{x}_1 &= x_2\\
+\dot{x}_2 &= A_1x_1 + A_2x_2 + A_3x_3 + A_5x_5 + A_7x_7\\
+\dot{x}_3 &= x_4\\
+\dot{x}_4 &= B_1x_1 + B_3x_3 + B_4x_4 + B_5x_5 + B_FF\\
+\dot{x}_5 &= x_6\\
+\dot{x}_6 &= C_1x_1 + C_3x_3 + C_5x_5 + C_6x_6 + C_9x_9\\
+\dot{x}_7 &= x_8\\
+\dot{x}_8 &= K_mu_m + M_1x_1 + M_7x_7 + M_8x_8\\
+\dot{x}_9 &= x_{10}\\
+\dot{x}_{10} &= K_Lu_L + L_5x_5 + L_9x_9 + L_{10}x_{10}
 \end{align}
 \end{gather}
 
@@ -58,7 +58,7 @@ The resulting state vector is described in (\ref{statevector}).
 \begin{align} \label{statevector}
 \mathbf{x} &=
 \begin{bmatrix}
-\theta_1 &\dot{\theta_1} &\theta_2 &\dot{\theta_2} &\theta_3 &\dot{\theta_3} &\theta_m &\dot{\theta_m} &\theta_L &\dot{\theta_L} \\
+\theta_1 &\dot{\theta}_1 &\theta_2 &\dot{\theta}_2 &\theta_3 &\dot{\theta}_3 &\theta_m &\dot{\theta}_m &\theta_L &\dot{\theta}_L \\
 \end{bmatrix}^T
 \end{align}
 
@@ -78,13 +78,14 @@ Parameter identification is performed using the Matlab parameter identification 
 To tune the model’s parameters, it is necessary to perform experiments for input-output measurement datasets.
 
 
-This is done by applying a known torque to the EndoWrist actuators and measuring the output force $F$, see figure \ref{endo_force_mes}.
-The goal here is to get a fully parameterized state space model which can then be used for grip force estimation with a Kalman filter.
+This is done by applying a known torque to the EndoWrist actuators and measuring the output force F, see figure \ref{endo_force_mes}.
+The goal here is to get a fully parameterized state space model which can be used for grip force estimation with a Kalman filter.
 
 \input{Tikz/Endo_force_measure}
 
 
-At the time of writing this article, we are still in the process of developing a full setup for fitting the state space model for grip force.
+At the time of writing this article, we are still in the process of developing a full setup for fitting the state space model for grip force.\\
+
 On the other hand, the outwards force model can be approximated linearly in a piecewise manner.
 This is done by using a linear approximation based on input torque and output downwards force measurement.
 
@@ -109,7 +110,7 @@ This is done by using a linear approximation based on input torque and output do
 \end{figure}
 
 
-A piecewise linear expression is made from the 340 mA sample and up and can be seen on \eqref{eq:linear_force_endo}.
+A piecewise linear expression is made from the 340 mA sample and up and can be seen on equation\eqref{eq:linear_force_endo}.
 
 
 \begin{equation}
@@ -119,4 +120,3 @@ A piecewise linear expression is made from the 340 mA sample and up and can be s
 
 
 We consider the above equation appropriate for feedback loop implementation.
-\todo{include graph for force estimation}
