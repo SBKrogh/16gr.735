@@ -1,14 +1,17 @@
 \section{Communication}
 
-As mentioned before, the sbRIO board controls the motors in one arm. The desired positions of the motors are sent to the board from the computer using the Ethernet cable as well as the list of the enabled motors. For the computer to perform force estimation it needs to receive the list of the active motors as well as the position, velocity and effort for each of them.
 
-It is said that the minimum refresh rate of haptic feedback is wildly debated to
+As mentioned before, the sbRIO board controls the motors in one arm. The desired positions of the motors and the list of the enabled motors are sent to the board from the computer using the Ethernet cable. To perform force estimation, the computer needs to receive the list of the active motors as well as the position, velocity and effort for each of them.
+
+
+It is said that the minimum refresh rate of haptic feedback is widely debated to
 be between 300 Hz and 600 Hz, but for a realistic force feedback it is commonly accepted
-to be at least 1000 Hz\cite{coles2011role}. In order for the system to fulfill this requirement it is necessary that the communication between the sbRIO board and the computer at least match this frequency. That is why this project aims at getting as close as possible to 1000 Hz in the communication between the sbRIO and the computer.
+to be at least 1000 Hz\cite{coles2011role}. In order for the system to fulfill this requirement it is necessary that the communication between the sbRIO board and the computer at least match this frequency. That is why this research aims at getting as close as possible to 1000 Hz in the communication between the sbRIO and the computer.
 
-In order to get the fastest communication it was decided to use UDP as it does not implement any reliability feature. Reliability in undesirable in our communication system as it would just lead to retransmitting obsolete data instead of transmitting the new one. Furthermore, most of the transport protocol implements features that improve long distance communication which would be superfluous in our test setup. 
+
+In order to get the fastest communication it was decided to use UDP as it does not implement any reliability feature. Network reliability is undesired in our communication system as it would just lead to retransmitting obsolete data instead of transmitting new one. Furthermore, most of the transport protocol implements features that improve long distance communication which would be superfluous, as the computer is directly connected to the robot.
  
-In addition to the transport protocol, another factor that influence the speed of the communication is the size of the packets sent. To maximize the communication's speed, the size of the packets must be minimized while keeping the computation time as low as possible. As stated before, the packets exchanged between the computer and the sbRIO contain numerical values (positions, velocities and efforts) and booleans (active or enabled motors). The bitcode of the numerical values is interpreted as ASCII characters and the booleans are gathered in one byte which is also interpreted as a character. Those characters constitute the payload of the packets. As each numerical value is stored on 4 bytes, in the test setup the size of the payload sent by the computer to the sbRIO is be 17 bytes and the size of the payload sent by the sbRIO to the computer is 49 bytes.
+In addition to the transport protocol, another factor that influence the speed of the communication is the size of the sent packets. To maximize the speed of the communication, the size of the packets must be minimized while keeping the computation time as low as possible. As stated before, the packets exchanged between the computer and the sbRIO contain numerical values (positions, velocities and efforts) and booleans (active or enabled motors). The bitcode of the numerical values is interpreted as ASCII characters and the booleans are gathered in one byte which is also interpreted as a character. Those characters constitute the payload of the packets. As each numerical value is stored on 4 bytes, in the test setup which has 4 motors, the size of the payload sent by the computer to the sbRIO is 17 bytes and the size of the payload sent by the sbRIO to the computer is 49 bytes.
+
 
 To decrease the size of the packets even further the packets could be compressed however for most algorithms the size reduction is small for this amount of data and thus not worth the computation time.
-
