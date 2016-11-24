@@ -25,24 +25,38 @@
 \end{table}
 
 
+
 \begin{figure}
   \centering
   \begin{subfigure}{.45\linewidth}
     \centering
-    \vspace{24pt}
-    \includegraphics[width=\linewidth]{10ms}
+   
+    \input{../Worksheets/rapport/pictures/10ms}
     \caption{10ms}
     \label{fig:10ms}
   \end{subfigure}
   \begin{subfigure}{.45\linewidth}
     \centering
-    \vspace{24pt}
-    \includegraphics[width=\linewidth]{0ms}
+
+    \input{../Worksheets/rapport/pictures/0ms}
     \caption{0ms}
     \label{fig:0ms}
   \end{subfigure}
 \caption{histograms}
 \label{fig:histograms}
 \end{figure}
+% \begin{figure}[H]
+%   \centering
+%   \begin{minipage}[width=\linewidth]{7cm} 
+%   \include{10ms}
+%   \end{minipage}
+%   \caption{figure test}
+% \end{figure}
+% \begin{figure}
+% \begin{subfigure}{.45\linewidth}
+% \input{../Worksheets/rapport/pictures/10ms}
+% \caption{test}
+% \end{subfigure}
+% \end{figure}
 
 When the frequency is increased the jitter increases as well, see Figures \ref{fig:10ms} and \ref{fig:0ms}. This is due to the system becoming more sensitive to disturbances coming from the preemption of other processes.\todo{probably need to justify this}
