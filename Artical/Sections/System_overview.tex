@@ -2,7 +2,7 @@
 
 \subsection{Entire setup}
 
-A fully featured DaVinci robot with connected Endowrists has four arms with 6 - 7 DOF each.
+A fully featured DaVinci robot with connected Endowrists has four arms with 6 - 7 DOF each. \todo{is has morer, but only seven can be actuated!}
 However, for test purposes, a small scale setup for controlling one EndoWrist has been created, see figure \ref{fig:Mec_d}.
 
 \begin{figure}
@@ -16,9 +16,9 @@ Reprecenting the onboard computer on the DaVinci robot, a sbRIO board has been i
 In order to perform higher level functions, such as force feedback control, it is necessary to remotely handle data and send high-level commands.
 This is handled by an external computer system. %that is connected to the Geomagic touch.
 
-The sbRIO board communicates with the computer using UDP \todo{UDP is one of our results and not part of the initial setup} communication protocols, while the Geomagic Touch does so using TCP/IP.
+The sbRIO board communicates with the computer using UDP \todo{UDP is one of our results and not part of the initial setup} communication protocols, while the Geomagic Touch, see section \ref{sec:Geomagic_touch}, does so using TCP/IP.
 The computer performs force estimation using a dynamical model of the test setup (or Endowrist, more precisely), this is vital for force feedback.
-In order to connect software components responsible for communicating with hardware and the ones responsible for the control algorithm and estimation Robot Operating System (ROS) is used.
+In order to connect software components responsible for communicating with hardware and the ones responsible for the control algorithm and estimation, the Robot Operating System (ROS) is used.
 ROS uses a network architecture to share data between components via data streams.
 
 
@@ -44,7 +44,7 @@ In order to project the reaction forces acting on the EndoWrist to the operator,
 
 
 
-\subsection{Geomagic touch}
+\subsection{Geomagic touch}\label{sec:Geomagic_touch}
 The Geomagic Touch is a haptic feedback device, which has the ability to actuate its joints in such a way that the user feels resistance when moving the pen. 
 
 
@@ -97,10 +97,10 @@ Because the incision cuts are small, blood loss during the surgery and the risk 
 \end{figure}
 
 
-The Endowrist can be manipulated as a human wrist with two clamps, thus having four degrees of freedom (DOF), see Figure \ref{fig:Endo_end}. This gives the movement of roll, pitch, yaw and an opening/closing mechanism that acts as the thumb and index finger of a hand.
+The Endowrist can be manipulated as a human wrist with two clamps, thus having four degrees of freedom (DOF), see Figure \ref{fig:Endo_end}.\todo{we need to update the picture!} This gives the movement of roll, pitch, yaw and an opening/closing mechanism that acts as the thumb and index finger of a hand.
 
 
-The end-effector is manipulated by the four wheels seen on Figure \ref{fig:Endo_plates}. The Endowrist is cable driven, which provides the opportunity of making it small but it also makes the system nonlinear due to dry friction.
+The end-effector is manipulated by the four wheels seen on Figure \ref{fig:Endo_plates}. The Endowrist is cable driven, which provides the opportunity of making it small but also makes the system nonlinear due to dry friction.
 
 
 
