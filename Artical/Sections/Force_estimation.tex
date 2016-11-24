@@ -1,0 +1,83 @@
+\section{Force estimation}
+In order to have a representation of the reaction force on the Endowrist, we must resort to estimation.
+Because of the reasons mentioned in section II, we cannot measure it directly using sensors and thus have to rely on mathematical models as functions of torque measurements.
+
+\subsection{Mathematical model}
+The main challenge we face in making a model lies in the fact that the pulley system on the Endowrist is non-linear, and thus its full dynamics cannot be modeled in a simple manner.
+Regardless, a physical model for grip force can be derived \cite{kim2014dynamic}, which serves as a good starting point for parameter estimation.
+This model only calculates grip force, which we consider acceptable since it is the arguably the most important variable to feedback to the operator.
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{pulleys.pdf}
+\caption{The pulley system of the Endowrist gripper modeled by equations (\ref{eq:dyn_1})-(\ref{eq:dyn_5}).}
+\end{figure}
+
+% ATTENTION !!
+% Before each equal sign include a & like this &=
+% it will make the equal signs stand in a line!!
+\begin{gather}
+\begin{align}
+J_m\ddot{{\theta}_m} + B_m \dot{{\theta}_m} + R_m T_{m1}(R_m {\theta}_m - R_1 {\theta}_1) &= u_m\\
+J_L\ddot{{\theta}_L} + B_L \dot{{\theta}_L} + R_L T_{L3}(R_L {\theta}_L - R_3 {\theta}_3) &= u_L
+\end{align}
+\end{gather}
+
+
+
+% \begin{align}\label{eq:dyn_1}
+% J_m\ddot{{\theta}_m} + B_m \dot{{\theta}_m} + R_m T_{m1}(R_m {\theta}_m - R_1 {\theta}_1) = u_m
+% \end{align}
+% \begin{align}\label{eq:dyn_2}
+% J_L\ddot{{\theta}_L} + B_L \dot{{\theta}_L} + R_L T_{L3}(R_L {\theta}_L - R_3 {\theta}_3) = u_L
+% \end{align}
+% \begin{multline}\label{eq:dyn_3}
+% J_1\ddot{{\theta}_1}+ B_1 \dot{{\theta}_1} + R_1 T_{12}(R_1{\theta_1} - R_1{\theta}_3 - R_2{\theta_2})\\ = R_1 T_m(R_m{\theta}_m - R_1{\theta}_1)
+% \end{multline}
+% \begin{align}\label{eq:dyn_4}
+% J_2\ddot{{\theta}_2}+ B_2 \dot{{\theta}_2} + LF = R_2 T_{12}(R_1{\theta_1} - R_1{\theta}_3 - R_2{\theta_2})
+% \end{align}
+% \begin{multline}\label{eq:dyn_5}
+% J_3\ddot{{\theta}_3}+ B_3 \dot{{\theta}_3} + R_1 T_{12}(R_1{\theta_1} - R_1{\theta}_3 - R_2{\theta_2})\\ = R_3 T_{L3}(R_L{\theta}_L - R_3{\theta}_3)
+% \end{multline}
+
+\todo{we should include what each variable corresponds to (T, J, R, F, theta)}
+
+From equations \ref{eq:dyn_1}-\ref{eq:dyn_5} it is visible that this system can be converted to a linear state space model.
+Moreover, simplifying the equations by replacing physical coefficients with general ones results in a 10th order state space model with 31 parameters.
+This is the model we will perform parameter identification on.
+
+\subsection{Parameter identification}
+Parameter identification is performed using the Matlab parameter identification toolbox.
+For us to tune the model parameters, it is necessary for us to perform experiments for input-output measurement datasets.
+
+We do this by applying a known force $F$ to the gripper and measuring efforts on the actuators.
+The goal here is to get a fully parametrized state space model which we can then use for grip force estimation with a Kalman filter.
+
+At the time of wiriting this article, we are stil in the process of developing a full setup for fitting the state space model.
+As a working model we are currently using an linear approximation based on torque and output downwards force measurement.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}{.45\linewidth}
+    \centering
+    \vspace{24pt}
+    \includegraphics[width=\linewidth]{overall_force.jpg}
+    \caption{The entire test setup. From the right, a scale for measuring the downwards force, a piece of wood for stiffening the Endowrist and keeping it it place and the Endowrist holder with motors.}
+    \label{fig:entire_force_testsetup}
+  \end{subfigure}
+  \begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{endeffector_force.jpg}
+    \caption{A 3D printed case which made it possible to make an orthogonal force from the end-effector to the scale.}
+    \label{fig:endeffector_force}
+  \end{subfigure}
+\caption{Test setup for the force estimation of the end-effector.}
+\label{fig:Overview_force}
+\end{figure}
+
+A piecewise linear expression is made from the 340 mA sample and up and can be seen on \eqref{eq:linear_force_endo}.
+
+\begin{equation}
+\text{y} = 0.0028 \cdot \text{x} -0.8259 
+\label{eq:linear_force_endo}
+\end{equation} 

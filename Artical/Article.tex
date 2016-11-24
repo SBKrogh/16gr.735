@@ -344,18 +344,8 @@
 
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
-\begin{abstract}
+\input{Sections/Abstract.tex}
 
-Haptic feedback is a form of transferring information to the user via the sense of touch, usually through some sort of input device the user gives commands with.
-This makes it ideal for teleoperating tasks requiring precision in applied force, robotic surgery being a prime example.
-Currently, haptic feedback in teleoperation is subject to numerous constraints on time delay and accuracy.
-Nonetheless, results show that implementing this type of feedback in teleoperated robotic surgery gives vastly better results.
-In this paper we propose a new method of teleoperating the DaVinci surgical robot using haptic feedback.
-The method involves using a state-of-the-art haptic device to control a surgical tool serving as the robots end-effector.
-Since the dynamics of the surgical tool are strongly non-linear, estimation techniques are used to calculate reaction forces on the device.
-Changes are made to existing communication protocols in order to reduce time delay\todo{Maybe add results (operating frequency for example)}, which is an important factor.
-The various constraints and challenges are adressed individually in each section. \todo{Erase last sentence}
-\end{abstract}
 % no keywords
 \hfill August 26, 2015
 
@@ -371,291 +361,16 @@ The various constraints and challenges are adressed individually in each section
 % creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
 
-\section{Introduction}
-% no \IEEEPARstart
-Over the last couple of decades the use of robots for minimally invasive surgeries has increased.
-This is mainly due to its precision and the reduction in tissue damage\cite{RIGSP}.
-Robots used in these surgical procedures have an attached end-effector that is used as a surgical tool.
-One such tool is the Endowrist. 
-The main advantage of the Endowrist lies in its construction, as it is made to be manipulated in a similar manner to a human wrist.
-
-Currently the only feedback operators get is visual, using live video transmissions of the surgery. 
-The problem with the operator having exclusively visual feedback lies in the fact that the surgeon has to estimate the force applied by the deformation of the skin and organs for each maneuver. %to skin and organs in every single manoeuvre made. 
-It has been shown experimentally that haptic feedback has a considerably positive effect on the reduction in surgical error\cite{EOFGFF}. 
-
-The purpose of haptic feedback is to apply force that resist the operators movement in such a way that it represents some information about the environment or situation.
-In theory, this should make teleoperated surgical procedures a lot more realistic to the operator and thus reduce accidents.
-
-The haptic feedback could be done as direct force feedback calculated from the resistance on the actuators but as the tool is highly non-linear the transparency of the controller will become less transparent\todo{transparent x2}.
-It would be possible to solve this problem by implementing a sensor to the end effector to measure the force but due to the demand of high hygiene the tools have to be sterilized at temperatures over a $100^\circ$ C which could damage the sensor(s). Furthermore it is stated by law that each surgical tool has to be discarded after a few times in use\todo{after a few use}. This means that the cost of the tool has to stay as low as possible and therefore make the idea of implementing an expensive sensor not ideal.
-
-Therefore the force feedback has to be estimated through the actuators which gives a high demand for the feedback controller as it has to be as precise as possible to feedback the correct force to the operator. Another important subject is the transparency of the feedback as the operator should have the feeling of doing the operation by hand and not remote\todo{remotely or through a robot}. This puts a demand on the speed of the feedback loop as the faster the loop runs the more smooth the force feedback to the operator will feel. This will set demands on communication frequency since we need to keep time delay to a minimum. It is wildly discussed what the minimum refresh rate of the feedback loop should be but seems to be someplace between 300 Hz and a\todo{remove "a"} 1000 Hz\cite{coles2011role}. 
-
-In the section II we will take an overview of our proposed control system as a whole, briefly presenting each of the components and their interaction.
-Section III will cover methods used to create a dynamic model of the Endowrist and proposed methods of translating the estimated force to actual force fed back to the operator.
-Section IV contains descriptions of various problems pertaining the requirement of transparency and explanations of methods used to address them.
-Finally,  we present (the expected) experimental results in section V and and draw a short conclusion in section VI.
+\input{Sections/Introduction}
  
- \section{System overview}
-In out\todo{our?} proposed system, the surgeon uses the Geomagic Touch joystick to control an Endowrist tool on one of the arms of the DaVinci surgical robot.
-It is important for the operator to have a feeling of resistance the tool is experiencing in order to adjust the position and grip strength and thus prevent damage to the patients tissue.
-To achieve this, we use the Geomagics haptic feedback feature in order to project the reaction forces acting on the Endowrist to the operator. 
-The communication between system components is done through the Robot Operating System (ROS).
+\input{Sections/System_overview}
 
-\subsection{Endowrist}
-An Endowrist, see \ref{fig:Endo_plates} \todo{figref?} is a surgical tool which can be manipulated as a human wrist. 
-It is used in surgical procedures such as Laparoscopic surgeries, better known as minimally invasive surgery (MIS), where small incisions in the human body is made during the surgery. 
-Because the incision cuts are small, blood lose\todo{blood loss?} during the surgery and the risk of infection is reduced. This has a positive effect on the recovery time for the patient.
+\input{Sections/Force_estimation}
 
-\begin{figure}
-	\centering
-	\begin{subfigure}{.22\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{Endowrist2.jpg}
-		\caption{Actuator plates, which can alternate the end effector position}
-		\label{fig:Endo_plates}
-	\end{subfigure}
-	\begin{subfigure}{.22\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{Endowrist3.jpg}
-		\caption{End effector of the Endowrist\newline}
-		\label{fig:Endo_end}
-	\end{subfigure}
-\caption{The Endowrist and it's end-effector}
-\label{fig:endowrits_set}
-\end{figure}
+\input{Sections/Communication}
 
-As mentioned the Endowrist has the ability to be manipulated as a human wrist and thereby has four DOF, see \ref{fig:Endo_end}\todo{1b doesn't really show the 4DOF}\todo{figref}. This enables the movement of roll, pitch, yaw and an open closing mechanism that acts as the thumb and index finger of a hand. 
+\input{Sections/Result}
 
-The end-effector is manipulated by the four wheels seen on \ref{fig:Endo_plates}. Wheel one and three define the movement of the yaw and the closing mechanism. Wheel two and four moves the pitch and roll. The Endowrist is cable driven, which enables the opportunity of making the Endowrist small but it also makes the system nonlinear as the force acting at one end is not directly transmitted to the other end due to friction. 
-
-\subsection{Geomagic touch}
-The geomagic touch is a haptic feedback device, which has the ability to manipulate its joints in such a way that the user feels resistance when moving the pen in a certain direction or way. 
-The geomagic touch described in this section is the model Phantom omni and can be seen on \ref{fig:phantom_omni}.
-
-\begin{figure}
-	\centering
-	\begin{subfigure}{.22\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{haptick1.jpg}
-		\caption{Overview of the Phantom omni's first three joints.}
-		\label{fig:phantom1}
-	\end{subfigure}
-	\begin{subfigure}{.22\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{haptick2.png}
-		\caption{Overview of the Phantom omni's last three joint}
-		\label{fig:phantom2}
-	\end{subfigure}
-\caption{Overview of all the Phantom omni's joints\cite{phantom_omni}}
-\label{fig:phantom_omni}
-\end{figure}
-
-As mentioned the Phantom omni has the ability to generate resistance for the user. In other words, when moved in a specific direction it can create a counter force in respect to a certain position. On \ref{fig:phantom_omni}, it can be seen that the omni has six DOF, where only the first three can be actuated, see \ref{fig:phantom1}. This means that the device only has the ability to generate force feedback with three DOF, in this case roll, pitch and yaw.
-
-The connection to the omni can either be made directly through a ethernet cable or through ethernet cable to a usb converter into a computer. For programming the omni an API is included, which enables the connection to the omni. The Geomagic Touch has a lot of features which can be programmed through the language C++, e.g force rendering or drawing graphics.
-
-\subsection{ROS} \todo{we should not describe what ROS is}
-The ROS is an open source software development tool for implementing robotics software. It provides the opportunity of hardware abstraction, low level device control, implementation of commonly used functionalities, messages between different processes and package management.%{\cite{wiki_ros}}
- It provides tools and libraries which utilize the the opportunity of communicating between disturbed computers, obtaining, writing and running codes.
- 
-ROS has three different levels of concepts\cite{Wiki_ros_concepts}
-
-\begin{itemize}
-\item \textbf{The file system level}
-
-Handles the main unit for a ROS system which is packages. A package may include data sets, ROS dependent libraries, configure files etc. to define a ROS process. In ROS a process is denoted as a node. 
-\item \textbf{The computation graph level}
-
-Handles the communication of the peer to peer network of the system in which data is processed. Through the computation graph level, the different nodes can communicate with each other by messages. When a node is sending data it is said to be publishing a topic. The different nodes can then subscribe to this topic to get the information that is published.
-\item \textbf{The Community level}
-
-ROS has a huge community which contain distribution of software installations, repositories and documentation of ROS. It also has a question and answer section with ROS related topics.
-This community makes the process of learning the system considerably easier.
-\end{itemize}
-
-\subsection{Overview}
-As mentioned before , a fully featured DaVinci robot \todo{arm} has 7 degrees of freedom on the Endowrist instrument.
-Since the robot has 4 arms, there are 4 instruments.
-Although our setup controls only 4 motors, in funcionality it is equivalent to one DaVinci arm. \todo{I find this confusing}
-
-\begin{figure}
-		\centering
-		\includegraphics[width=0.4\linewidth]{Test_setup4.jpg}
-		\caption{Full view of the mechanical test setup}
-		\label{fig:Mec_d}
-\end{figure}
-
-As mentioned before, the sbRio board controls the test setup and as such represents the onboard computer on the DaVinci robot.
-In order to perform higher level functions such as force feedback control, it is necessary to remotely handle data and send high-level commands.
-This is handled by an external computer system that is connected to the Phantom omni device.
-
-The sbRio board communicates with the computer using UDP \todo{UDP is one of our results and not part of the initial setup} communication protocols, while the Geomagic Touch does so using TCP/IP.
-The computer also performs force estimation using a dynamical model of the test setup (or Endowrist, more precisely), this is vital for force feedback.
-In order to connect software components responsible for communicating with hardware and the ones responsible for the control algorithm and estimation.
-For this purpose we use the Robot Operating System (ROS), which uses a network architecture to share data between components via data streams.
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}
-    % We start by placing the blocks
-    \node [block] (Geomagic) {\small{Geomagic Touch}};
-    \node [block, right of=Geomagic, node distance = 3.4cm] (ROS) {ROS};
-    \node [block, right of=ROS, node distance=3.3cm] (DaVinci) {DaVinci};
-    % We draw an edge between the controller and system block to 
-    % calculate the coordinate u. We need it to place the measurement block. 
-    \draw [<->] (Geomagic) -- node[label=above:\small{TCP/IP}] {} (ROS);
-    \draw [<->] (ROS) -- node [label=above:\small{UDP}] {} (DaVinci);
-\end{tikzpicture}
-\caption{Block diagram representing the system.}
-\end{figure}
-
-\section{Force estimation}
-In order to have a representation of the reaction force on the Endowrist, we must resort to estimation.
-Because of the reasons mentioned in section II, we cannot measure it directly using sensors and thus have to rely on mathematical models as functions of torque measurements.
-
-\subsection{Mathematical model}
-The main challenge we face in making a model lies in the fact that the pulley system on the Endowrist is non-linear, and thus its full dynamics cannot be modeled in a simple manner.
-Regardless, a physical model for grip force can be derived \cite{kim2014dynamic}, which serves as a good starting point for parameter estimation.
-This model only calculates grip force, which we consider acceptable since it is the arguably the most important variable to feedback to the operator.
-\begin{figure}
-\centering
-\includegraphics[width=\linewidth]{pulleys.pdf}
-\caption{The pulley system of the Endowrist gripper modeled by equations (\ref{eq:dyn_1})-(\ref{eq:dyn_5}).}
-\end{figure}
-
-% ATTENTION !!
-% Before each equal sign include a & like this &=
-% it will make the equal signs stand in a line!!
-\begin{gather}
-\begin{align}
-J_m\ddot{{\theta}_m} + B_m \dot{{\theta}_m} + R_m T_{m1}(R_m {\theta}_m - R_1 {\theta}_1) &= u_m\\
-J_L\ddot{{\theta}_L} + B_L \dot{{\theta}_L} + R_L T_{L3}(R_L {\theta}_L - R_3 {\theta}_3) &= u_L
-\end{align}
-\end{gather}
-
-
-
-% \begin{align}\label{eq:dyn_1}
-% J_m\ddot{{\theta}_m} + B_m \dot{{\theta}_m} + R_m T_{m1}(R_m {\theta}_m - R_1 {\theta}_1) = u_m
-% \end{align}
-% \begin{align}\label{eq:dyn_2}
-% J_L\ddot{{\theta}_L} + B_L \dot{{\theta}_L} + R_L T_{L3}(R_L {\theta}_L - R_3 {\theta}_3) = u_L
-% \end{align}
-% \begin{multline}\label{eq:dyn_3}
-% J_1\ddot{{\theta}_1}+ B_1 \dot{{\theta}_1} + R_1 T_{12}(R_1{\theta_1} - R_1{\theta}_3 - R_2{\theta_2})\\ = R_1 T_m(R_m{\theta}_m - R_1{\theta}_1)
-% \end{multline}
-% \begin{align}\label{eq:dyn_4}
-% J_2\ddot{{\theta}_2}+ B_2 \dot{{\theta}_2} + LF = R_2 T_{12}(R_1{\theta_1} - R_1{\theta}_3 - R_2{\theta_2})
-% \end{align}
-% \begin{multline}\label{eq:dyn_5}
-% J_3\ddot{{\theta}_3}+ B_3 \dot{{\theta}_3} + R_1 T_{12}(R_1{\theta_1} - R_1{\theta}_3 - R_2{\theta_2})\\ = R_3 T_{L3}(R_L{\theta}_L - R_3{\theta}_3)
-% \end{multline}
-
-\todo{we should include what each variable corresponds to (T, J, R, F, theta)}
-
-From equations \ref{eq:dyn_1}-\ref{eq:dyn_5} it is visible that this system can be converted to a linear state space model.
-Moreover, simplifying the equations by replacing physical coefficients with general ones results in a 10th order state space model with 31 parameters.
-This is the model we will perform parameter identification on.
-
-\subsection{Parameter identification}
-Parameter identification is performed using the Matlab parameter identification toolbox.
-For us to tune the model parameters, it is necessary for us to perform experiments for input-output measurement datasets.
-
-We do this by applying a known force $F$ to the gripper and measuring efforts on the actuators.
-The goal here is to get a fully parametrized state space model which we can then use for grip force estimation with a Kalman filter.
-
-At the time of wiriting this article, we are stil in the process of developing a full setup for fitting the state space model.
-As a working model we are currently using an linear approximation based on torque and output downwards force measurement.
-
-\begin{figure}
-	\centering
-	\begin{subfigure}{.45\linewidth}
-		\centering
-		\vspace{24pt}
-		\includegraphics[width=\linewidth]{overall_force.jpg}
-		\caption{The entire test setup. From the right, a scale for measuring the downwards force, a piece of wood for stiffening the Endowrist and keeping it it place and the Endowrist holder with motors.}
-		\label{fig:entire_force_testsetup}
-	\end{subfigure}
-	\begin{subfigure}{.45\linewidth}
-		\centering
-		\includegraphics[width=\linewidth]{endeffector_force.jpg}
-		\caption{A 3D printed case which made it possible to make an orthogonal force from the end-effector to the scale.}
-		\label{fig:endeffector_force}
-	\end{subfigure}
-\caption{Test setup for the force estimation of the end-effector.}
-\label{fig:Overview_force}
-\end{figure}
-
-A piecewise linear expression is made from the 340 mA sample and up and can be seen on \eqref{eq:linear_force_endo}.
-
-\begin{equation}
-\text{y} = 0.0028 \cdot \text{x} -0.8259 
-\label{eq:linear_force_endo}
-\end{equation} 
-\section{Communication}
-
-As mentioned before, the sbRIO board controls the motors in one arm. The desired positions of the motors are sent to the board from the computer using the Ethernet cable as well as the list of the enabled motors. For the computer to perform force estimation it needs to receive the list of the active motors as well as the position, velocity and effort for each of them.
-
-It is said that the minimum refresh rate of haptic feedback is wildly debated to
-be between 300 Hz and 600 Hz, but for a realistic force feedback it is commonly accepted
-to be at least 1000 Hz\cite{coles2011role}. In order for the system to fulfill this requirement it is necessary that the communication between the sbRIO board and the computer at least match this frequency. That is why this project aims at getting as close as possible to 1000 Hz in the communication between the sbRIO and the computer.
-
-In order to get the fastest communication it was decided to use UDP as it does not implement any reliability feature. Reliability in undesirable in our communication system as it would just lead to retransmitting obsolete data instead of transmitting the new one. Furthermore, most of the transport protocol implements features that improve long distance communication which would be superfluous in our test setup. 
- 
-In addition to the transport protocol, another factor that influence the speed of the communication is the size of the packets sent. To maximize the communication's speed, the size of the packets must be minimized while keeping the computation time as low as possible. As stated before, the packets exchanged between the computer and the sbRIO contain numerical values (positions, velocities and efforts) and booleans (active or enabled motors). The bitcode of the numerical values is interpreted as ASCII characters and the booleans are gathered in one byte which is also interpreted as a character. Those characters constitute the payload of the packets. As each numerical value is stored on 4 bytes, in the test setup the size of the payload sent by the computer to the sbRIO is be 17 bytes and the size of the payload sent by the sbRIO to the computer is 49 bytes.
-
-To decrease the size of the packets even further the packets could be compressed however for most algorithms the size reduction is small for this amount of data and thus not worth the computation time.
-
-
-\section{Results}
-
-\subsection{Communication}
-
- It was stated before that the requirements for our system was to get to at least 600Hz and to reach 1000Hz if possible. As shown in Table \ref{tab:UDPMeasurements}, the connexion can go up to almost 1000Hz using UDP which fulfills the requirements. Nevertheless, the jitter should not be neglected as the frequency get closer to 1000Hz the jitter will be high compared to the period and may cause unexpected behaviour in real time operation. This issue will be further discussed in the next section. However, the data show a periodic disturbance in the system originating from the computer\todo{need some kind of graphical representation of that} which increases the jitter and delay. %Addictional safety precautions should be taken to prevent those behaviour.
-
-
-\begin{table}[!t]
-%\centering
-  $\begin{tabular}{|c|c|c|c|c|c|}
-    \hline
-    \text{Delay} & \text{Frequency (Hz)} & \text{RTT* delay (ms)} & \text{Jitter} & \text{Error rate (\%)}\\
-    \hline
-    10ms & 86 & 1.1 & 4.9E-8 & 0 \\
-    \hline
-    2ms & 447 & 2.1 & 3.5 & 1.2E-4 \\
-    \hline
-    0ms & 981 & 1.3 & 6.1E-8 & 5.1E-5 \\
-    \hline
-  \end{tabular}$
-  *Round Time Trip\\
-  **The number of data set needs to be increased for the final version
-  \caption{UDP**}
-  \label{tab:UDPMeasurements}
-\end{table}
-
-
-\begin{figure}
-  \centering
-  \begin{subfigure}{.45\linewidth}
-    \centering
-    \vspace{24pt}
-    \includegraphics[width=\linewidth]{10ms}
-    \caption{10ms}
-    \label{fig:10ms}
-  \end{subfigure}
-  \begin{subfigure}{.45\linewidth}
-    \centering
-    \vspace{24pt}
-    \includegraphics[width=\linewidth]{0ms}
-    \caption{0ms}
-    \label{fig:0ms}
-  \end{subfigure}
-\caption{histograms}
-\label{fig:histograms}
-\end{figure}
-
-When the frequency is increased the jitter increases as well, see Figures \ref{fig:10ms} and \ref{fig:0ms}. This is due to the system becoming more sensitive to disturbances coming from the preemption of other processes.\todo{probably need to justify this}
 
 
 
@@ -753,10 +468,12 @@ When the frequency is increased the jitter increases as well, see Figures \ref{f
 % footnotes above bottom floats. This can be corrected via the
 % \fnbelowfloat command of the stfloats package.
 
-\section{Discussion}
-Safety and "compression"
-\section{Conclusion}
-The conclusion goes here.
+
+
+
+\input{Sections/Discussion}
+
+\input{Sections/Conclusion}
 
 
 
@@ -765,14 +482,8 @@ The conclusion goes here.
 
 
 % use section* for acknowledgment
-\section*{Acknowledgment}
 
-
-The authors would like to thank...
-
-
-
-
+\input{Sections/Acknowledgment}
 
 % trigger a \newpage just before the given reference
 % number - used to balance the columns on the last page

@@ -1,0 +1,113 @@
+ \section{System overview}
+In out\todo{our?} proposed system, the surgeon uses the Geomagic Touch joystick to control an Endowrist tool on one of the arms of the DaVinci surgical robot.
+It is important for the operator to have a feeling of resistance the tool is experiencing in order to adjust the position and grip strength and thus prevent damage to the patients tissue.
+To achieve this, we use the Geomagics haptic feedback feature in order to project the reaction forces acting on the Endowrist to the operator. 
+The communication between system components is done through the Robot Operating System (ROS).
+
+\subsection{Endowrist}
+An Endowrist, see \ref{fig:Endo_plates} \todo{figref?} is a surgical tool which can be manipulated as a human wrist. 
+It is used in surgical procedures such as Laparoscopic surgeries, better known as minimally invasive surgery (MIS), where small incisions in the human body is made during the surgery. 
+Because the incision cuts are small, blood lose\todo{blood loss?} during the surgery and the risk of infection is reduced. This has a positive effect on the recovery time for the patient.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}{.22\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Endowrist2.jpg}
+    \caption{Actuator plates, which can alternate the end effector position}
+    \label{fig:Endo_plates}
+  \end{subfigure}
+  \begin{subfigure}{.22\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Endowrist3.jpg}
+    \caption{End effector of the Endowrist\newline}
+    \label{fig:Endo_end}
+  \end{subfigure}
+\caption{The Endowrist and it's end-effector}
+\label{fig:endowrits_set}
+\end{figure}
+
+As mentioned the Endowrist has the ability to be manipulated as a human wrist and thereby has four DOF, see \ref{fig:Endo_end}\todo{1b doesn't really show the 4DOF}\todo{figref}. This enables the movement of roll, pitch, yaw and an open closing mechanism that acts as the thumb and index finger of a hand. 
+
+The end-effector is manipulated by the four wheels seen on \ref{fig:Endo_plates}. Wheel one and three define the movement of the yaw and the closing mechanism. Wheel two and four moves the pitch and roll. The Endowrist is cable driven, which enables the opportunity of making the Endowrist small but it also makes the system nonlinear as the force acting at one end is not directly transmitted to the other end due to friction. 
+
+\subsection{Geomagic touch}
+The geomagic touch is a haptic feedback device, which has the ability to manipulate its joints in such a way that the user feels resistance when moving the pen in a certain direction or way. 
+The geomagic touch described in this section is the model Phantom omni and can be seen on \ref{fig:phantom_omni}.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}{.22\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{haptick1.jpg}
+    \caption{Overview of the Phantom omni's first three joints.}
+    \label{fig:phantom1}
+  \end{subfigure}
+  \begin{subfigure}{.22\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{haptick2.png}
+    \caption{Overview of the Phantom omni's last three joint}
+    \label{fig:phantom2}
+  \end{subfigure}
+\caption{Overview of all the Phantom omni's joints\cite{phantom_omni}}
+\label{fig:phantom_omni}
+\end{figure}
+
+As mentioned the Phantom omni has the ability to generate resistance for the user. In other words, when moved in a specific direction it can create a counter force in respect to a certain position. On \ref{fig:phantom_omni}, it can be seen that the omni has six DOF, where only the first three can be actuated, see \ref{fig:phantom1}. This means that the device only has the ability to generate force feedback with three DOF, in this case roll, pitch and yaw.
+
+The connection to the omni can either be made directly through a ethernet cable or through ethernet cable to a usb converter into a computer. For programming the omni an API is included, which enables the connection to the omni. The Geomagic Touch has a lot of features which can be programmed through the language C++, e.g force rendering or drawing graphics.
+
+\subsection{ROS} \todo{we should not describe what ROS is}
+The ROS is an open source software development tool for implementing robotics software. It provides the opportunity of hardware abstraction, low level device control, implementation of commonly used functionalities, messages between different processes and package management.%{\cite{wiki_ros}}
+ It provides tools and libraries which utilize the the opportunity of communicating between disturbed computers, obtaining, writing and running codes.
+ 
+ROS has three different levels of concepts\cite{Wiki_ros_concepts}
+
+\begin{itemize}
+\item \textbf{The file system level}
+
+Handles the main unit for a ROS system which is packages. A package may include data sets, ROS dependent libraries, configure files etc. to define a ROS process. In ROS a process is denoted as a node. 
+\item \textbf{The computation graph level}
+
+Handles the communication of the peer to peer network of the system in which data is processed. Through the computation graph level, the different nodes can communicate with each other by messages. When a node is sending data it is said to be publishing a topic. The different nodes can then subscribe to this topic to get the information that is published.
+\item \textbf{The Community level}
+
+ROS has a huge community which contain distribution of software installations, repositories and documentation of ROS. It also has a question and answer section with ROS related topics.
+This community makes the process of learning the system considerably easier.
+\end{itemize}
+
+\subsection{Overview}
+As mentioned before , a fully featured DaVinci robot \todo{arm} has 7 degrees of freedom on the Endowrist instrument.
+Since the robot has 4 arms, there are 4 instruments.
+Although our setup controls only 4 motors, in funcionality it is equivalent to one DaVinci arm. \todo{I find this confusing}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.4\linewidth]{Test_setup4.jpg}
+    \caption{Full view of the mechanical test setup}
+    \label{fig:Mec_d}
+\end{figure}
+
+As mentioned before, the sbRio board controls the test setup and as such represents the onboard computer on the DaVinci robot.
+In order to perform higher level functions such as force feedback control, it is necessary to remotely handle data and send high-level commands.
+This is handled by an external computer system that is connected to the Phantom omni device.
+
+The sbRio board communicates with the computer using UDP \todo{UDP is one of our results and not part of the initial setup} communication protocols, while the Geomagic Touch does so using TCP/IP.
+The computer also performs force estimation using a dynamical model of the test setup (or Endowrist, more precisely), this is vital for force feedback.
+In order to connect software components responsible for communicating with hardware and the ones responsible for the control algorithm and estimation.
+For this purpose we use the Robot Operating System (ROS), which uses a network architecture to share data between components via data streams.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+    % We start by placing the blocks
+    \node [block] (Geomagic) {\small{Geomagic Touch}};
+    \node [block, right of=Geomagic, node distance = 3.4cm] (ROS) {ROS};
+    \node [block, right of=ROS, node distance=3.3cm] (DaVinci) {DaVinci};
+    % We draw an edge between the controller and system block to 
+    % calculate the coordinate u. We need it to place the measurement block. 
+    \draw [<->] (Geomagic) -- node[label=above:\small{TCP/IP}] {} (ROS);
+    \draw [<->] (ROS) -- node [label=above:\small{UDP}] {} (DaVinci);
+\end{tikzpicture}
+\caption{Block diagram representing the system.}
+\end{figure}

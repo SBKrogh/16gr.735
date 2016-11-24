@@ -1,0 +1,24 @@
+\section{Introduction}
+% no \IEEEPARstart
+Over the last couple of decades the use of robots for minimally invasive surgeries has increased.
+This is mainly due to its precision and the reduction in tissue damage\cite{RIGSP}.
+Robots used in these surgical procedures have an attached end-effector that is used as a surgical tool.
+One such tool is the Endowrist. 
+The main advantage of the Endowrist lies in its construction, as it is made to be manipulated in a similar manner to a human wrist.
+
+Currently the only feedback operators get is visual, using live video transmissions of the surgery. 
+The problem with the operator having exclusively visual feedback lies in the fact that the surgeon has to estimate the force applied by the deformation of the skin and organs for each maneuver. %to skin and organs in every single manoeuvre made. 
+It has been shown experimentally that haptic feedback has a considerably positive effect on the reduction in surgical error\cite{EOFGFF}. 
+
+The purpose of haptic feedback is to apply force that resist the operators movement in such a way that it represents some information about the environment or situation.
+In theory, this should make teleoperated surgical procedures a lot more realistic to the operator and thus reduce accidents.
+
+The haptic feedback could be done as direct force feedback calculated from the resistance on the actuators but as the tool is highly non-linear the transparency of the controller will become less transparent\todo{transparent x2}.
+It would be possible to solve this problem by implementing a sensor to the end effector to measure the force but due to the demand of high hygiene the tools have to be sterilized at temperatures over a $100^\circ$ C which could damage the sensor(s). Furthermore it is stated by law that each surgical tool has to be discarded after a few times in use\todo{after a few use}. This means that the cost of the tool has to stay as low as possible and therefore make the idea of implementing an expensive sensor not ideal.
+
+Therefore the force feedback has to be estimated through the actuators which gives a high demand for the feedback controller as it has to be as precise as possible to feedback the correct force to the operator. Another important subject is the transparency of the feedback as the operator should have the feeling of doing the operation by hand and not remote\todo{remotely or through a robot}. This puts a demand on the speed of the feedback loop as the faster the loop runs the more smooth the force feedback to the operator will feel. This will set demands on communication frequency since we need to keep time delay to a minimum. It is wildly discussed what the minimum refresh rate of the feedback loop should be but seems to be someplace between 300 Hz and a\todo{remove "a"} 1000 Hz\cite{coles2011role}. 
+
+In the section II we will take an overview of our proposed control system as a whole, briefly presenting each of the components and their interaction.
+Section III will cover methods used to create a dynamic model of the Endowrist and proposed methods of translating the estimated force to actual force fed back to the operator.
+Section IV contains descriptions of various problems pertaining the requirement of transparency and explanations of methods used to address them.
+Finally,  we present (the expected) experimental results in section V and and draw a short conclusion in section VI.
