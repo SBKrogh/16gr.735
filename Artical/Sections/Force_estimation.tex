@@ -1,17 +1,21 @@
 \section{Force estimation}
 In order to have a representation of the reaction force on the Endowrist, we must resort to estimation.
-Because of the reasons mentioned in section II, we cannot measure it directly using sensors and thus have to rely on mathematical models as functions of torque measurements.
+Because of the reasons mentioned in section II, the force cannot be measured using sensors and thus have to rely on mathematical models as functions of torque measurements.
 
 \subsection{Mathematical model}
-The main challenge we face in making a model lies in the fact that the pulley system on the Endowrist is non-linear, and thus its full dynamics cannot be modeled in a simple manner.
-Regardless, a physical model for grip force can be derived \cite{kim2014dynamic}, which serves as a good starting point for parameter estimation.
-This model only calculates grip force, which we consider acceptable since it is the arguably the most important variable to feedback to the operator.
+The main challenge we face in making a model lies in the fact that the pulley system on the Endowrist is non-linear, and thus its full dynamics cannot be modeled in a simple manner. In other words, to have an accurate representation of force we require a higher order model.
+Regardless, a physical linear model for grip force can be derived \cite{kim2014dynamic}.
+The grip force is important to the operator because a clear representation helps prevent excess grip application to soft tissue.
+This serves as a good starting point for a useable dynamical model.
+
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{pulleys.pdf}
 \caption{The pulley system of the Endowrist gripper modeled by equations (\ref{eq:dyn_1})-(\ref{eq:dyn_5}).}
 \end{figure}
 
+The dynamical model in \cite{kim2014dynamic} is simplified to a 10th order state space system with abstract, non-physical parameters.
+This is done to simplify the process of parameter estimation.
 % ATTENTION !!
 % Before each equal sign include a & like this &=
 % it will make the equal signs stand in a line!!
@@ -22,7 +26,20 @@ J_L\ddot{{\theta}_L} + B_L \dot{{\theta}_L} + R_L T_{L3}(R_L {\theta}_L - R_3 {\
 \end{align}
 \end{gather}
 
-
+\begin{gather}
+\begin{align}
+\dot{x_1} &= x_2\\
+\dot{x_2} &= A_1x_1 + A_2x_2 + A_3x_3 + A_5x_5 + A_7x_7\\
+\dot{x_3} &= x_4\\
+\dot{x_4} &= B_1x_1 + B_3x_3 + B_4x_4 + B_5x_5 + B_FF\\
+\dot{x_5} &= x_6\\
+\dot{x_6} &= C_1x_1 + C_3x_3 + C_5x_5 + C_6x_6 + C_9x_9\\
+\dot{x_7} &= x_8\\
+\dot{x_8} &= K_mu_m + M_1x_1 + M_7x_7 + M_8x_8\\
+\dot{x_9} &= x_{10}\\
+\dot{x_{10}} &= K_Lu_L + L_5x_5 + L_9x_9 + L_{10}x_{10}
+\end{align}
+\end{gather}
 
 % \begin{align}\label{eq:dyn_1}
 % J_m\ddot{{\theta}_m} + B_m \dot{{\theta}_m} + R_m T_{m1}(R_m {\theta}_m - R_1 {\theta}_1) = u_m
