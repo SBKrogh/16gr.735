@@ -5,7 +5,7 @@
  It was stated before that the requirements for our system was to get to at least 600Hz and to reach 1000Hz if possible. As shown in Table \ref{tab:UDPMeasurements}, the connection can go up to almost 1000Hz using UDP which fulfills the requirements. Nevertheless, the jitter should not be neglected as the frequency get closer to 1000Hz the jitter will be high compared to the period and may cause unexpected behaviour in real time operation. This issue will be further discussed in the next section. However, the data show a periodic disturbance in the system originating from the computer\todo{need some kind of graphical representation of that} which increases the jitter and delay. %Addictional safety precautions should be taken to prevent those behaviour.
 
 
-\begin{table}[!t]
+\begin{table}[h]
 %\centering
   $\begin{tabular}{|c|c|c|c|c|c|}
     \hline
@@ -26,7 +26,7 @@
 
 
 
-\begin{figure}
+\begin{figure}[h]
   \centering
   \begin{subfigure}{.45\linewidth}
     \centering
@@ -45,19 +45,7 @@
 \caption{histograms}
 \label{fig:histograms}
 \end{figure}
-% \begin{figure}[H]
-%   \centering
-%   \begin{minipage}[width=\linewidth]{7cm} 
-%   \include{10ms}
-%   \end{minipage}
-%   \caption{figure test}
-% \end{figure}
-% \begin{figure}
-% \begin{subfigure}{.45\linewidth}
-% \input{../Worksheets/rapport/pictures/10ms}
-% \caption{test}
-% \end{subfigure}
-% \end{figure}
+
 
 When the frequency is increased the jitter increases as well, see Figures \ref{fig:10ms} and \ref{fig:0ms}. This is due to the system becoming more sensitive to disturbances coming from the preemption of other processes.\todo{probably need to justify this}
 
