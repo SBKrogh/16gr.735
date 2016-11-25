@@ -2,7 +2,7 @@
 
 \subsection{Entire setup}
 
-A fully featured da Vinci robot with connected Endowrists has four arms with 6 - 7 DOF each. \todo{is has morer, but only seven can be actuated!}
+A fully featured da Vinci robot with connected EndoWrists has four arms with 6 - 7 DOF each. \todo{is has morer, but only seven can be actuated!}
 However, for test purposes, a small scale setup for controlling one EndoWrist has been created, see figure \ref{fig:Mec_d}.
 
 \begin{figure}
@@ -24,21 +24,23 @@ ROS uses a network architecture to share data between components via data stream
 
 \begin{figure}[h]
 \centering
+\scalebox{0.97}{
 \begin{tikzpicture}
     % We start by placing the blocks
-    \node [block] (Geomagic) {\small{Geomagic Touch}};
-    \node [block, right of=Geomagic, node distance = 3.4cm] (ROS) {ROS};
-    \node [block, right of=ROS, node distance=3.3cm] (DaVinci) {DaVinci};
+    \node [box] (Geomagic) {\small{Geomagic Touch}};
+    \node [box, right of=Geomagic, node distance = 3.4cm] (ROS) {ROS};
+    \node [box, right of=ROS, node distance=3.3cm] (DaVinci) {da Vinci};
     % We draw an edge between the controller and system block to
     % calculate the coordinate u. We need it to place the measurement block.
     \draw [<->] (Geomagic) -- node[label=above:\small{TCP/IP}] {} (ROS);
     \draw [<->] (ROS) -- node [label=above:\small{UDP}] {} (DaVinci);
 \end{tikzpicture}
+}
 \caption{Block diagram representing the system.}
 \end{figure}
 
 
-In our proposed system, the surgeon uses the Geomagic Touch joystick to control an EndoWrist tool on one of the arms of the daVinci surgical robot.
+In our proposed system, the surgeon uses the Geomagic Touch joystick to control an EndoWrist tool on one of the arms of the da Vinci surgical robot.
 It is important for the operator to have a feeling of the resistance the tool is experiencing in order to adjust the position and grip strength and thus prevent damage to the patient's tissue.
 In order to project the reaction forces acting on the EndoWrist to the operator, we use the Geomagic Touch haptic feedback feature. The communication between the da Vinci robot, the Geomagic Touch and the controller is done through Robots Operating System (ROS).
 
