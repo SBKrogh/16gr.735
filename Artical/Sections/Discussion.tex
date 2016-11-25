@@ -8,8 +8,8 @@ Based on earlier results \cite{kim2014dynamic} we expect an approximation of gri
 For the outwards force, the linear model parameters are defined and we expect the model to be precise in action since it fits the experimental results well.
 Additionally, it is simple to calculate so it doesn't introduce noticable delays in the system.
 
-For usable information to be provided , the representations of feedback from these three models need to be independent of each other.
-This means that the feedback force vector representing the yaw mechanism on the Geomagic Touch needs to be linearly independent from force vectors representing the other two mechanisms.
+For usable information to be provided , the representations of feedback from these three models need to be mutually independent.
+This means that the feedback force vector representing the e.g. yaw mechanism on the Geomagic Touch needs to be linearly independent of the ones resulting from the other two mechanisms.
 
 
 In the communication between the sbRIO and the computer, it was decided to not compress tranmistted data as the size of the packets is small (maximum of 49 bytes of payload). The compression rate for this amount of data is usually small and the computation time induced by compression and decompression lead to either a very small reduction of delay or even an additional delay. However no detailed study was made in this project to investigate the exact compression rate and computation time that would result from compression.
