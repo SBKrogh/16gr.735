@@ -10,3 +10,8 @@ Additionally, it is simple to calculate so it doesn't introduce noticable delays
 
 For usable information to be provided , the representations of feedback from these three models need to be independent of each other.
 This means that the feedback force vector representing the yaw mechanism on the Geomagic Touch needs to be linearly independent from force vectors representing the other two mechanisms.
+
+
+In the communication between the sbRIO and the computer, it was decided to not compress tranmistted data as the size of the packets is small (maximum of 49 bytes of payload). The compression rate for this amount of data is usually small and the computation time induced by compression and decompression lead to either a very small reduction of delay or even an additional delay. However no detailed study was made in this project to investigate the exact compression rate and computation time that would result from compression.
+
+By chosing UDP as a transport protocol, every reliability feature was removed from the connection which match the demands of our system in term of bandwidth. However, safety needs to be considered for such a system. As such a feature was implemented on both side of the communication in order to detect packet loss and connection timeout. The detection of those event allows to stop moving the end-effector and to notify the operator. In the future, additional steps such as protection against external attacks and handling of packet losses should be taken in order to improve the overall safety of the system.
