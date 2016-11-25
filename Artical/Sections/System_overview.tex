@@ -17,7 +17,7 @@ In order to perform higher level functions, such as force feedback control, it i
 This is handled by an external computer system. %that is connected to the Geomagic touch.
 
 The sbRIO board communicates with the computer using UDP \todo{UDP is one of our results and not part of the initial setup} communication protocols, while the Geomagic Touch, see section \ref{sec:Geomagic_touch}, does so using TCP/IP.
-The computer performs force estimation using a dynamical model of the test setup (or Endowrist, more precisely), this is vital for force feedback.
+The computer performs force estimation using a dynamical model of the test setup (or EndoWrist, more precisely), this is vital for force feedback.
 In order to connect software components responsible for communicating with hardware and the ones responsible for the control algorithm and estimation, the Robot Operating System (ROS) is used.
 ROS uses a network architecture to share data between components via data streams.
 
@@ -38,7 +38,7 @@ ROS uses a network architecture to share data between components via data stream
 \end{figure}
 
 
-In our proposed system, the surgeon uses the Geomagic Touch joystick to control an Endowrist tool on one of the arms of the DaVinci surgical robot.
+In our proposed system, the surgeon uses the Geomagic Touch joystick to control an EndoWrist tool on one of the arms of the daVinci surgical robot.
 It is important for the operator to have a feeling of the resistance the tool is experiencing in order to adjust the position and grip strength and thus prevent damage to the patient's tissue.
 In order to project the reaction forces acting on the EndoWrist to the operator, we use the Geomagic Touch haptic feedback feature. The communication between the da Vinci robot, the Geomagic Touch and the controller is done through Robots Operating System (ROS).
 
@@ -72,8 +72,8 @@ On Figure \ref{fig:phantom_omni}, it can be seen that the Geomagic Touch has six
 
 
     
-\subsection{Endowrist}
-An Endowrist, see Figure \ref{fig:Endo_plates} is a surgical tool which can be manipulated as a human wrist.
+\subsection{EndoWrist}
+An EndoWrist, see Figure \ref{fig:Endo_plates} is a surgical tool which can be manipulated as a human wrist.
 It is used in surgical procedures such as Laparoscopic surgeries,  where small incisions in the human body is made during the surgery.
 Because the incision cuts are small, blood loss during the surgery and the risk of infection is reduced. This has a positive effect on the recovery time of the patient\cite{RIGSP}.
 
@@ -89,10 +89,10 @@ Because the incision cuts are small, blood loss during the surgery and the risk 
   \begin{subfigure}{.22\textwidth}
     \centering
     \includegraphics[width=\linewidth]{Endowrist3.jpg}
-    \caption{End-effector of the Endowrist\newline}
+    \caption{End-effector of the EndoWrist\newline}
     \label{fig:Endo_end}
   \end{subfigure}
-\caption{The Endowrist and it's end-effector}
+\caption{The EndoWrist and it's end-effector}
 \label{fig:endowrits_set}
 \end{figure}
 
@@ -100,7 +100,7 @@ Because the incision cuts are small, blood loss during the surgery and the risk 
 The EndoWrist can be manipulated as a human wrist with two clamps, thus having four degrees of freedom (DOF), see Figure \ref{fig:Endo_end}.\todo{we need to update the picture!} This gives the movement of roll, pitch, yaw and an opening/closing mechanism that acts as the thumb and index finger of a hand.
 
 
-The end-effector is manipulated by the four wheels seen on Figure \ref{fig:Endo_plates}. The Endowrist is cable driven, which provides the opportunity of making it small but also makes the system nonlinear due to dry friction.
+The end-effector is manipulated by the four wheels seen on Figure \ref{fig:Endo_plates}. The EndoWrist is cable driven, which provides the opportunity of making it small but also makes the system nonlinear due to dry friction.
 
 
 
