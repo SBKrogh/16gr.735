@@ -16,7 +16,7 @@ Representing the onboard computer on the da Vinci robot, an sbRIO board has been
 In order to perform higher level functions, such as force feedback control, it is necessary to remotely handle data and send high-level commands.
 This is handled by an external computer system. %that is connected to the Geomagic touch.
 
-The sbRIO board communicates with the computer using UDP \todo{UDP is one of our results and not part of the initial setup} communication protocols, while the Geomagic Touch, see section \ref{sec:Geomagic_touch}, does so using TCP/IP.
+The sbRIO board communicates with the computer using User Datagram Protocol (UDP), while the Geomagic Touch, see section \ref{sec:Geomagic_touch}, does so using TCP/IP.
 The computer performs force estimation using a dynamical model of the test setup (or EndoWrist, more precisely), this is vital for force feedback.
 In order to connect software components responsible for communicating with hardware and the ones responsible for the control algorithm and estimation, the Robot Operating System (ROS) is used.
 ROS uses a network architecture to share data between components via data streams.
