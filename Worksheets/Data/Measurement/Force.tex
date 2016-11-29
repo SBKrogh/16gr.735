@@ -5,7 +5,7 @@ As the Endowrist tool is highly nonlinear, measurement of how the end effector r
 \subsection*{Purpose:}
 To measure the relationship between the current and the force at the end-effector.
 
-This test was made from engineering a simple setup where force could be measured. Therefore it should be noted that this test is not ideal as a load cell would have been preferable but it was not available. However it was possible to get a rough estimate of the relationship between current and force. 
+This test was made from engineering a simple setup where force could be measured. It is however a rough estimate as the construction is not professionally made. 
 
 The test setup can be seen on \figref{fig:Overview_force} 
 
@@ -15,13 +15,13 @@ The test setup can be seen on \figref{fig:Overview_force}
 		\centering
 		\vspace{24pt}
 		\includegraphics[width=\linewidth]{overall_force.jpg}
-		\caption{The entire test setup. From the right, a scale for measuring the downwards force, a piece of wood for stiffening the Endowrist and keeping it it place and the Endowrist holder with motors.}
+		\caption{The entire test setup. From the right, a load cell for measuring the downwards force, a piece of wood for stiffening the Endowrist and keeping it it place and the Endowrist holder with motors.}
 		\label{fig:entire_force_testsetup}
 	\end{subfigure}
 	\begin{subfigure}{.45\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{endeffector_force.jpg}
-		\caption{A 3D printed case which made it possible to make an orthogonal force from the end-effector to the scale.}
+		\caption{The load cell with the attached end-effector.}
 		\label{fig:endeffector_force}
 	\end{subfigure}
 \caption{Test setup for the force estimation of the end-effector.}
@@ -32,34 +32,35 @@ The test setup can be seen on \figref{fig:Overview_force}
 \begin{itemize}
 \item Endowrist model 420093 (AAU number: \#4).
 \item Maxon 110160 motor with attached Maxon gearhead 110356 and Maxon encoder 201937.
-\item Weight scale: Kern FCB 12K1 (AAU number: 86759).
-\item Labview for measuring the current.
-\item 3D printed case
+\item Block of wood for stabilizing the EndoWrist.
+\item Load cell rate for 1 kg of force \cite{Load_cell_1kg}.
+\item HX711 - Load cell amplifier \cite{HX711}
 \end{itemize}
 
 \subsection*{Procedure:}
 The following procedure was made for the force estimation:
 \begin{enumerate}
-\item The end-effector is set to an angle of $0^\circ$.
-\item The end-effector was directly connected to the 3D printed case and taped to the scale.
+\item The end-effector is attached perpendicular to the load cell. 
 \item The scale is reset to zero.
-\item Current is increased to the motor which control the yaw of the end-effector, until first force measurement was available and noted.
-\item Current is increased with approx. 50 - 100 mA and the force is noted in respect to the current until a current of 1 ampere is reached.
+\item Current is applied or increased to the motor which control the yaw of the end-effector, with steps of 120 mA and the force is measured.
+\item Current is increased until 1200 mA is applied.
 \end{enumerate}
+Step two to four is repeated seven times, where the data is logged. 
 
 
 \subsection*{Measuring data:}
-The data from the measurements can be seen on \figref{endo_force_mes} A linear expression is made from the 340 mA sample and up and can be seen on \eqref{eq:linear_force_endo}.
+The data from the measurements can be seen on \figref{endo_force_mes}. 
+%\eqref{eq:linear_force_endo}.
 
-\begin{equation}
-\text{y} = 0.0028 \cdot \text{x} -0.8259 
-\label{eq:linear_force_endo}
-\end{equation} 
+% \begin{equation}
+% \text{y} = 0.0028 \cdot \text{x} -0.8259 
+% \label{eq:linear_force_endo}
+% \end{equation} 
 
 
 
 \subsection*{Results:}
-It can be seen from the graph on \figref{endo_force_mes} that the force on the end-effector is highly nonlinear. The friction from the gearing and the Endowrist does that the force first begins to show around 200 mA due to the friction.
+It can be seen from the graph on \figref{endo_force_mes} that the force on the end-effector is highly nonlinear. The friction from the gearing and the Endowrist does that the force first has an exponential growth at the start. Around the 800 mA and 1200 mA step it can be seen that a drop in force is happening. What causes this drop is not identified but it can be seen that it appears for all the data sequences. \todor{better explanation?}
 
 
 \input{Data/Measurement/Endo_force_measure.tex}
@@ -67,13 +68,12 @@ It can be seen from the graph on \figref{endo_force_mes} that the force on the e
 \subsection*{Uncertainties of measurement:}
 \begin{itemize}
 \item Weight calibration.
-\item Not 100 \% orthogonal force to the scale.
-\item Elasticity of the 3D printed case, which made it possible for the end-effector to move a bit and get a slightly different angle than $0^\circ$. 
-\item Movement of the entire setup when the elasticity of the 3D printed case reached a certain point.
+\item Not 100 \% orthogonal force to the load cell.
+\item Input/Output impedance of sensors have a $\pm 10 \%$ tolerance.
 \end{itemize}
 
 \subsection*{Conclusion:}
-It can be seen that the force on the end-effector has an exponential growth and is therefore not linear.
-An estimation of a linear force increase is made from the 340 mA sample and up.\\
-This test setup made it possible to make a rough estimate of the force at the end-effector. However this is not an ideal setup.
+It can be seen that the force on the end-effector has an exponential growth.
+
+This test setup made it possible to make a rough measurements of the force at the end-effector.
 

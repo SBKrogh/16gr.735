@@ -6,63 +6,126 @@
 %
 \definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
 \definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+\definecolor{mycolor3}{rgb}{0.92900,0.69400,0.12500}%
+\definecolor{mycolor4}{rgb}{0.49400,0.18400,0.55600}%
+\definecolor{mycolor5}{rgb}{0.46600,0.67400,0.18800}%
+\definecolor{mycolor6}{rgb}{0.30100,0.74500,0.93300}%
+\definecolor{mycolor7}{rgb}{0.63500,0.07800,0.18400}%
 %
-\begin{figure}[H]
+\begin{figure}
 \begin{tikzpicture}
-
+\centering
 \begin{axis}[%
 width=4.521in,
 height=3.566in,
 at={(0.758in,0.481in)},
 scale only axis,
-xmin=-10,
-xmax=1100,
+xmin=0,
+xmax=1.25,
 xlabel style={font=\color{white!15!black}},
-xlabel={Current (mA)},
-ymin=-0.1,
-ymax=2.3,
+xlabel={Ampere [A]},
+ymin=0,
+ymax=1.2,
 ylabel style={font=\color{white!15!black}},
-ylabel={Force (N)},
+ylabel={Force [N]},
 axis background/.style={fill=white},
 title style={font=\bfseries},
-title={Force of the endowrist depending on current},
-xmajorgrids,
-ymajorgrids
+title={Relationship between ampere and clamp force}
 ]
 \addplot [color=mycolor1, draw=none, mark=asterisk, mark options={solid, mycolor1}, forget plot]
   table[row sep=crcr]{%
-0	0\\
-220	0.03928\\
-290	0.05892\\
-340	0.11784\\
-430	0.35352\\
-510	0.51064\\
-540	0.61866\\
-620	0.92308\\
-660	1.1293\\
-750	1.28642\\
-800	1.53192\\
-870	1.63994\\
-950	1.83634\\
-1010	1.94436\\
+0.12	0.05892\\
+0.24	0.12766\\
+0.36	0.3437\\
+0.48	0.6383\\
+0.6	0.72668\\
+0.72	0.82488\\
+0.84	0.80524\\
+0.96	0.92308\\
+1.08	0.982\\
+1.2	0.982\\
 };
-\addplot [color=mycolor2, forget plot]
+\addplot [color=mycolor2, draw=none, mark=asterisk, mark options={solid, mycolor2}, forget plot]
   table[row sep=crcr]{%
-290	-0.00996204344902341\\
-340	0.130719594329395\\
-430	0.383946542330548\\
-510	0.609037162776017\\
-540	0.693446145443068\\
-620	0.918536765888537\\
-660	1.03108207611127\\
-750	1.28430902411242\\
-800	1.42499066189084\\
-870	1.62194495478063\\
-950	1.8470355752261\\
-1010	2.0158535405602\\
+0.12	0.0491\\
+0.24	0.16694\\
+0.36	0.26514\\
+0.48	0.53028\\
+0.6	0.61866\\
+0.72	0.67758\\
+0.84	0.70704\\
+0.96	0.8347\\
+1.08	0.91326\\
+1.2	0.90344\\
+};
+\addplot [color=mycolor3, draw=none, mark=asterisk, mark options={solid, mycolor3}, forget plot]
+  table[row sep=crcr]{%
+0.12	0.0491\\
+0.24	0.12766\\
+0.36	0.3437\\
+0.48	0.62848\\
+0.6	0.72668\\
+0.72	0.79542\\
+0.84	0.79542\\
+0.96	0.89362\\
+1.08	1.02128\\
+1.2	1.00164\\
+};
+\addplot [color=mycolor4, draw=none, mark=asterisk, mark options={solid, mycolor4}, forget plot]
+  table[row sep=crcr]{%
+0.12	0.03928\\
+0.24	0.0982\\
+0.36	0.31424\\
+0.48	0.64812\\
+0.6	0.7365\\
+0.72	0.80524\\
+0.84	0.82488\\
+0.96	0.92308\\
+1.08	0.97218\\
+1.2	0.99182\\
+};
+\addplot [color=mycolor5, draw=none, mark=asterisk, mark options={solid, mycolor5}, forget plot]
+  table[row sep=crcr]{%
+0.12	0.0491\\
+0.24	0.12766\\
+0.36	0.3437\\
+0.48	0.67758\\
+0.6	0.7856\\
+0.72	0.84452\\
+0.84	0.87398\\
+0.96	0.982\\
+1.08	1.00164\\
+1.2	1.02128\\
+};
+\addplot [color=mycolor6, draw=none, mark=asterisk, mark options={solid, mycolor6}, forget plot]
+  table[row sep=crcr]{%
+0.12	0.0491\\
+0.24	0.12766\\
+0.36	0.35352\\
+0.48	0.6874\\
+0.6	0.79542\\
+0.72	0.85434\\
+0.84	0.90344\\
+0.96	0.982\\
+1.08	1.0311\\
+1.2	1.0311\\
+};
+\addplot [color=mycolor7, draw=none, mark=asterisk, mark options={solid, mycolor7}, forget plot]
+  table[row sep=crcr]{%
+0.12	0.0491\\
+0.24	0.11784\\
+0.36	0.33388\\
+0.48	0.66776\\
+0.6	0.75614\\
+0.72	0.81506\\
+0.84	0.87398\\
+0.96	0.97218\\
+1.08	1.04092\\
+1.2	1.0311\\
 };
 \end{axis}
+
 \end{tikzpicture}%
-\caption{The force measurements from the end-effector with a $0^\circ$ angle.}
+\caption{Force measurements, measured at the end-effector with ampere increases of 120 mA }
 \label{endo_force_mes}
 \end{figure}
