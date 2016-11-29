@@ -4,15 +4,15 @@ In order to communicate between ROS and the sbRIO board the university created a
 
 \begin{itemize}
 \item Low level driver
-\item Middel level driver
+\item Middle level driver
 \item High level driver
 \end{itemize}
 
-The low level driver communicate directly with the sbRIO board. The high level driver handled the communication between ROS nodes. It updates the data for the nodes and transmits the setpoints to the low level driver through the middel driver. The name "setpoint" is used to designate the next position a motor should take.
+The low level driver communicates directly with the sbRIO board. The high level driver handles the communication between ROS nodes. It updates the data for the nodes and transmits the setpoints to the low level driver through the middle driver. The name "setpoint" is used to designate the next position a motor should take.
 
-The middle level driver handles the creation(s) of the low lever driver(s) and communication between the low and high level driver, so there is no need for the client to acquire mutexes. Due to the opportunity of creating more than one low lever driver it is possible to communicate with more than one arm of the DaVinci robot.\todor{Just this column of text}
+The middle level driver handles the creation(s) of the low lever driver(s) and communication between the low and high level driver, so there is no need for the client to acquire mutexes. Due to the opportunity of creating more than one low level driver it is possible to communicate with more than one arm of the DaVinci robot.\todor{Just this column of text}
 
-The low level driver connects to one sbRIO board using a TCP/IP socket and launch a loop in a thread to handle the communication. The data exchange is made using \gls{JSON} files, see \secref{subsec:JSON}. The structure of the code can be seen in\figref{fig:original_driver}.
+The low level driver connects to one sbRIO board using a TCP/IP socket and exchange data with it using \gls{JSON} files, see \secref{subsec:JSON}. As shown in ~\figref{fig:original_driver}, the driver begins with an initialization of the connection and then start a loop. This loop is started in a thread and will run as long as the node is running. At each iteration of the loop, if some new data are present in the stream they are read and an update function is called to make them available to the higher levels. Then if there is some new setpoints or motor enable they are sent to the sbRIO. Finally, the thread goes to sleep before the next iteration of the loop. This sleeping period is introduced as to not overload the communication channel or the processor and this is the only control available on the speed of the communication.
 
 \begin{figure}[H]
 \centering
