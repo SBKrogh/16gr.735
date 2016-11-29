@@ -1,9 +1,8 @@
 \section{Kinematics for the Geomagic touch}
 
-As shown on \figref{fig:phantom_omni}, the Phantom omni has 6 joints. The coordinate frame for these joints can be derived as shown on \figref{fig:Frame_phantom}. Note that there is two additional frames for the Phantom omni. These are included because the distance between joint 3 and 4, 5 and 6, can not be defined as frame $O_3$ does not intersect with $x_4$ and $O_5$ does not intersect with $x_6$. This is solved by introducing the two frames upon $O_3$ and $O_5$ in such a way that the frames are rotated, thus fulfilling the DH(1) and DH(2) rule and thereby enabling the opportunity of defining the distance. \\
-The \gls{DH} parameters can then be derived as shown in \tabref{tab:kin_geo}, where the two additional frames are displayed with roman numbers.
-
-\todo{erase extra frame and edit kinematic chapter. The frame can be added away from the rotating joint, thus simplifes the kinematics parameters.}
+As shown on \figref{fig:phantom_omni}, the Phantom omni has 6 joints.
+The coordinate frame for these joints can be derived as shown on \figref{fig:Frame_phantom}. 
+The 6 frames on the DH scheme correspond to the links on the Geomagic touch and define their orientation and position.
 
 \begin{figure}[H]
 \centering
