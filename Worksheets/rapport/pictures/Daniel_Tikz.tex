@@ -4,7 +4,7 @@
 % %\draw (-1.5,-1.5) rectangle (13.5,1.5);
 
 % \draw (-2.8,3.1) rectangle (2.8,-12.8);
-% \node at (0,2.5) {\textbf{sbRIO}};
+% \node at (0,2.5) {\textbf{RIO}};
 
 
 % \draw (-2.5,2) rectangle (2.5,-4.2);
@@ -70,16 +70,16 @@
 
 
 
-\begin{figure}[H]
+\begin{sidewaysfigure}
 \centering
 \tikzset{dataset/.style = {rectangle, draw, text width = 5.5cm, minimum height=3cm}}
 \begin{tikzpicture}
 
-\node [dataset] (mpro) at (0,3) {\textbf{Micro processor}
+\node [dataset] (mpro) at (0,3) {\textbf{Microprocessor}
 \begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt]
 \item Data logging
 \item Ethernet communication
-\item Shutdown: Communication error \\
+\item Shutdown in case of communication error\\
 \end{itemize}};
 
 \node [dataset, below of=mpro, node distance=6.5cm] (FPGA) {\textbf{FPGA}
@@ -104,28 +104,44 @@
 \draw[<-, ultra thick] ([yshift=1cm]emc.east) -- ([yshift=1cm]FPGA.west);
 
 \tikzset{dataset/.style = {rectangle, draw, text width = 6cm, minimum height=10.5cm}}
-\node [dataset, above of=FPGA, node distance=3.5cm] (motor) {\textbf{sbRIO}
+
+\node [dataset, above of=FPGA, node distance=3.5cm] (sbrio) {\textbf{sbRIO}
 \begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=260pt] % Edit the last number to fit title 
 \item[]  %  This line is necessary!!
 \end{itemize}};
 
 
 \tikzset{dataset/.style = {rectangle, draw, text width = 5.5cm, minimum height=1cm}}
-\node [dataset, above of=emc, node distance=2.5cm] (motor) {\textbf{Motor}};
 
-\draw[->, ultra thick] ([xshift=-1cm]motor.south) -- ([xshift=-1cm]emc.north);
-\draw[<-, ultra thick] ([xshift=1cm]motor.south) -- ([xshift=1cm]emc.north);
+\node [dataset, below of=emc, node distance=2.5cm] (motor) {\textbf{Motor}};
 
-\tikzset{dataset/.style = {rectangle, draw, text width = 5.5cm, minimum height=5cm}} % This edits the size of the Ros computer box 
-\node [dataset, above of=motor, node distance=3.75cm] (ROS) {\textbf{Ros computer}
+\draw[->, ultra thick] ([xshift=-1cm]motor.north) -- ([xshift=-1cm]emc.south);
+\draw[<-, ultra thick] ([xshift=1cm]motor.north) -- ([xshift=1cm]emc.south);
+
+\tikzset{dataset/.style = {rectangle, draw, text width = 4.5cm, minimum height=5cm}} % This edits the size of the Ros computer box 
+
+
+\node [dataset, right of=mpro, node distance=7cm] (ROS) {\textbf{ROS computer}
 \begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
 \item 1
 \item 2
 \item 3 
 \end{itemize}};
 
-\draw[->, ultra thick] ([yshift=-1cm]mpro.west) -- ([yshift=-1cm]ROS.east); % ([yshift=-1cm]ROS.west) should probaly be edited!!!
-\draw[<-, ultra thick] ([yshift=1cm]mpro.west) -- ([yshift=1cm]ROS.east);
+\draw[->, ultra thick] ([yshift=-1cm]mpro.east) -- ([yshift=-1cm]ROS.west)node[right of=mpro, node distance=3.9cm] {UDP}; % ([yshift=-1cm]ROS.west) should probaly be edited!!!
+\draw[<-, ultra thick] ([yshift=1cm]mpro.east) -- ([yshift=1cm]ROS.west);
+
+
+
+\node [dataset, right of=ROS, node distance=5.5cm] (GT) {\textbf{Geomagic Touch}
+	\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
+	\item 1
+	\item 2
+	\item 3 
+	\end{itemize}};
+
+\draw[->, ultra thick] ([yshift=-1cm]ROS.east) -- ([yshift=-1cm]GT.west); % ([yshift=-1cm]ROS.west) should probaly be edited!!!
+\draw[<-, ultra thick] ([yshift=1cm]ROS.east) -- ([yshift=1cm]GT.west);
 
 % \draw [->,ultra thick] (-1,1.5) -- (-1,-2); %Micro to FPGA
 % \draw [<-,ultra thick] (1,1.5) -- (1,-2);
@@ -135,7 +151,7 @@
 
 \end{tikzpicture}
 \caption{Say somthing cool- "\textit{Somthing cool!}"}
-\end{figure}
+\end{sidewaysfigure}
 
 \todo{Include arrow, label anc new caption... elaborate this picture breifly, what do the different boxes do?}
 
