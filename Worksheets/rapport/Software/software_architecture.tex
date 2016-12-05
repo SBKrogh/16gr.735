@@ -25,19 +25,19 @@
 % considerably easier.
 
 In a high level overview, our system could structurally be represented in several components.
-The sBRio board controls the actuators on the DaVinci robot arm and the rest of the system communicates with it via drivers contained in the Davinci\_ ros package. The Phantom Omni communicates with the system via the Open Haptics API, and connects to ROS through the phantom\_ omni package.
+The sBRio board controls the actuators on the DaVinci robot arm and the rest of the system communicates with it via drivers contained in the Davinci\_ros package. The Phantom Omni communicates with the system via the Open Haptics API, and connects to ROS through the phantom\_omni package.
 
 Connecting all the system components requires an architecture based on a central node which handles communication between the two packages and has access to all the other methods required for control.
 We have developed the Endohap package exactly for this purpose.
-The endohap\_ node node contained in the package connects all the main system components using protocols either defined by ROS (TCP/IP) or externally (UDP). 
+The endohap\_node node contained in the package connects all the main system components using protocols either defined by ROS (TCP/IP) or externally (UDP). 
 
-Communication with the Endowrist test setup is handled by the boost libraries in the davinci\_ drivers package. 
-The sbrio\_ driver program transforms the data received by UDP and propagates it through the system using internal ROS communication protocols and vice versa. 
-More precisely, the motor state data is poblished to the joint\_ states ROS topic, which the central (endohap) node is subscribed to.
+Communication with the Endowrist test setup is handled by the boost libraries in the davinci\_drivers package. 
+The sbrio\_driver program transforms the data received by UDP and propagates it through the system using internal ROS communication protocols and vice versa. 
+More precisely, the motor state data is poblished to the joint\_states ROS topic, which the central (endohap) node is subscribed to.
 Since this makes it is possible to use a separate (non-ROS) protocol for communicating with the test setup while maintaining ROS protocols for the internal system, we conclude that this approach gives a higher degree of control in terms of communication speed.
 
 The motor state data is then used by the endohap node for Endowrist external force estimation and feedback generation.
-After this is done, the resulting force feedback reference needs to be sent to the phantom\_ omni package, from which the endohap node also recieves the user input for the Endowrist. While the phantom\_ omni package handles hardware communication via external TCP/IP protocols, the endohap node only publishes and subscribes to appropriate topics in order to communicate with that part of the system.
+After this is done, the resulting force feedback reference needs to be sent to the phantom\_omni package, from which the endohap node also recieves the user input for the Endowrist. While the phantom\_ omni package handles hardware communication via external TCP/IP protocols, the endohap node only publishes and subscribes to appropriate topics in order to communicate with that part of the system.
 
 All the calculation required for controlling the endowrist and giving force feedback to the phantom omni is also done within the endohap node. Forward kinematics are handled by the tf ROS package, which utilizes URDF description files combined with current joint position information published to ROS.
 This consequently allows for other useful features such as visualization in Rviz or various kinematics calculations.
@@ -52,9 +52,9 @@ Forming the node in an object-oriented manner gives the added advantage of modul
 \node [box] (EEST) at ($(0,-2) + (ECOM)$) {Endowrist \\ state estimation};
 \node [box] (ECTRL) at ($(-2,-3) + (EEST)$) {Endowrist \\ control};
 \node [box] (REFBK) at ($(2,-3) + (EEST)$) {Reference \\ and feedback};
-\node [box] (OMNI) at ($(4,0) + (REFBK)$) {phantom\_ omni};
+\node [box] (OMNI) at ($(4,0) + (REFBK)$) {phantom\_omni};
 \node [box] (PHANTOM) at ($(0,-2) + (OMNI)$) {Phantom \\ Omni};
-\node [box] (DAVINCI) at ($(6,0) + (ECOM)$) {davinci\_ driver};
+\node [box] (DAVINCI) at ($(6,0) + (ECOM)$) {davinci\_driver};
 \node [box] (TEST) at ($(0,-2) + (DAVINCI)$) {Test setup};
 
 \draw[->, ultra thick] (ECOM) -- (EEST);
