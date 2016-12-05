@@ -22,25 +22,21 @@ Those steps are repeated for both the serial and parallel case for the following
 
 \subsection*{Measuring data:}
 
-\begin{center}
-	$\begin{tabular}{c|ccccc}
-		\text{Delay} & \text{Sending\newline frequency (Hz)} & \text{Receiving frequency (Hz)} & \text{Average delay (ms)} & \text{Jitter} & \text{Error rate (\%)}\\
-		\hline
-		10ms & 4 & 4 & 1 & 1 & 1 \\
-		2ms & 4 & 4 & 1 & 1 & 1 \\
-		0ms & 1 & 1 & 1 & 1 & 15 \\
-	\end{tabular}$
-	\captionof{table}{TCP}
-\end{center}
-
+% \begin{center}
+% 	$\begin{tabular}{c|ccccc}
+% 		\text{Delay} & \text{Sending\newline frequency (Hz)} & \text{Receiving frequency (Hz)} & \text{Average delay (ms)} & \text{Jitter} & \text{Error rate (\%)}\\
+% 		\hline
+% 		10ms & 4 & 4 & 1 & 1 & 1 \\
+% 		2ms & 4 & 4 & 1 & 1 & 1 \\
+% 		0ms & 1 & 1 & 1 & 1 & 15 \\
+% 	\end{tabular}$
+% 	\captionof{table}{TCP}
+% \end{center}
+\todo{Find a way to represent what is desbribed in Results, as of now we have the wireshark files}
 \subsection*{Results:}
 
-
-
-\subsection*{Uncertainties of measurement:}
-
-??
+When the frequency is increased above 100Hz, instead of sending more packets it sends bigger packets in which two \gls{JSON} files are grouped. The more the frequency is increased, the bigger the packets.
 
 \subsection*{Conclusion:}
 
-Hopefully UDP is faster.
+The communication does not have the desired behavior when the frequency is increased. This may be due to the default behavior of TCP or to the default behavior of the JSON Stream. It was decided not to look further into this subject as this problem does not appear in the new communication protocol.

@@ -38,40 +38,25 @@ Those steps are repeated for both the serial and parallel case for the following
 \end{center}{}
 
 \begin{figure}[H]
-
-    \centering
-
-    \includegraphics[width=\linewidth]{10ms}
-
-    \caption{10ms}
-
-\end{figure} 
-
-\begin{figure}[H]
-
-    \centering
-
-    \includegraphics[width=\linewidth]{0ms}
-
-    \caption{0ms}
-
-\end{figure} 
-
-\todo{remake graph and table with more data set}
-
-\begin{figure}
-\input{../Worksheets/rapport/pictures/10ms}
+\centering
+	\begin{subfigure}{.45\textwidth}
+	    \centering
+	    \input{../Worksheets/rapport/pictures/10ms}
+	    \caption{10ms}
+	\end{subfigure} 
+	\begin{subfigure}{.45\textwidth}
+	    \centering
+	    \input{../Worksheets/rapport/pictures/0ms}
+	    \caption{0ms}
+	\end{subfigure} 
+	\label{Representation of the RTT delay for different frequencies}
 \end{figure}
+\todo{remake graph and table with the controller running}
 
 \subsection*{Results:}
 
 As the frequency of the communication increases, the delay becomes more and more sensitive to the disturbances caused by the preemption of other processes on the computer and as such the behavior of the system will become unpredictable. 
 
-
-\subsection*{Uncertainties of measurement:}
-
-??
-
 \subsection*{Conclusion:}
 
-Hopefully UDP is faster.
+As of now, the communication that uses UDP can reach up to 981Hz which meet our requirement of being higher than 300Hz. However the current measurements are taken without the controller running and need to be done again on the final configuration.
