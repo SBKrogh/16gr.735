@@ -10,13 +10,12 @@ In the former system the data exchanged through the TCP/IP connection follow the
 
 \begin{lstlisting}[language=C]
 "p4_primary":{
-	"position":[0,0.00013089955609757453203,-0.00012667699775192886591,0],
-	"velocity":[0,0.0015707947313785552979,0.0015707947313785552979,0],
-	"effort":[-0.48593282699584960938,-0.31835031509399414063,
-	-0.36891269683837890625,-0.39591121673583984375]
+	"position":[0.18189165291842698526913,0.00013089955609757453203,-0.0001266769975192886591,-0.1987191723699879841951,0.005448952358949832479,-0.075542398123354895423,0.34975197863262971333179],
+	"velocity":[0.0245981621957453203,0.0019754796320965562379,0.0015707947313785552979,0.00013089955609757453203,-0.08079910119712697,0.00179230726818657365132,0.36846987598741655653203],
+	"effort":[-0.48593282699584960938,-0.31835031509399414063,-0.36891269683837890625,-0.39591121673583984375,0.15245248632456985325663,0.32147856985321569887862,0.24789/86568745221455553]
 	}
 \end{lstlisting}
 
-As it can be seen in this example, the structure associate another structure to the element called "p4\_primary" which designates the Endowrist. This second structure contains arrays of positions, velocities and efforts with values for each of the four motors controlling the Endowrist.
+As it can be seen in this example, the structure associate another structure to the element called "p4\_primary" which designates the Endowrist. This second structure contains arrays of positions, velocities and efforts with values for each of the seven motors controlling the EndoWrist.
 
 The communication that was implemented is described in \secref{sec:ros} and \secref{sec:sbrio}
