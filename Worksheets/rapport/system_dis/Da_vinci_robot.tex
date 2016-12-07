@@ -24,11 +24,11 @@ The Da vinci robot is a minimal invasive surgery (MSI) robot used in surgeries s
 It consists of two main parts, a master console, see \figref{fig:mastermani}, and a slave manipulator, see \figref{fig:davincirobot}.
 
 \begin{itemize}
-\item The surgeon uses the master console to control the slave manipulator. It consists of two eye pieces, which display the surgery for the surgeon. 
-\item The slave manipulator is the robot which is controlled by the master console by the surgeon. It consists of four arms with 6-7 \gls{DOF} each, depending on which tool there is included at the end.
+\item The surgeon uses the master console to control the slave manipulator. It consists of two eye pieces, which display a high resolution 3D view of the surgery for the surgeon. 
+\item The slave manipulator is the robot which is controlled by the master console by the surgeon. It consists of four arms with 6-7 \gls{DOF} each, depending on the end.
 \end{itemize}
 
-The master console and three of the slave manipulators arms are disabled from the system. The master console will not be further analyzed. To control the last arm on the slave manipulator, the Geomagic touch, see \secref{sec:geo_magic}, has been implemented as the master controller.
+The master console and three of the slave manipulators arms are disabled from the system. The console is disabled from the system, since force feedback is not an option on this device. The three arms are disabled since the control on these will be identical. The master console will not be further analyzed. To control the last arm on the slave manipulator, the Geomagic touch, see \secref{sec:geo_magic}, has been implemented as the master controller.
 
 %a replacement master controller called a Geo magic touch is implemented, see \secref{sec:geo_magic}.
 
@@ -48,12 +48,13 @@ The slave manipulator arm consists of of three parts, arm, hand and tool, see \f
 \begin{enumerate}
 \item Arm:
 
-The arm of the tool is the part which is furtherest away from the patient. It is placed before the surgery and then locked in that position. Is is therefore not possible to alternate this position under surgery.
+The arm of the tool is the part which is furtherest away from the patient. 
+Under surgery it is locked to a specific position. Therefore it is not possible to change its position during the operation.
 \item Hand
 
 The hand is at the end of the arm and has three \gls{DOF}, which can be actuated under surgery.
 \item Tool / end effector 
 
-The tool is put together with the hand. Together these has 6 - 7 movable \gls{DOF} that can be actuated. The tool is the instrument which interacts with the patient under surgery. There are several different tools available, each with their own functionality. 
+The tool is connected to the hand. Together these got 6 - 7 movable \gls{DOF} that can be actuated. The tool is the instrument which interacts with the patient under surgery. There are several different tools available, each with their own functionality. 
 \end{enumerate}
 
