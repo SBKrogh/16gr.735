@@ -1,0 +1,28 @@
+\section{Human model}
+In this section a model of a human arm and hand are derived. This is done because of the \todo{Need something for this}..
+%ref
+% http://research.vuse.vanderbilt.edu/cim/pubs/journal/13%20-%20Speich%20Shao%20and%20Goldfarb%202005.pdf
+
+The human model can be describe from a mass-spring-damper model\todo{reference}, see figure \todo{figref}. This model has the base position in armpit of the operator. The constants $K_2$, $b_2$ and $K_1$, $b_1$ are the damper and spring constant for the arm and hand respectively. The mass, M, is the arm of the operator and the force, F, is the force between the hand and the manipulator, in this case the Geomagic touch.
+
+\input{rapport/Control/Tikz_human_model}
+
+
+From \todo{figure} the dynamic equations can be derived as \eqref{eq:force_endo_hand2} and \eqref{eq:force_endow_hand}.
+
+\begin{equation}
+F_h = k_1(x_m-x_h)+b_1(x_m-x_h)
+\label{eq:force_endo_hand2}
+\end{equation}
+
+\begin{equation}
+m_hx_hs^2 = k_1(x_m-x_h)+b_1(x_m-x_h)s-k_2x_h-b_2x_hs
+\label{eq:force_endow_hand}
+\end{equation}
+
+By substituting the equations into each other the transfer function for the dynamic model can be found. In this case the transfer function is made for the force between the hand and the Geomagic touch and its position, see \eqref{eq:force_endo_hand3}
+
+\begin{equation}
+\frac{x_m}{F_h} = \frac{m_hs^2+(b_2+b_1)s+(k_2+k_1)}{m_hb_1s^3+(m_hk_1+b_1b_2)+(k_1b_2+b_1k_2)s+k_2k_1}
+\label{eq:force_endo_hand3}
+\end{equation}

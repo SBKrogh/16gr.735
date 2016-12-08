@@ -1,0 +1,48 @@
+\subsection{Two clamp push} % \label{app:...}
+This test uses the test setup seen on \figref{fig:two_clamp}.
+
+\subsection*{Test equipment:}
+\begin{itemize}
+\item Endowrist model 420093 (AAU number: \#4).
+\item Maxon 110160 motor with attached Maxon gearhead 110356 and Maxon encoder 201937.
+\item Load cell rate for 1 kg of force \cite{Load_cell_1kg}.
+\item HX711 - Load cell amplifier \cite{HX711}
+\end{itemize}
+
+\subsection*{Procedure:}
+The following procedure was made for the push force measurements:
+\begin{enumerate}
+\item The two end-effector clamps are attached perpendicular to the load cell. 
+\item The scale is reset to zero.
+\item Current is applied to the motors which control the clamps of the end-effector and the force is measured (upwards direction).
+\item Current is increased in steps until 1200 mA is applied.
+\end{enumerate}
+Step two to four is repeated ten times, where the current and force is measured in respect to each other. 
+
+\subsection*{Measuring data:}
+The data from the measurements can be seen on \todo{Picture}%\figref{endo_force_mes}. 
+%\eqref{eq:linear_force_endo}.
+
+% \begin{equation}
+% \text{y} = 0.0028 \cdot \text{x} -0.8259 
+% \label{eq:linear_force_endo}
+% \end{equation} 
+
+
+
+\subsection*{Results:}
+\todo{result}
+%It can be seen from the graph on \figref{endo_force_mes} that the force on the end-effector is highly nonlinear. The friction from the gearing and the Endowrist does that the force first has an exponential growth at the start. Around the 800 mA and 1200 mA step it can be seen that a drop in force is happening. What causes this drop is not identified but it can be seen that it appears for all the data sequences. \todor{better explanation?}
+
+
+%\input{Data/Measurement/Endo_force_measure.tex}
+
+\subsection*{Uncertainties of measurement:}
+\begin{itemize}
+\item Not 100 \% orthogonal force to the load cell.
+\item Input/Output impedance of sensors have a $\pm 10 \%$ tolerance.
+\item Movement of test setup when force is generated.
+\end{itemize}
+
+\subsection*{Conclusion:}
+\todo{conclusion}

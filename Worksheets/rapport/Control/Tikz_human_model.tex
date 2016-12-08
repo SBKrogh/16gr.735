@@ -1,0 +1,27 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[every node/.style={draw,outer sep=0pt,thick}]
+
+
+
+
+\node (MO) [minimum width=1cm, minimum height=2.5cm] at (-3,0) {$m_x$};
+\node (M) [minimum width=1cm, minimum height=2.5cm] at (0,0) {$m_h$};
+
+\draw [spring] ([yshift=0.7cm]MO.east) -- ([yshift=0.7cm]M.west);
+\draw [damper] ([yshift=-0.7cm]MO.east) -- ([yshift=-0.7cm]M.west);
+
+\node (wall) [ground, rotate=90, minimum width=3cm] at (3,0) {};
+\draw (wall.north east) -- (wall.north west);
+
+\draw [spring] ([yshift=0.7cm]M.east) -- ([yshift=0.7cm]wall.north);
+\draw [damper] ([yshift=-0.7cm]M.east) -- ([yshift=-0.7cm]wall.north); %rotation makes the north, south, east and west rotate!
+
+\draw [->,ultra thick] (-4.9,0) -- (-3.7,0);
+
+
+\end{tikzpicture}
+\caption{Simple human arm/hand dynamical model.}
+\end{figure}
+\todo{add b,K,F and mx and mh direction}
+

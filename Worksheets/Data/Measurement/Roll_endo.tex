@@ -1,0 +1,55 @@
+\subsection{EndoWrist roll measurement}% \label{app:...}
+The test setup for this measurement can be seen on \todo{figref and a picture below}
+
+\subsection*{Test equipment:}
+\begin{itemize}
+\item Endowrist model 420093 (AAU number: \#4).
+\item Maxon 110160 motor with attached Maxon gearhead 110356 and Maxon encoder 201937.
+\item Torque sensor - Holger clasen: MWA-W8-1-P (AAU number: LBNR 08931).
+\item Active low pass filter set to 100 Hz and gain 1 (AAU number: C2-104-H1).
+\item Agilent 54621A oscilloscope (AAU number: 56684)
+\end{itemize}
+
+\subsection*{Procedure:}
+The following procedure was made for the push force measurements:
+\begin{enumerate}
+\item The carbon stick of the EndoWrist is attached to the torque sensor. 
+\item The torque sensor is connected to the low pass filter and the low pass filter to the oscilloscope.
+\item Current is applied or increased to the motor which control the roll of the end-effector, with different current steps and the output from the torque sensor is noted.
+\item Current is increased until 1200 mA is applied.
+\end{enumerate}
+Step three and four is repeated four times, where the current and torque is noted in respect to each other.. 
+\todo{update n times}
+
+\subsection*{Measuring data:}
+The data from the measurements can be seen on \todo{Picture}
+
+\input{Data/Measurement/roll_force.tex}
+
+%\figref{endo_force_mes}. 
+%\eqref{eq:linear_force_endo}.
+
+% \begin{equation}
+% \text{y} = 0.0028 \cdot \text{x} -0.8259 
+% \label{eq:linear_force_endo}
+% \end{equation} 
+
+
+
+\subsection*{Results:}
+\todo{result}
+
+
+%It can be seen from the graph on \figref{endo_force_mes} that the force on the end-effector is highly nonlinear. The friction from the gearing and the Endowrist does that the force first has an exponential growth at the start. Around the 800 mA and 1200 mA step it can be seen that a drop in force is happening. What causes this drop is not identified but it can be seen that it appears for all the data sequences. \todor{better explanation?}
+
+
+%\input{Data/Measurement/Endo_force_measure.tex}
+
+\subsection*{Uncertainties of measurement:}
+\begin{itemize}
+\item Gain of low pass filter could deviate from 1.
+\end{itemize}
+
+\subsection*{Conclusion:}
+It can be seen on figure \figref{fig:torque_measurement} that the roll-torque of the EndoWrist has a linear growth from approx. 100 mA and up. The parameters for this estimation can therefore be expressed as y = A$\cdot$x+B.
+

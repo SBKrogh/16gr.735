@@ -1,79 +1,81 @@
-\section{Measurement of external force at end effector} % \label{app:...}
+\section{Force measurements for the end-effector} % \label{app:...}
 
-As the Endowrist tool is highly nonlinear, measurement of how the end effector responds to external force should be made.
+As the Endowrist tool is highly nonlinear, measurement of how the end effector responds to external force should be made. These measurements are made for the parameters estimation of the EndoWrist model.  
 
 \subsection*{Purpose:}
-To measure the relationship between the current and the force at the end-effector.
+The purpose is to measure the relationship between the current consumption and force acting at the end-effector. Furthermore these measurements are used in the parameter estimation for the model of the EndoWrist.
 
-This test was made from engineering a simple setup where force could be measured. It is however a rough estimate as the construction is not professionally made. 
+The force estimations are done on three different setups:
+\begin{itemize}
+\item Pull/push of one clamp on the end-effector (yaw),
+\item Pull/push of two clamps where the force is applied in the same direction (yaw),
+\item Pull/push of the pitch on the end-effector (pitch)
+\item and the rotation of the end-effector (roll).
+\end{itemize}
 
-The test setup can be seen on \figref{fig:Overview_force} 
+In the following subsections the different tests defined in the itemizer above are made. For making the force measurements, item one to three, different attachment to a load-cell is made. These can be seen on \figref{fig:Overview_endowrist_attachment}.
 
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{.45\textwidth}
+	\begin{subfigure}{.32\textwidth}
 		\centering
-		\vspace{24pt}
-		\includegraphics[width=\linewidth]{overall_force.jpg}
-		\caption{The entire test setup. From the right, a load cell for measuring the downwards force, a piece of wood for stiffening the Endowrist and keeping it it place and the Endowrist holder with motors.}
-		\label{fig:entire_force_testsetup}
+		\vspace{-12pt}
+		\includegraphics[width=\linewidth]{One_clamp.jpg}
+		\caption{One clamp is attached to the load cell, so the pull/push force of one clamp can be made.}
+		\label{fig:one_clamp}
 	\end{subfigure}
-	\begin{subfigure}{.45\textwidth}
+	\begin{subfigure}{.32\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{endeffector_force.jpg}
-		\caption{The load cell with the attached end-effector.}
-		\label{fig:endeffector_force}
+		\includegraphics[width=\linewidth]{Two_clamp.jpg}
+		\caption{The clamps are put together and connected to the load-cell such that the pull/push force can be measured.}
+		\label{fig:two_clamp}
 	\end{subfigure}
-\caption{Test setup for the force estimation of the end-effector.}
-\label{fig:Overview_force}
+	\begin{subfigure}{.32\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{Pitch_clamp.jpg}
+		\caption{The end-effector are turned $90^\circ$ and attached to the load-cell, such that the pitch force can be measured.}
+		\label{fig:pitch_force}
+	\end{subfigure}
+\caption{Attachments between the end-effector and the load-cell used for force measurements}
+\label{fig:Overview_endowrist_attachment}
 \end{figure}
 
-\subsection*{Test equipment:}
-\begin{itemize}
-\item Endowrist model 420093 (AAU number: \#4).
-\item Maxon 110160 motor with attached Maxon gearhead 110356 and Maxon encoder 201937.
-\item Block of wood for stabilizing the EndoWrist.
-\item Load cell rate for 1 kg of force \cite{Load_cell_1kg}.
-\item HX711 - Load cell amplifier \cite{HX711}
-\end{itemize}
 
-\subsection*{Procedure:}
-The following procedure was made for the force estimation:
-\begin{enumerate}
-\item The end-effector is attached perpendicular to the load cell. 
-\item The scale is reset to zero.
-\item Current is applied or increased to the motor which control the yaw of the end-effector, with steps of 120 mA and the force is measured.
-\item Current is increased until 1200 mA is applied.
-\end{enumerate}
-Step two to four is repeated seven times, where the data is logged. 
+\input{Data/Measurement/Pull_clamp}
 
+\input{Data/Measurement/Push_clamp}
 
-\subsection*{Measuring data:}
-The data from the measurements can be seen on \figref{endo_force_mes}. 
-%\eqref{eq:linear_force_endo}.
+\input{Data/Measurement/Pull_Two_clamp}
 
-% \begin{equation}
-% \text{y} = 0.0028 \cdot \text{x} -0.8259 
-% \label{eq:linear_force_endo}
-% \end{equation} 
+\input{Data/Measurement/Push_Two_clamp}
+
+\input{Data/Measurement/Pitch_pull}
+
+\input{Data/Measurement/Pitch_push}
+
+\input{Data/Measurement/Roll_endo}
 
 
 
-\subsection*{Results:}
-It can be seen from the graph on \figref{endo_force_mes} that the force on the end-effector is highly nonlinear. The friction from the gearing and the Endowrist does that the force first has an exponential growth at the start. Around the 800 mA and 1200 mA step it can be seen that a drop in force is happening. What causes this drop is not identified but it can be seen that it appears for all the data sequences. \todor{better explanation?}
+
+% \begin{figure}[H]
+% 	\centering
+% 	\begin{subfigure}{.45\textwidth}
+% 		\centering
+% 		\vspace{24pt}
+% 		\includegraphics[width=\linewidth]{overall_force.jpg}
+% 		\caption{The entire test setup. From the right, a load cell for measuring the downwards force, a piece of wood for stiffening the Endowrist and keeping it it place and the Endowrist holder with motors.}
+% 		\label{fig:entire_force_testsetup}
+% 	\end{subfigure}
+% 	\begin{subfigure}{.45\textwidth}
+% 		\centering
+% 		\includegraphics[width=\linewidth]{endeffector_force.jpg}
+% 		\caption{The load cell with the attached end-effector.}
+% 		\label{fig:endeffector_force}
+% 	\end{subfigure}
+% \caption{Test setup for the force estimation of the end-effector.}
+% \label{fig:Overview_force}
+% \end{figure}
 
 
-\input{Data/Measurement/Endo_force_measure.tex}
-
-\subsection*{Uncertainties of measurement:}
-\begin{itemize}
-\item Weight calibration.
-\item Not 100 \% orthogonal force to the load cell.
-\item Input/Output impedance of sensors have a $\pm 10 \%$ tolerance.
-\end{itemize}
-
-\subsection*{Conclusion:}
-It can be seen that the force on the end-effector has an exponential growth.
-
-This test setup made it possible to make a rough measurements of the force at the end-effector.
 
