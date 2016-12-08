@@ -1,0 +1,1 @@
+Time |		encoder ticks(related to position) 	|		current value (A)
