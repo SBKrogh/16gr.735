@@ -16,9 +16,10 @@
 \todo{maked with red is Christoffer}
 
 There are two elements that impact greatly the size of the exchanged messages: the number of character added by the JSON format and the length of the numbers.
-As detailed in ~\secref{subsec:JSON}, the JSON format add numerous characters for the structure and require a name for each value. The first modification made in order to minimize the size of the messages was to remove the JSON format. One way of doing this is to define a fixed format for the messages. For simplicity, it was decided to keep a format similar to the original one, composed of a vectors of positions, velocities and efforts. All of these vectors contain the same number of elements and each elements must have the same length to make it possible to read. \textcolor{red}{In addition to these three vectors, a vector of booleans was added in order to keep the possibility of enabling or disabling the motors.}
+As detailed in ~\secref{subsec:JSON}, the JSON format add numerous characters for the structure and require a name for each value. The first modification made in order to minimize the size of the messages was to remove the JSON format. One way of doing this is to define a fixed format for the messages. For simplicity, it was decided to keep a format similar to the original one, composed of a vectors of positions, velocities and efforts. All of these vectors contain the same number of elements and each elements must have the same length to make it possible to read. 
+With the original \gls{JSON} format it is possible to specify the content of the file using the name of the first element in it. In addition to the messages containing the positions, velocities and efforts, there is messages that can be sent to indicate which motors are active or not. In order to implement that feature in the new format a byte is added at the end of the packet, this byte contains a boolean for each motors indicating if the motor is active or not.
 
-As mentioned, all the numbers in the vectors should have the same length. In the original format, not only the numbers were long (18 digits) but the length would vary from one message to another. Different solutions were considered. The first one would be to fix the number of digits but that would still imply a conversion to string. The second solution considered was the compression of the characters sent.  \textcolor{red}{However, as the size of the messages is small, the compression rate is low and the computation time required for compression would end up in a low gain of time or even in a time loss.} The third and last option was to send the binary representation directly without any encoding. The numerical values being stored as floats, each of them requires 4 bytes. It have the advantage of having a fixed length without having to round the value. The last solution was chosen as it has the lowest computation time, since no encoding is used. The only issue is that the endianness of both devices is not the same, this  \textcolor{red}{is fixed in the implementation} on the ROS side. The packets obtained with the new format are shown in \tabref{fig:received_packet} and \tabref{fig:sent_packet}
+As mentioned, all the numbers in the vectors should have the same length. In the original format, not only the numbers were long (18 digits) but the length would vary from one message to another. Different solutions were considered. The first one would be to fix the number of digits but that would still imply a conversion to string. The second solution considered was the compression of the characters sent.  \textcolor{red}{However, as the size of the messages is small, the compression rate is low and the computation time required for compression would end up in a low gain of time or even in a time loss.} The third and last option was to send the binary representation directly without any encoding. The numerical values being stored as floats, each of them requires 4 bytes. It have the advantage of having a fixed length without having to round the value. The last solution was chosen as it has the lowest computation time, since no encoding is used. The only issue is that the endianness of both devices is not the same, this is corrected in the implementation on the ROS side. The packets obtained with the new format are shown in \tabref{fig:received_packet} and \tabref{fig:sent_packet}
 
 With the original format, one message such as the one in ~\secref{subsec:JSON} contained 583 characters (583 bytes) for 7 motors. With the new format the message that contains the same information is 85 bytes. Therefore, the messages following the new format uses only 15\% of the original size.
 
@@ -29,7 +30,7 @@ With the original format, one message such as the one in ~\secref{subsec:JSON} c
   \hline			
   				 & Positions & Velocities & Efforts & Active\\ \hline
 Number of floats & 7 		 & 7 		  & 7 		& 		\\ \hline
-Number of bytes  & 4*7 		 & 4*7 		  & 4*7 	& 1		\\
+Number of bytes  & 4x7 		 & 4x7 		  & 4x7 	& 1		\\
 \hline  
 %\caption{Packet from the sbRIO to ROS for one arm, with a payload size of 85 bytes.}
 %\label{fig:received_packet}
@@ -39,14 +40,13 @@ Number of bytes  & 4*7 		 & 4*7 		  & 4*7 	& 1		\\
 \end{table}
 \todo{What is the resolution of the encoders compared to the representation}
 
-\todo{Use proper multiplication symbol}
 \begin{table}[H]
 \centering
 \begin{tabular}{| l | l | l |}
 \hline			
 					& Set points	 & Enabled\\ \hline
 Number of floats	& 7				 &		  \\ \hline
-Number of bytes		& 7*4 bytes		 & 1 byte \\
+Number of bytes		& 7x4 bytes		 & 1 byte \\
 \hline  
 %\caption{Packet from ROS to the sbRIO for one arm, with a payload size of 29 bytes.}
 %\label{fig:sent_packet}

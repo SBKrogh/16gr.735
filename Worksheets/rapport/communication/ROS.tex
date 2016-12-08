@@ -1,14 +1,14 @@
 \section{ROS}\label{sec:ros}
 
-In order to communicate between ROS and the sbRIO board the university created a ROS node called davinci\_driver. This driver is composed of three parts:
-\todo{The university didn't create anything!}
+In order to communicate between ROS and the sbRIO board a driver named davinci\_driver\cite{davinci_driver} was used. It is composed of three parts:
+\todor{is this enough reference to the github?}
 
 \begin{itemize}
 \item Low level driver
 \item Middle level driver
 \item High level driver
 \end{itemize}
-\todo{Itemizer need reference to Git repo}
+
 
 The low level driver communicates directly with the sbRIO board. The high level driver handles the communication between ROS nodes. It updates the data for the nodes and transmits the setpoints to the low level driver through the middle driver. The name "setpoint" is used to designate the next position a motor should take.
 
