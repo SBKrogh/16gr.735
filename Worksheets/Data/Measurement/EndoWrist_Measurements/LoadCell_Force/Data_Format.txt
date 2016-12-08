@@ -1,0 +1,3 @@
+The columns hold the following information:
+
+Time |	LoadCell Voltage output | 	Loadcell force (kN) | 	setpoint |		position  | 	Actual current |	Current Demand
