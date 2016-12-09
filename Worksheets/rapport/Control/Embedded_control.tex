@@ -1,0 +1,19 @@
+\section{Embedded control system}
+
+It is imperative to create a controller which minimizes the effects of communication delay. Therefore the aim was to implement as much of the motion control on the embedded system as possible. The human operator  inputs the required position by moving the GT. These positions are sent as position reference to the sbRIO. 
+The sbRIO has an implemented cascade position-speed-current control, which takes care of the EndoWrist positioning tasks. The P position control that tracks the setpoint is running on the sbRIO FPGA. The FPGA sends the speed reference to the Escon controller in the form of PWM signals. The Escon controller is running the PI speed control with inner PI current control loop. The inner loops are faster than the outer loops.
+
+The chosen controller parameters:
+
+\begin{center}
+	\begin{tabular}{ c | c | c | c }
+		\hline
+		Controller type & P gain & I time constant & Sampling rate \\ \hline
+		Position controller & 10 & 0 & 2 kHz \\ \hline
+		Speed controller & 426 & 28 ms & 5.36 kHz \\ \hline
+		Position controller & 1121 & $38 \mu s$ & 53.6 kHz \\ \hline
+	\end{tabular}
+\end{center}
+
+
+\input{rapport/Control/Embedded_Control_tikz}

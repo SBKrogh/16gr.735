@@ -1,0 +1,41 @@
+\begin{figure}
+	\begin{tikzpicture}
+	\sbEntree{E}
+	\sbComp{a}{E}
+	\sbBloc{b}{P}{a}
+	\sbRelier[$x_{d}$]{E}{a}
+	\sbComp{c}{b}	
+	\sbRelier[$\epsilon_x$]{a}{b}
+	\sbRelier[$\dot{x}_{d}$]{b}{c}
+	
+	\sbBloc{d}{PI}{c}	
+	\sbRelier[$\epsilon_{\dot{x}}$]{c}{d}
+	
+	\sbComp{e}{d}	
+	\sbRelier[$I_d$]{d}{e}
+	
+	\sbBloc{f}{PI}{e}	
+	\sbRelier[$\epsilon_{I}$]{e}{f}
+	
+	
+	\sbBloc{g}{Process}{f}	
+	\sbRelier{f}{g}
+	
+	
+	\sbSortie{h}{g}
+	\sbRelier{g}{h}
+	
+	\sbRenvoi{g}{a}{$x_a$}
+	\sbRenvoi{g}{c}{$\dot{x}_a$}
+	\sbRenvoi{g}{e}{$I_a$}
+	
+	\draw [color=gray,thick](0,-2) rectangle (4.4,1.5);
+	\node at (0.5,1) [below=10mm, right=0mm] {sbRIO FPGA};
+	
+		\draw [color=gray,thick](4.4,-2) rectangle (10.75,1.5);
+		\node at (6.5,1) [below=10mm, right=0mm] {ESCON controller};
+	
+	\end{tikzpicture}
+	\caption{Embedded cascade control. x is position, $\dot{x}$ is speed, I is current. d index means demand, a index means actual value.}
+\end{figure}
+	
