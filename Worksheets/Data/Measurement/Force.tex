@@ -39,11 +39,14 @@ In the following subsections the different tests defined in the itemizer above a
 \caption{Attachments between the end-effector and the load-cell used for force measurements}
 \label{fig:Overview_endowrist_attachment}
 \end{figure}
-
-
+The load-cell is connected to an Arduino which calculate the force applied to the load-cell. The force is then translated to a corresponding voltage. Since the Arduino does not have any DAC, the voltage is translated to a binary code which is send to a "Max531 DAC". The voltage output is send to the sbRIO board, which log all the data, e.g current, force, time, position etc.
+\todo{draw simpel setup of arduino}
+\todo{We probaly have to go through the mA applied in each section as 1200 mA and the figures does not seem to fit each other.}
 \input{Data/Measurement/Pull_clamp}
 
-\input{Data/Measurement/Push_clamp}
+\input{Data/Measurement/Pull_clampp}
+
+%\input{Data/Measurement/Push_clamp}
 
 \input{Data/Measurement/Pull_Two_clamp}
 
