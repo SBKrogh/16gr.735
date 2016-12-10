@@ -8,12 +8,14 @@
 \definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
 \definecolor{mycolor3}{rgb}{0.92900,0.69400,0.12500}%
 %
+\begin{figure}[H]
+\centering
 \begin{tikzpicture}
 
 \begin{axis}[%
-width=4.521in,
-height=1.413in,
-at={(0.758in,0.542in)},
+width=4.44in,
+height=1.265in,
+at={(0.745in,0.534in)},
 scale only axis,
 xmin=0,
 xmax=30,
@@ -4538,9 +4540,9 @@ ymajorgrids
 \end{axis}
 
 \begin{axis}[%
-width=4.521in,
-height=1.413in,
-at={(0.758in,2.615in)},
+width=4.44in,
+height=1.265in,
+at={(0.745in,2.459in)},
 scale only axis,
 xmin=0,
 xmax=30,
@@ -4552,7 +4554,7 @@ ylabel style={font=\color{white!15!black}},
 ylabel={Force [N]},
 axis background/.style={fill=white},
 title style={font=\bfseries},
-title={Clamp two - intwards force},
+title={Clamp two - inwards force},
 xmajorgrids,
 ymajorgrids
 ]
@@ -9064,3 +9066,6 @@ ymajorgrids
 };
 \end{axis}
 \end{tikzpicture}%
+\caption{Graph of inwards force for clamp one of the Endo-Wrist in respect to current.}
+\label{fig:2_clamp_in}
+\end{figure}

@@ -23,7 +23,7 @@ grid on
 
 subplot(2,1,1)
 plot(time,data_2.y{14}*1000,time,data_2.y{16}*1000,time,data_2.y{13}*1000)
-title('Clamp two - intwards force')
+title('Clamp two - inwards force')
 xlabel('Time [s]')
 ylabel('Force [N]')
 axis([0 30 -0.5 2])

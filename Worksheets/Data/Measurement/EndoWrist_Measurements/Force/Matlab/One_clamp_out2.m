@@ -5,8 +5,8 @@ load('data_for_simon')
 % data = iddata(y,u,Ts)
 
 ts = 0.02;     %Sample time
-data_x = data_1.u{1};    % Input
-data_y = data_1.y{1};    % Output
+data_x = data_2.u{1};    % Input
+data_y = data_2.y{1};    % Output
 
 n = length(data_x);  
 for t = 1:n
