@@ -113,7 +113,31 @@ On Figure \ref{fig:phantom_omni}, it can be seen that the Geomagic Touch has six
 
     
 \subsection{EndoWrist}\label{sec:EndoWrist}
-An EndoWrist, see Figure \ref{fig:Endo_plates} is a surgical tool which can be manipulated as a human wrist.
+
+{\color{green}An EndoWrist, see Figure \ref{fig:Endo_plates}, is a surgical tool for the da Vinci robot which can be manipulated as a human wrist. It provides the surgeon the ability to operate with the robot as he would without it. To replicate the movements of the wrist while maintaining a low cost and respecting the hygiene norms, the tool is composed of a system of cables and pulleys. This construction imitates the human tendons however it also introduces nonlinearities in the tool, and thus, a challenge for controlling or modeling it.
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}{.22\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,]{Endowrist22.png}
+    \caption{Actuator plates, which can manipulate the end effector position}
+    \label{fig:Endo_plates}
+  \end{subfigure}
+  \begin{subfigure}{.22\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Endowrist31.png}
+    \caption{End-effector of the EndoWrist\newline}
+    \label{fig:Endo_end}
+  \end{subfigure}
+\caption{The EndoWrist and its end-effector}
+\label{fig:endowrits_set}
+\end{figure}
+
+In real operation each tool has six to seven DOF, however, the EndoWrist itself, when disconnected from the robot, only has four DOF. Each DOF is actuated through a plate, see Figure \ref{fig:Endo_plates}. The four DOF are roll, pitch, yaw and clamp, see \ref{fig:Endo_end}. The nonlinearities of the tool are analyzed when building the model in Section \ref{sec:force_estimation}.
+}
+
+{\color{red}An EndoWrist, see Figure \ref{fig:Endo_plates}, is a surgical tool which can be manipulated as a human wrist.
 It is used in surgical procedures such as Laparoscopic surgeries,  where small incisions in the human body is made during the surgery.
 Because the incision cuts are small, blood loss during the surgery and the risk of infection is reduced. This has a positive effect on the recovery time of the patient\cite{RIGSP}.
 
@@ -140,7 +164,7 @@ Because the incision cuts are small, blood loss during the surgery and the risk 
 The EndoWrist can be manipulated as a human wrist with two clamps, thus having four degrees of freedom (DOF), see Figure \ref{fig:Endo_end}. This gives the movement of roll, pitch, yaw and an opening/closing mechanism that acts as the thumb and index finger of a hand.
 
 
-The end-effector is manipulated by the four wheels seen on Figure \ref{fig:Endo_plates}. The EndoWrist is cable driven, which provides the opportunity of making it small but also makes the system nonlinear due to dry friction.
+The end-effector is manipulated by the four wheels seen on Figure \ref{fig:Endo_plates}. The EndoWrist is cable driven, which provides the opportunity of making it small but also makes the system nonlinear due to dry friction.}
 
 
 

@@ -12,6 +12,7 @@ The force estimations are done on three different setups:
 \item Pull/push of the pitch on the end-effector (pitch)
 \item and the rotation of the end-effector (roll).
 \end{itemize}
+\todo{Do we use the pull push of two clamps?}
 
 In the following subsections the different tests defined in the itemizer above are made. For making the force measurements, item one to three, different attachment to a load-cell is made. These can be seen on \figref{fig:Overview_endowrist_attachment}.
 
@@ -39,8 +40,46 @@ In the following subsections the different tests defined in the itemizer above a
 \caption{Attachments between the end-effector and the load-cell used for force measurements}
 \label{fig:Overview_endowrist_attachment}
 \end{figure}
-The load-cell is connected to an Arduino which calculate the force applied to the load-cell. The force is then translated to a corresponding voltage. Since the Arduino does not have any DAC, the voltage is translated to a binary code which is send to a "Max531 DAC". The voltage output is send to the sbRIO board, which log all the data, e.g current, force, time, position etc.
-\todo{draw simpel setup of arduino}
+
+\subsection*{Electric test setup}
+For making the force measurement for the EndoWrist a simple hardware construction was build. This setup can be seen on \figref{fig:arduino_loadcell}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}%[every node/.style={draw,outer sep=0pt,thick}]
+
+\draw [ultra thick] (0,0) rectangle (2,2);
+\node at (1,1) {Load-cell};
+\draw [->,ultra thick] (0,1) -- (-1,1);
+
+\draw [ultra thick] (-3,0) rectangle (-1,2);
+\node at (-2,1) {Amplifier};
+\draw [->,ultra thick] (-3,1) -- (-4,1);
+
+\draw [ultra thick] (3,3) rectangle (5,5);
+\node at (4,4) {Motor};
+\draw [<-,ultra thick] (2,4) -- (3,4);
+\draw [->,ultra thick] (2,4) -- (3,4);
+
+\draw [ultra thick] (0,3) rectangle (2,5);
+\node at (1,4) {sbRIO};
+\draw [<-,ultra thick] (0,4) -- (-1,4);
+
+\draw [ultra thick] (-3,3) rectangle (-1,5);
+\node at (-2,4) {DAC};
+\draw [<-,ultra thick] (-3,4) -- (-4,4);
+
+\draw [ultra thick] (-6,0) rectangle (-4,5);
+\node at (-5,2.5) {Arduino};
+
+\end{tikzpicture}
+\caption{Simple human arm/hand dynamical model.}
+\label{fig:arduino_loadcell}
+\end{figure}
+
+
+The load-cell's output is amplified and send to an Arduino which calculate the force applied to the load-cell from the output. The force is then translated to a corresponding voltage output. Since the Arduino does not have a DAC, the voltage is translated to a binary code which is send to a "Max531 DAC". The voltage output from the DAC is read at the sbRIO board. In parallel, the sbRIO board also samples data such as the current send to the motor, motor position and a time stamp.
+
 \todo{We probaly have to go through the mA applied in each section as 1200 mA and the figures does not seem to fit each other.}
 \input{Data/Measurement/Pull_clamp}
 
