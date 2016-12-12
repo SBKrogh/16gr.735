@@ -17,6 +17,8 @@ The chosen controller parameters:
 
 The speed and current controller parameters were calibrated automatically by ESCON Studio. The program queries the motor parameters, desired current limits and maximum acceleration values and calculates the controller parameters based on those. The EndoWrist can not handle high speeds and high acceleration, thus speed was not the main priority in tuning the position PID control. We focused on precision and avoiding overshoot. By running experiments, we decided upon a P controller of 10 for each motor. A lower gain would result in slower motion, a higher gain would result in overshoots. The EndoWrist-motor system has inherent damping in the form of friction, inertia and elasticity, thus the system is stable even without integral and differential controller. The following graph shows experiments with free-running EndoWrist. The setpoints square signals moving jumping between the limits the EndoWrist can move between. This is a movement that would never happen in normal operation.
 
+\input{Data/Measurement/Tuning/roll_sin}
+
 \begin{figure}[h] \label{ fig7} \begin{minipage}[b]{0.50\linewidth}\centering\includegraphics[width=0.70\linewidth]{extreme_yaw1.png} \caption{} \end{minipage} \begin{minipage}[b]{0.50\linewidth}\centering\includegraphics[width=0.70\linewidth]{extreme_yaw2.png} \caption{} \end{minipage} \begin{minipage}[b]{0.50\linewidth}\centering\includegraphics[width=0.70\linewidth]{extreme_pitch.png} \caption{} \end{minipage}\hfill \begin{minipage}[b]{0.50\linewidth}\centering\includegraphics[width=0.70\linewidth]{extreme_roll.png} \caption{} \end{minipage} \end{figure}
 
 \begin{figure}[h] \label{ fig7} \begin{minipage}[b]{0.50\linewidth}\centering\includegraphics[width=0.70\linewidth]{mild_yaw1.png} \caption{The yaw setpoint tracking lag in this case is 50 ms} \end{minipage} \begin{minipage}[b]{0.50\linewidth}\centering\includegraphics[width=0.70\linewidth]{mild_yaw2.png} \caption{} \end{minipage} \begin{minipage}[b]{0.50\linewidth}\centering\includegraphics[width=0.70\linewidth]{mild_pitch.png} \caption{} \end{minipage}\hfill \begin{minipage}[b]{0.50\linewidth}\centering\includegraphics[width=0.70\linewidth]{mild_roll.png} \caption{} \end{minipage} \end{figure}
@@ -25,3 +27,37 @@ The speed and current controller parameters were calibrated automatically by ESC
 The following graph shows measurements with sinusoidal setpoint signals. This is much more similar to normal operations, where instead of jumps, the operator makes continuous moves.
 
 \input{rapport/Control/Embedded_Control_tikz}
+
+\subsubsection{FPGA}
+
+The FPGA built into the sbRIO is taking care of the interfacing between the controllers and the microprocessor. The code running on the FPGA is much faster than the one running on the microprocessor. To reach maximum possible speed, we implemented whatever we could on the FPGA, however the FPGA is incapable of handling higher level functions such as string handling and UDP networking.
+
+The FPGA's main functions are the following:
+
+\begin{itemize}	
+	\setlength\itemsep{0em}
+	\item Count the encoder ticks coming from the controller
+	\item Read the controller's analog and digital inputs 
+	\item Calculate position PID control signal and send the corresponding PWM signal to the controller
+	\item Enable the motors
+	
+\end{itemize}
+
+Since the current value coming from the ESCON is noisy, the FPGA also needs a built in low pass filter.
+
+\subsubsection{ESCON motor controllers}
+
+The ESCON controllers are programmed to output a speed corresponding to the FPGA PWM signal. The speed controller has an inner current controller, which also keeps the motors from taking overcurrent. The current ramps can be adjusted to fit the user's needs. The speed control gain can be adjusted by the onboard potmeter. 
+The outer speed loop provides the control signal for the internal current controller. The inner control loop must have a higher frequency than the speed control loop. The PI current controller is running at 53.6 kHz, while the PI speed controller is running at 5.36 kHz. The inner loop ensures fast response, the outer higher precision ($http://www.iraj.in/journal/journal_file/journal_pdf/1-59-140229369778-81.pdf$). The advantages of the cascade structure:
+
+\begin{itemize}
+	\item Better setpoint tracking
+	\item Better disturbance rejection
+	\item Less delay and phase lag
+\end{itemize}
+
+The position is controlled by setting the duty ratio of the incoming PWM signal. The speed reference is 0 at 50\% duty ratio and grows linearily at higher values.
+The ESCON controller has 2 programmable analog outputs, thus we are unable to read speed, actual current and demand current simultaneously.
+The controllers have autocalibration functionalities, but this ability is obstructed by the gearing limits.
+
+ESCON Studio provides the tool for logging data from the ESCON controller by using only a USB cable.
