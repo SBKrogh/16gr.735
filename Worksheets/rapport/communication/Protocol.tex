@@ -1,4 +1,4 @@
-\subsection{Protocol}\label{sec:Protocol}
+\section{Protocol}\label{sec:Protocol}
 
 Finding a communication protocol faster than TCP/IP is possible as the safeties in the protocol tend to slow down the overall speed of the communication\todo{we need a ref for this}. Furthermore, some of the safeties like congestion control are irrelevant in our case since we are directly connected to the destination. Flow control is not necessary as the need for flow control implies that a delay is created on the receiving side which would induce delay in the entire system. Reliable transport and ordered delivery are a problem, since retransmitting data is useless in our case as the data can be deprecated. Instead, it is much more interesting to receive new data. 
 

@@ -1,11 +1,12 @@
 %\section{Communication between the sbRIO and ROS}\label{sec:com_ROS_sbRIO}
 
 
+ \section{Previous communication}
 In the former system setup the sbRIO board and the computer running ROS are communicating through an ethernet cable using the TCP/IP protocol.
 
 The speed of the communication between the sbRIO board and the computer running ROS is set to 100 Hz. This was done as a trade off between being fast and for avoiding bugs which where bandwidth related\cite{Chris_Surgical}.
 
-\section{JavaScript Object Notation}\label{subsec:JSON}
+\subsection{JavaScript Object Notation}\label{subsec:JSON}
 In the former system the data exchanged through the TCP/IP connection follow the \gls{JSON} format. \gls{JSON} is a "\textit{text format for the serialization of structured data}"\cite{JSON_IETF} which mean that it defines a syntax and a structure that can be used to exchange data. The structure used by \gls{JSON} associate a name to a value. The value can be a number, string, array, object, boolean or null. It is also worth mentioning that a \gls{JSON} file only contains characters, if a decimal number is to be sent, each digit will be represented by a character instead of having the bitcode representation of a double or a float for example. The former message from the sbRIO to ROS that would contain the information regarding the motors for the Endowrist followed this structure:
 
 \begin{lstlisting}[language=C]

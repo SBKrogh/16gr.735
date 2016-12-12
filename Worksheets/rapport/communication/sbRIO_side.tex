@@ -1,0 +1,65 @@
+\subsection{Embedded System}
+\label{Embedded}
+\subsubsection{sbRIO Microprocessor}
+
+The processor on the sbRIO board is running at a 400 MHz clockrate, while our target communication frequency is 1 kHz. This means that the code running on the processor has to be optimized in order to achieve the set goals. The fundamental functions of the sbRIO are the following:
+
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item Read data from the FPGA, converting position values based on the gearing
+	\item Encode the data into a string
+	\item Send the string through a UDP port
+	\item Fix communication errors
+	\item Poll incoming UDP packets, send the decoded values to the FPGA
+	\item Emergency shutdown	
+\end{itemize}
+
+
+The code includes tools for debugging and measurement, these have a substantial impact on the communication performance. They are disabled during normal operation. LabView's array handling is far from optimal, further speed increase could be achieved by compiling a more optimized C code into a DLL file and calling it in the LabView code. The extra functionalities are the following:
+
+\begin{itemize}	
+	\setlength\itemsep{0em}
+	\item Timestamp sender through UDP
+	\item Time logging for packet departure and arrival to csv file
+	\item Front Panel PID gain adjustment, motor enabler
+	\item Manual, sinusoidal, squarewave signal generator for the motor
+	\item Motor data logging to csv file
+	
+\end{itemize}
+
+We need to decide how to handle connection loss. Either we turn of the motors or we stay in position.
+
+\subsubsection{FPGA}
+
+The FPGA built into the sbRIO is taking care of the interfacing between the controllers and the microprocessor. The code running on the FPGA is much faster than the one running on the microprocessor. To reach maximum possible speed, we implemented whatever we could on the FPGA, however the FPGA is incapable of handling higher level functions such as string handling and UDP networking.
+
+The FPGA's main functions are the following:
+
+\begin{itemize}	
+	\setlength\itemsep{0em}
+	\item Count the encoder ticks coming from the controller
+	\item Read the controller's analog and digital inputs 
+	\item Calculate position PID control signal and send the corresponding PWM signal to the controller
+	\item Enable the motors
+	
+\end{itemize}
+
+Since the current value coming from the ESCON is noisy, the FPGA also needs a built in low pass filter.
+
+\subsubsection{ESCON motor controllers}
+
+The ESCON controllers are programmed to output a speed corresponding to the FPGA PWM signal. The speed controller has an inner current controller, which also keeps the motors from taking overcurrent. The current ramps can be adjusted to fit the user's needs. The speed control gain can be adjusted by the onboard potmeter. 
+The outer speed loop provides the control signal for the internal current controller. The inner control loop must have a higher frequency than the speed control loop. The PI current controller is running at 53.6 kHz, while the PI speed controller is running at 5.36 kHz. The inner loop ensures fast response, the outer higher precision ($http://www.iraj.in/journal/journal_file/journal_pdf/1-59-140229369778-81.pdf$). The advantages of the cascade structure:
+
+\begin{itemize}
+	\item Better setpoint tracking
+	\item Better disturbance rejection
+	\item Less delay and phase lag
+\end{itemize}
+
+The position is controlled by setting the duty ratio of the incoming PWM signal. The speed reference is 0 at 50\% duty ratio and grows linearily at higher values.
+The ESCON controller has 2 programmable analog outputs, thus we are unable to read speed, actual current and demand current simultaneously.
+The controllers have autocalibration functionalities, but this ability is obstructed by the gearing limits.
+
+
+Look into whether we can read data from the ESCON controllers!
