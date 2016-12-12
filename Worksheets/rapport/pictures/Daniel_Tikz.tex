@@ -121,23 +121,21 @@
 \tikzset{dataset/.style = {rectangle, draw, text width = 4.5cm, minimum height=5cm}} % This edits the size of the Ros computer box 
 
 
-\node [dataset, right of=mpro, node distance=7cm] (ROS) {\textbf{ROS computer}
+\node [dataset, right of=mpro, node distance=7cm] (ROS) {\textbf{Computer}
 \begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
-\item 1
-\item 2
-\item 3 
+\item High level computations
+\item ROS
 \end{itemize}};
 
-\draw[->, ultra thick] ([yshift=-1cm]mpro.east) -- ([yshift=-1cm]ROS.west)node[right of=mpro, node distance=3.9cm] {UDP}; % ([yshift=-1cm]ROS.west) should probaly be edited!!!
+%\draw[->, ultra thick] ([yshift=-1cm]mpro.east) -- ([yshift=-1cm]ROS.west)node[right of=mpro, node distance=3.9cm] {UDP}; % ([yshift=-1cm]ROS.west) should probaly be edited!!!
 \draw[<-, ultra thick] ([yshift=1cm]mpro.east) -- ([yshift=1cm]ROS.west);
 
 
 
 \node [dataset, right of=ROS, node distance=5.5cm] (GT) {\textbf{Geomagic Touch}
 	\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
-	\item 1
-	\item 2
-	\item 3 
+	\item Force feedback
+	\item Interfacing with human
 	\end{itemize}};
 
 \draw[->, ultra thick] ([yshift=-1cm]ROS.east) -- ([yshift=-1cm]GT.west); % ([yshift=-1cm]ROS.west) should probaly be edited!!!
@@ -150,7 +148,8 @@
 % \draw [<-,ultra thick] (-3,-4) -- (-4,-4);
 
 \end{tikzpicture}
-\caption{Say somthing cool- "\textit{Somthing cool!}"}
+\caption{Interfacing between components}
+\label{interface}
 \end{sidewaysfigure}
 
 \todo{Include arrow, label anc new caption... elaborate this picture breifly, what do the different boxes do?}
