@@ -31,22 +31,23 @@ The board is configured through ethernet cable. The programs can be written in L
 \subsection{Hardware setup}
 
 The Endowrists, see \figref{fig:endowrits_set}, is actuated by 4 Maxon DC motors, see \secref{Maxon_Motor}. Each motor is equipped with an ESCON motor controller responsible for the cascade speed and inner loop current control. The control reference is sent through the sbRIO. They also provide current measurements to the sbRIO. Each motor hosts an encoder and a potmeter that provide absolute and relative angular position information to the FPGA built into the sbRIO board. For a graphical illustration of the connection see \figref{electro_setup}.
- 
-\todo{som explanation for the next line UDP, or erase it?}
-The sbRIO communicates with the PC using UDP protocol. 
-
+ \todo{For a graphical illustration of the connection see ??? Figure ???}
 %\input{rapport/system_dis/Eletronic_component.tex} % Old picture
 \input{rapport/pictures/Daniel_Tikz.tex}
 
 
 \subsection{Motor}\label{Maxon_Motor}
-The four motors for actuating the Endowrist is sold as a bulk solution which include motor, gear and a position encoder, see \figref{fig:Full_motor _dis}.
-\todo{What type of motors?
-How can you control via ESCON?
-What measurements are available?
-The gear ratio may be of importance for you}
-The control of these motors are done through the ESCON motor drivers, which are connected to the sbRIO board. The datasheet for the motor parts can be found on \path{CD:/Datasheets/Motor/}\todo{(Datasheet) Don't know if this is necessary - Maby we don't have to turne in a physical paper??}
+The four motors for actuating the EndoWrist is sold as a bulk solution which include motor\cite{motor_motor}, gear\cite{motor_gear} and a position encoder\cite{motor_encoder}, see \figref{fig:Full_motor _dis}.
+These motors are direct current (DC) motors. Some of the parameters for this bulk solution is listed below:
 
+\begin{itemize}
+\item Torque constant: $10.9\frac{\text{mNm}}{\text{A}}$
+\item Nominal continues current: 0.681 A 
+\item Gearing ratio: 1:19
+\item Encoder precision: 512 counts pr. rotation.
+\end{itemize}
+
+The control of these motors are done through the sbRIO board, connected to a motor controllers, see \secref{sec:motor_control}.
 %The ESCON motor controllers are attached to the sbRIO controller and send the control signals through cables. The motor has a nominal torque of 6.96 mNm.
 %4 Maxon motors are used for the actuation of the endowrist. The motors are implemented using a combination gear (Maxon 353816) including the gearing, the servo motor and the sensors. The ESCON motor controllers are attached to the sbRIO controller and send the control signals through cables. The motor has a nominal torque of 6.96 mNm.
 
@@ -56,20 +57,20 @@ The control of these motors are done through the ESCON motor drivers, which are 
 		\vspace{0pt}
 		\centering
 		\includegraphics[width=\linewidth]{motor.jpg}
-		\caption{The Maxon 110160 \newline DC motor\cite{motor_motor}}
+		\caption{The Maxon 110160 \newline DC motor.}
 		\label{fig:motor}
 	\end{subfigure}
 	\begin{subfigure}{.32\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{motor_gear.jpg}
-		\caption{The planetary gearhead equipped with sleeve bearing\cite{motor_gear}}
+		\caption{The planetary gearhead, 110356, equipped with sleeve bearing.}
 		\label{fig:motor_gear}
 	\end{subfigure}
 	\begin{subfigure}{.32\textwidth}
 	\hspace{5pt}
 		\centering
 		\includegraphics[width=\linewidth]{motor_sensor.jpg}
-		\caption{The encoder used for getting angular data\cite{motor_encoder}}
+		\caption{The encoder, 201937, used for getting angular data.}
 		\label{fig:motor_sensor}
 	\end{subfigure}
 	\caption{The combination gear disassembled}
@@ -80,7 +81,8 @@ The control of these motors are done through the ESCON motor drivers, which are 
 
 
 
-\subsection{ESCON 50/5 motor controller}
+\subsection{ESCON 50/5 motor controller}\label{sec:motor_control}
+\todo{we have two of these sections now - one here and in implementation}
 For driving the motors, there has been implemented four ESCON motor driver of the type 50/5 (part number 438725), see \figref{fig:ESCON505}. 
 
 \begin{figure}[H]
@@ -102,7 +104,7 @@ It has three operating modes
 \end{itemize}
 
 The reason we chose speed controller with inner loop control is explained in \ref{Embedded}.
-
+\todo{still in the describing phase}
 
 
 \input{rapport/system_dis/Mechanical_testsetup.tex}

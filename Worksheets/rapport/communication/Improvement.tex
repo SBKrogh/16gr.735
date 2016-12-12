@@ -1,0 +1,29 @@
+\chapter{Improvement}\label{cha:improvement}
+
+
+\input{rapport/Improvement/Min_speed}
+
+
+% As stated in \secref{sec:com_ROS_sbRIO}, the current communication is set to run at a frequency of 100 Hz and to do a force feedback we need more than 300 Hz, see \secref{sec:min_speed}. This means that it is required to find a way to speed up the communication in order to do a force feedback. Speeding up the communication could be done by three different ways:
+
+% \begin{itemize}
+% 	\item Find a faster communication protocol,
+% 	\item Minimize the amount of data transmitted,
+% 	\item Implement faster hardware.	
+% \end{itemize}
+% \todo{More analyses is required}
+
+% Implementing faster hardware does not match with the goals of our project one of them being to use only the existing hardware.\todo{This is not written anywhere?}
+% However, finding a communication protocol faster than TCP/IP is possible as the safeties in the protocol tend to slow down the overall speed of the communication\todo{we need a ref for this}. Furthermore, some of the safeties like congestion control are irrelevant in our case since we are directly connected to the destination. Flow control is not necessary as the need for flow control implies that a delay is created on the receiving side which would induce delay in the entire system. Reliable transport and ordered delivery are a problem, since retransmitting data is useless in our case as the data will be deprecated. Instead, it is much more interesting to receive the new data. 
+
+% The protocol chosen for this project is \gls{UDP}. This is done because its a faster protocol than TCPI/IP and the project goal is to reduce the latency in communication between the computer running ROS and the sbRIO board. It is however less relaible than TCP/IP but it is deemed irrelevant as a new package with data should be send send as soon as possible. This also solve the problem with storing old data in the transmitter buffer which could be obsolete.
+\input{rapport/Improvement/Protocol}
+
+\input{rapport/Improvement/Minimizing_messages}
+
+\input{rapport/Improvement/Implementation}
+
+\input{rapport/Improvement/ROS_side}
+
+\input{rapport/Improvement/sbRIO_side}
+

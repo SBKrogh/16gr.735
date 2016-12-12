@@ -1,0 +1,22 @@
+%\section{Minimum refresh speed}\label{sec:min_speed}
+
+The refresh rate for the haptic feedback has an influence on the transparency of the controller. An ideal situation is that there is no delay in the system and the system is perfectly modeled, thus give the user a direct feedback\todo{maybe scaled? and Update rate vs. delay. Also jitter should be considered} of what forces the tool is exposed to. 
+
+As one of the goals for this project is to give a higher bandwidth for the communication and thereby enable the opportunity of making a more transparent feedback control, the minimum required refresh rate should be found.
+
+From the article \textit{The role of haptics in medical training simulators: a survey of the state of the art}\cite{coles2011role}, it is said that the minimum refresh rate of haptic feedback is wildly debated to be between 300 Hz and 600 Hz, but for a realistic force feedback it is commonly accepted to be at least 1000 Hz, thus it is not defined. \todo{This is just marked with a "!" sign by Christoffer}
+
+From \chapref{cha:prev_communication}  the communication between the sbRIO and the computer is in the present setup at a 100 Hz, which does not meet the minimum of 300 Hz. Therefore the speed should be raised with at least a factor of three. It is however preferable to exceed this so the system does not run on the limit, thus having the ability to make complex calculations.
+\todoc{Should we specify our goal more precisely than this? (>300 Hz is a loose definition)}
+
+Speeding up the communication could be done in different ways, where three is stated below
+
+\begin{itemize}
+	\item Find a faster communication protocol,
+	\item Minimize the amount of data transmitted,
+	\item Implement faster hardware.	
+\end{itemize}
+
+Implementing faster hardware is not a possibility in this case as one of the goals for this project is to only use the existing hardware.\todo{This is not written anywhere?}
+However implementing a new communication protocol and minimizing the package size is possible.
+% Implementing faster hardware does however not match with the goals of this project as one of them being to use only the existing hardware.\todo{This is not written anywhere?} 

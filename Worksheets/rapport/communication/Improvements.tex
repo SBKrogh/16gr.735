@@ -1,0 +1,26 @@
+\chapter{Improvements}\label{sec:improvements}
+As stated in \secref{sec:com_ROS_sbRIO}, the current communication is set to run at a frequency of 100 Hz and to do a force feedback we need more than 300 Hz, see \secref{sec:min_speed}. This means that it is required to find a way to speed up the communication in order to do a force feedback. Speeding up the communication could be done by three different ways:
+
+\begin{itemize}
+	\item Find a faster communication protocol,
+	\item Minimize the amount of data transmitted,
+	\item Implement faster hardware.	
+\end{itemize}
+\todo{More analyses is required}
+
+Implementing faster hardware does not match with the goals of our project one of them being to use only the existing hardware.\todo{This is not written anywhere?}
+However, finding a communication protocol faster than TCP/IP is possible as the safeties in the protocol tend to slow down the overall speed of the communication\todo{we need a ref for this}. Furthermore, some of the safeties like congestion control are irrelevant in our case since we are directly connected to the destination. Flow control is not necessary as the need for flow control implies that a delay is created on the receiving side which would induce delay in the entire system. Reliable transport and ordered delivery are a problem, since retransmitting data is useless in our case as the data will be deprecated. Instead, it is much more interesting to receive the new data. 
+
+The protocol chosen for this project is \gls{UDP}. This is done because its a faster protocol than TCPI/IP and the project goal is to reduce the latency in communication between the computer running ROS and the sbRIO board. It is however less relaible than TCP/IP but it is deemed irrelevant as a new package with data should be send send as soon as possible. This also solve the problem with storing old data in the transmitter buffer which could be obsolete.
+
+% For those reasons, the new protocol chosen is the \gls{UDP} which does not implement those tools.
+
+
+% As the goal is to reduce latency in the communication between the robot and ROS it has been chosen to go with the \gls{UDP} protocol as it should be faster than the TCP/IP protocol, however less reliable. Because of the higher data rate, package loss or package error should not become a problem, as a new package is send as soon as possible. Furthermore instead of storing old data at the transmitter which can be obsolete if needed to be resend, as in TCP/IP, \gls{UDP} will send new data instead.
+
+
+
+% \section{User datagram protocol}
+% \gls{UDP} communication protocol is a faster way of communicating compared to TCP/IP. It is connectionless which means that it wont establish a connection before sending data. When data is transmitted, new data is loaded into the transmitter buffer and then send when the connection line is free, thus the data is not stored at the transmitter as in TCP/IP. Furthermore the \gls{UDP} protocol does not wait for an acknowledgment and thereby just sends the data as fast as possible to the specified address.
+
+% As the goal is to reduce latency in the communication between the robot and ROS it has been chosen to go with the \gls{UDP} protocol as it should be faster than the TCP/IP protocol, however less reliable. Because of the higher data rate, package loss or package error should not become a problem, as a new package is send as soon as possible. Furthermore instead of storing old data at the transmitter which can be obsolete if needed to be resend, as in TCP/IP, \gls{UDP} will send new data instead.

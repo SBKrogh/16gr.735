@@ -5,6 +5,30 @@ The Phantom omni can be installed on both Windows, and Linux, embedded systems.
 Use the provided installation guides on\\
 \url{http://dsc.sensable.com/viewforum.php?f=15}
 
-\textbf{Note to the linux system:} If this installation is running on a non-US version of Linux, a readout of the different joint positions can be corrupted. This is because of the difference in the EU and US compiling, where the ',' and '.' is read different.\\
-To solve this problem, follow the solution given on\\
+\textbf{Note to the linux system:} If this installation is running on a non-US version of Linux, a readout of the different joint positions can be corrupted. This is because of the difference in the EU and US format of numbers, where the ',' and '.' is read differently.\\
+The solution to this problem was found on:\\
 \url{http://dsc.sensable.com/viewtopic.php?t=5644#top}
+
+To solve the problem add the following to ~/.bashrc
+\begin{lstlisting}[language=bash]
+export LC_NUMERIC=en_US.UTF-8
+\end{lstlisting}
+and use the following command to reload the file
+\begin{lstlisting}[language=C]
+source ~/.bashrc
+\end{lstlisting}
+
+\subsection{Connecting to the Geomagic Touch and the sbRIO}
+
+When connecting both devices to the same computer one or both of the devices are disconnected. The problem was identified using the \textit{route -n} command. Two default routes to the local network (169.254.0.0/16) were present in the table, each of them leading to a different physical interface.
+
+To solve this issue, the ip address of the interface connected to the sbRIO was fixed to have always the same value: 169.254.4.10. The default route to the interface connected to the sbRIO was removed. And a new route was added to send every packets that should be sent to the sbRIO to the right physical interface. The ip address of the sbRIO is always 169.254.4.42.
+
+This manipulation has to be done every time the two devices are connected to the computer. For effiency, a bash script was created: 
+
+\begin{lstlisting}[language=bash]
+#!/bin/bash
+ifconfig eth0 169.254.4.10 netmask 255.255.0.0
+route del -net 169.254.0.0 gw 0.0.0.0 netmask 255.255.0.0
+route add -net 169.254.4.42 netmask 255.255.255.255 gw 169.254.4.10
+\end{lstlisting}
