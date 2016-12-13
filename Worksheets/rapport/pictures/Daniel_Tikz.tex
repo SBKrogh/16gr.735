@@ -127,18 +127,19 @@
 \item ROS
 \end{itemize}};
 
-%\draw[->, ultra thick] ([yshift=-1cm]mpro.east) -- ([yshift=-1cm]ROS.west)node[right of=mpro, node distance=3.9cm] {UDP}; % ([yshift=-1cm]ROS.west) should probaly be edited!!!
+\draw[->, ultra thick] ([yshift=-1cm]mpro.east) -- ([yshift=-1cm]ROS.west)node[right of=mpro, node distance=3.9cm] {UDP}; % ([yshift=-1cm]ROS.west) should probaly be edited!!!
 \draw[<-, ultra thick] ([yshift=1cm]mpro.east) -- ([yshift=1cm]ROS.west);
 
 
 
-\node [dataset, right of=ROS, node distance=5.5cm] (GT) {\textbf{Geomagic Touch}
+\node [dataset, right of=ROS, node distance=6cm] (GT) {\textbf{Geomagic Touch}
 	\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
 	\item Force feedback
 	\item Interfacing with human
 	\end{itemize}};
 
-\draw[->, ultra thick] ([yshift=-1cm]ROS.east) -- ([yshift=-1cm]GT.west); % ([yshift=-1cm]ROS.west) should probaly be edited!!!
+\draw[->, ultra thick] ([yshift=-1cm]ROS.east) -- ([yshift=-1cm]GT.west)node[right of=ROS, node distance=3cm] {UDP}; % ([yshift=-1cm]ROS.west) should probaly be edited!!!
+
 \draw[<-, ultra thick] ([yshift=1cm]ROS.east) -- ([yshift=1cm]GT.west);
 
 % \draw [->,ultra thick] (-1,1.5) -- (-1,-2); %Micro to FPGA
