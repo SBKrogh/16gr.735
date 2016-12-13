@@ -1,5 +1,5 @@
-\subsection{Clamp Two} % \label{app:...}
-This test uses the test setup seen on \figref{fig:one_clamp}.
+\subsection{Clamp two} % \label{app:...}
+This test uses the test setup seen on \figref{fig:one_clamp}. A positive force for the clamps are defined as an inwards force.
 
 \subsection*{Test equipment:}
 \begin{itemize}
@@ -12,7 +12,7 @@ This test uses the test setup seen on \figref{fig:one_clamp}.
 \end{itemize}
 
 \subsection*{Procedure:}
-The following procedures was made for the force estimation of clamp 1 on the EndoWrist. 
+The following procedures was made for the force estimation of clamp 2 on the EndoWrist. 
 Inwards force:
 \begin{enumerate}
 \item One clamp of the end-effector is attached perpendicular to the load cell. 
@@ -37,10 +37,6 @@ The data from six of the measurements can be seen on \figref{fig:2_clamp_in} and
 \input{Data/Measurement/EndoWrist_Measurements/Force/2_One_clamp_in}
 
 \input{Data/Measurement/EndoWrist_Measurements/Force/2_One_clamp_out}
-
-%\input{Data/Measurement/EndoWrist_Measurements/Force/2_One_clamp_in}
-
-%\input{Data/Measurement/EndoWrist_Measurements/Force/2_One_clamp_out}
 %\figref{endo_force_mes}. 
 %\eqref{eq:linear_force_endo}.
 
@@ -49,10 +45,9 @@ The data from six of the measurements can be seen on \figref{fig:2_clamp_in} and
 % \label{eq:linear_force_endo}
 % \end{equation} 
 
-
-
 \subsection*{Results:}
-From \figref{fig:1_clamp_in} and \figref{fig:1_clamp_out} it six different measurements can be seen for clamp on of the EndoWrist. The direction is both inwards and outwards. It can be seen due to static friction from the motor, gearing and the EndoWrist, that a current of approx 150 mA is needed before movement. It can also be seen that there is different growth in force, in respect to the current, for the different measurements. This is probably because of the elasticity of the tool. Depending of the start position of the tool, the wire can either be in a relaxed or stressed state. This can have an influence on when force is transfered to the end-effector as the friction can be different and a higher current is needed to overcome the friction. It can be seen on each measurement, that there is a sharp current decrease. This is because of a safety feature in the Escon motor controller setup, where it needs the nominal current for the motor. The motor controller can handle a current peak for a certain amount of time and then it will limit the current to the nominal. It should be noted when the current drops the maximum force is still applied to the load-cell. This is probably due to the friction of the tool. When the maximum force is applied and the current drops, the friction will help keeping the force.
+From \figref{fig:2_clamp_in} and \figref{fig:2_clamp_out} six different measurements can be seen for clamp two of the EndoWrist.
+It can be seen due to static friction from the motor, gearing and the EndoWrist, that a current of approx 500 mA for the inwards and outwards force is needed before movement. It can also be seen that there is different growth in force, in respect to the current, for the different measurements. This is probably because of the elasticity of the tool. Depending of the start position of the tool, the wire can either be in a relaxed or stressed state. If the wire is in a relaxed state the motor can rotate a littel and build up a small inertia to help overcome the friction of the EndoWrist. It can be seen on each measurement, that there is a sharp current decrease. This is because of a safety feature in the Escon motor controller setup, where it needs the nominal current for the motor. The motor controller can handle a current peak for a certain amount of time and then it will limit the current to the nominal. It should be noted when the current drops the maximum force is still applied to the load-cell. This is probably due to the friction of the tool. When the maximum force is applied and the current drops, the friction will help keeping the force. At \figref{fig:2_clamp_out} it can be seen from 8 - 12 seconds that a force is increasing and decreasing. This is due to the construction of the test setup. If the EndoWrist is not supported at correctly at the end, the pitch had a tendency to bend a little, which alter the force direction applied to the load-cell.
 
 %It can be seen from the graph on \figref{endo_force_mes} that the force on the end-effector is highly nonlinear. The friction from the gearing and the Endowrist does that the force first has an exponential growth at the start. Around the 800 mA and 1200 mA step it can be seen that a drop in force is happening. What causes this drop is not identified but it can be seen that it appears for all the data sequences. \todor{better explanation?}
 
@@ -64,7 +59,7 @@ From \figref{fig:1_clamp_in} and \figref{fig:1_clamp_out} it six different measu
 \item Not 100 \% orthogonal force to the load cell.
 \item Input/Output impedance of sensors have a $\pm 10 \%$ tolerance.
 \item Movement of test setup when force is generated.
-\item The pitch joint of the EndoWrist had a tendency to bend when high force was applied which change the force direction. 
+\item The pitch joint of the EndoWrist had a tendency to bend when high force was applied which change the force direction.
 \end{itemize}
 
 \subsection*{Conclusion:}

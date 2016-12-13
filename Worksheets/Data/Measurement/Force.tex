@@ -1,14 +1,14 @@
 \section{Force measurements for the end-effector} % \label{app:...}
 
-As the Endowrist tool is highly nonlinear, measurement of how the end effector responds to external force should be made. These measurements are made for the parameters estimation of the EndoWrist model.  
+As the Endowrist tool is highly nonlinear, measurement of how the end-effector responds to external force should is made. These measurements are made for the model estimation of the EndoWrist.  
 
 \subsection*{Purpose:}
-The purpose is to measure the relationship between the current consumption and force acting at the end-effector. Furthermore these measurements are used in the parameter estimation for the model of the EndoWrist.
+The purpose is to measure the relationship between the current consumption and force acting at the end-effector.
 
-The force estimations are done on three different setups:
+The force estimations are done on four different setups:
 \begin{itemize}
-\item Pull/push of one clamp on the end-effector (yaw),
-\item Pull/push of two clamps where the force is applied in the same direction (yaw),
+\item Pull/push force for each clamp on the end-effector (yaw),
+\item Pull/push of two clamps where the force for both clamps is applied in the same direction (yaw),
 \item Pull/push of the pitch on the end-effector (pitch)
 \item and the rotation of the end-effector (roll).
 \end{itemize}
@@ -42,7 +42,7 @@ In the following subsections the different tests defined in the itemizer above a
 \end{figure}
 
 \subsection*{Electric test setup}
-For making the force measurement for the EndoWrist a simple hardware construction was build. This setup can be seen on \figref{fig:arduino_loadcell}
+For making the force measurement for the EndoWrist a simple hardware construction was build. This was made due to the lack of the hardware available at Aalborg university. A simple block diagram of setup can be seen on \figref{fig:arduino_loadcell}
 
 \begin{figure}[H]
 \centering
@@ -73,12 +73,11 @@ For making the force measurement for the EndoWrist a simple hardware constructio
 \node at (-5,2.5) {Arduino};
 
 \end{tikzpicture}
-\caption{Simple human arm/hand dynamical model.}
+\caption{Diagram of the test setup for the force measurements.}
 \label{fig:arduino_loadcell}
 \end{figure}
 
-
-The load-cell's output is amplified and send to an Arduino which calculate the force applied to the load-cell from the output. The force is then translated to a corresponding voltage output, $4\cdot\frac{mV}{g}$. Since the Arduino does not have a DAC, the voltage is translated to a binary code and send to a "Max531 DAC" with a SPI communication. The voltage output from the DAC is read at the sbRIO board. In parallel, the sbRIO board also samples data such as the current send to the motor, motor position and a time stamp.
+The load-cell's output is amplified and send to an Arduino which calculate the force applied to the load-cell. The force is then translated to a corresponding voltage output, $4\cdot\frac{mV}{g}$. Since the Arduino does not have a digital to analog converter (DAC), the voltage is translated to a binary code and send to a "Max531 DAC" through a serial peripheral interface (SPI). The voltage output from the DAC is read at the sbRIO board which also samples the current send to the motor, motor position and time stamps.
 
 \todo{We probaly have to go through the mA applied in each section as 1200 mA and the figures does not seem to fit each other.}
 \input{Data/Measurement/Pull_clamp}
@@ -93,7 +92,7 @@ The load-cell's output is amplified and send to an Arduino which calculate the f
 
 \input{Data/Measurement/Pitch_pull}
 
-\input{Data/Measurement/Pitch_push}
+%\input{Data/Measurement/Pitch_push}
 
 \input{Data/Measurement/Roll_endo}
 
