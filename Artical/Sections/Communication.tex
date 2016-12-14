@@ -1,9 +1,9 @@
 \section{Communication}
-
-The sbRIO board controls the motors for one Endowrist. The desired positions of the motors and the list of the enabled motors are sent to the board from the computer using an Ethernet cable. To perform force estimation, the computer needs to receive the list of the active motors as well as the position, velocity and effort for each of them.
+\todo{it is not clear what you have done}
+The embedded system controls the motors for one Endowrist. The desired positions of the motors and the list of the enabled motors are sent to the board from the computer using an Ethernet cable. To perform force estimation, the computer needs to receive the list of the active motors as well as the position, velocity and effort for each of them.
 
 %{\color{green}
-As mentioned in Section \ref{sec:introduction} the frequency aimed for the force feedback loop is 600Hz. However this loop include not only includes communication between the sbRIO and the computer but also computation time for force estimation and communication between the GT and the computer. Thus, the communications with the computer must be faster than 600Hz. The hardware available would not allow us to reach frequencies much higher than 1000Hz, that is why 1kHz was chosen as the aimed frequency for the communication with the sbRIO. The drivers for the GT have a default frequency of 1kHz, this communication was not modified.
+As mentioned in Section \ref{sec:introduction} the frequency aimed for the force feedback loop is 600 Hz. However this loop not only includes communication between the embedded system and the computer but also computation time for force estimation and communication between the GT and the computer. Thus, the communications with the computer must be faster than 600 Hz. The hardware available would not allow us to reach frequencies much higher than 1000 Hz, that is why 1 kHz was chosen as the aimed frequency for the communication with the embedded system. The drivers for the GT have a default frequency of 1kHz, this communication was not modified.
 %}
 
 % {\color{red}
@@ -12,14 +12,159 @@ As mentioned in Section \ref{sec:introduction} the frequency aimed for the force
 % to be at least 1000 Hz\cite{coles2011role}. We decided to aim for 600Hz. In order for the system to fulfill this requirement it is necessary that the communication between the sbRIO board and the computer at least match this frequency.%\todo{which is not defined!}. %That is why this research aims at getting as close as possible to 1000 Hz in the communication between the sbRIO and the computer.
 % }
 
-In order to get the fastest communication it was decided to use UDP as it does not implement any reliability feature. Network reliability is undesired in our communication system as it would just lead to retransmitting obsolete data instead of transmitting new one. Furthermore, most of the transport protocol implements features that improve long distance communication which would be superfluous, as the computer is directly connected to the robot.
+In order to get the fastest communication it was decided to use \textcolor{red}{UDP as it does not implement any reliability feature.} Network reliability is undesired in our communication system as it would just lead to retransmitting obsolete data instead of transmitting new one. Furthermore, most of the transport protocol implements features that improve long distance communication which would be superfluous, as the computer is directly connected to the robot.
  
-In addition to the transport protocol, another factor that influence the speed of the communication is the size of the sent packets. To maximize the speed of the communication, the size of the packets must be minimized while keeping the computation time as low as possible. As stated before, the packets exchanged between the computer and the sbRIO contain numerical values (positions, velocities and efforts) and booleans (active or enabled motors). The bitcode of the numerical values is interpreted as ASCII characters and the booleans are gathered in one byte which is also interpreted as a character. Those characters constitute the payload of the packets. As each numerical value is stored on 4 bytes, in the test setup which has 4 motors, the size of the payload sent by the computer to the sbRIO is 17 bytes and the size of the payload sent by the sbRIO to the computer is 49 bytes.
+In addition to the transport protocol, another factor that influence the speed of the communication is the size of the sent packets. To maximize the speed of the communication, the size of the packets must be minimized while keeping the computation time as low as possible. As stated before, the packets exchanged between the computer and the embedded system contain numerical values (positions, velocities and efforts) and booleans (active or enabled motors). The bitcode of the numerical values is interpreted as ASCII characters and the booleans are gathered in one byte which is also interpreted as a character. Those characters constitute the payload of the packets. As each numerical value is stored on 4 bytes, in the test setup which has 4 motors, the size of the payload sent by the computer to the embedded system is 17 bytes and the size of the payload sent by the embedded system to the computer is 49 bytes.
 
 %{\color{green}
-To investigate the quality of the communication as a function of frequency three parameters were measured: the delay between two packets received, the jitter and the error rate. Since the computation time for force estimation and on the sbRIO are very small compared to the frequency of the communication, inferior to 3 $\mu$s, if the communication can reach the aimed frequency of 1kHz, the goal for the feedback loop is reached.
+To investigate the quality of the communication as a function of frequency three parameters were measured: the delay between two packets received, the jitter and the error rate. Since the computation time for force estimation and on the embedded system are very small compared to the frequency of the communication, inferior to 3 $\mu$s, if the communication can reach the aimed frequency of 1kHz, the goal for the feedback loop is reached.
 %}
 % {\color{red}
 % To investigate the quality of the communication as a function of frequency three parameters are measured: the round-time trip delay, the jitter and the error rate. However, as the software does not have a way of directly setting the frequency of the communication it is the delay in the communication loop that is modified through the experiment. The computation time and transmission time of the packets being non negligible, the frequency of the communication is not equal to the inverse of this delay.
 % }
 %To decrease the size of the packets even further the packets could be compressed however for most algorithms the size reduction is small for this amount of data and thus not worth the computation time.\todo{should this sentence not be in the discussion?}
+\begin{figure}[h]
+\begin{tikzpicture}
+    \matrix(dict)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=1.5cm},
+        row 1/.style={anchor=south}%,
+        column 1/.style={nodes={text width = 0.5cm, align=right}}
+    ]{
+		0 	& position1 & position2 & position3 & position4\\
+		16 	& velocity1 & velocity2 & velocity3 & velocity4\\
+		32 	& effort1 	& effort2 	& effort3 	& effort4\\
+		48	\\
+    };
+    %horizontal
+    \draw(dict-1-2.north west)--(dict-1-5.north east);
+    \draw(dict-1-2.south west)--(dict-1-5.south east);
+    \draw(dict-2-2.south west)--(dict-2-5.south east);
+    \draw(dict-3-2.south west)--(dict-3-5.south east);
+	%vertical
+    \draw(dict-1-1.north east)--(dict-4-1.south east);
+    \draw(dict-1-2.north east)--(dict-3-2.south east);
+    \draw(dict-1-3.north east)--(dict-3-3.south east);
+    \draw(dict-1-4.north east)--(dict-3-4.south east);
+    \draw(dict-1-5.north east)--(dict-3-5.south east);
+
+    %small at bottom
+    \draw(dict-4-1.south east)--($(0.5,0)+(dict-4-1.south east)$);
+    \draw($(0.5,0)+(dict-4-1.south east)$)--($(0.5,0.49)+(dict-4-1.south east)$);
+
+    %numbers on top
+    \node at ($(0,0.3)+(dict-1-1.north east)$) {0};
+    \node at ($(0,0.3)+(dict-1-2.north east)$) {4};
+    \node at ($(0,0.3)+(dict-1-3.north east)$) {8};
+    \node at ($(0,0.3)+(dict-1-4.north east)$) {12};
+    \node at ($(0,0.3)+(dict-1-5.north east)$) {16};
+
+    \node at ($(0,0.3)+(dict-1-1.north)$) {bytes};
+    \node at ($(0,0.6)+(dict-1-1.north)$) {Offset};
+
+    %The zoom on the last byte
+    \node (zoom) at (1,-2) {XXXX 4 booleans};
+    \draw(zoom.north east)--(zoom.north west);
+    \draw(zoom.north east)--(zoom.south east);
+    \draw(zoom.north west)--(zoom.south west);
+    \draw(zoom.south east)--(zoom.south west);
+    \draw($(zoom.north)+(-0.25,0)$)--($(zoom.south)+(-0.25,0)$);
+    \draw(zoom.north east)--($(1,0)+(dict-4-1)$);
+    \draw(zoom.north west)--($(1,0)+(dict-4-1)$);
+    \node at ($(zoom.north east)+(0,0.3)$) {1};
+    \node at ($(zoom.north west)+(0,0.3)$) {0};
+
+\end{tikzpicture}
+\caption{New packets}
+\end{figure}
+
+
+\begin{figure}[h]
+\begin{tikzpicture}
+    \matrix(dict1)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=2.5cm},
+        row 1/.style={anchor=south},
+        column 1/.style={nodes={text width = 1.5cm}}
+    ]{
+		0 	& \{"p4\_primary":\{\\
+    };
+
+
+    \matrix(dict2)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=2.5cm},
+        row 1/.style={anchor=south},
+        column 1/.style={nodes={text width = 1.5cm}},
+        column 3/.style={nodes={text width = 3cm}}
+    ] at ($(dict1)+ (1.6,-1)$){
+		15 	& "positions": & array of 4 positions\\
+    };
+
+    \matrix(dict3)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=2.5cm},
+        row 1/.style={anchor=south},
+        column 1/.style={nodes={text width = 1.5cm}},
+        column 3/.style={nodes={text width = 3cm}}
+    ] at ($(dict2)+ (0,-1)$){
+		125	& ,"velocities": & array of 4 velocities\\
+    };
+
+    \matrix(dict4)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=2.5cm},
+        row 1/.style={anchor=south},
+        column 1/.style={nodes={text width = 1.5cm}},
+        column 3/.style={nodes={text width = 3cm}}
+    ] at ($(dict3)+ (0,-1)$){
+		236	& ,"efforts": & array of 4 efforts\\
+    };
+
+    \matrix(dict5)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=2.5cm},
+        row 1/.style={anchor=south},
+        column 1/.style={nodes={text width = 1.5cm}}
+    ] at ($(dict4)+ (-1.6,-1)$){
+		344 & \}\} \\
+    };
+
+%Boxes
+    \draw(dict1-1-2.north east)--(dict1-1-2.north west)--(dict1-1-2.south west)--(dict1-1-2.south east)--(dict1-1-2.north east);
+    \draw(dict2-1-2.north east)--(dict2-1-2.north west)--(dict2-1-2.south west)--(dict2-1-2.south east)--(dict2-1-2.north east);
+    \draw(dict3-1-2.north east)--(dict3-1-2.north west)--(dict3-1-2.south west)--(dict3-1-2.south east)--(dict3-1-2.north east);
+    \draw(dict4-1-2.north east)--(dict4-1-2.north west)--(dict4-1-2.south west)--(dict4-1-2.south east)--(dict4-1-2.north east);
+    \draw(dict5-1-2.north east)--(dict5-1-2.north west)--(dict5-1-2.south west)--(dict5-1-2.south east)--(dict5-1-2.north east);
+
+
+    \draw(dict2-1-3.north east)--(dict2-1-3.north west)--(dict2-1-3.south west)--(dict2-1-3.south east)--(dict2-1-3.north east);
+    \draw($(dict3-1-3.north east)+(0,-0.03)$)--($(dict3-1-3.north west)+(0,-0.03)$)--(dict3-1-3.south west)--(dict3-1-3.south east)--($(dict3-1-3.north east)+(0,-0.03)$);
+    \draw($(dict4-1-3.north east)+(0,-0.03)$)--($(dict4-1-3.north west)+(0,-0.03)$)--(dict4-1-3.south west)--(dict4-1-3.south east)--($(dict4-1-3.north east)+(0,-0.03)$);
+
+%curly braces
+	\draw [decorate,decoration={brace,amplitude=10pt, mirror},xshift=-4pt,yshift=0pt]
+	($(dict2.north west)+(0.5,0)$) -- ($(dict4.south west)+(0.5,0)$) node [black,midway,xshift=-0.9cm] {\footnotesize Data};
+
+	\draw [decorate,decoration={brace,amplitude=5pt, mirror},xshift=-4pt,yshift=0pt]
+	($(dict1.north west)+(0.5,0)$) -- ($(dict1.south west)+(0.5,0)$) node [black,midway,xshift=-0.9cm] {\footnotesize Head};
+
+	\draw [decorate,decoration={brace,amplitude=5pt, mirror},xshift=-4pt,yshift=0pt]
+	($(dict5.north west)+(0.5,0)$) -- ($(dict5.south west)+(0.5,0)$) node [black,midway,xshift=-0.9cm] {\footnotesize Tail};
+
+%numbers
+	\node at ($(dict1-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+	\node at ($(dict1-1-2.north east)+(0,0.2)$) {\footnotesize 15};
+
+	\node at ($(dict2-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+	\node at ($(dict2-1-2.north east)+(0,0.2)$) {\footnotesize 12};
+	\node at ($(dict2-1-3.north east)+(0,0.2)$) {\footnotesize 110};
+
+	\node at ($(dict3-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+	\node at ($(dict3-1-2.north east)+(0,0.2)$) {\footnotesize 14};
+	\node at ($(dict3-1-3.north east)+(0,0.2)$) {\footnotesize 112};
+
+	\node at ($(dict4-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+	\node at ($(dict4-1-2.north east)+(0,0.2)$) {\footnotesize 11};
+	\node at ($(dict4-1-3.north east)+(0,0.2)$) {\footnotesize 111};
+
+	\node at ($(dict5-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+	\node at ($(dict5-1-2.north east)+(0,0.2)$) {\footnotesize 2};
+\end{tikzpicture}
+\caption{Old packets}
+\end{figure}
+
