@@ -1,0 +1,62 @@
+
+\begin{scaletikzpicturetowidth}{0.85\textwidth}
+\begin{tikzpicture}[scale=\tikzscale]
+
+
+\draw [<->,ultra thick] (2,0) -- (0,0) -- (0,2);
+\node at (2.5,0) {$x_0$};
+\node at (-0.5,2) {$z_0$};
+
+\draw [blue,thick, decorate,decoration={brace,amplitude=10pt},xshift=-4pt,yshift=0pt]
+(-0.55,0) -- (-0.55,2.5) node [black,midway,xshift=-0.6cm] 
+{\footnotesize $d_1$};
+
+\draw [<->,ultra thick] (2,2.5) -- (0,2.5) -- (0,4.5);
+\node at (2.5,2.5) {$x_1$};
+\node at (-0.5,4.5) {$z_1$};
+
+\draw [->,ultra thick] (0,6) -- (2,6);
+\draw [fill=red] (0,6) circle [radius=0.1];
+\draw [thick] (0,6) circle [radius=0.2];
+\node at (0,6.6) {$z_2$};
+\node at (2,6.6) {$x_2$};
+
+\draw [blue,thick,decorate,decoration={brace,amplitude=10pt,mirror,raise=4pt},yshift=0pt]
+(0,5.8) -- (5,5.8) node [black,midway,xshift=0cm,yshift=-0.7cm] {\footnotesize
+$a_3$};
+
+\draw [->,ultra thick] (5,6) -- (7,6);
+\draw [fill=red] (5,6) circle [radius=0.1];
+\draw [thick] (5,6) circle [radius=0.2];
+\node at (5,6.6) {$z_3$};
+\node at (7,6.6) {$x_3$};
+
+\draw [<->,ultra thick] (5,2.5) -- (5,4.5) -- (7,4.5);
+\node at (7,5) {$x_4$};
+\node at (4.5,2.5) {$z_4$};
+
+\draw [->,ultra thick] (5,0) -- (5,2);
+\draw [fill=red] (5,0) circle [radius=0.1];
+\draw [thick] (5,0) circle [radius=0.2];
+\node at (4.5,0) {$z_5$};
+\node at (4.5,2) {$x_5$};
+
+\draw [blue,thick, decorate,decoration={brace,amplitude=10pt},xshift=-4pt,yshift=0pt]
+(4.3,0) -- (4.3,4.5) node [black,midway,xshift=-0.6cm] 
+{\footnotesize $d_4$};
+
+\draw [->,ultra thick] (6.6,0) -- (8.5,0);
+\draw [thick] (6.5,0) circle [radius=0.2];
+\node [red, ultra thick] at (6.5,0) {x};
+\node at (6.5,0.5) {$x_6$};
+
+\draw [fill=red] (-1,-1) circle [radius=0.1];
+\draw [thick] (-1,-1) circle [radius=0.2];
+\node at (2.6,-0.95) {z axis outwards direction.};
+
+\draw [thick] (-1,-1.5) circle [radius=0.2];
+\node [red, ultra thick] at (-1,-1.5) {x};
+\node at (2.5,-1.5) {z axis inwards direction.};
+
+\end{tikzpicture}
+\end{scaletikzpicturetowidth}

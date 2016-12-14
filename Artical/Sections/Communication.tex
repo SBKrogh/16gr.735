@@ -1,26 +1,25 @@
 \section{Communication}
 
-
 The sbRIO board controls the motors for one Endowrist. The desired positions of the motors and the list of the enabled motors are sent to the board from the computer using an Ethernet cable. To perform force estimation, the computer needs to receive the list of the active motors as well as the position, velocity and effort for each of them.
 
-{\color{green}
+%{\color{green}
 As mentioned in Section \ref{sec:introduction} the frequency aimed for the force feedback loop is 600Hz. However this loop include not only includes communication between the sbRIO and the computer but also computation time for force estimation and communication between the GT and the computer. Thus, the communications with the computer must be faster than 600Hz. The hardware available would not allow us to reach frequencies much higher than 1000Hz, that is why 1kHz was chosen as the aimed frequency for the communication with the sbRIO. The drivers for the GT have a default frequency of 1kHz, this communication was not modified.
-}
+%}
 
-{\color{red}
-It is said that the minimum refresh rate of haptic feedback is widely debated to
-be between 300 Hz and 600 Hz, but for a realistic force feedback it is commonly accepted
-to be at least 1000 Hz\cite{coles2011role}. We decided to aim for 600Hz. In order for the system to fulfill this requirement it is necessary that the communication between the sbRIO board and the computer at least match this frequency.%\todo{which is not defined!}. %That is why this research aims at getting as close as possible to 1000 Hz in the communication between the sbRIO and the computer.
-}
+% {\color{red}
+% It is said that the minimum refresh rate of haptic feedback is widely debated to
+% be between 300 Hz and 600 Hz, but for a realistic force feedback it is commonly accepted
+% to be at least 1000 Hz\cite{coles2011role}. We decided to aim for 600Hz. In order for the system to fulfill this requirement it is necessary that the communication between the sbRIO board and the computer at least match this frequency.%\todo{which is not defined!}. %That is why this research aims at getting as close as possible to 1000 Hz in the communication between the sbRIO and the computer.
+% }
 
 In order to get the fastest communication it was decided to use UDP as it does not implement any reliability feature. Network reliability is undesired in our communication system as it would just lead to retransmitting obsolete data instead of transmitting new one. Furthermore, most of the transport protocol implements features that improve long distance communication which would be superfluous, as the computer is directly connected to the robot.
  
 In addition to the transport protocol, another factor that influence the speed of the communication is the size of the sent packets. To maximize the speed of the communication, the size of the packets must be minimized while keeping the computation time as low as possible. As stated before, the packets exchanged between the computer and the sbRIO contain numerical values (positions, velocities and efforts) and booleans (active or enabled motors). The bitcode of the numerical values is interpreted as ASCII characters and the booleans are gathered in one byte which is also interpreted as a character. Those characters constitute the payload of the packets. As each numerical value is stored on 4 bytes, in the test setup which has 4 motors, the size of the payload sent by the computer to the sbRIO is 17 bytes and the size of the payload sent by the sbRIO to the computer is 49 bytes.
 
-{\color{green}
+%{\color{green}
 To investigate the quality of the communication as a function of frequency three parameters were measured: the delay between two packets received, the jitter and the error rate. Since the computation time for force estimation and on the sbRIO are very small compared to the frequency of the communication, inferior to 3 $\mu$s, if the communication can reach the aimed frequency of 1kHz, the goal for the feedback loop is reached.
-}
-{\color{red}
-To investigate the quality of the communication as a function of frequency three parameters are measured: the round-time trip delay, the jitter and the error rate. However, as the software does not have a way of directly setting the frequency of the communication it is the delay in the communication loop that is modified through the experiment. The computation time and transmission time of the packets being non negligible, the frequency of the communication is not equal to the inverse of this delay.
-}
+%}
+% {\color{red}
+% To investigate the quality of the communication as a function of frequency three parameters are measured: the round-time trip delay, the jitter and the error rate. However, as the software does not have a way of directly setting the frequency of the communication it is the delay in the communication loop that is modified through the experiment. The computation time and transmission time of the packets being non negligible, the frequency of the communication is not equal to the inverse of this delay.
+% }
 %To decrease the size of the packets even further the packets could be compressed however for most algorithms the size reduction is small for this amount of data and thus not worth the computation time.\todo{should this sentence not be in the discussion?}
