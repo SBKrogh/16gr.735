@@ -23,7 +23,6 @@ To investigate the quality of the communication as a function of frequency three
 % To investigate the quality of the communication as a function of frequency three parameters are measured: the round-time trip delay, the jitter and the error rate. However, as the software does not have a way of directly setting the frequency of the communication it is the delay in the communication loop that is modified through the experiment. The computation time and transmission time of the packets being non negligible, the frequency of the communication is not equal to the inverse of this delay.
 % }
 %To decrease the size of the packets even further the packets could be compressed however for most algorithms the size reduction is small for this amount of data and thus not worth the computation time.\todo{should this sentence not be in the discussion?}
-\todo{should i had the TCP and UDP headers?}
 \begin{figure}[h]
 \begin{tikzpicture}
     \matrix(dict)[matrix of nodes,%below=of game,
@@ -77,3 +76,95 @@ To investigate the quality of the communication as a function of frequency three
 \end{tikzpicture}
 \caption{New packets}
 \end{figure}
+
+
+\begin{figure}[h]
+\begin{tikzpicture}
+    \matrix(dict1)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=2.5cm},
+        row 1/.style={anchor=south},
+        column 1/.style={nodes={text width = 1.5cm}}
+    ]{
+		0 	& \{"p4\_primary":\{\\
+    };
+
+
+    \matrix(dict2)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=2.5cm},
+        row 1/.style={anchor=south},
+        column 1/.style={nodes={text width = 1.5cm}},
+        column 3/.style={nodes={text width = 3cm}}
+    ] at ($(dict1)+ (1.6,-1)$){
+		15 	& "positions": & array of 4 positions\\
+    };
+
+    \matrix(dict3)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=2.5cm},
+        row 1/.style={anchor=south},
+        column 1/.style={nodes={text width = 1.5cm}},
+        column 3/.style={nodes={text width = 3cm}}
+    ] at ($(dict2)+ (0,-1)$){
+		125	& ,"velocities": & array of 4 velocities\\
+    };
+
+    \matrix(dict4)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=2.5cm},
+        row 1/.style={anchor=south},
+        column 1/.style={nodes={text width = 1.5cm}},
+        column 3/.style={nodes={text width = 3cm}}
+    ] at ($(dict3)+ (0,-1)$){
+		236	& ,"efforts": & array of 4 efforts\\
+    };
+
+    \matrix(dict5)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=2.5cm},
+        row 1/.style={anchor=south},
+        column 1/.style={nodes={text width = 1.5cm}}
+    ] at ($(dict4)+ (-1.6,-1)$){
+		344 & \}\} \\
+    };
+
+%Boxes
+    \draw(dict1-1-2.north east)--(dict1-1-2.north west)--(dict1-1-2.south west)--(dict1-1-2.south east)--(dict1-1-2.north east);
+    \draw(dict2-1-2.north east)--(dict2-1-2.north west)--(dict2-1-2.south west)--(dict2-1-2.south east)--(dict2-1-2.north east);
+    \draw(dict3-1-2.north east)--(dict3-1-2.north west)--(dict3-1-2.south west)--(dict3-1-2.south east)--(dict3-1-2.north east);
+    \draw(dict4-1-2.north east)--(dict4-1-2.north west)--(dict4-1-2.south west)--(dict4-1-2.south east)--(dict4-1-2.north east);
+    \draw(dict5-1-2.north east)--(dict5-1-2.north west)--(dict5-1-2.south west)--(dict5-1-2.south east)--(dict5-1-2.north east);
+
+
+    \draw(dict2-1-3.north east)--(dict2-1-3.north west)--(dict2-1-3.south west)--(dict2-1-3.south east)--(dict2-1-3.north east);
+    \draw($(dict3-1-3.north east)+(0,-0.03)$)--($(dict3-1-3.north west)+(0,-0.03)$)--(dict3-1-3.south west)--(dict3-1-3.south east)--($(dict3-1-3.north east)+(0,-0.03)$);
+    \draw($(dict4-1-3.north east)+(0,-0.03)$)--($(dict4-1-3.north west)+(0,-0.03)$)--(dict4-1-3.south west)--(dict4-1-3.south east)--($(dict4-1-3.north east)+(0,-0.03)$);
+
+%curly braces
+	\draw [decorate,decoration={brace,amplitude=10pt, mirror},xshift=-4pt,yshift=0pt]
+	($(dict2.north west)+(0.5,0)$) -- ($(dict4.south west)+(0.5,0)$) node [black,midway,xshift=-0.9cm] {\footnotesize Data};
+
+	\draw [decorate,decoration={brace,amplitude=5pt, mirror},xshift=-4pt,yshift=0pt]
+	($(dict1.north west)+(0.5,0)$) -- ($(dict1.south west)+(0.5,0)$) node [black,midway,xshift=-0.9cm] {\footnotesize Head};
+
+	\draw [decorate,decoration={brace,amplitude=5pt, mirror},xshift=-4pt,yshift=0pt]
+	($(dict5.north west)+(0.5,0)$) -- ($(dict5.south west)+(0.5,0)$) node [black,midway,xshift=-0.9cm] {\footnotesize Tail};
+
+%numbers
+	\node at ($(dict1-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+	\node at ($(dict1-1-2.north east)+(0,0.2)$) {\footnotesize 15};
+
+	\node at ($(dict2-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+	\node at ($(dict2-1-2.north east)+(0,0.2)$) {\footnotesize 12};
+	\node at ($(dict2-1-3.north east)+(0,0.2)$) {\footnotesize 110};
+
+	\node at ($(dict3-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+	\node at ($(dict3-1-2.north east)+(0,0.2)$) {\footnotesize 14};
+	\node at ($(dict3-1-3.north east)+(0,0.2)$) {\footnotesize 112};
+
+	\node at ($(dict4-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+	\node at ($(dict4-1-2.north east)+(0,0.2)$) {\footnotesize 11};
+	\node at ($(dict4-1-3.north east)+(0,0.2)$) {\footnotesize 111};
+
+	\node at ($(dict5-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+	\node at ($(dict5-1-2.north east)+(0,0.2)$) {\footnotesize 2};
+\end{tikzpicture}
+\caption{Old packets}
+\end{figure}
+
