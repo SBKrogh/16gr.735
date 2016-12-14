@@ -1,9 +1,9 @@
 \section{System overview}\label{sec:system_overview}
 %{\color{green}
-A fully featured da Vinci robot with connected EndoWrists has four arms with 6 - 7 actuated Degrees Of Freedom (DOF) each. Each arm has its own drivers and an embedded system, an sbRIO board, controlling it. The sbRIOs receive the desired position of the end-effector from the console from which the surgeon operates.\\
-As mentioned in Section \ref{sec:introduction}, the EndoWrist is highly nonlinear and constitute most the challenge in the modelization of one arm of the robot, thus, if the force feedback can effectively be applied to the tool, it can be extended to the arm. As each arm is independent, the system designed for one arm can be extended to the full arm, the same applies to the tool. The setup used in this project only control one EndoWrist which has 4 DOF and is further described in \ref{sec:EndoWrist}.%\color{red}{As each arm is independent, the system designed for one arm can be extended to the full robot. This paper will focus on implementing a force feedback on one EndoWrist.} \\ 
-To control the EndoWrist an sbRIO board is used. On a da Vinci robot the surgeon performs the operation from a console that communicates with the robot. The manipulators for the robot do not implement an interface for haptic feedback, thus, a haptic device, a Geomagic Touch (GT), is used in this setup instead of the device used on the official console. This device is further described in part \ref{sec:Geomagic_touch}.\\
-As force estimation requires computational power and an interface is required to exchange information between GT and sbRIO, a computer added to the system and connected to both devices using Ethernet cables. The entire setup is represented in Figure \ref{fig:full_setup}
+A da Vinci robot with connected EndoWrists has four arms with 6 - 7 actuated Degrees Of Freedom (DOF) each. Each arm has its own drivers and an embedded system controlling it. The embedded systems receive the desired position of the end-effector \textcolor{red}{from the console from which the surgeon operates.}\\
+As mentioned in Section \ref{sec:introduction}, the EndoWrist is highly nonlinear and constitute most the challenge in the modelization of one arm of the robot, thus, if the force feedback can effectively be applied to the tool, it can be extended to the arm. As each arm is independent, the system designed for one arm can be extended to the full arm, the same applies to the tool. The setup used in this project only control one EndoWrist which has 4 DOF and is further described in Section \ref{sec:EndoWrist}.%\color{red}{As each arm is independent, the system designed for one arm can be extended to the full robot. This paper will focus on implementing a force feedback on one EndoWrist.} \\ 
+To control the EndoWrist the embedded system of the robot is used. On a da Vinci robot the surgeon performs the operation from a console that communicates with the robot. The manipulators for the robot do not implement an interface for haptic feedback, thus, a haptic device, a Geomagic Touch (GT), is used in this setup instead of the device used on the official console. This device is further described in Section \ref{sec:Geomagic_touch}.\\
+As force estimation requires computational power and an interface is required to exchange information between GT and embedded system, a computer is added to the system and connected to both devices using Ethernet cables. The entire setup is represented in Fig. \ref{fig:full_setup}
 \begin{figure}[h]
 \centering
 \scalebox{0.97}{
@@ -11,7 +11,7 @@ As force estimation requires computational power and an interface is required to
     % We start by placing the blocks
     \node [box] (Geomagic) {\small{Geomagic Touch}};
     \node [box, right of=Geomagic, node distance = 3.4cm] (Computer) {Computer};
-    \node [box, below of=Computer, node distance=3.3cm] (Sbrio) {sbRIO};
+    \node [box, below of=Computer, node distance=3.3cm] (Sbrio) {Embedded\\System};
     \node [box, left of=Sbrio, node distance=2.5cm] (Driver) {Motor driver};
     \node [box, left of=Driver, node distance=2.5cm] (EndoWrist) {EndoWrist};
     % We draw an edge between the controller and system block to
@@ -27,7 +27,7 @@ As force estimation requires computational power and an interface is required to
     \draw[thick,dashed] ($(-1.5,1)+(EndoWrist)$) -- ($(1.5,1)+(Sbrio)$) -- ($(1.5,-1.5)+(Sbrio)$) -- ($(-1.5,-1.5)+(EndoWrist)$)-- ($(-1.5,1)+(EndoWrist)$);
 
     \node at (2,1.7) {\textbf{Console}};
-    \node at (2,-5) {\textbf{da Vinci robot}};
+    \node at (1.5,-2) {\textbf{da Vinci robot}};
 \end{tikzpicture}
 }
 \caption{Block diagram representing the system.}
@@ -86,30 +86,30 @@ As force estimation requires computational power and an interface is required to
 
 % }
 
-% \subsection{Geomagic touch}\label{sec:Geomagic_touch}
-% The Geomagic Touch is a haptic feedback device, which has the ability to actuate its joints in such a way that the user feels resistance when moving the pen. 
+\subsection{Geomagic touch}\label{sec:Geomagic_touch}
+The Geomagic Touch is a haptic feedback device, which has the ability to actuate its joints in such a way that the user feels resistance when moving the pen. 
 
 
-% \begin{figure}[h]
-%   \centering
-%   \begin{subfigure}{.22\textwidth}
-%     \centering
-%     \includegraphics[width=\linewidth]{haptick1.png}
-%     \caption{Overview of the Geomagic Touch's first three joints.}
-%     \label{fig:phantom1}
-%   \end{subfigure}
-%   \begin{subfigure}{.22\textwidth}
-%     \centering
-%     \includegraphics[width=\linewidth]{haptick2.png}
-%     \caption{Overview of the Geomagic Touch's last three joint}
-%     \label{fig:phantom2}
-%   \end{subfigure}
-% \caption{Overview of all the Geomagic Touch's joints.}
-% \label{fig:phantom_omni}
-% \end{figure}
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}{.22\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{haptick1.png}
+    \caption{Overview of the Geomagic Touch's first three joints.}
+    \label{fig:phantom1}
+  \end{subfigure}
+  \begin{subfigure}{.22\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{haptick2.png}
+    \caption{Overview of the Geomagic Touch's last three joint}
+    \label{fig:phantom2}
+  \end{subfigure}
+\caption{Overview of all the Geomagic Touch's joints.}
+\label{fig:phantom_omni}
+\end{figure}
 
 
-% On Figure \ref{fig:phantom_omni}, it can be seen that the Geomagic Touch has six DOF, where the first three can be actuated, see Figure \ref{fig:phantom1}. This means that the device has the ability to generate force feedback with three DOF, in this case roll, pitch and yaw.
+On Fig. \ref{fig:phantom_omni}, it can be seen that the Geomagic Touch has six DOF, where the first three can be actuated, see Fig. \ref{fig:phantom1}. This means that the device has the ability to generate force feedback with three DOF, in this case roll, pitch and yaw.
 
 
 
@@ -117,7 +117,7 @@ As force estimation requires computational power and an interface is required to
 \subsection{EndoWrist}\label{sec:EndoWrist}
 
 %{\color{green}
-An EndoWrist, see Figure \ref{fig:Endo_plates}, is a surgical tool for the da Vinci robot which can be manipulated as a human wrist. It provides the surgeon the ability to operate with the robot as the operator would without it. To replicate the movements of the wrist while maintaining a low cost and respecting the hygiene norms, the tool is composed of a system of cables and pulleys. This construction imitates the human tendons however it also introduces nonlinearities in the tool, and thus, a challenge for controlling or modeling it.
+An EndoWrist, see Fig. \ref{fig:Endo_plates}, is a surgical tool for the da Vinci robot which can be manipulated as a human wrist. It provides the surgeon the ability to operate with the robot as the operator would without it. To replicate the movements of the wrist while maintaining a low cost and respecting \textcolor{red}{the hygiene norms}, the tool is composed of a system of cables and pulleys. This construction imitates the human tendons however it also introduces nonlinearities in the tool, and thus, a challenge for controlling or modeling it.
 
 \begin{figure}[h]
   \centering
@@ -136,8 +136,9 @@ An EndoWrist, see Figure \ref{fig:Endo_plates}, is a surgical tool for the da Vi
 \caption{The EndoWrist and its end-effector}
 \label{fig:endowrits_set}
 \end{figure}
+\todo{make the 2 pictures the same height}
 
-In real operation each arm has six to seven actuated DOF in total, however, the EndoWrist itself, when disconnected from the robot, only has four DOF. Each DOF is actuated through a plate, see Figure \ref{fig:Endo_plates}. The four DOF are roll, pitch, yaw and clamp, see \ref{fig:Endo_end}. The nonlinearities of the tool are analyzed when building the model in Section \ref{sec:force_estimation}.
+In real operation each arm has six to seven actuated DOF in total, however, the EndoWrist itself, when disconnected from the robot, only has four DOF. Each DOF is actuated through a plate, see Fig. \ref{fig:Endo_plates}. The four DOF are roll, pitch, yaw and clamp, see Fig. \ref{fig:Endo_end}. The nonlinearities of the tool are analyzed when building the model in Section \ref{sec:force_estimation}.
 %}
 
 % {\color{red}An EndoWrist, see Figure \ref{fig:Endo_plates}, is a surgical tool which can be manipulated as a human wrist.
