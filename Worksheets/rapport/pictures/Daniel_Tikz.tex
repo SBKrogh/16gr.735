@@ -93,15 +93,21 @@
 \draw[->, ultra thick] ([xshift=-1cm]mpro.south) -- ([xshift=-1cm]FPGA.north);
 \draw[<-, ultra thick] ([xshift=1cm]mpro.south) -- ([xshift=1cm]FPGA.north);
 
-\node [dataset, left of=FPGA, node distance=7cm] (emc) {\textbf{ESCON motor controller}
+\node [dataset, left of=FPGA, node distance=7.5cm] (emc) {\textbf{ESCON motor controller}
 \begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
 \item Speed controll with intter current control
 \item Limit output current
 \item Read encoder ticks 
 \end{itemize}};
 
-\draw[->, ultra thick] ([yshift=-1cm]emc.east) -- ([yshift=-1cm]FPGA.west);
-\draw[<-, ultra thick] ([yshift=1cm]emc.east) -- ([yshift=1cm]FPGA.west);
+\draw[->, ultra thick] ([yshift=-0.5cm]emc.east) -- ([yshift=-0.5cm]FPGA.west)
+node[right of=emc, node distance=3.55cm](data1) {}
+node[above of=data1, node distance=1.7cm] {\footnotesize Speed}
+node[above of=data1, node distance=1.4cm] {\footnotesize Control}
+node[above of=data1, node distance=0.8cm] {\footnotesize Enable}
+node[below of=data1, node distance=0.8cm] {\footnotesize Position}
+node[below of=data1, node distance=1.4cm] {\footnotesize Current};
+\draw[<-, ultra thick] ([yshift=0.5cm]emc.east) -- ([yshift=0.5cm]FPGA.west);
 
 \tikzset{dataset/.style = {rectangle, draw, text width = 6cm, minimum height=10.5cm}}
 
@@ -127,7 +133,12 @@
 \item ROS
 \end{itemize}};
 
-\draw[->, ultra thick] ([yshift=-1cm]mpro.east) -- ([yshift=-1cm]ROS.west)node[right of=mpro, node distance=3.9cm] {UDP}; % ([yshift=-1cm]ROS.west) should probaly be edited!!!
+\draw[->, ultra thick] ([yshift=-1cm]mpro.east) -- ([yshift=-1cm]ROS.west)node[right of=mpro, node distance=3.9cm](udp1) {UDP}
+node[above of=udp1, node distance=1.5cm] {\footnotesize Setpoint}
+node[above of=udp1, node distance=2cm] {\footnotesize Enable}
+node[below of=udp1, node distance=1.5cm] {\footnotesize Position}
+node[below of=udp1, node distance=2cm] {\footnotesize Speed}
+node[below of=udp1, node distance=2.5cm] {\footnotesize Current}; % ([yshift=-1cm]ROS.west) should probaly be edited!!!
 \draw[<-, ultra thick] ([yshift=1cm]mpro.east) -- ([yshift=1cm]ROS.west);
 
 
@@ -135,10 +146,13 @@
 \node [dataset, right of=ROS, node distance=6cm] (GT) {\textbf{Geomagic Touch}
 	\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
 	\item Force feedback
-	\item Interfacing with human
+	\item Interfacing with\\ human
 	\end{itemize}};
 
-\draw[->, ultra thick] ([yshift=-1cm]ROS.east) -- ([yshift=-1cm]GT.west)node[right of=ROS, node distance=3cm] {UDP}; % ([yshift=-1cm]ROS.west) should probaly be edited!!!
+\draw[->, ultra thick] ([yshift=-1cm]ROS.east) -- ([yshift=-1cm]GT.west)node[right of=ROS, node distance=3cm] (udp2){UDP}
+node[above of=udp2, node distance=1.5cm] {\footnotesize Setpoint}
+node[below of=udp2, node distance=1.5cm] {\footnotesize Force}
+; % ([yshift=-1cm]ROS.west) should probaly be edited!!!
 
 \draw[<-, ultra thick] ([yshift=1cm]ROS.east) -- ([yshift=1cm]GT.west);
 
