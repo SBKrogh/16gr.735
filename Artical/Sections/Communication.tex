@@ -28,16 +28,52 @@ To investigate the quality of the communication as a function of frequency three
 \begin{tikzpicture}
     \matrix(dict)[matrix of nodes,%below=of game,
         nodes={align=center,text width=1.5cm},
-        row 1/.style={anchor=south},
-        column 1/.style={nodes={text width=2cm,align=right}}
+        row 1/.style={anchor=south}%,
+        column 1/.style={nodes={text width = 0.5cm, align=right}}
     ]{
-0 	& position1 & position2 & position3 & position4\\
-        16 	& velocity1 & velocity2 & velocity3 & velocity4\\
-        32 	& effort1 & effort2 & effort3 & effort4\\
-        48	\\
+		0 	& position1 & position2 & position3 & position4\\
+		16 	& velocity1 & velocity2 & velocity3 & velocity4\\
+		32 	& effort1 	& effort2 	& effort3 	& effort4\\
+		48	\\
     };
-    \draw(dict-1-1.south west)--(dict-1-4.south east);
-    \draw(dict-1-1.north east)--(dict-3-1.south east);
+    %horizontal
+    \draw(dict-1-2.north west)--(dict-1-5.north east);
+    \draw(dict-1-2.south west)--(dict-1-5.south east);
+    \draw(dict-2-2.south west)--(dict-2-5.south east);
+    \draw(dict-3-2.south west)--(dict-3-5.south east);
+	%vertical
+    \draw(dict-1-1.north east)--(dict-4-1.south east);
+    \draw(dict-1-2.north east)--(dict-3-2.south east);
+    \draw(dict-1-3.north east)--(dict-3-3.south east);
+    \draw(dict-1-4.north east)--(dict-3-4.south east);
+    \draw(dict-1-5.north east)--(dict-3-5.south east);
+
+    %small at bottom
+    \draw(dict-4-1.south east)--($(0.5,0)+(dict-4-1.south east)$);
+    \draw($(0.5,0)+(dict-4-1.south east)$)--($(0.5,0.49)+(dict-4-1.south east)$);
+
+    %numbers on top
+    \node at ($(0,0.3)+(dict-1-1.north east)$) {0};
+    \node at ($(0,0.3)+(dict-1-2.north east)$) {4};
+    \node at ($(0,0.3)+(dict-1-3.north east)$) {8};
+    \node at ($(0,0.3)+(dict-1-4.north east)$) {12};
+    \node at ($(0,0.3)+(dict-1-5.north east)$) {16};
+
+    \node at ($(0,0.3)+(dict-1-1.north)$) {bytes};
+    \node at ($(0,0.6)+(dict-1-1.north)$) {Offset};
+
+    %The zoom on the last byte
+    \node (zoom) at (1,-2) {XXXX 4 booleans};
+    \draw(zoom.north east)--(zoom.north west);
+    \draw(zoom.north east)--(zoom.south east);
+    \draw(zoom.north west)--(zoom.south west);
+    \draw(zoom.south east)--(zoom.south west);
+    \draw($(zoom.north)+(-0.25,0)$)--($(zoom.south)+(-0.25,0)$);
+    \draw(zoom.north east)--($(1,0)+(dict-4-1)$);
+    \draw(zoom.north west)--($(1,0)+(dict-4-1)$);
+    \node at ($(zoom.north east)+(0,0.3)$) {1};
+    \node at ($(zoom.north west)+(0,0.3)$) {0};
+
 \end{tikzpicture}
 \caption{New packets}
 \end{figure}
