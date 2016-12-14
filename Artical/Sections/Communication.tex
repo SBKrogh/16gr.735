@@ -23,3 +23,21 @@ To investigate the quality of the communication as a function of frequency three
 % To investigate the quality of the communication as a function of frequency three parameters are measured: the round-time trip delay, the jitter and the error rate. However, as the software does not have a way of directly setting the frequency of the communication it is the delay in the communication loop that is modified through the experiment. The computation time and transmission time of the packets being non negligible, the frequency of the communication is not equal to the inverse of this delay.
 % }
 %To decrease the size of the packets even further the packets could be compressed however for most algorithms the size reduction is small for this amount of data and thus not worth the computation time.\todo{should this sentence not be in the discussion?}
+\todo{should i had the TCP and UDP headers?}
+\begin{figure}[h]
+\begin{tikzpicture}
+    \matrix(dict)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=1.5cm},
+        row 1/.style={anchor=south},
+        column 1/.style={nodes={text width=2cm,align=right}}
+    ]{
+0 	& position1 & position2 & position3 & position4\\
+        16 	& velocity1 & velocity2 & velocity3 & velocity4\\
+        32 	& effort1 & effort2 & effort3 & effort4\\
+        48	\\
+    };
+    \draw(dict-1-1.south west)--(dict-1-4.south east);
+    \draw(dict-1-1.north east)--(dict-3-1.south east);
+\end{tikzpicture}
+\caption{New packets}
+\end{figure}
