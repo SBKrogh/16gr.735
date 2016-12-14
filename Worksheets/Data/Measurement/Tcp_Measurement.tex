@@ -2,8 +2,7 @@
 
 \subsection*{Purpose:}
 
-To determine the maximum frequency that can be used with the TCP/IP protocol. To do so, we will measure the round time trip delay and jitter and look at those values as a function of the delay used in the sending loop.
-
+The purpose is to determine the maximum frequency that can be used with the TCP/IP protocol.  To do so, Wireshark is used to record information about the traffic. The values that are necessary for analyzing the connection are the delay between two packets received or sent and from that, the actual frequency as it may differ from the value programmed, the jitter and the packet loss. 
 \subsection*{Test equipment:}
 
 The sbRIO 9636 is connected to a computer running Ubuntu 14.04 LTS via an Ethernet cable of 1 gpbs. The computer runs the ROS nodes that are used for the project, thus it communicates with both the Geomagic Touch and the sbRIO and it sends random setpoints to the sbRIO. The sbRIO uses the entire code of the project.
@@ -13,15 +12,35 @@ The sbRIO 9636 is connected to a computer running Ubuntu 14.04 LTS via an Ethern
 \begin{enumerate}
 	\item The sbRIO is started and connected to the computer.
 	\item The ROS node is started.
-	\item tshark is started.% using this command: tshark -i 1 -f tcp -a duration:20 -w ~/wireshark_capture
-	\item Once the Wireshark recording is done the ROS node is stopped.
+	\item Wireshark is started.% using this command: tshark -i 1 -f tcp -a duration:20 -w ~/wireshark_capture
+	\item Once the recording is done the ROS node is stopped. The recording time here was 20 seconds.
 	\item The log files are retrieved to be analyzed using Matlab and Wireshark.
 \end{enumerate}
-Those steps are repeated for both the serial and parallel case for the following settings: 10 ms, 2 ms and 0 ms.
+Those steps are repeated for the following settings: 100Hz, 500Hz and 1000Hz.
 
 
 \subsection*{Measuring data:}
 
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=\linewidth]{10ms_TCP.png}
+		\caption{Wireshark recordings for 100Hz}
+		\label{fig:10ms_tcp}
+	\end{figure}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=\linewidth]{2ms_TCP.png}
+		\caption{Wireshark recordings for 500Hz}
+		\label{fig:2ms_tcp}
+	\end{figure}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=\linewidth]{0ms_TCP.png}
+		\caption{Wireshark recordings for 1000Hz}
+		\label{fig:0ms_tcp}
+	\end{figure}
+
+\todo{decide if e retake measurements}
 % \begin{center}
 % 	$\begin{tabular}{c|ccccc}
 % 		\text{Delay} & \text{Sending\newline frequency (Hz)} & \text{Receiving frequency (Hz)} & \text{Average delay (ms)} & \text{Jitter} & \text{Error rate (\%)}\\
@@ -32,10 +51,10 @@ Those steps are repeated for both the serial and parallel case for the following
 % 	\end{tabular}$
 % 	\captionof{table}{TCP}
 % \end{center}
-\todo{Find a way to represent what is desbribed in Results, as of now we have the wireshark files}
+
 \subsection*{Results:}
 
-When the frequency is increased above 100Hz, instead of sending more packets it sends bigger packets in which two \gls{JSON} files are grouped. The more the frequency is increased, the bigger the packets.
+When the frequency is increased above 100Hz, instead of sending more packets it sends bigger packets in which two \gls{JSON} files or more are grouped. The more the frequency is increased, the bigger the packets. 
 
 \subsection*{Conclusion:}
 
