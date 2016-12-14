@@ -68,125 +68,227 @@
 %\caption{Overall system with feedback in both direction}
 %\end{figure}
 
-
-
 \begin{sidewaysfigure}
-\centering
-\tikzset{dataset/.style = {rectangle, draw, text width = 5.5cm, minimum height=3cm}}
-\begin{tikzpicture}
-
-\node [dataset] (mpro) at (0,3) {\textbf{Microprocessor}
-\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt]
-\item Data logging
-\item Ethernet communication
-\item Shutdown in case of communication error\\
-\end{itemize}};
-
-\node [dataset, below of=mpro, node distance=6.5cm] (FPGA) {\textbf{FPGA}
-\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
-\item Position contron
-\item Encoder counter
-\item PWM control
-\item Read data: Escon 
-\end{itemize}};
-
-\draw[->, ultra thick] ([xshift=-1cm]mpro.south) -- ([xshift=-1cm]FPGA.north);
-\draw[<-, ultra thick] ([xshift=1cm]mpro.south) -- ([xshift=1cm]FPGA.north);
-
-\node [dataset, left of=FPGA, node distance=7.5cm] (emc) {\textbf{ESCON motor controller}
-\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
-\item Speed controll with intter current control
-\item Limit output current
-\item Read encoder ticks 
-\end{itemize}};
-
-\draw[->, ultra thick] ([yshift=-0.5cm]emc.east) -- ([yshift=-0.5cm]FPGA.west)
-node[right of=emc, node distance=3.55cm](data1) {}
-node[above of=data1, node distance=1.7cm] {\footnotesize Speed}
-node[above of=data1, node distance=1.4cm] {\footnotesize Control}
-node[above of=data1, node distance=0.8cm] {\footnotesize Enable}
-node[below of=data1, node distance=0.8cm] {\footnotesize Position}
-node[below of=data1, node distance=1.4cm] {\footnotesize Current};
-\draw[<-, ultra thick] ([yshift=0.5cm]emc.east) -- ([yshift=0.5cm]FPGA.west);
-
-\tikzset{dataset/.style = {rectangle, draw, text width = 6cm, minimum height=10.5cm}}
-
-\node [dataset, above of=FPGA, node distance=3.5cm] (sbrio) {\textbf{sbRIO}
-\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=260pt] % Edit the last number to fit title 
-\item[]  %  This line is necessary!!
-\end{itemize}};
-
-
-\tikzset{dataset/.style = {rectangle, draw, text width = 5.5cm, minimum height=1cm}}
-
-\node [dataset, below of=emc, node distance=2.5cm] (motor) {\textbf{Motor}};
-
-\draw[->, ultra thick] ([xshift=-1cm]motor.north) -- ([xshift=-1cm]emc.south);
-\draw[<-, ultra thick] ([xshift=1cm]motor.north) -- ([xshift=1cm]emc.south);
-
-\tikzset{dataset/.style = {rectangle, draw, text width = 4.5cm, minimum height=5cm}} % This edits the size of the Ros computer box 
-
-
-\node [dataset, right of=mpro, node distance=7cm] (ROS) {\textbf{Computer}
-\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
-\item High level computations
-\item ROS
-\end{itemize}};
-
-\draw[->, ultra thick] ([yshift=-1cm]mpro.east) -- ([yshift=-1cm]ROS.west)node[right of=mpro, node distance=3.9cm](udp1) {UDP}
-node[above of=udp1, node distance=1.5cm] {\footnotesize Setpoint}
-node[above of=udp1, node distance=2cm] {\footnotesize Enable}
-node[below of=udp1, node distance=1.5cm] {\footnotesize Position}
-node[below of=udp1, node distance=2cm] {\footnotesize Speed}
-node[below of=udp1, node distance=2.5cm] {\footnotesize Current}; % ([yshift=-1cm]ROS.west) should probaly be edited!!!
-\draw[<-, ultra thick] ([yshift=1cm]mpro.east) -- ([yshift=1cm]ROS.west);
-
-
-
-\node [dataset, right of=ROS, node distance=6cm] (GT) {\textbf{Geomagic Touch}
-	\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
-	\item Force feedback
-	\item Interfacing with\\ human
-	\end{itemize}};
-
-\draw[->, ultra thick] ([yshift=-1cm]ROS.east) -- ([yshift=-1cm]GT.west)node[right of=ROS, node distance=3cm] (udp2){UDP}
-node[above of=udp2, node distance=1.5cm] {\footnotesize Setpoint}
-node[below of=udp2, node distance=1.5cm] {\footnotesize Force}
-; % ([yshift=-1cm]ROS.west) should probaly be edited!!!
-
-\draw[<-, ultra thick] ([yshift=1cm]ROS.east) -- ([yshift=1cm]GT.west);
-
-% \draw [->,ultra thick] (-1,1.5) -- (-1,-2); %Micro to FPGA
-% \draw [<-,ultra thick] (1,1.5) -- (1,-2);
-
-% \draw [->,ultra thick] (-3,-3) -- (-4,-3);
-% \draw [<-,ultra thick] (-3,-4) -- (-4,-4);
-
-\end{tikzpicture}
-\caption{Interfacing between components}
-\label{interface}
+	%\begin{subfigure}[b]{\textheight}
+		\centering
+		\resizebox{\textheight}{!}{
+				\tikzset{dataset/.style = {rectangle, draw, text width = 5.5cm, minimum height=3cm}}
+				\begin{tikzpicture}
+				
+				\node [dataset] (mpro) at (0,3) {\textbf{Microprocessor}
+					\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt]
+					\item Data logging
+					\item Ethernet communication
+					\item Shutdown in case of communication error\\
+					\end{itemize}};
+				
+				\node [dataset, below of=mpro, node distance=6.5cm] (FPGA) {\textbf{FPGA}
+					\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
+					\item Position contron
+					\item Encoder counter
+					\item PWM control
+					\item Read data: Escon 
+					\end{itemize}};
+				
+				\draw[->, ultra thick] ([xshift=-1cm]mpro.south) -- ([xshift=-1cm]FPGA.north);
+				\draw[<-, ultra thick] ([xshift=1cm]mpro.south) -- ([xshift=1cm]FPGA.north);
+				
+				\node [dataset, left of=FPGA, node distance=7.5cm] (emc) {\textbf{ESCON motor controller}
+					\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
+					\item Speed controll with intter current control
+					\item Limit output current
+					\item Read encoder ticks 
+					\end{itemize}};
+				
+				\draw[->, ultra thick] ([yshift=-0.5cm]emc.east) -- ([yshift=-0.5cm]FPGA.west)
+				node[right of=emc, node distance=3.55cm](data1) {}
+				node[above of=data1, node distance=1.7cm] {\footnotesize Speed}
+				node[above of=data1, node distance=1.4cm] {\footnotesize Control}
+				node[above of=data1, node distance=0.8cm] {\footnotesize Enable}
+				node[below of=data1, node distance=0.8cm] {\footnotesize Position}
+				node[below of=data1, node distance=1.4cm] {\footnotesize Current};
+				\draw[<-, ultra thick] ([yshift=0.5cm]emc.east) -- ([yshift=0.5cm]FPGA.west);
+				
+				\tikzset{dataset/.style = {rectangle, draw, text width = 6cm, minimum height=10.5cm}}
+				
+				\node [dataset, above of=FPGA, node distance=3.5cm] (sbrio) {\textbf{sbRIO}
+					\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=260pt] % Edit the last number to fit title 
+					\item[]  %  This line is necessary!!
+					\end{itemize}};
+				
+				
+				\tikzset{dataset/.style = {rectangle, draw, text width = 5.5cm, minimum height=1cm}}
+				
+				\node [dataset, below of=emc, node distance=2.5cm] (motor) {\textbf{Motor}};
+				
+				\draw[->, ultra thick] ([xshift=-1cm]motor.north) -- ([xshift=-1cm]emc.south);
+				\draw[<-, ultra thick] ([xshift=1cm]motor.north) -- ([xshift=1cm]emc.south);
+				
+				\tikzset{dataset/.style = {rectangle, draw, text width = 4.5cm, minimum height=5cm}} % This edits the size of the Ros computer box 
+				
+				
+				\node [dataset, right of=mpro, node distance=7cm] (ROS) {\textbf{Computer}
+					\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
+					\item High level computations
+					\item ROS
+					\end{itemize}};
+				
+				\draw[->, ultra thick] ([yshift=-1cm]mpro.east) -- ([yshift=-1cm]ROS.west)node[right of=mpro, node distance=3.9cm](udp1) {UDP}
+				node[above of=udp1, node distance=1.5cm] {\footnotesize Setpoint}
+				node[above of=udp1, node distance=2cm] {\footnotesize Enable}
+				node[below of=udp1, node distance=1.5cm] {\footnotesize Position}
+				node[below of=udp1, node distance=2cm] {\footnotesize Speed}
+				node[below of=udp1, node distance=2.5cm] {\footnotesize Current}; % ([yshift=-1cm]ROS.west) should probaly be edited!!!
+				\draw[<-, ultra thick] ([yshift=1cm]mpro.east) -- ([yshift=1cm]ROS.west);
+				
+				
+				
+				\node [dataset, right of=ROS, node distance=6cm] (GT) {\textbf{Geomagic Touch}
+					\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
+					\item Force feedback
+					\item Interfacing with\\ human
+					\end{itemize}};
+				
+				\draw[->, ultra thick] ([yshift=-1cm]ROS.east) -- ([yshift=-1cm]GT.west)node[right of=ROS, node distance=3cm] (udp2){UDP}
+				node[above of=udp2, node distance=1.5cm] {\footnotesize Setpoint}
+				node[below of=udp2, node distance=1.5cm] {\footnotesize Force}
+				; % ([yshift=-1cm]ROS.west) should probaly be edited!!!
+				
+				\draw[<-, ultra thick] ([yshift=1cm]ROS.east) -- ([yshift=1cm]GT.west);
+				
+				% \draw [->,ultra thick] (-1,1.5) -- (-1,-2); %Micro to FPGA
+				% \draw [<-,ultra thick] (1,1.5) -- (1,-2);
+				
+				% \draw [->,ultra thick] (-3,-3) -- (-4,-3);
+				% \draw [<-,ultra thick] (-3,-4) -- (-4,-4);
+				
+				\end{tikzpicture}
+				
+				
+		}
+		\caption{Interfacing between components}
+		\label{interface}
+	%\end{subfigure}
 \end{sidewaysfigure}
 
-\todo{Include arrow, label anc new caption... elaborate this picture breifly, what do the different boxes do?}
 
-% \begin{figure}[htb]
-% \tikzset{dataset/.style = {rectangle, draw, text width = 5cm, minimum height=1in}}
-% \begin{tikzpicture}[auto, font={\scriptsize}]
-%     % Place nodes
-%     \node [dataset] (tm) {Data 1 
-%                             \begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt]   %% this added.
-%                                 \item{\# Adults } 
-%                                 \item{\# Children} 
-%                                 \item{Income}
-%                                 \item{Ethnicity}
-%                             \end{itemize}\par};
-%     \node [dataset, right of=tm, node distance=3in] (dmv) {Data 2 
-%                             \begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
-%                                 \item{Data 2} 
-%                             \end{itemize}\par};
-%     % draw links
-%     \path [<->] (tm) edge node[above, sloped] {Address} (dmv);
-% \end{tikzpicture}
-%     \caption{Analysis dataset assembly.}
-%     \label{fig:dataset}
-% \end{figure}
+%\begin{sidewaysfigure}
+%\centering
+%\tikzset{dataset/.style = {rectangle, draw, text width = 5.5cm, minimum height=3cm}}
+%\begin{tikzpicture}
+%
+%\node [dataset] (mpro) at (0,3) {\textbf{Microprocessor}
+%\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt]
+%\item Data logging
+%\item Ethernet communication
+%\item Shutdown in case of communication error\\
+%\end{itemize}};
+%
+%\node [dataset, below of=mpro, node distance=6.5cm] (FPGA) {\textbf{FPGA}
+%\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
+%\item Position contron
+%\item Encoder counter
+%\item PWM control
+%\item Read data: Escon 
+%\end{itemize}};
+%
+%\draw[->, ultra thick] ([xshift=-1cm]mpro.south) -- ([xshift=-1cm]FPGA.north);
+%\draw[<-, ultra thick] ([xshift=1cm]mpro.south) -- ([xshift=1cm]FPGA.north);
+%
+%\node [dataset, left of=FPGA, node distance=7.5cm] (emc) {\textbf{ESCON motor controller}
+%\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
+%\item Speed controll with intter current control
+%\item Limit output current
+%\item Read encoder ticks 
+%\end{itemize}};
+%
+%\draw[->, ultra thick] ([yshift=-0.5cm]emc.east) -- ([yshift=-0.5cm]FPGA.west)
+%node[right of=emc, node distance=3.55cm](data1) {}
+%node[above of=data1, node distance=1.7cm] {\footnotesize Speed}
+%node[above of=data1, node distance=1.4cm] {\footnotesize Control}
+%node[above of=data1, node distance=0.8cm] {\footnotesize Enable}
+%node[below of=data1, node distance=0.8cm] {\footnotesize Position}
+%node[below of=data1, node distance=1.4cm] {\footnotesize Current};
+%\draw[<-, ultra thick] ([yshift=0.5cm]emc.east) -- ([yshift=0.5cm]FPGA.west);
+%
+%\tikzset{dataset/.style = {rectangle, draw, text width = 6cm, minimum height=10.5cm}}
+%
+%\node [dataset, above of=FPGA, node distance=3.5cm] (sbrio) {\textbf{sbRIO}
+%\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=260pt] % Edit the last number to fit title 
+%\item[]  %  This line is necessary!!
+%\end{itemize}};
+%
+%
+%\tikzset{dataset/.style = {rectangle, draw, text width = 5.5cm, minimum height=1cm}}
+%
+%\node [dataset, below of=emc, node distance=2.5cm] (motor) {\textbf{Motor}};
+%
+%\draw[->, ultra thick] ([xshift=-1cm]motor.north) -- ([xshift=-1cm]emc.south);
+%\draw[<-, ultra thick] ([xshift=1cm]motor.north) -- ([xshift=1cm]emc.south);
+%
+%\tikzset{dataset/.style = {rectangle, draw, text width = 4.5cm, minimum height=5cm}} % This edits the size of the Ros computer box 
+%
+%
+%\node [dataset, right of=mpro, node distance=7cm] (ROS) {\textbf{Computer}
+%\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
+%\item High level computations
+%\item ROS
+%\end{itemize}};
+%
+%\draw[->, ultra thick] ([yshift=-1cm]mpro.east) -- ([yshift=-1cm]ROS.west)node[right of=mpro, node distance=3.9cm](udp1) {UDP}
+%node[above of=udp1, node distance=1.5cm] {\footnotesize Setpoint}
+%node[above of=udp1, node distance=2cm] {\footnotesize Enable}
+%node[below of=udp1, node distance=1.5cm] {\footnotesize Position}
+%node[below of=udp1, node distance=2cm] {\footnotesize Speed}
+%node[below of=udp1, node distance=2.5cm] {\footnotesize Current}; % ([yshift=-1cm]ROS.west) should probaly be edited!!!
+%\draw[<-, ultra thick] ([yshift=1cm]mpro.east) -- ([yshift=1cm]ROS.west);
+%
+%
+%
+%\node [dataset, right of=ROS, node distance=6cm] (GT) {\textbf{Geomagic Touch}
+%	\begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
+%	\item Force feedback
+%	\item Interfacing with\\ human
+%	\end{itemize}};
+%
+%\draw[->, ultra thick] ([yshift=-1cm]ROS.east) -- ([yshift=-1cm]GT.west)node[right of=ROS, node distance=3cm] (udp2){UDP}
+%node[above of=udp2, node distance=1.5cm] {\footnotesize Setpoint}
+%node[below of=udp2, node distance=1.5cm] {\footnotesize Force}
+%; % ([yshift=-1cm]ROS.west) should probaly be edited!!!
+%
+%\draw[<-, ultra thick] ([yshift=1cm]ROS.east) -- ([yshift=1cm]GT.west);
+%
+%% \draw [->,ultra thick] (-1,1.5) -- (-1,-2); %Micro to FPGA
+%% \draw [<-,ultra thick] (1,1.5) -- (1,-2);
+%
+%% \draw [->,ultra thick] (-3,-3) -- (-4,-3);
+%% \draw [<-,ultra thick] (-3,-4) -- (-4,-4);
+%
+%\end{tikzpicture}
+%\caption{Interfacing between components}
+%\label{interface}
+%\end{sidewaysfigure}
+%
+%\todo{Include arrow, label anc new caption... elaborate this picture breifly, what do the different boxes do?}
+%
+%% \begin{figure}[htb]
+%% \tikzset{dataset/.style = {rectangle, draw, text width = 5cm, minimum height=1in}}
+%% \begin{tikzpicture}[auto, font={\scriptsize}]
+%%     % Place nodes
+%%     \node [dataset] (tm) {Data 1 
+%%                             \begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt]   %% this added.
+%%                                 \item{\# Adults } 
+%%                                 \item{\# Children} 
+%%                                 \item{Income}
+%%                                 \item{Ethnicity}
+%%                             \end{itemize}\par};
+%%     \node [dataset, right of=tm, node distance=3in] (dmv) {Data 2 
+%%                             \begin{itemize}[itemsep=0pt,partopsep=0pt,topsep=0pt] 
+%%                                 \item{Data 2} 
+%%                             \end{itemize}\par};
+%%     % draw links
+%%     \path [<->] (tm) edge node[above, sloped] {Address} (dmv);
+%% \end{tikzpicture}
+%%     \caption{Analysis dataset assembly.}
+%%     \label{fig:dataset}
+%% \end{figure}

@@ -40,8 +40,9 @@
 %\end{figure}
 
 
-\begin{figure}	 	
 
+\begin{figure}	 	
+\resizebox{\textwidth}{!}{
 \begin{tikzpicture}%[transform canvas={scale=0.5}]
 
 \draw [-latex] (10.6,3.4) ellipse (0.25 and 0.25);
@@ -94,6 +95,7 @@
 \draw  [line width=0.5mm](0,5) rectangle (4.35,-1);
 \draw [line width=0.5mm] (4.5,5) rectangle (13.65,-0.2);
 \end{tikzpicture}
-\caption{Embedded cascade control structure}
+}
+\caption{Embedded cascade control structure. d index means the desired control value, a index means actual value, $\epsilon$ is the error}
 \label{cascade_fig}
 \end{figure}
