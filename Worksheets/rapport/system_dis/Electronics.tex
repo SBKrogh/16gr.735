@@ -42,8 +42,19 @@ These motors are direct current (DC) motors. Some of the parameters for this bul
 \item Torque constant: $10.9\frac{\text{mNm}}{\text{A}}$
 \item Nominal continues current: 0.681 A 
 \item Gearing ratio: 1:19
-\item Encoder precision: 512 counts pr. rotation. With the proper programming 2048 positions can be distinguished in one rotation.
+\item Encoder precision: 512 counts pr. rotation. With the proper programming, see section \ref{encount} 2048 positions can be distinguished in one rotation.
 \end{itemize}
+
+\subsubsection{Encoder tick counting}
+\label{encount}
+The FPGA has implemented encoder signal counter, that directly receives the signals from  the ESCON controller's two encoder sensors. One sensor is shifted by $90\deg$. The FPGA steps one unit each time the state of any of the sensor changes and FPGA compares the state of encoder A to the state of encoder B using a XOR function. This way the direction of the movement can be determined. The resulting position resolution is four times as high as the resolution of encoder lines.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\columnwidth]{encoder.pdf}
+	\caption{Encoder signal sensor states depending on position \cite{motor_encoder}.}
+	\label{fig:encoder}
+\end{figure}
 
 The control of these motors are done through the sbRIO board, connected to a motor controllers, see \secref{sec:motor_control}.
 %The ESCON motor controllers are attached to the sbRIO controller and send the control signals through cables. The motor has a nominal torque of 6.96 mNm.
