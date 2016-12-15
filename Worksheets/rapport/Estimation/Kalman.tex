@@ -1,0 +1,68 @@
+\input{Clean_up/preamble}
+\raggedbottom
+\begin{document}
+
+%%% Tikz Magic %%%
+\include{Clean_up/tikz_magi}
+
+% Forindhold - Kun romer tal
+
+\frontmatter.
+
+%Formalia
+%\include{rapport/introduktion/main} %%%%%%%     <->    Front page, synopsis and preface included in this
+
+
+%\include{rapport/Start_Templates/The_Four_W}
+%\include{rapport/Start_Templates/Test_template}
+%\include{Data/Measurement/Tcp_Measurement}
+%\include{Clean_up/tikz_guide}
+
+\tableofcontents*
+
+% Hovedindhold - nummereres fra ''side 1 af sidste side''b
+\mainmatter
+\makeevenfoot{AAU}{\thepage \text{} of \pageref{LastPage}}{}{}
+\makeoddfoot{AAU}{}{}{\thepage \text{} of \pageref{LastPage}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\%
+% Delete this before turning in
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Include sections here   %
+
+\include{rapport/introduktion/intro}
+
+\include{rapport/system_dis/System_Overview}
+
+\include{rapport/communication/Communication}
+
+%\include{rapport/Improvement/Improvement}
+
+%\include{rapport/Software/software_architecture}
+
+\include{Data/Measurement/Measurement}
+
+\include{rapport/Kinematic/Kinematic}
+
+\include{rapport/Definitions/Definitions}
+
+\include{rapport/Control/Control}
+
+%\include{rapport/Simulation/matlab_simulation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Bilag  %
+\bibliography{Clean_up/Bibliography}
+
+\part*{Appendix}
+\addcontentsline{toc}{part}{Appendix}
+
+\appendix
+\include{Appendix/Setup_system}
+
+\clearpage
+
+
+
+\end{document}
