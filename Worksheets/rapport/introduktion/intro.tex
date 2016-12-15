@@ -30,24 +30,31 @@ In order to provide the sensation of directly controlling the EndoWrist, the GT 
 %The current applied to the motors for actuating the end-manipulator is known. The current is highly correlated with the force affecting the end-effector. By having a model of the EndoWrist and motor dynamics, the output force can be estimated. Hence this projects aims at experimentally deriving the dynamical model of the motor-end-effector system.}
 %\todo{Solution}
 
-As the project is limited on time, the system setup is a striped version of the da Vinci robot. It includes one surgical tool that can be actuated, one computer and one haptic device which is controlled by an operator. 
+This project is based on a previous research. The previous setup could only reach 100 Hz in communication frequency\cite{Chris_Surgical}, which does not satisfy the refresh rate demand of a haptic feedback. Therefore this project aims at increasing the connection speed to the minimum
+requirement of 600 Hz.
+Furthermore this project aims at implementing a force feedback control loop utilizing the
+setup available at Aalborg university based on a dynamic model of the surgical tool.
 
-\begin{figure}
-\centering
-\begin{tikzpicture}
-\node[box] (hum) at (0,0) {Human};
-\node[box] (Hap) at ($(3,0) + (hum)$) {Haptic device};
-\node[box] (com) at ($(3,0) + (Hap)$) {Computer};
-\node[box] (sur) at ($(3,0) + (com)$) {Surgical tool};
 
-\draw[<->, ultra thick] (hum.east) -- (Hap.west);
-\draw[<->, ultra thick] (Hap.east) -- (com.west);
-\draw[<->, ultra thick] (com.east) -- (sur.west);
 
-\end{tikzpicture}
-\caption{Simple illustration of the communication setup between the operator and the surgical tool.}
-\label{fig:introduction_setup}
-\end{figure}
+% As the project is limited on time, the system setup is a striped version of the da Vinci robot. It includes one surgical tool that can be actuated, one computer and one haptic device which is controlled by an operator. 
+
+% \begin{figure}
+% \centering
+% \begin{tikzpicture}
+% \node[box] (hum) at (0,0) {Human};
+% \node[box] (Hap) at ($(3,0) + (hum)$) {Haptic device};
+% \node[box] (com) at ($(3,0) + (Hap)$) {Computer};
+% \node[box] (sur) at ($(3,0) + (com)$) {Surgical tool};
+
+% \draw[<->, ultra thick] (hum.east) -- (Hap.west);
+% \draw[<->, ultra thick] (Hap.east) -- (com.west);
+% \draw[<->, ultra thick] (com.east) -- (sur.west);
+
+% \end{tikzpicture}
+% \caption{Simple illustration of the communication setup between the operator and the surgical tool.}
+% \label{fig:introduction_setup}
+% \end{figure}
 
 %{\color{red}The system setup used is a stripped version of the da Vinci robot. It includes the end effector of the robot which is controlled by a distributed system imitating the da Vinci robots control architecture, where the GT controller and the end-effector has several layers between them. The embedded system actuating the robot communicates through an ethernet cable with the computer running connected to the GT device. This computer also runs the high computation demanding tasks.}
 
