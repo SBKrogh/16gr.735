@@ -1,5 +1,4 @@
 \section{Communication}
-\todo{it is not clear what you have done}
 The embedded system controls the motors for one Endowrist. The desired positions of the motors and the list of the enabled motors are sent to the board from the computer using an Ethernet cable. To perform force estimation, the computer needs to receive the list of the active motors as well as the position, velocity and effort for each of them.
 
 %{\color{green}
@@ -110,7 +109,8 @@ In addition to the transport protocol, another factor that influence the speed o
 	\node at ($(dict5-1-1.north east)+(0,0.2)$) {\footnotesize 0};
 	\node at ($(dict5-1-2.north east)+(0,0.2)$) {\footnotesize 2};
 
-	\node at ($(dict1-1-1.north)+(0,0.3)$) {Offset bytes};
+    \node at ($(0,0.3)+(dict1-1-1.north)$) {bytes};
+    \node at ($(0,0.6)+(dict1-1-1.north)$) {Offset};
 
 \end{tikzpicture}
 \caption{Old packets}
