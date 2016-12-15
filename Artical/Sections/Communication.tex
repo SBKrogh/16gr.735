@@ -12,26 +12,17 @@ As mentioned in Section \ref{sec:introduction} the frequency aimed for the force
 % to be at least 1000 Hz\cite{coles2011role}. We decided to aim for 600Hz. In order for the system to fulfill this requirement it is necessary that the communication between the sbRIO board and the computer at least match this frequency.%\todo{which is not defined!}. %That is why this research aims at getting as close as possible to 1000 Hz in the communication between the sbRIO and the computer.
 % }
 
-In order to get the fastest communication it was decided to use \textcolor{red}{UDP as it does not implement any reliability feature.} Network reliability is undesired in our communication system as it would just lead to retransmitting obsolete data instead of transmitting new one. Furthermore, most of the transport protocol implements features that improve long distance communication which would be superfluous, as the computer is directly connected to the robot.
+\textcolor{green}{The original system implements a stream of Javascript Object Notation (JSON)\cite{JSON_IETF} files using TCP. However this communication can not reach a frequency higher than 100 Hz which does not match the goal of 1000 Hz. Thus, this part focuses on the modifications applied to the communication in order to make it reach the requirements.}
+
+\textcolor{red}{In order to get the fastest communication it was decided to use UDP as it does not implement any reliability feature. Network reliability is undesired in our communication system as it would just lead to retransmitting obsolete data instead of transmitting new one. Furthermore, most of the transport protocol implements features that improve long distance communication which would be superfluous, as the computer is directly connected to the robot.}
  
+\textcolor{green}{In order to get a faster communication it was decided to use UDP instead of TCP as it does not retransmit any packets or implement any features to improve long distance communications. In our system, retransmission of packets would lead to retransmitting obsolete data instead of transmitting new ones. Furthermore, improvements of long distance communications would be superfluous since the two devices are directly connected.}
+
 {\color{red}In addition to the transport protocol, another factor that influence the speed of the communication is the size of the sent packets. To maximize the speed of the communication, the size of the packets must be minimized while keeping the computation time as low as possible. As stated before, the packets exchanged between the computer and the embedded system contain numerical values (positions, velocities and efforts) and booleans (active or enabled motors). The bitcode of the numerical values is interpreted as ASCII characters and the booleans are gathered in one byte which is also interpreted as a character. Those characters constitute the payload of the packets. As each numerical value is stored on 4 bytes, in the test setup which has 4 motors, the size of the payload sent by the computer to the embedded system is 17 bytes and the size of the payload sent by the embedded system to the computer is 49 bytes.}
 
 {\color{green}
-In addition to the transport protocol, another factor that influence the speed of the communication is the size of the packets. To maximize the number of packets sent, the size of those packets must be minimized while keeping the computation time as low as possible. As stated before, the packets sent to the computer contain position, velocity, effort and a boolean value for each motor. In the original setup the Javascript Object Notation (JSON)\cite{JSON_IETF} was used. The JSON creates a human readable file and thus, use one character per digit in number. In this setup the numbers can go up to 23 characters. The size of the numbers, combined to the additional characters required for the JSON leads to packets of 346 bytes in a worst case scenario, those packets are described in Fig. \ref{fig:old_packets}. To reduce the size of those packets, it was decided to interpret the binary representation as characters instead of the human readable format. As the numerical values are stored as floats following the IEEE 754 standard\cite{IEEE_754}, each of them require four bytes. Also, a constant structure was define to remove the need of control sequences. The new packets are described in Fig. \ref{fig:new_packets} and have a constant size of 49 bytes. Thus, the size of the packets was reduced by 85\%.
+In addition to the transport protocol, another factor that influence the speed of the communication is the size of the packets. To maximize the number of packets sent, the size of those packets must be minimized while keeping the computation time as low as possible. As stated before, the packets sent to the computer contain position, velocity, effort and a boolean value for each motor. The JSON used in the original system creates a human readable file and thus, use one character per digit in a number. In this setup the numbers can go up to 23 characters. The size of the numbers, combined to the additional characters required for the JSON leads to packets of 346 bytes in a worst case scenario, those packets are described in Fig. \ref{fig:old_packets}. To reduce the size of those packets, it was decided to interpret the binary representation as characters instead of the human readable format. As the numerical values are stored as floats following the IEEE 754 standard\cite{IEEE_754}, each of them require four bytes. Also, a constant structure was define to remove the need of control sequences. The new packets are described in Fig. \ref{fig:new_packets} and have a constant size of 49 bytes. Thus, the size of the packets was reduced by 86\%.
 }
-
-%{\color{green}
-To investigate the quality of the communication as a function of frequency three parameters were measured: the delay between two packets received, the jitter and the error rate. Since the computation time for force estimation and on the embedded system are very small compared to the frequency of the communication, inferior to 3 $\mu$s, if the communication can reach the aimed frequency of 1kHz, the goal for the feedback loop is reached.
-%}
-% {\color{red}
-% To investigate the quality of the communication as a function of frequency three parameters are measured: the round-time trip delay, the jitter and the error rate. However, as the software does not have a way of directly setting the frequency of the communication it is the delay in the communication loop that is modified through the experiment. The computation time and transmission time of the packets being non negligible, the frequency of the communication is not equal to the inverse of this delay.
-% }
-%To decrease the size of the packets even further the packets could be compressed however for most algorithms the size reduction is small for this amount of data and thus not worth the computation time.\todo{should this sentence not be in the discussion?}
-
-
-
-
-
 \begin{figure}[h]
 \begin{tikzpicture}
     \matrix(dict1)[matrix of nodes,%below=of game,
@@ -181,6 +172,19 @@ To investigate the quality of the communication as a function of frequency three
 \caption{New packets}
 \label{fig:new_packets}
 \end{figure}
+%{\color{green}
+To investigate the quality of the communication as a function of frequency three parameters were measured: the delay between two packets received, the jitter and the error rate. Since the computation time for force estimation and on the embedded system are very small compared to the frequency of the communication, inferior to 3 $\mu$s, if the communication can reach the aimed frequency of 1kHz, the goal for the feedback loop is reached.
+%}
+% {\color{red}
+% To investigate the quality of the communication as a function of frequency three parameters are measured: the round-time trip delay, the jitter and the error rate. However, as the software does not have a way of directly setting the frequency of the communication it is the delay in the communication loop that is modified through the experiment. The computation time and transmission time of the packets being non negligible, the frequency of the communication is not equal to the inverse of this delay.
+% }
+%To decrease the size of the packets even further the packets could be compressed however for most algorithms the size reduction is small for this amount of data and thus not worth the computation time.\todo{should this sentence not be in the discussion?}
+
+
+
+
+
+
 
 
 
