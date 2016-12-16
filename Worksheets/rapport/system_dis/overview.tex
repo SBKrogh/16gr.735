@@ -1,24 +1,26 @@
-\section{Overview}
-As mentioned before, a fully featured DaVinci robot has four arms with 6-7 \gls{DOF} in total, when the Endowrist instrument included.
+\section{Summary}
+As mentioned before, a fully featured DaVinci robot has four arms with 6-7 actuated \gls{DOF} in total when the EndoWrist is included.
 %Since the robot has 4 arms, there are 4 instruments.
 %Although our setup controls only 4 motors, in funcionality it is equivalent to one DaVinci arm.
-Although our setup controls only 4 motors, it can manipulate the surgical tool itself in the same way the da Vinci robot does. The missing features are the one related to the hand of the robot holding the tool.
+Although the test setup only controls four motors, it can manipulate the surgical tool itself in the same way the da Vinci robot does. The missing features are the ones related to the hand of the robot holding the tool, see \secref{sec:da_vin_rob}.
 
-The sbRio board controls the test setup and as such represents the onboard computer on the DaVinci robot.
+The sbRIO board controls the test setup and as such represents the onboard computer on the DaVinci robot.
 In order to perform higher level functions such as force feedback control, it is necessary to remotely handle data and send high-level commands.
 This is handled by an external computer system that is connected to the Geo magic touch device.
+\todo{should we include the computer in the system description or is this to little a subject to cover?}
 
-The sbRIO board and the Geomagic Touch both communicate with the computer using UDP.
-The computer also performs force estimation using a dynamical model of the test setup (or EndoWrist, more precisely), this is vital for force feedback.
+The sbRIO board and the Geomagic Touch both communicate with the computer using UDP. The computer should also handle the force estimation using a dynamical model of the test setup (or EndoWrist, more precisely), this is vital for force feedback.
 In order to connect software components responsible for communicating with hardware and the ones responsible for the control algorithm and estimation.
-For this purpose we use the Robot Operating System (ROS), which uses a network architecture to share data between components via data streams.
+\todo{error in sentence?}
+For this purpose we use the Robot Operating System (ROS), which uses a network architecture to share data between components via data streams. Go to \secref{sec:def_ROS} for a short introduction to ROS.
 
+A general overview of the system that will be developed can be seen on \figref{sec:summering_model}.
+
+\begin{figure}
 \input{rapport/pictures/First_feedback_block}
-\todo{Do we have a model of the operator?}
+\caption{Simple block diagram of the control system that is going to be developed.}
+\label{sec:summering_model}
+\end{figure}
+\todo{maybe we should exclude Embedded system to sbRIO insted?}
 
-\subsection*{Problem formulation}
-\begin{itemize}
-\item \textit{How can the communication speed be increased to at least 600 Hz, such that force feedback can be implement on the system?}
-\item \textit{How is a controller to be designed such that it can handle delay in the system?}
-\end{itemize}
-\todo{Problemformulation}
+
