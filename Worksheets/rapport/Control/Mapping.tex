@@ -5,6 +5,7 @@ The roll of the EndoWrist was associated to the roll of the GT. The clamp of the
 \\
 
 \begin{figure}[H]
+\centering
 \begin{tikzpicture}
 	% GT
 	\begin{scope}
@@ -52,7 +53,7 @@ The phantom\_omni node\cite{phantom_omni_github} used to communicate can only ha
 	F_x &= F_\textrm{clamp}\cdot sin(\theta) + F_\textrm{roll}\cdot cos(\theta)\\
 	F_y &= F_\textrm{clamp}\cdot cos(\theta) - F_\textrm{roll}\cdot sin(\theta)\\
 	F_z &= F_\textrm{pitch}
-	\end{split}
+\end{split}
 \label{eq:cylindrical_to_cartesian}
 \end{equation}
 with:\\
@@ -63,7 +64,12 @@ with:\\
 \hspace*{8mm} $F_\textrm{roll}$  the force feedback from the roll\\
 
 \begin{equation} 
-1+1=\pi;
+\begin{split}
+	&P_\textrm{roll} = P_\textrm{roll}\\
+	&P_\textrm{pitch} = z\\
+	&P_\textrm{clamp1} = -5.384*r + 0.7\\
+	&P_\textrm{clamp2} = 5.384*r - 0.7
+\end{split}
 \label{eq:cartesian_to_cylindrical}
 \end{equation}
 
