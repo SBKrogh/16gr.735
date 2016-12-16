@@ -49,7 +49,7 @@ These motors are direct current (DC) motors. Some of the parameters for this bul
 \label{encount}
 The FPGA has implemented encoder signal counter, that directly receives the signals from  the ESCON controller's two encoder sensors. One sensor is shifted by $90\deg$. The FPGA steps one unit each time the state of any of the sensor changes and FPGA compares the state of encoder A to the state of encoder B using a XOR function. This way the direction of the movement can be determined. The resulting position resolution is four times as high as the resolution of encoder lines.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\columnwidth]{encoder.pdf}
 	\caption{Encoder signal sensor states depending on position \cite{motor_encoder}.}
