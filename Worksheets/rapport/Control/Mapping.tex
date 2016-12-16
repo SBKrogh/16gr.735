@@ -1,0 +1,69 @@
+\section{Mapping}
+
+The setup studied in this project does not allow the translations of the EndoWrist. Although the models derived can be used on the full da Vinci robot, the mapping of the movements of the Geomagic Touch to the tool cannot be the same. As described in \secref{sec:geo_magic}, the GT can only actuates three joints, these joints are the one that needs to be used for the human to easily estimates the quality of the force feedback. It was decided to control the EndoWrist by controlling the roll, pitch and clamping independently. To do so, each of these three joints are assigned one vector. All three vectors are orthogonal to be able to sense the feedback of each joint individually.
+The roll of the EndoWrist was associated to the roll of the GT. The clamp of the EndoWrist is associated to the radial vector going from the base of the GT to the end of the stylus. The pitch is controlled by the normal vector to the plan defined by the two previous vectors which is a vertical vector. The vectors in the horizontal plan are represented in \figref{fig:cartesian_polar}. The Cartesian z axis and the vector for the pitch of the EndoWrist are collinear and are not represented on the figure.
+\\
+
+\begin{figure}[H]
+\begin{tikzpicture}
+	% GT
+	\begin{scope}
+	    \clip (-2.1,0) rectangle (2.1,2.1);
+	    \draw (0,0) circle(2)[ultra thick];
+	\end{scope}
+	\node at (-1.5,0.3) {$\textbf{GT}$};
+	%Cartesian axis
+	\draw [fill=black] (-0,-0) circle [radius=0.1];
+	\draw [->,ultra thick] (0,0) -- (0,4);
+	\draw [->,ultra thick] (0,0) -- (4,0);
+	\node at (-0.3, 4) {$y$};
+	\node at (4, 0.3) {$x$};
+	\node at (-0.2, -0.3) {$O_c$};
+	%end effector
+	\draw [fill=black] (2.5,2.5) circle [radius=0.1];
+	\begin{scope}
+	    \clip (-3.55,0) rectangle (3.55,3.55);
+	    \draw (0,0) circle(3.54);
+	\end{scope}
+	\draw (0,0) -- (2.5,2.5);
+	\node at (2.1, 2.5) {$O_p$};
+	%Cylindrical axis
+	\draw [->,ultra thick] (2.5,2.5) -- (3.5,3.5);
+	\draw [->,ultra thick] (2.5,2.5) -- (3.5,1.5);
+	\node at (3.5,3.8) {$F_\textrm{clamp}$};
+	\node at (3.9,1.5) {$F_\textrm{roll}$};
+	\node at (1.3,3.55) {$\theta$};
+
+\end{tikzpicture}
+\label{fig:cartesian_polar}
+\caption{Vectors in the Cartesian plan}
+\end{figure}
+with:\\
+	\hspace*{8mm} $O_c$ Origin of the Cartesian space
+	\space*{8mm} $O_p$ Position of the end-effector
+
+
+The phantom\_omni node\cite{phantom_omni_github} used to communicate can only handle Cartesian positions and forces. Thus, conversion from cylindrical to Cartesian and from Cartesian to cylindrical are required, this transformation are described in \eqref{eq:cartesian_to_cylindrical} and \eqref{eq:cylindrical_to_cartesian}.
+
+
+
+\begin{equation} 
+\begin{split}
+	F_x &= F_\textrm{clamp}\cdot sin(\theta) + F_\textrm{roll}\cdot cos(\theta)\\
+	F_y &= F_\textrm{clamp}\cdot cos(\theta) - F_\textrm{roll}\cdot sin(\theta)\\
+	F_z &= F_\textrm{pitch}
+	\end{split}
+\label{eq:cylindrical_to_cartesian}
+\end{equation}
+with:\\
+\hspace*{8mm} $\theta = atan2(y,x)$\\
+\hspace*{8mm} (x,y,z)  the Cartesian coordinates of the GT\\
+\hspace*{8mm} $F_\textrm{clamp}$  the force feedback from the clamp\\
+\hspace*{8mm} $F_\textrm{pitch}$  the force feedback from the pitch\\
+\hspace*{8mm} $F_\textrm{roll}$  the force feedback from the roll\\
+
+\begin{equation} 
+1+1=\pi;
+\label{eq:cartesian_to_cylindrical}
+\end{equation}
+

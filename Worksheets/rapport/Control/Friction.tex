@@ -4,7 +4,7 @@ The effort measured on the sbRIO is equal to the sum of the force required to ov
 
 \subsection{Model}
 The total friction acting on the actuator can be written as:
-
+\vspace{9pt}
 \begin{equation}
 \tau_f = \tau_v + \tau_c + \tau_s
 \label{eq:total_friction}
@@ -18,7 +18,7 @@ with:\\
 
 The viscous friction is proportional to the opposite of the velocity:
 \begin{equation}
-\tau_v = F * w;
+\tau_v = F * w
 \label{eq:viscous_friction}
 \end{equation}
 with:\\
@@ -28,7 +28,7 @@ with:\\
 The coefficient $F$ can be computed from the measurements made on the setup by plotting the effort depending on the velocity.
 
 The stiction or static friction is the amount of effort required for the object to start moving when its velocity is zero. As such it can be described as:
-
+\vspace{9pt}
 \begin{equation} 
 \tau_s =  \begin{cases} K_s, & \mbox{if } w = 0 \\ 0, & \mbox{else} \end{cases}
 \label{eq:static_friction}
@@ -41,7 +41,7 @@ with:\\
 The coulomb friction occurs as a constant force opposing the movement:
 
 \begin{equation}
-\tau_c = sign(w)*K_c;
+\tau_c = sign(w)*K_c
 \label{eq:coulomb_friction}
 \end{equation}
 with:\\
@@ -55,14 +55,16 @@ From \eqref{eq:viscous_friction} to \eqref{eq:coulomb_friction}, the total frict
 \begin{figure}[h]
 \centering
 	\begin{tikzpicture}
+	%axes
 	\draw [->,thick] (-3,0) -- (3,0);
 	\draw [->,thick] (0,-2.2) -- (0,2.2);
+	%friction model
 	\draw [ultra thick, color=blue] (0,-1.6) -- (0,1.6);
 	\draw [ultra thick, color=blue] (0,1.2) -- (3,2);
 	\draw [ultra thick, color=blue] (0,-1.2) -- (-3,-2);
 	\draw (0,1.2) -- (3,1.2);
 	\draw (0,-1.2) -- (-3,-1.2);
-
+	%name of axis and variables
 	\node at (-0.4,1.6) {$\tau_s$};
 	\draw (-0.22,1.6) -- (-0.1,1.6);
 	\node at (-0.4,1.2) {$\tau_c$};
@@ -133,18 +135,16 @@ The values for the static friction constants have been measured and used to buil
 \begin{figure}[h]
 \centering
 	\begin{tikzpicture}
+	%axes
 	\draw [->,thick] (-3,0) -- (3,0);
 	\draw [->,thick] (0,-2.2) -- (0,2.2);
+	%model
 	\draw [ultra thick, color=blue] (0,-1.6) -- (0,1.6);
 	\draw [ultra thick, color=blue] (0,1.6) -- (3,1.6);
 	\draw [ultra thick, color=blue] (0,-1.6) -- (-3,-1.6);
-
-
+	%name of axis and variables
 	\node at (-0.4,1.6) {$\tau_s$};
 	\draw (-0.22,1.6) -- (-0.1,1.6);
-
-
-
 
 	\node at (3,0.4) {$w$};
 	\node at (0.4,2.2) {$\tau_f$};
