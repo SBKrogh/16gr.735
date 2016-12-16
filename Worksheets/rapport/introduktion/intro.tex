@@ -24,16 +24,21 @@ Studies show that an added force feedback feature increases the success rate of 
 
 
 
-In order to provide the sensation of directly controlling the EndoWrist, the GT needs to output the force affecting the EndoWrist to the surgeon. Haptic devices needs to have a refresh rate around 600 Hz in order to give the consumer the sense of touch\cite{coles2011role}, which poses a speed demand on the communication.% otherwise the delay and granularity (???) becomes too much of an issue. The main issue is that this force can not be directly measured. The regulations state that each surgical tool needs to undergo a sterilization process between operations, where the tool is treated with high temperature detergents. Furthermore, The EndoWrist has to be discarded after a number of uses\cite{catalog_davinci}. These two regulation makes it economically unworthwhile to implement expensive, high temperature tolerant force sensors on the end-manipulator, just to be discarded after a couple of uses uses. A different approach needs to be sought.
+In order to provide the sensation of directly controlling the EndoWrist, the GT needs to output the force affecting the EndoWrist to the surgeon. 
+{\color{green}
+From \cite{coles2011role}, it is stated that it is commonly accepted for the feedback loop of force feedback to be a 1000 Hz, which poses a speed demand on the communication.
+}
+
+{\color{red} 
+Haptic devices needs to have a refresh rate around 600 Hz in order to give the consumer the sense of touch\cite{coles2011role}, which poses a speed demand on the communication.}% otherwise the delay and granularity (???) becomes too much of an issue. The main issue is that this force can not be directly measured. The regulations state that each surgical tool needs to undergo a sterilization process between operations, where the tool is treated with high temperature detergents. Furthermore, The EndoWrist has to be discarded after a number of uses\cite{catalog_davinci}. These two regulation makes it economically unworthwhile to implement expensive, high temperature tolerant force sensors on the end-manipulator, just to be discarded after a couple of uses uses. A different approach needs to be sought.
 
 %{\color{red}
 %The current applied to the motors for actuating the end-manipulator is known. The current is highly correlated with the force affecting the end-effector. By having a model of the EndoWrist and motor dynamics, the output force can be estimated. Hence this projects aims at experimentally deriving the dynamical model of the motor-end-effector system.}
 %\todo{Solution}
 
-This project is based on a previous research. The previous setup could only reach 100 Hz in communication frequency\cite{Chris_Surgical}, which does not satisfy the refresh rate demand of a haptic feedback. Therefore this project aims at increasing the connection speed to the minimum
-requirement of 600 Hz.
-Furthermore this project aims at implementing a force feedback control loop utilizing the
-setup available at Aalborg university based on a dynamic model of the surgical tool.
+This project is based on a previous research. The previous setup could only reach 100 Hz in communication frequency\cite{Chris_Surgical}, which does not satisfy the refresh rate demand of force feedback. Therefore this project aims at increasing the connection speed to the minimum
+requirement of a 1000 Hz.
+Furthermore this project aims at implementing a force feedback control loop utilizing the setup available at Aalborg university based on a dynamic model of the surgical tool.
 
 
 
