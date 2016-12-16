@@ -2,22 +2,22 @@
 
 \subsection*{Purpose:}
 
-To determine the maximum frequency that can be used with the UDP protocol. To do so, we will measure the round time trip delay and jitter and look at those values as a function of the delay used in the sending loop.
+The purpose is to determine the maximum frequency that can be used in our system with the UDP protocol. To do so, we will measure the delay between to received packets and jitter and look at those values as a function of the delay used in the sending loop.
 
 \subsection*{Test equipment:}
 
-The sbRIO 9636 is connected to a computer running Ubuntu 14.04 LTS via an Ethernet cable of 1 gpbs. The computer runs the ROS nodes that are used for the project, thus it communicates with both the Geomagic Touch and the sbRIO and it sends random setpoints to the sbRIO. The sbRIO uses the entire code of the project.
+The sbRIO 9636 is connected to a computer running Ubuntu 14.04 LTS via an Ethernet cable of 1 gpbs. The computer runs the ROS nodes that are used for the project, thus it communicates with both the Geomagic Touch and the sbRIO. The sbRIO as well runs the entire code of the project.
 
 \subsection*{Procedure:}
 
 \begin{enumerate}
 	\item The sbRIO is started and connected to the computer.
 	\item The ROS node is started.
-	\item tshark is started.% using this command: $tshark -i 1 -f udp -a duration:20 -w ~/wireshark_capture$
+	\item Wireshark is started.% using this command: $tshark -i 1 -f udp -a duration:20 -w ~/wireshark_capture$
 	\item Once the Wireshark recording is done the ROS node is stopped.
 	\item The log files are retrieved to be analyzed using Matlab and Wireshark.
 \end{enumerate}
-Those steps are repeated for both the serial and parallel case for the following settings: 10 ms, 2 ms and 0 ms.
+Those steps are repeated for both the serial and parallel case for the following settings: 10 ms, 2 ms and 1 ms.
 
 
 \subsection*{Measuring data:}
@@ -25,38 +25,60 @@ Those steps are repeated for both the serial and parallel case for the following
 \begin{center}
   $\begin{tabular}{|c|c|c|c|c|c|}
     \hline
-    \text{Delay} & \text{Frequency (Hz)} & \text{RTT* delay (ms)} & \text{Jitter} & \text{Error rate (\%)}\\
+    \text{Delay} & \text{Frequency (Hz)} & \text{delay (ms)} & \text{Jitter ($\mu$s)} & \text{Packet loss (\%)}\\
     \hline
-    10ms & 86 & 1.1 & 4.9E-8 & 0 \\
-    %\hline
-    %2ms & 447 & 2.1 & 3.5 & 1.2E-4 \\
+    10ms & 99 & 10.1 & 4.66E-2 & 0 \\
     \hline
-    0ms & 981 & 1.3 & 6.1E-8 & 5.1E-5 \\
+    2ms & 474 & 2.1 & 5.51E-2 & 0.2 \\
+    \hline
+    1ms & 638 & 1.6 & 1.16E-2 & 1.2 \\
     \hline
   \end{tabular}$
 	\captionof{table}{UDP}
-\end{center}{}
-
+\end{center}
 \begin{figure}[H]
-\centering
-	\begin{subfigure}{.45\textwidth}
+	\centering
+	\input{../Worksheets/rapport/pictures/UDP_10ms}
+	\caption{10ms}
+\end{figure} 
+\begin{figure}[H]
+		\centering
+	    \input{../Worksheets/rapport/pictures/UDP_2ms}
+	    \caption{2ms}
+\end{figure} 
+\begin{figure}[H]
 	    \centering
-	    \input{../Worksheets/rapport/pictures/10ms}
-	    \caption{10ms}
-	\end{subfigure} 
-	\begin{subfigure}{.45\textwidth}
-	    \centering
-	    \input{../Worksheets/rapport/pictures/0ms}
-	    \caption{0ms}
-	\end{subfigure} 
-	\label{Representation of the RTT delay for different frequencies}
-\end{figure}
-\todo{remake graph and table with the controller running}
+	    \input{../Worksheets/rapport/pictures/UDP_1ms}
+	    \caption{1ms}
+\end{figure} 
+
+% \begin{figure}[H]
+% \centering
+% 	\begin{subfigure}{.45\textwidth}
+% 	    \centering
+% 	    \input{../Worksheets/rapport/pictures/UDP_10ms}
+% 	    \caption{10ms}
+% 	\end{subfigure} 
+% 	\begin{subfigure}{.45\textwidth}
+% 	    \centering
+% 	    \input{../Worksheets/rapport/pictures/UDP_2ms}
+% 	    \caption{2ms}
+% 	\end{subfigure} 
+% 	\begin{subfigure}{.45\textwidth}
+% 	    \centering
+% 	    \input{../Worksheets/rapport/pictures/UDP_1ms}
+% 	    \caption{1ms}
+% 	\end{subfigure} 
+% 	\label{Representation of the delay for different frequencies}
+% \end{figure}
 
 \subsection*{Results:}
 
-As the frequency of the communication increases, the delay becomes more and more sensitive to the disturbances caused by the preemption of other processes on the computer and as such the behavior of the system will become unpredictable. 
+From a frequency of 99 Hz to 474 Hz, it can be seen that the jitter as well as the packet loss increase. As both of them are mainly consequences of congestion on the network\cite{cisco_jitter} this phenomenon was expected. However, when the frequency is increased to 638 Hz, the jitter decreases and the packet loss keep increasing. The cause is that the jitter increases but the driver only waits 1 ms to receive a packet from the sbRIO after sending and thus rejects the packets coming after that deadline. The packet loss could be reduced by increasing the waiting time but that would reduce the frequency. A trade-off between frequency and error rate has to be made.
+The data for the maximum frequency of the driver could not be collected as the congestion on the network becomes too important. When that happens the communication does not behave as intended and each device send more than one packet in a row.
 
 \subsection*{Conclusion:}
 
-As of now, the communication that uses UDP can reach up to 981Hz which meet our requirement of being higher than 300Hz. However the current measurements are taken without the controller running and need to be done again on the final configuration.
+The communication cannot reach frequencies higher than 638 Hz due to congestion which does not meet the requirements. However  compared to the original communication that used JSON and TCP the frequency is increased by 638\%. 
+To improve the communication to 1000 Hz, two axis are considered. The first one is to implement a protocol that has a congestion control feature as congestion seemed to be the cause of the behavior. The second one is to have the computer running only the code dedicated to the project as it is possible for the driver to reach 981 Hz when force estimation and the communication with the Geomagic Touch are not running. This could be done by using a real-time operating system like RTAI. Those solutions were not investigated any further because of the time available for the project.
+\todo{should i mention RTAI or is it useless?}
