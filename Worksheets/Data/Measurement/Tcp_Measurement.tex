@@ -40,7 +40,6 @@ Those steps are repeated for the following settings: 100Hz, 500Hz and 1000Hz.
 		\label{fig:0ms_tcp}
 	\end{figure}
 
-\todo{decide if e retake measurements}
 % \begin{center}
 % 	$\begin{tabular}{c|ccccc}
 % 		\text{Delay} & \text{Sending\newline frequency (Hz)} & \text{Receiving frequency (Hz)} & \text{Average delay (ms)} & \text{Jitter} & \text{Error rate (\%)}\\
@@ -58,4 +57,4 @@ When the frequency is increased above 100Hz, instead of sending more packets it 
 
 \subsection*{Conclusion:}
 
-The communication does not have the desired behavior when the frequency is increased. This may be due to the default behavior of TCP or to the default behavior of the JSON Stream. It was decided not to look further into this subject as this problem does not appear in the new communication protocol.
+The communication does not have the desired behavior when the frequency is increased. This may be due to the default behavior of TCP or to the default behavior of the JSON Stream. It was decided not to look further into this subject as this problem does not appear in the new communication protocol since it does not implement any connection or stream.
