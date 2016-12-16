@@ -1,0 +1,41 @@
+\begin{figure}[H]
+\begin{tikzpicture}
+\draw (-1.5,-2.5) rectangle (13.5,2.5);
+
+
+\node[box] (Opt) at (0,0) {Operator};
+\node[box] (Geo) at ($(3,0) + (Opt)$) {Geomagic\\touch};
+\node[box] (ros) at ($(3,0) + (Geo)$) {Robotic\\operating\\system};
+\node[box] (davin) at ($(3,0) + (ros)$) {Embedded \\system};
+\node[box] (end) at ($(3,0) + (davin)$) {Endowrist};
+
+
+\draw[->, ultra thick] ([yshift=0.3cm]Opt.east) -- ([yshift=0.3cm]Geo.west);
+\draw[->, ultra thick] ([yshift=0.3cm]Geo.east) -- ([yshift=0.3cm]ros.west);
+\draw[->, ultra thick] ([yshift=0.3cm]ros.east) -- ([yshift=0.3cm]davin.west);
+\draw[->, ultra thick] ([yshift=0.3cm]davin.east) -- ([yshift=0.3cm]end.west);
+
+
+\draw[<-, ultra thick] ([yshift=-0.3cm]Opt.east) -- ([yshift=-0.3cm]Geo.west);
+\draw[<-, ultra thick] ([yshift=-0.3cm]Geo.east) -- ([yshift=-0.3cm]ros.west);
+\draw[<-, ultra thick] ([yshift=-0.3cm]ros.east) -- ([yshift=-0.3cm]davin.west);
+%\draw[<-, ultra thick] ([yshift=-0.3cm]davin.east) -- ([yshift=-0.3cm]end.west);
+
+\node at (1.5,1) {Position};
+\node at (4.5,1) {Position};
+% \node at (7.5,1) {yes};
+% \node at (10.5,1) {yes};
+
+\node at (1.5,-1) {Force};
+\node at (4.5,-1) {Force};
+\node at (10.5,1) {Torque};
+% \node at (10.5,1) {yes};
+\node at (7.5,1.5) {Motor enable};
+\node at (7.5,1) {Position};
+\node at (7.5,-1) {Position};
+\node at (7.5,-1.5) {Speed};
+\node at (7.5,-2) {Current};
+
+\end{tikzpicture}
+\caption{Overall system with feedback in both direction}
+\end{figure}
