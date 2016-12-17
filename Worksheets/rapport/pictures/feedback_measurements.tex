@@ -29,7 +29,7 @@ xmajorgrids,
 ymajorgrids,
 legend style={legend cell align=left, align=left, draw=white!15!black, at={(0.66,0.25)}}
 ]
-\addplot [color=mycolor1, draw=none, mark=*, mark options={solid, mycolor1}]
+\addplot [color=mycolor1, draw=none, mark=*, mark size=1,mark options={solid, mycolor1}]
   table[row sep=crcr]{%
 0	-0.069839\\
 0.046	-0.0691929999999998\\
@@ -378,7 +378,7 @@ legend style={legend cell align=left, align=left, draw=white!15!black, at={(0.66
 };
 \addlegendentry{Position Error}
 
-\addplot [color=mycolor2]
+\addplot [color=mycolor2, thick]
   table[row sep=crcr]{%
 0	-0.457965\\
 0.046	-0.482939\\
@@ -727,7 +727,7 @@ legend style={legend cell align=left, align=left, draw=white!15!black, at={(0.66
 };
 \addlegendentry{Force feedback [N]}
 
-\addplot [color=green, dashed]
+\addplot [color=green, dashed, very thick]
   table[row sep=crcr]{%
 0	-0.0462933\\
 0.046	-0.0146618\\
