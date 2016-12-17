@@ -299,10 +299,3 @@ http://image.dfrobot.com/image/data/SEN0160/hx711_english.pdf
   year={1986},
   publisher={American Psychological Association}
 }
-
-@book{van2012subspace,
-  title={Subspace identification for linear systems: Theory—Implementation—Applications},
-  author={Van Overschee, Peter and De Moor, BL},
-  year={2012},
-  publisher={Springer Science \& Business Media}
-}
