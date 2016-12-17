@@ -78,12 +78,19 @@ The nonlinearity estimators at the inputs and outputs of the system can be model
 \draw [->] (5.45,2) -- (7.45,2) node [pos=0.5,above] {y(t)};
 \end{tikzpicture}
 }
-\caption{Block diagram of a Hammerstein-Weiner model\ref{fig:weiner}}
+\caption{Block diagram of a Hammerstein-Wiener model\ref{fig:weiner}}
 \label{weiner}
 \end{figure}
 
-A deadzone nonlinearity on the input allows us to represent the effects of friction on the force and position, and is used in this model.
+A deadzone nonlinearity on the input allows us to represent the effects of friction on the force, and is used in this model.
 Different output nonlinearities are also utilized and compared.
+
+Two approaches were chosen in the matter of inputs and outputs of the model.
+The first approach considered the possible correlation between the motor velocity and end-effector force during impact, so a model that outputs both force and velocity as a function of current could be corrected (via Kalman filter) with actual velocity measurements and provide correction of the force model.
+The second approach has the models output force as a function of current and velocity and thus cant be corrected.
+
+The same modeling process was used for both the yaw and pitch models.
+For clarity, the results of each step in the process will only be presented for the yaw model, while the final results will be presented for both the yaw and pitch models.
 
 \section{Parameter identification}
 Once a general model structure has been chosen, parameter identification algorithms can be utilized.
@@ -102,9 +109,7 @@ As seen on figure (), the diminishing returns of increasing the state-space orde
 %figure of subspace singular value analysis
 
 \subsection{Identification data}
-The outputs of the proposed models in both yaw and pitch cases are the position and force, while the inputs consist of velocity and current.
-The data acquisition process is described in chapter () and will not be covered in this chapter.
-
+Both of these approaches are possible to realize on the data sets acquired in the manner described in chapter (measurement).
 However, the data contains various irregularities caused by the imperfect measuring process as well as the hardware.
 For this reason parts of the data needed to be removed before identification, which required interpretation of restults.
 Also, linear model identification showed the best results when done on data in which the strongly nonlinear effects of friction were "cropped".
@@ -132,28 +137,121 @@ The algorithm which provides the best result varies heavily on the data set and 
 
 %example of model fits to data
 \begin{figure}[H]
-\hspace{-2em}\includegraphics[width=1.15\linewidth]{sscomparison1}
-\caption{'Somthing cool'}
+\centering
+\hspace{-2em}\includegraphics[width=0.7\linewidth]{sscomparison1}
+\caption{Second order yaw force models identified by different subspace identification algorithms.}
 \label{fig:1LMI}
 \end{figure}
 
+Below are included models for yaw and pitch force, none of the models have the feedthrough component  $\left( \mathbf{D} = 0 \right)$ .
+\subsubsection{Current and velocity to yaw force model}
 
+% here be resulting model
+\begin{align}
+\mathbf{A} = \begin{bmatrix}
+    0.9745 &  -0.3699 & -0.0620 &   0.2917 &   0.5007 &  -5.5391 \\
+   -0.0002 &   1.0135 &  0.8285 &  -0.3743 &  -1.4557 &  -2.0967 \\
+   -0.0002 &  -0.0123 &  0.9149 &  -1.1440 &  -0.9316 &  -2.7853 \\
+   -0.0001 &  -0.0002 &  0.0275 &   0.7842 &   1.6365 &   1.8560 \\
+    0.0000 &  -0.0001 & -0.0019 &  -0.0809 &   0.8869 &   2.4092 \\
+    0.0000 &  -0.0000 &  0.0001 &   0.0080 &  -0.0583 &   0.8887 
+     \end{bmatrix}
+\end{align}
+
+\begin{align}
+\mathbf{B} = \begin{bmatrix}
+    1.9790  &   0.0335\\
+   -2.4107  &   0.9244\\
+   12.9892 &   -0.8068\\
+    0.0178  &  0.3667\\
+    1.8671  &  -0.1057\\
+   -0.0295  &  -0.0104
+     \end{bmatrix}
+\end{align}
+
+\begin{align}
+\mathbf{C} = \begin{bmatrix}
+   -0.3687  & -0.4929    &0.5447   & 0.4463   &-0.2808    &0.1893
+     \end{bmatrix}
+\end{align}
+
+\subsubsection{Current to yaw force and velocity model}
+\begin{align}
+\mathbf{A} = \begin{bmatrix}
+    0.7313   &-0.0127    &0.1740   &-0.1144    &0.0905   &-0.5073\\
+    0.1553    &1.0169   &-0.0123    &0.0170   &-0.2070    &0.2019\\
+   -0.1874   &-0.1139   &0.7711    &0.1933    &0.5803   &-0.2750\\
+    0.0153   &-0.1637   &-0.1293    &1.1559    &0.4107   &-0.2867\\
+   -0.0634    &0.0624    &0.0454   &-0.1131    &0.7416    &0.1248\\
+    0.0319   &-0.0217   &-0.0288    &0.1873    &0.2192    &0.5781
+     \end{bmatrix}
+\end{align}
+
+\begin{align}
+\mathbf{B} = \begin{bmatrix}
+    4.9625\\
+    0.8681\\
+   -8.7862\\
+   -7.0312\\
+    3.4482\\
+   -1.1655\\
+     \end{bmatrix}
+\end{align}
+
+\begin{align}
+\mathbf{C} = \begin{bmatrix}
+   -7.6500  &-13.2158   &-1.9397   &-3.8056    &4.4598    &7.7643\\
+   27.7245   &71.7534   &22.1589   &-2.8204  &-11.4389  &-12.9482     
+\end{bmatrix}
+\end{align}
+
+Comparing the responses of these models it is clear that having current and velocity as inputs provides a much better estimate than when the only input is effort.
 
 \begin{figure}[H]
-\hspace{-2.5em}\includegraphics[width=1.15\linewidth]{sscomparison2}
-\caption{'Somthing cool'}
+\centering
+\hspace{-2em}\includegraphics[width=0.7\linewidth]{comparisonp1p2}
+\caption{Second order yaw force models identified by different subspace identification algorithms.}
+\label{fig:1LMI2}
+\end{figure}
+\subsection{Hammerstein-Weiner model identification}
+
+Once the linear model is identified we can estimate the nonlinearities with the Hammerstein-Wiener model.
+
+\begin{figure}[H]
+\centering
+\hspace{-2.5em}\includegraphics[width=0.7\linewidth]{sshwcomp1}
+\caption{Hammerstein-Wiener model with deadzone nonlinearity responses compared to measured data for yaw force.}
 \label{fig:2LMI}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+\hspace{-2.5em}\includegraphics[width=0.7\linewidth]{sshwcomp2}
+\caption{Hammerstein-Wiener model with deadzone input nonlinearity and saturation output nonlinearity responses compared to measured data for yaw force.}
+\label{fig:2LMI1}
+\end{figure}
 
-%\input{rapport/pictures/sscomparison1}
-%\input{rapport/pictures/sscomparison2}
+\begin{figure}[H]
+\centering
+\hspace{-2.5em}\includegraphics[width=0.7\linewidth]{sshwcomp3}
+\caption{Hammerstein-Wiener model with deadzone nonlinearities on the output.}
+\label{fig:2LMI2}
+\end{figure}
 
-The parameter identification for the models was done in a manner that prioritizes force estimation over position, as position measurements are available.
-Also, position estimation required a different dataset.
+It is noticable that the deadzone nonlinearity on the output significantly improves the linear model and as such makes for a good yaw force model.
+This serves as a proof of concept for our own friction estimating nonlinearity based on measured data described in the control chapter.
 
-% here be resulting model
+\section{Model validation}
+Once a model has been created, it needs to be tested on data it wasn't originally fitted to for accuracy.
+We expect our model to capture the general force dynamics in a way that is proportional to the actual force.
+In that way we are able to represent the resulting force estimate as force feedback on the Geomagic Touch.
+In figure \ref{fig:final_res} the response to different types of input data is examined.
+The data was gathered in measurments described in CHAPTER, but wasn't used in the fitting process.
 
-\subsection{Hammerstein-Weiner model identification}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.2\linewidth]{modelyaw}
+\caption{Yaw model excited with different types of inputs.}
+\label{fig:final_res}
+\end{figure}
 
-Once the linear model is identified we can estimate the nonlinearities with the Hammerstein-Weiner model.
