@@ -57,7 +57,7 @@ Additionally, if the dynamical system is linear, time-invariant, and finite-dime
 \vspace{-0.5cm}
 \begin{align}\label{eq:ssd}
 \mathbf{x}(k+1) = \mathbf{A}\mathbf{x}(k) + \mathbf{B}\mathbf{u}(k)\\
-\mathbf{y}(k+1) = \mathbf{C}\mathbf{x}(k) + \mathbf{D}\mathbf{u}(k)
+\mathbf{y}(k+1) = \mathbf{C}\mathbf{x}(k+1) + \mathbf{D}\mathbf{u}(k)
 \end{align}
 
 This representation of a system is especially useful in MIMO systems as it maintains the same form for any number of inputs and outputs, as opposed to transfer functions.
@@ -125,7 +125,7 @@ A sample of original and modified data can be seen on \figref{figlowpass}.
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\linewidth]{lowpass.eps}
-\caption{'Somthing cool'}
+\caption{Comparison of original and low-pass filtered data.}
 \label{figlowpass}
 \end{figure}
 
@@ -143,67 +143,7 @@ The algorithm which provides the best result varies heavily on the data set and 
 \label{fig:1LMI}
 \end{figure}
 
-Below are included models for yaw and pitch force, none of the models have the feedthrough component  $\left( \mathbf{D} = 0 \right)$ .
-\subsubsection{Current and velocity to yaw force model}
 
-% here be resulting model
-\begin{align}
-\mathbf{A} = \begin{bmatrix}
-    0.9745 &  -0.3699 & -0.0620 &   0.2917 &   0.5007 &  -5.5391 \\
-   -0.0002 &   1.0135 &  0.8285 &  -0.3743 &  -1.4557 &  -2.0967 \\
-   -0.0002 &  -0.0123 &  0.9149 &  -1.1440 &  -0.9316 &  -2.7853 \\
-   -0.0001 &  -0.0002 &  0.0275 &   0.7842 &   1.6365 &   1.8560 \\
-    0.0000 &  -0.0001 & -0.0019 &  -0.0809 &   0.8869 &   2.4092 \\
-    0.0000 &  -0.0000 &  0.0001 &   0.0080 &  -0.0583 &   0.8887 
-     \end{bmatrix}
-\end{align}
-
-\begin{align}
-\mathbf{B} = \begin{bmatrix}
-    1.9790  &   0.0335\\
-   -2.4107  &   0.9244\\
-   12.9892 &   -0.8068\\
-    0.0178  &  0.3667\\
-    1.8671  &  -0.1057\\
-   -0.0295  &  -0.0104
-     \end{bmatrix}
-\end{align}
-
-\begin{align}
-\mathbf{C} = \begin{bmatrix}
-   -0.3687  & -0.4929    &0.5447   & 0.4463   &-0.2808    &0.1893
-     \end{bmatrix}
-\end{align}
-
-\subsubsection{Current to yaw force and velocity model}
-\begin{align}
-\mathbf{A} = \begin{bmatrix}
-    0.7313   &-0.0127    &0.1740   &-0.1144    &0.0905   &-0.5073\\
-    0.1553    &1.0169   &-0.0123    &0.0170   &-0.2070    &0.2019\\
-   -0.1874   &-0.1139   &0.7711    &0.1933    &0.5803   &-0.2750\\
-    0.0153   &-0.1637   &-0.1293    &1.1559    &0.4107   &-0.2867\\
-   -0.0634    &0.0624    &0.0454   &-0.1131    &0.7416    &0.1248\\
-    0.0319   &-0.0217   &-0.0288    &0.1873    &0.2192    &0.5781
-     \end{bmatrix}
-\end{align}
-
-\begin{align}
-\mathbf{B} = \begin{bmatrix}
-    4.9625\\
-    0.8681\\
-   -8.7862\\
-   -7.0312\\
-    3.4482\\
-   -1.1655\\
-     \end{bmatrix}
-\end{align}
-
-\begin{align}
-\mathbf{C} = \begin{bmatrix}
-   -7.6500  &-13.2158   &-1.9397   &-3.8056    &4.4598    &7.7643\\
-   27.7245   &71.7534   &22.1589   &-2.8204  &-11.4389  &-12.9482     
-\end{bmatrix}
-\end{align}
 
 Comparing the responses of these models it is clear that having current and velocity as inputs provides a much better estimate than when the only input is effort.
 
@@ -255,8 +195,7 @@ The data was gathered in measurments described in CHAPTER, but wasn't used in th
 
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=1.2\linewidth]{modelyaw}
+\hspace{-2.5em}\includegraphics[width=1.2\linewidth]{modelyaw}
 \caption{Yaw model excited with different types of inputs.}
 \label{fig:final_res_yaw}
 \end{figure}
@@ -265,8 +204,27 @@ Unlike the yaw model, the nonlinear pitch model had large jumps in value and was
 Thus, the linear model is used.
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=1.2\linewidth]{modelpitch}
+{-2.5em}\includegraphics[width=1.2\linewidth]{modelpitch}
 \caption{Pitch model excited with different types of inputs.}
 \label{fig:final_res_pitch}
 \end{figure}
+
+A property of viewing the linear parts of models in the state-space is simple parallel composition.
+This means that the entire dynamic model of the system can be viewed as one state space matrix (\ref{eq:allSS}).
+
+\begin{align}\label{eq:allSS}
+\mathbf{x}(k+1) &= 
+\begin{bmatrix} \mathbf{A}_{roll} & \mathbf{0} & \mathbf{0}\\
+ \mathbf{0} & \mathbf{A}_{pitch} &\mathbf{0}\\
+ \mathbf{0} &\mathbf{0} & \mathbf{A}_{yaw}  \end{bmatrix} 
+ \mathbf{x}(k) + 
+\begin{bmatrix} \mathbf{B}_{roll} & \mathbf{0} & \mathbf{0}\\
+ \mathbf{0} & \mathbf{B}_{pitch} &\mathbf{0}\\
+ \mathbf{0} &\mathbf{0} & \mathbf{B}_{yaw}  \end{bmatrix} 
+ \mathbf{u}(k)\\
+\mathbf{y}(k+1)& = 
+\begin{bmatrix} \mathbf{C}_{roll} & \mathbf{0} & \mathbf{0}\\
+ \mathbf{0} & \mathbf{C}_{pitch} &\mathbf{0}\\
+ \mathbf{0} &\mathbf{0} & \mathbf{C}_{yaw}  \end{bmatrix} 
+\mathbf{x}(k+1)
+\end{align}

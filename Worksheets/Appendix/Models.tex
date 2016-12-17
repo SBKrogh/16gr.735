@@ -1,0 +1,62 @@
+\chapter{Models}
+Below are included models for yaw and pitch force, none of the models have the feedthrough component  $\left( \mathbf{D} = 0 \right)$ .
+\subsubsection{Current and velocity to yaw force model}
+
+% here be resulting model
+\begin{align}
+\mathbf{A} = \begin{bmatrix}
+    0.9745 &  -0.3699 & -0.0620 &   0.2917 &   0.5007 &  -5.5391 \\
+   -0.0002 &   1.0135 &  0.8285 &  -0.3743 &  -1.4557 &  -2.0967 \\
+   -0.0002 &  -0.0123 &  0.9149 &  -1.1440 &  -0.9316 &  -2.7853 \\
+   -0.0001 &  -0.0002 &  0.0275 &   0.7842 &   1.6365 &   1.8560 \\
+    0.0000 &  -0.0001 & -0.0019 &  -0.0809 &   0.8869 &   2.4092 \\
+    0.0000 &  -0.0000 &  0.0001 &   0.0080 &  -0.0583 &   0.8887 
+     \end{bmatrix}
+\end{align}
+
+\begin{align}
+\mathbf{B} = \begin{bmatrix}
+    1.9790  &   0.0335\\
+   -2.4107  &   0.9244\\
+   12.9892 &   -0.8068\\
+    0.0178  &  0.3667\\
+    1.8671  &  -0.1057\\
+   -0.0295  &  -0.0104
+     \end{bmatrix}
+\end{align}
+
+\begin{align}
+\mathbf{C} = \begin{bmatrix}
+   -0.3687  & -0.4929    &0.5447   & 0.4463   &-0.2808    &0.1893
+     \end{bmatrix}
+\end{align}
+
+\subsubsection{Current to yaw force and velocity model}
+\begin{align}
+\mathbf{A} = \begin{bmatrix}
+    0.7313   &-0.0127    &0.1740   &-0.1144    &0.0905   &-0.5073\\
+    0.1553    &1.0169   &-0.0123    &0.0170   &-0.2070    &0.2019\\
+   -0.1874   &-0.1139   &0.7711    &0.1933    &0.5803   &-0.2750\\
+    0.0153   &-0.1637   &-0.1293    &1.1559    &0.4107   &-0.2867\\
+   -0.0634    &0.0624    &0.0454   &-0.1131    &0.7416    &0.1248\\
+    0.0319   &-0.0217   &-0.0288    &0.1873    &0.2192    &0.5781
+     \end{bmatrix}
+\end{align}
+
+\begin{align}
+\mathbf{B} = \begin{bmatrix}
+    4.9625\\
+    0.8681\\
+   -8.7862\\
+   -7.0312\\
+    3.4482\\
+   -1.1655\\
+     \end{bmatrix}
+\end{align}
+
+\begin{align}
+\mathbf{C} = \begin{bmatrix}
+   -7.6500  &-13.2158   &-1.9397   &-3.8056    &4.4598    &7.7643\\
+   27.7245   &71.7534   &22.1589   &-2.8204  &-11.4389  &-12.9482     
+\end{bmatrix}
+\end{align}
