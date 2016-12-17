@@ -25,9 +25,17 @@ Studies show that an added force feedback feature increases the success rate of 
 
 
 
-In order to provide the sensation of directly controlling the EndoWrist, the GT needs to output the force affecting the EndoWrist to the surgeon. 
+In order to provide the sensation of directly controlling the EndoWrist, the GT needs to output the force affecting the EndoWrist to the surgeon. Two aspect is needed to be covered. One including the force fed back and two the communication between the GT and the EndoWrist. 
+
+The main issue in feeding back the force is that the force can not be directly measured. Regulations states that each surgical tool needs to undergo a sterilization process between operations, where the tool is treated with high temperature detergents. Furthermore, The EndoWrist has to be discarded after a number of uses\cite{catalog_davinci}. These two regulation makes it economically unworthwhile to implement expensive, high temperature tolerant force sensors on the end-manipulator, just to be discarded after a couple of uses. A different approach needs to be sought.\\
+The current applied to the actuators of the EndoWrist is highly correlated with the force applied, but due to the fact that the tool is nonlinear the force calculated directly form the current will be misleading to fed back. Therefore a model of the EndoWrists dynamic including the actuators is needed to give a better estimate of the actual force applied to the EndoWrist.
+
+
+
+The communication speed between the GT and the EndoWrist   needs to be 
+
 {\color{green}
-From \cite{coles2011role}, it is stated that it is commonly accepted for the feedback loop of force feedback to be a 1000 Hz, which poses a speed demand on the communication.
+From \cite{coles2011role}, it is stated that it is commonly accepted for the feedback loop of force feedback to be a 1000 Hz, which poses a speed demand on the communication. 
 }
 
 {\color{red} 
