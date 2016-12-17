@@ -1,6 +1,6 @@
 \section{Friction model}
 
-The effort measured on the sbRIO is equal to the sum of the force required to overcome the nonlinearities of the EndoWrist and the external forces applied to the end-effector. One of the main nonlinearities is the friction. For the system to be transparent, the force required to overcome friction should not be fed back as this force would not be felt if the teleoperator was holding the tool directly. In order to isolate the external forces a friction model is required. The model built is based on the one derived in \cite{force_reflection} that describe the friction in a motor. However in the model it was decided to consider the motor and the EndoWrist as one element as no dynamic model for the motor alone is derived. Thus, the model estimates the sum of the friction in the EndoWrist and in the motor.
+The current effort measured by the ESCON controller is \textcolor{green}{proportional} to the sum of the force required to overcome the nonlinearities of the EndoWrist and the external forces applied to the end-effector. One of the main nonlinearities is the friction. For the system to be transparent, the force required to overcome friction should not be fed back as this force would not be felt if the teleoperator was holding the tool directly. In order to isolate the external forces, a friction model is required. The model built is based on the one derived in \cite{force_reflection} that describe the friction in a motor. However in the model it was decided to consider the motor and the EndoWrist as one element as no dynamic model for the motor alone is derived. Thus, the model estimates the sum of the friction in the EndoWrist and in the motor.
 
 \subsection{Model}
 The total friction acting on the actuator can be written as:
@@ -18,36 +18,36 @@ with:\\
 
 The viscous friction is proportional to the opposite of the velocity:
 \begin{equation}
-\tau_v = F * w
+\tau_v = F_\mu \cdot \omega
 \label{eq:viscous_friction}
 \end{equation}
 with:\\
-\hspace*{8mm}$w$ the angular velocity\\
-\hspace*{8mm}$F$ a negative coefficient\\
+\hspace*{8mm}$\omega$ the angular velocity\\
+\hspace*{8mm}$F_\mu$ a negative coefficient\\
 
-The coefficient $F$ can be computed from the measurements made on the setup by plotting the effort depending on the velocity.
+The coefficient $F_\mu$ can be computed from the measurements made on the setup by plotting the effort depending on the velocity.
 
 The stiction or static friction is the amount of effort required for the object to start moving when its velocity is zero. As such it can be described as:
 \vspace{9pt}
 \begin{equation} 
-\tau_s =  \begin{cases} K_s, & \mbox{if } w = 0 \\ 0, & \mbox{else} \end{cases}
+\tau_s =  \begin{cases} K_s, & \mbox{if } \omega = 0 \\ 0, & \mbox{else} \end{cases}
 \label{eq:static_friction}
 \end{equation}
 with:\\
-\hspace*{8mm}$w$ the angular velocity\\
+\hspace*{8mm}$\omega$ the angular velocity\\
 \hspace*{8mm}$K_s$ a constant\\
 
 %The constant $K_s$ can be measured by increasing the current supplied to the motor until it starts moving. 
 The coulomb friction occurs as a constant force opposing the movement:
 
 \begin{equation}
-\tau_c = sign(w)*K_c
+\tau_c = sign(\omega)\cdot K_c
 \label{eq:coulomb_friction}
 \end{equation}
 with:\\
-\hspace*{8mm}$w$ the angular velocity\\
+\hspace*{8mm}$\omega$ the angular velocity\\
 \hspace*{8mm}$K_c$ a constant determined experimentally\\
-\hspace*{8mm}the $sign$ function is defined as $sign(w) = \begin{cases} 1, & \mbox{if } w > 0 \\ 0, & \mbox{if } w == 0 \\ -1, & \mbox{if } w < 0\end{cases}$\\
+\hspace*{8mm}the $sign$ function is defined as $sign(\omega) = \begin{cases} 1, & \mbox{if } \omega > 0 \\ 0, & \mbox{if } \omega == 0 \\ -1, & \mbox{if } \omega < 0\end{cases}$\\
 
 %The constant $K_c$ can be measured by setting the motor in motion and decreasing the current until the motor stops moving.
 From \eqref{eq:viscous_friction} to \eqref{eq:coulomb_friction}, the total friction given by \eqref{eq:total_friction} can be plotted as:
@@ -72,7 +72,7 @@ From \eqref{eq:viscous_friction} to \eqref{eq:coulomb_friction}, the total frict
 	\node at (1,1.8) {$\tau_v$};
 
 
-	\node at (3,0.4) {$w$};
+	\node at (3,0.4) {$\omega$};
 	\node at (0.4,2.2) {$\tau_f$};
 
 	\end{tikzpicture}
@@ -81,7 +81,7 @@ From \eqref{eq:viscous_friction} to \eqref{eq:coulomb_friction}, the total frict
 
 \subsection{Measurements}
 
-For the model to be complete, each type of friction requries a value to be measured. These measurements need to be made for each joint as the non linearities in the EndoWrist varies greatly depending on the joints.
+For the model to be complete, each type of friction requries a value to be measured. These measurements need to be made for each joint as the nonlinearities in the EndoWrist varies greatly depending on the joints.
 
 \subsection*{Test equipment:}
 
@@ -125,12 +125,12 @@ This procedure is repeated for each motors.
 \end{center}
 \subsection*{Results:}
 
-As it can be seen in \figref{fig:friction_measurement}, not only is the current measurement noisy but the position does not have a clear point were it starts increasing. This behavior of the position is due to the play between the motor and the EndoWrist and to the nonlinearities of the EndoWrist. Because of this it is possible to obtain proper measurements of all coefficients with the equipement available for this project. As the goal for this project is not accuracy in the force feedback, it was decided to simplify the friction model.
+As it can be seen in \figref{fig:friction_measurement}, not only is the current measurement noisy but the position does not have a clearly distinguishable point where it starts increasing. This behavior of the position is due to the play between the motor and the EndoWrist and to the nonlinearities of the EndoWrist. Because of this it is impossible to obtain proper measurements of all coefficients with the equipement available for this project. As the goal for this project is not accuracy in the force feedback, it was decided to simplify the friction model.
 
-In the new model, viscous friction is neglected as the end effector cannot move at high speed. In addition, the coulomb constant $K_c$ is chosen to be equal to $K_s$, by doing so the overall friction is slightly overestimated and the friction model removes the nonlinearities and non significant external forces from the feedback. The values used for $K_s$ are gathered in \figref{fig:static_friction_coefficient}
+In the new model, viscous friction is neglected as the end effector cannot move at high speed. In addition, the coulomb constant $K_c$ is chosen to be equal to $K_s$, by doing so the overall friction is slightly overestimated and the friction model removes the nonlinearities and insignificant external forces from the feedback. The values used for $K_s$ are gathered in \figref{fig:static_friction_coefficient}
 \subsection*{Conclusion:}
 
-The values for the static friction constants have been measured and used to build a new simplified model of friction that still suits the requirements this project. The new model is represented in \figref{fig:new_friction_model}. It is used in combinaison with the force estimation to increase the overall transparency.
+The values for the static friction constants have been measured and used to build a new simplified model of friction that still suits the requirements this project. The new model is represented in \figref{fig:new_friction_model}. It is used in combination with the force estimation to increase the overall transparency.
 
 \begin{figure}[h]
 \centering
@@ -146,7 +146,7 @@ The values for the static friction constants have been measured and used to buil
 	\node at (-0.4,1.6) {$\tau_s$};
 	\draw (-0.22,1.6) -- (-0.1,1.6);
 
-	\node at (3,0.4) {$w$};
+	\node at (3,0.4) {$\omega$};
 	\node at (0.4,2.2) {$\tau_f$};
 
 	\end{tikzpicture}

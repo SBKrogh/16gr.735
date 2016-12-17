@@ -7,7 +7,7 @@
 The EndoWrist, see \secref{sec:Endowrist}, is actuated by 4 Maxon DC motors, see \secref{Maxon_Motor}. Each motor is equipped with an ESCON motor controller. The ESCON controllers receive the control reference from a single-board reconfigurable input-output board (sbRIO).   For a graphical illustration of the connection see \figref{interface}.
 
 \subsection{Interfacing}
-The interfacing between the subsystems have a linear flow, i.e. every data propagates through the same path see \figref{interface}. Each interface uses bidirectional communication. The communication between the Geomagic Touch and the computer, and the communication between the computer and the sbRIO both happen using UDP. The sbRIO's in-built microprocessor and FPGA communicates using onboard wires. The ESCON controller and the FPGA interfaces using electric wires. Information exchange between them happens using pwm signals for numeric data and digital signal for boolean data.
+The interfacing between the subsystems have a linear flow, i.e. every data propagates through the same path, as shown on \figref{interface}. Each interface uses bidirectional communication. The communication between the Geomagic Touch and the computer, and the communication between the computer and the sbRIO both happen using UDP. The sbRIO's in-built microprocessor and FPGA communicates using onboard wires. The ESCON controller and the FPGA interfaces using electric wires. Information exchange between them happens using pulse width modulation (PWM) signals for numeric data and digital signal for boolean data.
 
 \input{rapport/system_dis/escon.tex}
 
