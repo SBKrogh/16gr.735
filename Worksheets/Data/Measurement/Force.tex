@@ -77,8 +77,11 @@ For making the force measurement for the EndoWrist a simple hardware constructio
 \caption{Diagram of the test setup for the force measurements.}
 \label{fig:arduino_loadcell}
 \end{figure}
-\todo{Why do we use an arduino?}
+
 The load-cell's output is amplified and send to an Arduino which calculate the force applied to the load-cell. The force is then translated to a corresponding voltage output, $4\cdot\frac{mV}{g}$. Since the Arduino does not have a digital to analog converter (DAC), the voltage is translated to a binary code and send to a "Max531 DAC" through a serial peripheral interface (SPI). The voltage output from the DAC is read at the sbRIO board which also samples the current send to the motor, motor position and time stamps.
+
+It can be seen on \figref{fig:arduino_loadcell} that an Arduino is used in the data samples. This was done since a library designed for the Arduino was found.
+
 
 \todo{We probaly have to go through the mA applied in each section as 1200 mA and the figures does not seem to fit each other.}
 
