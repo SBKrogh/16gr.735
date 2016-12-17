@@ -1,5 +1,34 @@
+%  The AAU Poster Theme.
+%  2013-05-08 v. 1.1.0
+%  Copyright 2013 by Jesper Kjær Nielsen <jkn@es.aau.dk>
+%
+%  This is free software: you can redistribute it and/or modify
+%  it under the terms of the GNU General Public License as published by
+%  the Free Software Foundation, either version 3 of the License, or
+%  (at your option) any later version.
+%
+%  This is distributed in the hope that it will be useful,
+%  but WITHOUT ANY WARRANTY; without even the implied warranty of
+%  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%  GNU General Public License for more details.
+%
+%  You can find the GNU General Public License at <http://www.gnu.org/licenses/>.
 \documentclass[a0paper,landscape]{baposter}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Language, Encoding and Fonts
+% http://en.wikibooks.org/wiki/LaTeX/Internationalization
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Select encoding of your inputs. Depends on
+% your operating system and its default input
+% encoding. Typically, you should use
+%   Linux  : utf8 (most modern Linux distributions)
+%            latin1 
+%   Windows: ansinew
+%            latin1 (works in most cases)
+%   Mac    : applemac
+% Notice that you can manually change the input
+% encoding of your files by selecting "save as"
+% an select the desired input encoding. 
 \usepackage[utf8]{inputenc}
 % Make latex understand and use the typographic
 % rules of the language used in the document.
@@ -9,19 +38,39 @@
 \usepackage{helvet}
 % Change the default font family from roman to sans serif
 \renewcommand{\familydefault}{\sfdefault} % for text
-%\usepackage[helvet]{sfmath} % for math
+\usepackage[helvet]{sfmath} % for math
 % Choose the font encoding
 \usepackage[T1]{fontenc}
-
+\usepackage[font=small,labelfont=bf]{caption}
+\DeclareCaptionFont{tiny}{\footnotesize}
+\usepackage{enumitem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Graphics and Tables
+% http://en.wikibooks.org/wiki/LaTeX/Importing_Graphics
+% http://en.wikibooks.org/wiki/LaTeX/Tables
+% http://pgfplots.sourceforge.net/
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% You cannot use floats in the baposter theme.
+% We therefore load the caption package which provides
+% the command \captionof
+% Set up how figure and table captions are displayed
 \usepackage{caption}
 \captionsetup{
-  font=small,% set font size to footnotesize
+  font=large,% set font size to footnotesize
   labelfont=bf % bold label (e.g., Figure 3.2) font
 }
 % Make the standard latex tables look so much better
 \usepackage{array,booktabs}
 % For creating beautiful plots
 \usepackage{pgfplots}
+
+\usepackage{graphicx}
+\usepackage{nicefrac}
+\usepackage{mathtools}
+\usepackage{tabularx,booktabs,ragged2e}
+\usepackage{xcolor}
+%\usepackage{showframe}
+\usepackage[framemethod=tikz]{mdframed}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Mathematics
@@ -39,7 +88,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \selectcolormodel{RGB}
 % define the three aau colors
-\definecolor{aaublue1}{RGB}{33,26,82}% dark blue
+\definecolor{aaublue1}{RGB}%
+{33,26,82}
+%{33,26,82}% dark blue
 \definecolor{aaublue2}{RGB}{113,109,143} % light blue
 \definecolor{aaublue3}{RGB}{194,193,204} % lighter blue
 
@@ -47,6 +98,14 @@
 % Lists
 % http://en.wikibooks.org/wiki/LaTeX/List_Structures
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{pgfplots}
+\usepackage{tikz}
+
 % Easier configuration of lists
 \usepackage{enumitem}
 %configure itemize
@@ -62,6 +121,22 @@
 \setitemize[2]{label={\scriptsize\raise1.25pt\hbox{$\blacktriangleright$}}}
 \setitemize[3]{label={\raise1.25pt\hbox{$\star$}}}
 \setitemize[4]{label={-}}
+%\setenumerate[1]{label={\theenumi.}}
+%\setenumerate[2]{label={(\theenumii)}}
+%\setenumerate[3]{label={\theenumiii.}}
+%\setenumerate[4]{label={\theenumiv.}}
+%\setdescription{font=\color{aaublue1}\normalfont\bfseries}
+
+% use setlist[<itemize,enumerate,description>,<level>] if you have a newer latex distribution
+%\setlist[itemize,1]{label={\raise1.25pt\hbox{$\blacktriangleright$}}}
+%\setlist[itemize,2]{label={\scriptsize\raise1.25pt\hbox{$\blacktriangleright$}}}
+%\setlist[itemize,3]{label={\raise1.25pt\hbox{$\star$}}}
+%\setlist[itemize,4]{label={-}}
+%\setlist[enumerate,1]{label={\theenumi.}}
+%\setlist[enumerate,2]{label={(\theenumii)}}
+%\setlist[enumerate,3]{label={\theenumiii.}}
+%\setlist[enumerate,4]{label={\theenumiv.}}
+%\setlist[description]{font=\color{aaublue1}\normalfont\bfseries}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Misc
@@ -81,8 +156,25 @@
 % Macros
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\alert}[1]{{\color{aaublue1}#1}}
-\pgfplotsset{compat=1.11}
+
+\usepackage{tabularx} % in the preamble
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,fill=white, thick,inner sep=0.3pt,text=aaublue1] (char) {#1};}}
+            
+\newcommand*\titcleCirc[2]{\begin{tabularx}{\textwidth}{YcY}
+ & #1 & \circled{#2}
+  \end{tabularx}
+}            
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% *** CITATION PACKAGES ***
+  \usepackage[square, numbers, comma, sort&compress]{natbib}      
+  \bibliographystyle{ieeetr}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
 % Document Start 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -141,9 +233,9 @@
   Control of photovoltaic system and diesel hybrid system
 }
 %the author(s)
-{\color{white}\small
-  \vspace{0.5em}Daniel B. Andersen, Jacob N. Pedersen, Krisztian M. Balla, Nicolaj V. Christensen and Thomas H. Pilgaard.\\
-  Department of Control Engineering, Aalborg University, Fredrik Bajers Vej 7C
+{\vspace{0.3em}\color{white}\small
+  \textit{\vspace{0.1em}Daniel B. Andersen, Jacob N. Pedersen, Krisztian M. Balla, Nicolaj V. Christensen and Thomas H. Pilgaard.\\
+  Department of Control Engineering, Aalborg University, Fredrik Bajers Vej 7C}
 }
 %the logo (the logo on the right)
 {
@@ -156,27 +248,51 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{posterbox}[name=intro,column=0]{Introduction}
+This paper investigates how photovoltaic systems can be intetrated into existion diesel-powered grids. This is done using a hybrid power plant consisting of a 60 kVA/48 kW genset \cite{generator_datasheet,alternator_datasheet} and a 20 kW SMA STP inverter\cite{inverter_datasheet}. 
+\end{posterbox}
+
+\begin{posterbox}[name=methods,column=0,below=intro,above=bottom]{System overview}
+
+\begin{center}
+\input{Tikz/system_block.tex} 
+    \vspace{-2mm}
+    \captionsetup{font=tiny}
+    \captionof{figure}{Block diagram illustrating the genset with an added frequency controller.}
+\end{center}
 
 \end{posterbox}
 
-\begin{posterbox}[name=methods,column=0,below=intro,above=bottom]{Methods}
+\begin{posterbox}[name=results,span=1,column=2,row=0]{Results}
 
 \end{posterbox}
 
-\begin{posterbox}[name=results,span=2,column=1,row=0]{Results}
+\begin{posterbox}[name=Control,column=1]{Control}
+
+
+\begin{center}
+    \input{Tikz/controlstructure.tex} 
+    \vspace{-2mm}
+    \captionsetup{font=tiny}
+    \captionof{figure}{Block diagram of the control design.}
+\end{center}
+
 
 \end{posterbox}
 
-\begin{posterbox}[name=discussion,column=1,below=results]{Discussion}
+\begin{posterbox}[name=results_and_simulations,column=1,below=Control]{Results and simulations}
 
 \end{posterbox}
 
-\begin{posterbox}[name=conclusion,column=2,below=results]{Conclusion}
+\begin{posterbox}[name=discussion,column=2,below=results]{Discussion}
 
 \end{posterbox}
 
-\begin{posterbox}[name=references,column=2,below=conclusion,above=bottom]{References}
+\begin{posterbox}[name=conclusion,column=2,below=discussion]{Conclusion}
 
+\end{posterbox}
+
+\begin{posterbox}[name=references,column=2,above=bottom]{References}
+\bibliography{bibliography}
 \end{posterbox}
 
 \end{poster}
