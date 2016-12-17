@@ -24,6 +24,8 @@
 Article.pdf
 Article.nls
 
+aauposter.pdf
+
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
 *.bcf

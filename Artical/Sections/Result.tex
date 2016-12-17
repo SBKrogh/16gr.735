@@ -3,26 +3,28 @@
 \subsection{Communication}
 
  It was stated before that the requirements for our system was to get to at least 550 Hz and to reach 1000Hz if possible. As shown in Table \ref{tab:UDPMeasurements}, the connection can go up to almost 1000Hz using UDP which fulfills the requirements. However, the jitter should not be neglected as the frequency get closer to 1000Hz the jitter increases and becomes high compared to the period and may cause unexpected behavior in real time operation. It is though that as the period become smaller, the system becomes more sensitive to the preemption of other processes.
-\begin{table}[h]
-%\centering
+\begin{center}
   $\begin{tabular}{|c|c|c|c|c|c|}
     \hline
-    \text{Delay} & \text{Frequency (Hz)} & \text{RTT* delay (ms)} & \text{Jitter} & \text{Error rate (\%)}\\
+    \text{Frequency (Hz)} & \text{delay (ms)} & \text{Jitter ($\mu$s)} & \text{Packet loss (\%)}\\
     \hline
-    10ms & 86 & 1.1 & 4.9E-8 & 0 \\
-    %\hline
-    %2ms & 447 & 2.1 & 3.5 & 1.2E-4 \\
+    99 & 10.1 & 4.66E-2 & 0 \\
     \hline
-    0ms & 981 & 1.3 & 6.1E-8 & 5.1E-5 \\
+    474 & 2.1 & 5.51E-2 & 0.2 \\
+    \hline
+    638 & 1.6 & 1.16E-2 & 1.2 \\
     \hline
   \end{tabular}$
-  *Round Time Trip\\
-  **The number of data set needs to be increased for the final version
-  \caption{UDP**}
+  \captionof{table}{Measurements of the UDP performances}
   \label{tab:UDPMeasurements}
-\end{table}
+
+\end{center}
 
 
+\begin{figure}[h]
+  \input{../Worksheets/rapport/pictures/feedback_measurements}
+  \caption{Measurements of the reponse of the force feedback for the clamp}
+\end{figure}
 
 % \begin{figure}[h]
 %   \centering

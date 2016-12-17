@@ -1,0 +1,39 @@
+\begin{tikzpicture}
+
+\node[box] (DE) at (0,0) {Genset};
+%Inverter
+\node[box] (AGC) at ($(-3,0)+(DE)$) {Genset \\ Control};
+\node[box] (ASC) at ($(0,2.5)+(AGC)$) {Plant \\ Control};
+\node[box] (INV) at ($(3,0)+(ASC)$) {Inverter};
+%controllers & load
+\node[box] (L) at ($(3.5,1.25)+(DE)$) {Load};
+
+
+%Peripheral
+%\node[fill = {rgb:red,0;green,1;blue,3},box] (Sensor) at (0,0) {Sensor};
+%\node[fill = {rgb:red,0;green,1;blue,3},box] (RC) at ($(0,-2)+(Sensor)$) {Remote};
+%FPGA
+%\node[fill = black!40!green,box] (Reg) at ($(3.5,0)+(Sensor)$) {Regulator};
+%\node[fill = black!40!green,box] (Cont) at ($(0,-2)+(Reg)$) {Control};
+%\node[fill = black!40!green,box] (PWM) at ($(3,0)+(Cont)$) {PWM};
+%\node[fill = {rgb:red,0;green,1;blue,3},box] (Mot) at ($(3.5,0)+(PWM)$) {Motor \\ Driver};
+
+%connections
+\draw[->] (AGC) -- (DE);
+\draw[->] (ASC) -- (INV);
+\draw[<->] (ASC) -- (AGC);
+\draw[-,double,very thick] (DE) -- ($(3.5,0)+(DE)$) -- (L) -- ($(0,1.25)+(L)$) -- (INV);
+\draw[<-] (ASC) -- ($(0,1.25)+(ASC)$) -- ($(1.5,1.25)+(INV)$) -- ($(1.5,0)+(INV)$);
+\draw[<-] (AGC) -- ($(0,-1.25)+(AGC)$) -- ($(1.5,-1.25)+(DE)$) -- ($(1.5,0)+(DE)$);
+\draw[<-] ($(0.5,-0.75)+(ASC)$) -- ($(0.5,-1.25)+(ASC)$) -- ($(1.5,1.25)+(DE)$) -- ($(1.5,0)+(DE)$);
+%\draw[<-] (AGC) -- ($(2.2,0)+(AGC)$) -- ($(2.2,0)+(EG)$);
+%\draw[<-] (INC) -- ($(4.2,0)+(INC)$) -- ($(1.2,0)+(LC)$);
+%\draw[<-] (ASC) -- ($(4.8,0)+(ASC)$) -- ($(1.8,0)+(LC)$);
+
+%dashed boxes
+
+
+
+%\draw[thick,dashed] ($(-1.5,2)+(Reg)$) -- ($(1.5,4)+(PWM)$) -- ($(1.5,-1.5)+(PWM)$) -- ($(-1.5,-1.5)+(Cont)$) -- ($(-1.5,2)+(Reg)$);
+%\node[] at ($(1.5,1.5)+(Reg)$) {\textbf{FPGA}};
+\end{tikzpicture}%
