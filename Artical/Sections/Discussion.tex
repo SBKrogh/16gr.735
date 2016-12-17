@@ -12,6 +12,8 @@ For usable information to be provided , the representations of feedback from the
 This means that the feedback force vector representing the e.g. yaw mechanism on the Geomagic Touch needs to be linearly independent of the ones resulting from the other two mechanisms. 
 We can easily do this by pairing individual actions with horizontal and vertical movement of the Geomagic Touch end effector, as well as the rotation of it's first joint .
 
+%In the communication between the embedded system and the computer, it was decided to not compress transmitted data as the size of the packets is small (maximum of 49 bytes of payload). It is he implementation of a fast compression algorithm like the one described in \ref{very fast algo from worksheets} could improve the performances of the communication.
+%{\color{red}
 In the communication between the embedded system and the computer, it was decided to not compress transmitted data as the size of the packets is small (maximum of 49 bytes of payload). The compression rate for this amount of data is usually small and the computation time induced by compression and decompression lead to either a very small reduction of delay or even an additional delay. However no detailed study was made in this project to investigate the exact compression rate and computation time that would result from compression.
 
 By choosing UDP as a transport protocol, every network reliability feature was removed from the connection which matches the demands of our system in term of bandwidth. 
@@ -19,3 +21,4 @@ However, safety needs to be considered for such a system.
 As such a feature was implemented on both side of the communication in order to detect packet loss and connection timeout. 
 The detection of those events allows to stop moving the end-effector and to notify the operator. 
 In the future, additional steps such as protection against external \textcolor{green}{cyber}attacks and handling of packet losses should be taken in order to improve the overall safety of the system.
+%}
