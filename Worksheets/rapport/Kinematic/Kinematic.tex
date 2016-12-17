@@ -2,7 +2,7 @@
 
 In \chapref{cha:overview}, an overview of the system available on Aalborg university was introduced. In this chapter we derive the kinematics. This is done to describe each joint and end effector positions for e.g the Geomagic touch or the hand of the da Vinci robot. 
 
-In the following the \gls{DH} notation is going to be used\cite{spong2008robot}. This eases calculation of the different positions and gives a simple , unambiguous description of the kinematics using the least amount of parameters. The \gls{DH} notation only uses four parameters to describe the movement of the different joints. Each joint is given its own coordinate frame do describe the link between the different joints and are denoted as $O_i$ from 0 to $n$. To utilize the \gls{DH} notation some rules got to be fulfilled and are as followed\cite{spong2008robot}:
+In the following the \gls{DH} notation is going to be used\cite{spong2008robot}. This eases calculation of the different positions and gives a simple , unambiguous description of the kinematics using the least amount of parameters. The \gls{DH} notation only uses four parameters to describe the transformation between the different frames. Each joint is given its own coordinate frame do describe the link between the different joints and are denoted as $O_i$ from 0 to $n$. To utilize the \gls{DH} notation some rules got to be fulfilled and are as followed\cite{spong2008robot}:
 
 \begin{itemize}
 \item DH(1): The axis $x_n$ is perpendicular to axis $z_{n-1}$
@@ -58,6 +58,6 @@ is the angle between $x_i$ and $x_{i+1}$ measured in a plane normal to $z_i$.
 
 \input{rapport/Kinematic/Geomagic_kino.tex}
 
-%\input{rapport/Kinematic/EndoW_kino.tex}
+%%%\input{rapport/Kinematic/EndoW_kino.tex}
 
 \input{rapport/Kinematic/Da_vinci_kino.tex}
