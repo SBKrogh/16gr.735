@@ -97,7 +97,15 @@ For the measurements with sinusoidal setpoint signals, see \figref{square_excite
 	\label{sin_excite}
 \end{figure}
 
+\subsubsection{Encoder tick counting}\label{encount}
+The FPGA has implemented encoder signal counter, that directly receives the signals from  the ESCON controller's two encoder sensors. One sensor is shifted by $90\deg$. The FPGA steps one unit each time the state of any of the sensor changes and FPGA compares the state of encoder A to the state of encoder B using a XOR function. This way the direction of the movement can be determined. The resulting position resolution is four times as high as the resolution of encoder marks.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\columnwidth]{encoder.pdf}
+	\caption{Encoder signal sensor states depending on position \cite{motor_encoder}.}
+	\label{fig:encoder}
+\end{figure}
 
 \subsubsection{FPGA}
 
