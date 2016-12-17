@@ -40,8 +40,8 @@ The roll of the EndoWrist was associated to the roll of the GT. The clamp of the
 \caption{Vectors in the Cartesian plan}
 \end{figure}
 with:\\
-	\hspace*{8mm} $O_c$ Origin of the Cartesian space
-	\space*{8mm} $O_p$ Position of the end-effector
+	\hspace*{8mm} $O_c$ Origin of the Cartesian space\\
+	\hspace*{8mm} $O_p$ Position of the end-effector
 
 
 The phantom\_omni node\cite{phantom_omni_github} used to communicate can only handle Cartesian positions and forces. Thus, conversion from cylindrical to Cartesian and from Cartesian to cylindrical are required, this transformation are described in \eqref{eq:cartesian_to_cylindrical} and \eqref{eq:cylindrical_to_cartesian}.
@@ -56,12 +56,23 @@ The phantom\_omni node\cite{phantom_omni_github} used to communicate can only ha
 \end{split}
 \label{eq:cylindrical_to_cartesian}
 \end{equation}
-with:\\
-\hspace*{8mm} $\theta = atan2(y,x)$\\
-\hspace*{8mm} (x,y,z)  the Cartesian coordinates of the GT\\
-\hspace*{8mm} $F_\textrm{clamp}$  the force feedback from the clamp\\
-\hspace*{8mm} $F_\textrm{pitch}$  the force feedback from the pitch\\
-\hspace*{8mm} $F_\textrm{roll}$  the force feedback from the roll\\
+
+\begin{minipage}[t]{0.20\textwidth}
+With:\\
+\hspace*{8mm} $\theta = $\\
+\hspace*{8mm} $(x,y,z)$ \\
+\hspace*{8mm} $F_\textrm{clamp}$ \\
+\hspace*{8mm} $F_\textrm{pitch}$ \\
+\hspace*{8mm} $F_\textrm{roll}$ 
+\end{minipage}
+\begin{minipage}[t]{0.68\textwidth}
+\vspace*{2mm}
+$atan2(y,x)$\\
+the Cartesian coordinates of the GT\\
+the force feedback from the clamp\\
+the force feedback from the pitch\\
+the force feedback from the roll
+\end{minipage}
 
 \begin{equation} 
 \begin{split}
