@@ -12,6 +12,7 @@ The force estimations are done on four different setups:
 \item Pull/push of the pitch on the end-effector (pitch)
 \item and the rotation of the end-effector (roll).
 \end{itemize}
+\todo{The reader don't know what we mean about push pull, maybe include a graphic}
 \todo{Do we use the pull push of two clamps?}
 
 In the following subsections the different tests defined in the itemizer above are made. For making the force measurements, item one to three, different attachment to a load-cell is made. These can be seen on \figref{fig:Overview_endowrist_attachment}.
@@ -76,10 +77,15 @@ For making the force measurement for the EndoWrist a simple hardware constructio
 \caption{Diagram of the test setup for the force measurements.}
 \label{fig:arduino_loadcell}
 \end{figure}
-
+\todo{Why do we use an arduino?}
 The load-cell's output is amplified and send to an Arduino which calculate the force applied to the load-cell. The force is then translated to a corresponding voltage output, $4\cdot\frac{mV}{g}$. Since the Arduino does not have a digital to analog converter (DAC), the voltage is translated to a binary code and send to a "Max531 DAC" through a serial peripheral interface (SPI). The voltage output from the DAC is read at the sbRIO board which also samples the current send to the motor, motor position and time stamps.
 
 \todo{We probaly have to go through the mA applied in each section as 1200 mA and the figures does not seem to fit each other.}
+
+\todo{Measurement protocols should be in appendix.
+You should put the figures and an explanation of the test in the main report}
+
+\todo{You should estimate it accurately (current)}
 \input{Data/Measurement/Pull_clamp}
 
 \input{Data/Measurement/Pull_clampp}
