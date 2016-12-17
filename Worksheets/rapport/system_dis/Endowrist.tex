@@ -1,6 +1,6 @@
-\section{Endowrist}\label{sec:Endowrist}
+\section{EndoWrist}\label{sec:Endowrist}
 
-An Endowrist, see \figref{fig:Endo_full} is a surgical tool which can be manipulated as a human wrist with two fingers. It is used in surgical procedures such as Laparoscopic surgeries, better known as minimally invasive surgery (MIS), where small incisions in the human body is made under the surgery. Because the incision cuts are small, blood lose under the surgery and the risk of infection is reduced. This has a positive effect on the recovery time for the patient.
+An Endowrist, see \figref{fig:Endo_full} is a surgical tool which can be manipulated in a similar manner as a human wrist with two fingers. Therefore it has four \gls{DOF}, see \figref{fig:Endo_end}. This enables roll, pitch, yaw movement and an open-closing mechanism that acts as the thumb and index finger of a hand.  It is used in surgical procedures such as Laparoscopic surgeries, better known as minimally invasive surgery (MIS), where small incisions in the human body is made during the surgery. Since the incision cuts are small, blood loss during the surgery and the risk of infection is reduced. This has a positive effect on the recovery time for the patient.
 
 
 \begin{figure}[H]
@@ -8,7 +8,7 @@ An Endowrist, see \figref{fig:Endo_full} is a surgical tool which can be manipul
 	\begin{subfigure}{.32\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{Endowrist1.jpg}
-		\caption{Full view of a Endowrist\vspace{8.5mm}   }
+		\caption{Full view of an EndoWrist\vspace{8.5mm}   }
 		\label{fig:Endo_full}
 	\end{subfigure}
 	\begin{subfigure}{.32\textwidth}
@@ -20,16 +20,12 @@ An Endowrist, see \figref{fig:Endo_full} is a surgical tool which can be manipul
 	\begin{subfigure}{.32\textwidth}
 		\centering
 		\includegraphics[width=\linewidth,height=3.55cm]{Endowrist31.png}
-		\caption{End effector of the Endowrist\newline}
+		\caption{End-effector of the EndoWrist\newline}
 		\label{fig:Endo_end}
 	\end{subfigure}
-\caption{The Endowrist and how the interaction with it are made}
+\caption{The EndoWrist and how the interaction with it is made}
 \label{fig:endowrits_set}
 \end{figure}
 
-As mentioned the Endowrist has the ability to be manipulated as a human wrist with two fingers and thereby has four \gls{DOF}, see \figref{fig:Endo_end}. This enables the movement of roll, pitch, yaw and an open closing mechanism that acts as the thumb and index finger of a hand. 
 
-The end effector is manipulated by the four wheels seen on \figref{fig:Endo_plates}. Wheel one and three define the movement of the yaw and the closing mechanism for the clamps. Wheel two and four moves the pitch and roll. The Endowrist is cable driven, which enables the opportunity of making the Endowrist small but it also makes the system nonlinear as the force acting at one end is not directly transmitted to the other end due to friction. 
-
-
-
+The end-effector is manipulated by the four wheels seen on \figref{fig:Endo_plates}. Wheel one and three define the movement of the yaw and the closing mechanism for the clamps. Wheel two and four moves the pitch and roll. The EndoWrist is cable driven, which provides the opportunity of making the EndoWrist small. The main drawback of the cable system is that it makes the system nonlinear, since the inherent frition absorbs a significant amount of the input power. Therefore the end-effector's power output is lower than the power input.
