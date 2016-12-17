@@ -1,12 +1,12 @@
 \section{Discussion}
-Due to the structure of the Endowrist, we have split the dynamical model of the force into separate submodels pertaining to the actions most commonly performed.
+Due to the structure of the EndoWrist, we have split the dynamical model of the force into separate submodels pertaining to the actions most commonly performed.
 A model was defined both for the grip, radial and tangential forces of the clamping tool.
 
 The grip and tangential force models parameters are still to be defined through experiments performed using a load cell for grip force measurement.
 Based on earlier results \cite{kim2014dynamic} we expect an approximation of grip force adequate for feedback.
 
 For the radial force, the linear model parameters are defined and we expect the model to be precise in action since it fits the experimental results well.
-Additionally, it is simple to calculate so it doesn't introduce noticable delays in the system.
+Additionally, it is simple to calculate so it doesn't introduce noticeable delays in the system.
 
 For usable information to be provided , the representations of feedback from these three models need to be mutually independent.
 This means that the feedback force vector representing the e.g. yaw mechanism on the Geomagic Touch needs to be linearly independent of the ones resulting from the other two mechanisms. 
@@ -14,8 +14,8 @@ We can easily do this by pairing individual actions with horizontal and vertical
 
 In the communication between the embedded system and the computer, it was decided to not compress transmitted data as the size of the packets is small (maximum of 49 bytes of payload). The compression rate for this amount of data is usually small and the computation time induced by compression and decompression lead to either a very small reduction of delay or even an additional delay. However no detailed study was made in this project to investigate the exact compression rate and computation time that would result from compression.
 
-By chosing UDP as a transport protocol, every network reliability feature was removed from the connection which match the demands of our system in term of bandwidth. 
+By choosing UDP as a transport protocol, every network reliability feature was removed from the connection which matches the demands of our system in term of bandwidth. 
 However, safety needs to be considered for such a system. 
 As such a feature was implemented on both side of the communication in order to detect packet loss and connection timeout. 
-The detection of those event allows to stop moving the end-effector and to notify the operator. 
-In the future, additional steps such as protection against external attacks and handling of packet losses should be taken in order to improve the overall safety of the system.
+The detection of those events allows to stop moving the end-effector and to notify the operator. 
+In the future, additional steps such as protection against external \textcolor{green}{cyber}attacks and handling of packet losses should be taken in order to improve the overall safety of the system.
