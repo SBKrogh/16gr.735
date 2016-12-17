@@ -57,8 +57,10 @@ During surgery, it is locked to a specific position. Between surgeries, its 6 \g
 The hand is at the end of the arm and has three \gls{DOF}, two rotational and one translational, which can be actuated during surgery. 
 \item End-effector tool (EndoWrist)
 
-The end-effector tool is connected to the hand. Together the tool and the hand have 6 - 7 movable \gls{DOF} that can be actuated. The tool is the instrument which interacts with the patient during surgery. There are several different tools available, each with their own functionality. 
+The end-effector tool is connected to the hand, it is only capable of doing rotational movement on its own. Together the tool and the hand have 6 - 7 movable \gls{DOF} that can be actuated. The tool is the instrument which interacts with the patient during surgery. There are several different tools available, each with their own functionality. 
 \end{enumerate}
 
-\textcolor{green}{The present project concentrates on implementing haptic feedback control for the end-effector called EndoWrist. Controlling the robot arm is not a subject of this project. The end-effector was separated from the da Vinci system. The da Vinci's master console controller lacks actuation. In order to be able to provide haptic feedback, a Geomagic Touch, see \secref{sec:geo_magic}, has been implemented as a replacement. The original master console will not be further analyzed. 	
+\textcolor{green}{The present project concentrates on implementing haptic feedback control for the end-effector called EndoWrist. Controlling the robot arm is not a subject of this project. The end-effector was separated from the da Vinci system. 
+	
+The da Vinci's master console controller lacks actuation. In order to be able to provide haptic feedback, a Geomagic Touch, see \secref{sec:geo_magic}, has been implemented as a replacement. The original master console will not be further analyzed. 	
 }
