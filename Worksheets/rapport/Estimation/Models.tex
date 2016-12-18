@@ -239,16 +239,15 @@ This method would involve designing a steady-state Kalman filter \cite{brown1997
 
 The choice of a Kalman filter over the Luenberger observer \cite{friedland2012control} is based on the fact that the Kalman filter takes into account the stochastic nature of measurments.
 
-Before implementing an observer, it is neccessary to check our system for observeability.
-A state-space system is observable only if it's observeability matrix has the same rank as it's $\mathbf{A}$ matrix.
+Before implementing an observer/estimator, it is neccessary to check our system for observeability.
 Formally, a system is said to be observable if, for any possible sequence of state and control vectors, the current state can be determined in finite time.
-The observability matrix is defined as:
+We determine observability by ascertaining that the rank of the observability matrix (\ref{eq:obs}) is equal to the rank of $\mathbf{A}$. 
 
-%\begin{align}
+\begin{align}\label{eq:obs}
+\mathcal{O}_v=\begin{bmatrix} C \\ CA \\ CA^2 \\ \vdots \\ CA^{v-1} \end{bmatrix}
+\end{align}
 
-%\end{align}
-
-
+Checking the matrices for the linear parts of our models, we find that this is indeed true and an observer gain exists.
 
 \subsection{Kalman filter }
 

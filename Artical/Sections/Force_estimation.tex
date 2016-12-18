@@ -19,9 +19,10 @@ However, deriving this model precisely enough for grey-box identification has be
 Models for yaw and pitch forces require the utilization of so called black-box identification algorithms, which only provide a general model structure. 
 A straightforward approach would involve choosing a nonlinear model structure for identification.
 On the other hand, stability analysis of nonlinear models is difficult and due to the nature of the system only general trends in force need to be represented.
-For this reason it was decided to identify a linear state-space model which is then used as a part of Hammerstein-Wiener nonlinear model \cite{zhu2002estimation}.
+For this reason it was decided to identify a linear state-space model which is then used as a part of Hammerstein-Wiener  \cite{zhu2002estimation} nonlinear model as seen in Fig. \ref{fig:weiner}.
 
-\begin{figure} 
+
+\begin{figure} \label{weiner}
 \resizebox{0.9\linewidth}{!}{
 \begin{tikzpicture}
 \draw  (-3.5,3) rectangle (0,1) node[pos=.5] {Linear Block};
@@ -33,16 +34,28 @@ For this reason it was decided to identify a linear state-space model which is t
 \draw [->] (5.45,2) -- (7.45,2) node [pos=0.5,above] {y(t)};
 \end{tikzpicture}
 }
-\caption{Block diagram of a Hammerstein-Wiener model\ref{fig:weiner}}
-\label{weiner}
+\caption{Block diagram of a Hammerstein-Wiener model.}
 \end{figure}
 
 \subsubsection{Roll force}
 The roll force, which is determined by the roll actuator and directly rotates the entire tool, making it independent to the rest of the system.
 By simple measurement with the setup as seen in (SETUP PICTURE) we can interpret the roll force as determined by a feedthrough component in the state space model of the system.
 
-\begin{align}
-F_{roll} = m e_{roll}
+\begin{align}\label{eq:allSS}
+\mathbf{x}(k+1) &= 
+\begin{bmatrix} \mathbf{0} & \mathbf{0} & \mathbf{0}\\
+ \mathbf{0} & \mathbf{A}_{pitch} &\mathbf{0}\\
+ \mathbf{0} &\mathbf{0} & \mathbf{A}_{yaw}  \end{bmatrix} 
+ \mathbf{x}(k) + 
+\begin{bmatrix} \mathbf{B}_{roll} & \mathbf{0} & \mathbf{0}\\
+ \mathbf{0} & \mathbf{B}_{pitch} &\mathbf{0}\\
+ \mathbf{0} &\mathbf{0} & \mathbf{B}_{yaw}  \end{bmatrix} 
+ \mathbf{u}(k)\\
+\mathbf{y}(k+1) &= 
+\begin{bmatrix} \mathbf{C}_{roll} & \mathbf{0} & \mathbf{0}\\
+ \mathbf{0} & \mathbf{C}_{pitch} &\mathbf{0}\\
+ \mathbf{0} &\mathbf{0} & \mathbf{C}_{yaw}  \end{bmatrix} 
+\mathbf{x}(k) 
 \end{align}
 
 \subsubsection{Pitch and yaw forces}
