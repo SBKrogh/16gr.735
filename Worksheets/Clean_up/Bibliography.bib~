@@ -329,3 +329,22 @@ http://image.dfrobot.com/image/data/SEN0160/hx711_english.pdf
   year={2014},
   publisher={Springer}
 }
+
+@article{zhu2002estimation,
+  title={Estimation of an N--L--N Hammerstein--Wiener model},
+  author={Zhu, Yucai},
+  journal={Automatica},
+  volume={38},
+  number={9},
+  pages={1607--1614},
+  year={2002},
+  publisher={Elsevier}
+}
+
+@article{brown1997introduction,
+  title={Introduction to random signals and applied Kalman filtering: with MATLAB exercises and solutions},
+  author={Brown, Robert Grover and Hwang, Patrick YC},
+  journal={Introduction to random signals and applied Kalman filtering: with MATLAB exercises and solutions, by Brown, Robert Grover.; Hwang, Patrick YC New York: Wiley, c1997.},
+  volume={1},
+  year={1997}
+}
