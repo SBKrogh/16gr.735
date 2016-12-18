@@ -1,81 +1,63 @@
 %\begin{figure}
-\resizebox{0.5\textwidth}{!}{
-\begin{tikzpicture}
-
-\draw  (0,0) rectangle (1.5,1)node[pos=.5]{\large H};
-\draw  (0,3.5) rectangle (1.5,4.5)node[pos=.5]{\large GT};
-\draw  (6.5,3.5) rectangle (8,4.5)node[pos=.5]{\large K};
-\draw  (2.5,0) rectangle (4,1)node[pos=.5]{\large T};
-\draw  (6.5,0) rectangle (8,1)node[above,pos=.5]{ Position}node[below,pos=.5]{ Control};
-
-
-\draw [->,line width=1pt] (0.75,3.5) -- (0.75,1) node [pos=0.5,left] {F*};
-\draw [->,line width=1pt] (1.5,0.5) -- (2.5,0.5) node [pos=0.5,above] {P};
-\draw [->,line width=1pt] (4,0.5) -- (5,0.5) node [pos=0.5,above] (v1) {$\theta_d$};
-
-\draw [<-,line width=1pt] (1.5,4) -- (6.5,4) node [pos=0.5,above] {$\hat{F}$};
-\draw [<-,line width=1pt] (8,4) -- (13.9,4) node [pos=0.1,above] {$\hat{x}$};
-
-
-;
-
-
-\draw  (5.25,0.5) ellipse (0.25 and 0.25) node  [ left=-0.5mm]{\tiny$+$} node  [below =-0.5mm]{\tiny$-$};
-\draw [->,line width=1pt] (5.5,0.5) -- (6.5,0.5) node [pos=0.5,above] (v1) {$\theta_e$};
-
-
-
-\draw [->,line width=1pt] (8,0.5) -- (9,0.5) node [pos=0.5,above] (v1) {$\dot\theta_d$};
-\draw  (9.25,0.5) ellipse (0.25 and 0.25) node  [ left=-0.5mm]{\tiny$+$} node  [below =-0.5mm]{\tiny$-$};
-\draw  (10.5,0) rectangle (12,1)node[above,pos=.5]{ Speed}node[below,pos=.5]{ Control};
-\draw [->,line width=1pt] (9.5,0.5) -- (10.5,0.5) node [pos=0.5,above] (v1) {$\dot\theta_e$};
-
-\draw [->,line width=1pt] (12,0.5) -- (13,0.5) node [pos=0.5,above] (v1) {$I_d$};
-\draw  (13.25,0.5) ellipse (0.25 and 0.25) node  [ left=-0.5mm]{\tiny$+$} node  [below =-0.5mm]{\tiny$-$};
-\draw  (14.5,0) rectangle (16,1)node[above,pos=.5]{ Current}node[below,pos=.5]{ Control};
-\draw [->,line width=1pt] (13.5,0.5) -- (14.5,0.5) node [pos=0.5,above] (v1) {$I_e$};
-
-\draw [->,line width=1pt] (16,0.5) -- (17,0.5) node [pos=0.5,above] (v1) {$I_a$};
-
-
-\draw  [line width=2pt] (17.05,0) rectangle (18.55,2.5)node[pos=.5]{Plant};
-
-\draw [->,line width=1pt](16.5,0.5) -- (16.5,-0.5) -- (13.25,-0.5) -- node [pos=0.5,left] {$I_a$} (13.25,0.25);
-\draw  [->,line width=1pt](18.5,0.5) -- (19,0.5) -- (19,-1) --(9.25,-1) --  node [pos=0.5,left]{$\dot\theta_a$}  (9.25,0.25);
-\draw [->,line width=1pt] (18.5,1) -- (19.5,1) node (v2) {} -- (19.5,-1.5) -- (5.25,-1.5) --   node [pos=0.5,left]{$\theta_a$}(5.25,0.25);
-
-\draw  (12.5,3.25) rectangle (13,3.75)node[pos=.5]{\large B};
-
-
-
-\draw [<-,line width=1pt](12.75,3.25) -- node [pos=0.5,left]{$I_a$} (12.75,1.5) -- (16.75,1.5) -- (16.75,0.5);
-\draw  (14,3.5) ellipse (0.25 and 0.25) node  [ left=-0.5mm]{\tiny$+$} node  [below =-0.5mm]{\tiny$+$} node  [above =-0.5mm]{\tiny$-$};
-\draw [->,line width=1pt](13,3.5) -- (13.75,3.5);
-
-
-\draw  (14.8,3.25) rectangle (15.3,3.75)node[pos=.5]{$ \frac{1}{s}$};
-\draw [->,line width=1pt](14.25,3.5) -- (14.8,3.5);
-
-\draw  (16.25,3.25) rectangle (16.75,3.75)node[pos=.5]{\large C};
-\draw [->,line width=1pt](15.3,3.5) -- (16.25,3.5);
-
-
-\draw  (14.8,2.25) rectangle (15.3,2.75)node[pos=.5]{\large A};
-
-\draw [->,line width=1pt] (15.8,3.5) -- (15.8,2.5) -- (15.3,2.5);
-
-\draw [->,line width=1pt] (14.8,2.5) -- (14,2.5) -- (14,3.25);\draw  (17.55,4.5) ellipse (0.25 and 0.25) node  [below =-0.5mm]{\tiny$-$} node  [right =-0.5mm]{\tiny$+$};
-
-\draw  (16.25,4.25) rectangle (16.75,4.75)node[pos=.5]{ $M_n$};
-\draw [->,line width=1pt](16.75,3.5) --node[above,pos=.5]{ $\hat y$} (17.5,3.5) -- (17.5,4.25);
-\draw [->,line width=1pt](17.3,4.5) -- (16.75,4.5);
-\draw[->,line width=1pt](16.25,4.5) -- (14,4.5) -- (14,3.75);
-\draw  [->,line width=1pt](19.5,1) -- (19.5,4.5) --node[above,pos=.5]{ $y$} (17.8,4.5);
-\draw [line width=1pt] (15.8,3.5) -- (15.8,4) -- (14.1,4);
-
-
-
-\draw[line width=1pt]  (14.1,4) arc (0:180:0.1);
-\end{tikzpicture}
-}
+%\resizebox{\textwidth}{!}{
+%\begin{tikzpicture}
+%
+%
+%\draw  [fill=blue,fill opacity=0.2](7.6,-1.45) rectangle (14.65,3.5);
+%\draw   [fill=blue,fill opacity=0.2](1.55,-1.45) rectangle (6.2,3.5);
+%\draw   [fill=blue,fill opacity=0.2](-2.9,-1.45) rectangle (0.15,3.5);
+%
+%\draw  [fill=white](-2.3,0) rectangle (-0.8,1)node[pos=.5]{\large Human};
+%\draw  [fill=white](-2.3,2.05) rectangle (-0.8,3.05)node[pos=.4, above,xshift=5]{\large Haptic};
+%\draw  (-2.3,2.05) rectangle (-0.8,3.05)node[pos=.5, below,xshift=0]{\large Device};
+%\draw  [fill=white](2.2,2.05) rectangle (3.25,3.05)node[pos=.5]{\large K};
+%\draw  [fill=white](2.25,0) rectangle (5.3,1)node[pos=.5,above]{Coordinate}node[pos=.5,below]{Transform};
+%
+%\draw  (0.3,0) rectangle (1.4,1)node[pos=.5]{ Delay};
+%\draw  (0.3,2.05) rectangle (1.4,3.05)node[pos=.5]{ Delay};
+%\draw  (6.35,2.05) rectangle (7.4,3.05)node[pos=.5]{ Delay};
+%
+%\draw [->,line width=1pt] (-1.55,2.05) -- (-1.55,1) node [pos=0.5,left] {F};
+%\draw [->,line width=1pt] (-0.8,0.5) -- (0.3,0.5) node [pos=0.5,above] {$x_{ref}$};
+%
+%\draw [->,line width=1pt] (1.4,0.5) -- (2.25,0.5) node [pos=0.6,above] {$x_{ref}$};
+%
+%\draw [<-,line width=1pt] (-0.8,2.55) -- (0.25,2.55) node [pos=0.5,above] {$\hat{F}$};
+%\draw [<-,line width=1pt] (1.4,2.55) -- (2.2,2.55) node [pos=0.5,above] {$\hat{F}$};
+%
+%
+%\draw [fill=white] (11.8,0) rectangle (13.3,1.05)node[pos=.5]{Plant};
+%\draw [->,line width=1pt] (7.45,0.4896) -- (8.3,0.4896) node [pos=0.6,above] {$\theta_{ref}$};
+%\draw [->,line width=1pt] (5.3,0.4896) -- (6.35,0.4896) node [pos=0.5,above] {$\theta_{ref}$};
+%
+%\draw [<-,line width=1pt] (5.3,2.55) -- (6.3,2.55) node [pos=0.5,above] {$\theta_a,I$};
+%
+%
+%\draw  (6.35,-0.0104) rectangle (7.45,0.9896)node[pos=.5]{Delay};
+%
+%
+%\draw  (8.55,0.5) ellipse (0.25 and 0.25) node  [ left=-0.5mm]{\tiny$+$} node  [below =-0.5mm]{\tiny$-$};
+%
+%
+%
+%
+%\draw  [->,line width=1pt](13.3,0.5) node (v2) {}--(13.85,0.5) node (v3) {} -- (13.85,2.55) --node[above,pos=.5]{ } (7.4,2.55);
+%
+%
+%
+%\draw [fill=white] (3.7,2.05) rectangle (5.3,3.05)node[above,pos=.5]{Force}node[below,pos=.5]{Estimator};
+%\draw  [fill=white](9.55,0.05) rectangle (11.05,1.05)node[above,pos=.5]{Position}node[below,pos=.5]{Control};
+%\draw [->,line width=1pt] (8.8,0.5) -- (9.55,0.5) node [pos=0.5,above] (v1) {$\theta_e$};
+%\draw [->,line width=1pt] (11.05,0.5) -- (11.75,0.5) node [pos=0.5,above] (v1) {$I$};
+%\draw  [->,line width=1pt](13.85,0.5)
+%-- (13.85,-0.5) -- (8.55,-0.5) -- node [pos=0.5,left] (v1) {$\theta_a$}(8.55,0.25);
+%
+%\draw [<-,line width=1pt] (3.25,2.55) -- (3.7,2.55) node [pos=0.5,above] {};
+%\node at (-1.45,-1) {\large \textbf{Controller}};
+%\node at (3.8,-1) {\large \textbf{Computer}};
+%\node at (11,-1) {{\large \textbf{Robot}}};
+%\end{tikzpicture}
+%}
 %\end{figure}
+
+\includegraphics[width=\textwidth]{../Worksheets/rapport/pictures/control.pdf}
