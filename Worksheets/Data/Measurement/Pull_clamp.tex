@@ -1,5 +1,14 @@
-\subsection{Clamp one} % \label{app:...}
-This test uses the test setup seen on \figref{fig:one_clamp}.
+\subsection{Grip force} % \label{app:...}
+
+This test uses the test setup seen on \figref{fig:one_clamp}. The positive force is defined as downwards direction on the load-cell, see \figref{fig:mes_up_down1}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\linewidth]{load_cell_mes.png}
+	\caption{Load-cell with defined upwards- downwars force.}
+	\label{fig:mes_up_down1}
+\end{figure}
+
 
 \subsection*{Test equipment:}
 \begin{itemize}
@@ -12,33 +21,25 @@ This test uses the test setup seen on \figref{fig:one_clamp}.
 \end{itemize}
 
 \subsection*{Procedure:}
-The following procedures was made for the force estimation of clamp 1 on the EndoWrist. A positive force for the clamps are
-defined as an inwards force.
+The following procedures was made for the dynamic measurements of one clamp on the EndoWrist.
 
-Inwards force:
 \begin{enumerate}
-\item Clamp one of the end-effector is attached perpendicular to the load cell. 
+\item One clamp is enabled and put above the load-cell as seen on \figref{fig:one_clamp}.
 \item The scale is set to zero.
-\item Current is applied to the motor which control the clamp attached to the load-cell and the force is measured (inwards direction).
-\item Current is increased in steps until 1200 mA is applied.
+\item Alternating setpoints are send to the motor controlling the upper clamp in a triangular wave.
+\item Current, force and velocity is sampled.
 \end{enumerate}
-Step two to four is repeated eight times, where the current and force is measured in respect to each other. 
-
-Outwards force:
-\begin{enumerate}
-\item Clamp one of the end-effector is attached perpendicular to the load cell. 
-\item The scale is set to zero.
-\item Current is applied to the motor which control the clamp attached to the load-cell and the force is measured (outwards direction).
-\item Current is increased in steps until 1200 mA is applied.
-\end{enumerate}
-Step two to four is repeated eight times, where the current and force is measured in respect to each other. 
+Each test is running for a short period of time, since the input setpoints are periodic. This test was done 11 times.
 
 \subsection*{Measuring data:}
-The data from six of the measurements can be seen on \figref{fig:1_clamp_in} and \figref{fig:1_clamp_out}.
+The data form one measurement is shown on \figref{yaw_mes123}.
+\begin{figure}[H]
+\centering
+\input{Data/Measurement/EndoWrist_Measurements/Force/yaw_mes}
+\caption{One set of data that shows the force, current and velocity. The interval between the red lines shows one period of contact with the load cell and the green is the release of the force applied.}
+\label{yaw_mes123}
+\end{figure}
 
-\input{Data/Measurement/EndoWrist_Measurements/Force/1_One_clamp_in}
-
-\input{Data/Measurement/EndoWrist_Measurements/Force/1_One_clamp_out}
 %\figref{endo_force_mes}. 
 %\eqref{eq:linear_force_endo}.
 
@@ -48,10 +49,9 @@ The data from six of the measurements can be seen on \figref{fig:1_clamp_in} and
 % \end{equation} 
 
 
-
 \subsection*{Results:}
-From \figref{fig:1_clamp_in} and \figref{fig:1_clamp_out}, six different measurements can be seen for clamp one of the EndoWrist. It can be seen due to static friction from the motor, gearing and the EndoWrist, that a current of approx 500 mA in inwards direction and 700 mA needed before any movement. It can also be seen that there is different growth in force, in respect to the current, for the different measurements. This is probably because of the elasticity of the tool and friction. Depending of the start position of the tool, the wire can either be in a relaxed or stressed state. If the wire is in a relaxed state the motor can rotate a littel and build up a small inertia to help overcome the friction of the EndoWrist.
-It can be seen on each measurement, that there is a sharp current decrease at the end of the measurement. This is because of a safety feature in the Escon motor controller setup, where nominal current for the motor is needed. The motor controller can handle a current peak for a certain amount of time and then it will limit the current to the nominal current. It should be noted when the current drops the maximum force is still applied to the load-cell. This is probably due to the friction of the tool. When the maximum force is applied and the current drops, the friction will help keeping the force.
+From \figref{yaw_mes123}, one of the measurements for the grip force estimation is shown. The first red line marks one of the starting periods, where contact between the clamp and the load-cell is happening. It can be seen that a current increase is happening in when the load-cell is applied force. When the current decreases the force is kept until the sign on the current has changed and force is applied in an upwards direction of the clamp. 
+
 
 %It can be seen from the graph on \figref{endo_force_mes} that the force on the end-effector is highly nonlinear. The friction from the gearing and the Endowrist does that the force first has an exponential growth at the start. Around the 800 mA and 1200 mA step it can be seen that a drop in force is happening. What causes this drop is not identified but it can be seen that it appears for all the data sequences. \todor{better explanation?}
 
@@ -67,4 +67,4 @@ It can be seen on each measurement, that there is a sharp current decrease at th
 \end{itemize}
 
 \subsection*{Conclusion:}
-\todo{conclusion}
+It can be seen that there is a high friction in mechanical part that handles the clamp. Due to this friction, the tool is able to withhold a force when the current is decreasing.
