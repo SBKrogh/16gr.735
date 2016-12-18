@@ -38,53 +38,57 @@
 %\end{minipage}
 
 \begin{minipage}{\textwidth}
-The test system shown on \figref{fig:overview} controls the da Vinci end-effector detached from the system. The control structure presented on ----------- has high computation demand which cannot be satisfied by the embedded system. Therefore the haptic device needs to interface with the embedded system through a computer running the robotic operating sytem (ROS), that also provides the required computation power.
-\end{minipage}
-\begin{minipage}{\textwidth}
 	\begin{figure}[H]
 		\resizebox{\textwidth}{!}{
-		\begin{tikzpicture}
-		%\draw (-1.5,-2.5) rectangle (13.5,2.5);
-		
-		
-		\node[box] (Opt) at (0,0) {Surgeon};
-		\node[box] (Geo) at ($(3,0) + (Opt)$) {Haptic\\device};
-		\node[box] (ros) at ($(3,0) + (Geo)$) {Robotic\\operating\\system};
-		\node[box] (davin) at ($(3,0) + (ros)$) {Embedded \\system};
-		\node[box] (end) at ($(3,0) + (davin)$) {End-effecor};
-		
-		
-		\draw[->, ultra thick] ([yshift=0.3cm]Opt.east) -- ([yshift=0.3cm]Geo.west);
-		\draw[->, ultra thick] ([yshift=0.3cm]Geo.east) -- ([yshift=0.3cm]ros.west);
-		\draw[->, ultra thick] ([yshift=0.3cm]ros.east) -- ([yshift=0.3cm]davin.west);
-		\draw[->, ultra thick] ([yshift=0.3cm]davin.east) -- ([yshift=0.3cm]end.west);
-		
-		
-		\draw[<-, ultra thick] ([yshift=-0.3cm]Opt.east) -- ([yshift=-0.3cm]Geo.west);
-		\draw[<-, ultra thick] ([yshift=-0.3cm]Geo.east) -- ([yshift=-0.3cm]ros.west);
-		\draw[<-, ultra thick] ([yshift=-0.3cm]ros.east) -- ([yshift=-0.3cm]davin.west);
-		%\draw[<-, ultra thick] ([yshift=-0.3cm]davin.east) -- ([yshift=-0.3cm]end.west);
-		
-		\node at (1.5,1) {Position};
-		\node at (4.5,1) {Position};
-		% \node at (7.5,1) {yes};
-		% \node at (10.5,1) {yes};
-		
-		\node at (1.5,-1) {Force};
-		\node at (4.5,-1) {Force};
-		\node at (10.5,1) {Torque};
-		% \node at (10.5,1) {yes};
-		\node at (7.5,1.5) {Motor enable};
-		\node at (7.5,1) {Position};
-		\node at (7.5,-1) {Position};
-		\node at (7.5,-1.5) {Speed};
-		\node at (7.5,-2) {Current};
-		
-		\end{tikzpicture}
-	}
-		\caption{Overall system with feedback in both direction}
+			\begin{tikzpicture}
+			%\draw (-1.5,-2.5) rectangle (13.5,2.5);
+			
+			
+			\node[box] (Opt) at (0,0) {\small Surgeon};
+			\node[box] (Geo) at ($(3,0) + (Opt)$) {\small Haptic\\device};
+			\node[box] (ros) at ($(3,0) + (Geo)$) {\small Robotic\\operating\\system};
+			\node[box] (davin) at ($(3,0) + (ros)$) {\small Embedded \\system};
+			\node[box] (end) at ($(3,0) + (davin)$) {\small End-effecor};
+			
+			
+			\draw[->, ultra thick] ([yshift=0.3cm]Opt.east) -- ([yshift=0.3cm]Geo.west);
+			\draw[->, ultra thick] ([yshift=0.3cm]Geo.east) -- ([yshift=0.3cm]ros.west);
+			\draw[->, ultra thick] ([yshift=0.3cm]ros.east) -- ([yshift=0.3cm]davin.west);
+			\draw[->, ultra thick] ([yshift=0.3cm]davin.east) -- ([yshift=0.3cm]end.west);
+			
+			
+			\draw[<-, ultra thick] ([yshift=-0.3cm]Opt.east) -- ([yshift=-0.3cm]Geo.west);
+			\draw[<-, ultra thick] ([yshift=-0.3cm]Geo.east) -- ([yshift=-0.3cm]ros.west);
+			\draw[<-, ultra thick] ([yshift=-0.3cm]ros.east) -- ([yshift=-0.3cm]davin.west);
+			%\draw[<-, ultra thick] ([yshift=-0.3cm]davin.east) -- ([yshift=-0.3cm]end.west);
+			
+			\node at (1.5,1) {Position};
+			\node at (4.5,1) {Position};
+			% \node at (7.5,1) {yes};
+			% \node at (10.5,1) {yes};
+			
+			\node at (1.5,-1) {\small Force};
+			\node at (4.5,-1) {\small Force};
+			\node at (10.5,1) {\small Torque};
+			% \node at (10.5,1) {yes};
+			\node at (7.5,1.2) {\small Motor enable};
+			\node at (7.5,0.8) {\small Position};
+			\node at (7.5,-0.8) {\small Position};
+			\node at (7.5,-1.2) {\small Speed};
+			\node at (7.5,-1.6) {\small Current};
+			
+			\end{tikzpicture}
+		}
+		\footnotesize\caption{System overview}
 		\label{fig:overview}
 	\end{figure}
 \end{minipage}\hfil
+
+
+\begin{minipage}{\textwidth}
+The test system shown on \figref{fig:overview} controls the da Vinci end-effector detached from the system.
+The control structure has high computation demand therefore a computer running the robotic operating sytem (ROS) is added to the system.
+% The control structure presented on ----------- has high computation demand which cannot be satisfied by the embedded system. Therefore the haptic device needs to interface with the embedded system through a computer running the robotic operating sytem (ROS), that also provides the required computation power.
+\end{minipage}
 
 

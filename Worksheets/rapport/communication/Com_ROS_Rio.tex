@@ -7,9 +7,9 @@ In the former system setup the sbRIO board and the computer running ROS are comm
 The speed of the communication between the sbRIO board and the computer running ROS was set to 100 Hz. This was done as a trade off between being fast and for avoiding bugs which where bandwidth related\cite{Chris_Surgical}.
 
 \subsection{JavaScript Object Notation}\label{subsec:JSON}
-In the former system the data exchanged through a TCP connection follow the \gls{JSON} format. \gls{JSON} is a "\textit{text format for the serialization of structured data}"\cite{JSON_IETF} which mean that it defines a syntax and a structure that can be used to exchange data. The structure used by \gls{JSON} associate a name to a value. The value can be a number, string, array, object, boolean or null. It is also worth mentioning that a \gls{JSON} file only contains characters, if a decimal number is to be sent, each digit will be represented by a character instead of having the bitcode representation of a double or a float for example. The former message from the sbRIO to ROS that would contain the information regarding the motors for the Endowrist followed the structure on \coderef{JSON_lst}.
+In the former system the data exchanged through a TCP connection follow the \gls{JSON} format. \gls{JSON} is a "\textit{text format for the serialization of structured data}"\cite{JSON_IETF} which mean that it defines a syntax and a structure that can be used to exchange data. The structure used by \gls{JSON} associate a name to a value. The value can be a number, string, array, object, boolean or null. It is also worth mentioning that a \gls{JSON} file only contains characters, if a decimal number is to be sent, each digit will be represented by a character instead of having the bitcode representation of a double or a float for example. The former message from the sbRIO to ROS that would contain the information regarding the motors for the Endowrist followed the structure on \coderef{JSON_lst}\todo{It's written listings instead of Code}.
 
-\begin{lstlisting}[caption={Example of the previous JASON string.},label={JSON_lst},language=C]
+\begin{lstlisting}[caption={Example of the previous \gls{JSON} string.},label={JSON_lst},language=C]
 "p4_primary":{
 	"position":[0.18189165291842698526913,0.00013089955609757453203,
 	-0.0001266769975192886591,-0.1987191723699879841951,
@@ -24,6 +24,100 @@ In the former system the data exchanged through a TCP connection follow the \gls
 
 \end{lstlisting}
 
-As it can be seen in this example, the structure associate another structure to the element called "p4\_primary" which designates the Endowrist. This second structure contains arrays of positions, velocities and efforts with values for each of the seven motors controlling the EndoWrist.
+As it can be seen in this example, the structure associate another structure to the element called "p4\_primary" which designates the Endowrist. This second structure contains arrays of positions, velocities and efforts with values for each of the seven motors controlling the EndoWrist. When controlling four motors like it is done in this study, 346 bytes are required to store the file, see \figref{fig:old_packets}. 
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+    \matrix(dict1)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=2.5cm},
+        row 1/.style={anchor=south},
+        column 1/.style={nodes={text width = 1.5cm}}
+    ]{
+		0 	& \{"p4\_primary":\{\\
+    };
 
+
+    \matrix(dict2)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=2.5cm},
+        row 1/.style={anchor=south},
+        column 1/.style={nodes={text width = 1.5cm}},
+        column 3/.style={nodes={text width = 4cm}}
+    ] at ($(dict1)+ (2.1,-1)$){
+		15 	& "positions": & array of 4 positions\\
+    };
+
+    \matrix(dict3)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=2.5cm},
+        row 1/.style={anchor=south},
+        column 1/.style={nodes={text width = 1.5cm}},
+        column 3/.style={nodes={text width = 4cm}}
+    ] at ($(dict2)+ (0,-1)$){
+		125	& ,"velocities": & array of 4 velocities\\
+    };
+
+    \matrix(dict4)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=2.5cm},
+        row 1/.style={anchor=south},
+        column 1/.style={nodes={text width = 1.5cm}},
+        column 3/.style={nodes={text width = 4cm}}
+    ] at ($(dict3)+ (0,-1)$){
+		236	& ,"efforts": & array of 4 efforts\\
+    };
+
+    \matrix(dict5)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=2.5cm},
+        row 1/.style={anchor=south},
+        column 1/.style={nodes={text width = 1.5cm}}
+    ] at ($(dict4)+ (-2.1,-1)$){
+		344 & \}\} \\
+    };
+
+%Boxes
+    \draw(dict1-1-2.north east)--(dict1-1-2.north west)--(dict1-1-2.south west)--(dict1-1-2.south east)--(dict1-1-2.north east);
+    \draw(dict2-1-2.north east)--(dict2-1-2.north west)--(dict2-1-2.south west)--(dict2-1-2.south east)--(dict2-1-2.north east);
+    \draw(dict3-1-2.north east)--(dict3-1-2.north west)--(dict3-1-2.south west)--(dict3-1-2.south east)--(dict3-1-2.north east);
+    \draw(dict4-1-2.north east)--(dict4-1-2.north west)--(dict4-1-2.south west)--(dict4-1-2.south east)--(dict4-1-2.north east);
+    \draw(dict5-1-2.north east)--(dict5-1-2.north west)--(dict5-1-2.south west)--(dict5-1-2.south east)--(dict5-1-2.north east);
+
+
+    \draw(dict2-1-3.north east)--(dict2-1-3.north west)--(dict2-1-3.south west)--(dict2-1-3.south east)--(dict2-1-3.north east);
+    \draw($(dict3-1-3.north east)+(0,0)$)--($(dict3-1-3.north west)+(0,0)$)--(dict3-1-3.south west)--(dict3-1-3.south east)--($(dict3-1-3.north east)+(0,0)$);
+    \draw($(dict4-1-3.north east)+(0,0)$)--($(dict4-1-3.north west)+(0,0)$)--(dict4-1-3.south west)--(dict4-1-3.south east)--($(dict4-1-3.north east)+(0,0)$);
+
+%curly braces
+	\draw [decorate,decoration={brace,amplitude=10pt, mirror},xshift=-4pt,yshift=0pt]
+	($(dict2.north west)+(0.5,0)$) -- ($(dict4.south west)+(0.5,0)$) node [black,midway,xshift=-0.9cm] {\footnotesize Data};
+
+	\draw [decorate,decoration={brace,amplitude=5pt, mirror},xshift=-4pt,yshift=0pt]
+	($(dict1.north west)+(0.5,0)$) -- ($(dict1.south west)+(0.5,0)$) node [black,midway,xshift=-0.9cm] {\footnotesize Head};
+
+	\draw [decorate,decoration={brace,amplitude=5pt, mirror},xshift=-4pt,yshift=0pt]
+	($(dict5.north west)+(0.5,0)$) -- ($(dict5.south west)+(0.5,0)$) node [black,midway,xshift=-0.9cm] {\footnotesize Tail};
+
+%numbers
+	\node at ($(dict1-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+	\node at ($(dict1-1-2.north east)+(0,0.2)$) {\footnotesize 15};
+
+	\node at ($(dict2-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+	\node at ($(dict2-1-2.north east)+(0,0.2)$) {\footnotesize 12};
+	\node at ($(dict2-1-3.north east)+(0,0.2)$) {\footnotesize 110};
+
+	\node at ($(dict3-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+	\node at ($(dict3-1-2.north east)+(0,0.2)$) {\footnotesize 14};
+	\node at ($(dict3-1-3.north east)+(0,0.2)$) {\footnotesize 112};
+
+	\node at ($(dict4-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+	\node at ($(dict4-1-2.north east)+(0,0.2)$) {\footnotesize 11};
+	\node at ($(dict4-1-3.north east)+(0,0.2)$) {\footnotesize 111};
+
+	\node at ($(dict5-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+	\node at ($(dict5-1-2.north east)+(0,0.2)$) {\footnotesize 2};
+
+    \node at ($(0,0.3)+(dict1-1-1.north)$) {bytes};
+    \node at ($(0,0.6)+(dict1-1-1.north)$) {Offset};
+
+\end{tikzpicture}
+\caption{Packet using JSON}
+\label{fig:old_packets}
+\end{figure}
 The communication that was implemented is described in \secref{sec:ros}.% and \secref{sec:sbrio}

@@ -1,4 +1,8 @@
-The surgeon controlling the currently commercially available da Vinci teleoperated surgical robot has to rely solely on a 3D visual feed when assessing the force output by the robot's end-effector. The lack of any kind of haptic feedback can lead to surgical accidents. The present project aims at implementing haptic feedback on the robot in order to reduce the number of surgical errors.
-The original controller is substituted by a haptic device.
-Challenges arise from the fact that the force affecting the end-effector cannot be measured directly, it needs to be estimated based on the measurable motor current. A position controller based implementation of the force feedback is analysed.
-Efforts were made to increase the communication speed as much as possible in order to minimize the stability problems arising from communication delay.
+%The surgeon controlling the currently commercially available da Vinci teleoperated surgical robot has to rely solely on a 3D visual feed when assessing the force output by the robot's end-effector. The lack of any kind of haptic feedback can lead to surgical accidents. 
+The present project aims at implementing haptic feedback on a surgical robot end-effector in order to reduce the number of surgical errors. %The original controller is substituted by a haptic device.
+Challenges arise from the fact that the force affecting the end-effector cannot be measured directly, it needs to be estimated based on the measurable motor current.
+\begin{itemize}
+	
+	\item Efforts were made to increase the communication speed as much as possible in order to minimize the stability problems arising from communication delay and provide haptic feedback with high sampling frequency.
+\item A position controller based implementation of the force feedback is analysed.
+\end{itemize} 
