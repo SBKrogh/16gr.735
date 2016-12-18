@@ -13,7 +13,7 @@ The human model can be describe from a mass-spring-damper model\cite{speich2005m
 \end{figure}
 
 
-From \todo{figure} the dynamic equations can be derived as \eqref{eq:force_endo_hand2} and \eqref{eq:force_endow_hand}.
+From \figref{fig:human_model} the dynamic equations can be derived as \eqref{eq:force_endo_hand2} and \eqref{eq:force_endow_hand}.
 
 \begin{equation}
 F_h = k_1(x_m-x_h)+b_1(x_m-x_h)s
@@ -31,3 +31,26 @@ By substituting the equations into each other the transfer function for the dyna
 \frac{x_m}{F_h} = \frac{m_hs^2+(b_2+b_1)s+(k_2+k_1)}{m_hb_1s^3+(m_hk_1+b_1b_2)s^2+(k_1b_2+b_1k_2)s+k_2k_1}
 \label{eq:force_endo_hand3}
 \end{equation}
+
+The parameters used for simulation are obtained from \cite{speich2005modeling} and displayed in \tabref{fig:human_parameters}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{| l | l | l |}
+	\hline			
+	Variable &	Value &	Unit\\
+	\hline
+	$b_1$ &	4.5	&	N s/m\\
+	\hline
+	$b_2$ &	7.9 &	N s/m\\
+	\hline
+	$k_1$ &	48.8 &	N/m \\
+	\hline
+	$k_2$ &	375	&	N/m \\
+	\hline
+	$m_h$ &	1.46 &	kg \\
+	\hline  
+\end{tabular}
+\caption{Parameters of the humand arm-hand model}
+\label{fig:human_parameters}
+\end{table}
