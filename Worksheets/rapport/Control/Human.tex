@@ -1,11 +1,16 @@
 \section{Human model}
-In this section a model of a human arm and hand are derived. This is done because of the \todo{Need something for this}..
+In this section a model of a human arm and hand are derived. This model is required to make a simulation of the entire system studied in this project. Most model built for teleoperation exclude a part of the arm-hand system\cite{lawrence1992stability} or limit the number of \gls{DOF}\cite{tsuji1994spatial}. For surgical application, the surgeon makes delicate movements relying on the fingers, thus it was decided to use a model including both the arm and the hand.
 %ref
 % http://research.vuse.vanderbilt.edu/cim/pubs/journal/13%20-%20Speich%20Shao%20and%20Goldfarb%202005.pdf
 
-The human model can be describe from a mass-spring-damper model\todo{reference}, see figure \todo{figref}. This model has the base position in armpit of the operator. The constants $K_2$, $b_2$ and $K_1$, $b_1$ are the damper and spring constant for the arm and hand respectively. The mass, M, is the arm of the operator and the force, F, is the force between the hand and the manipulator, in this case the Geomagic touch.
+The human model can be describe from a mass-spring-damper model\cite{speich2005modeling}, see \figref{fig:human_model}. This model has the base position in the armpit of the operator. The constants $K_2$, $b_2$ and $K_1$, $b_1$ are the damper and spring constant for the arm and hand respectively. The mass, M, is the arm of the operator and the force, F, is the force between the hand and the manipulator, in this case the Geomagic touch.
 
+\begin{figure}[H]
+\centering
 \input{rapport/Control/Tikz_human_model}
+\caption{Simple human arm/hand dynamical model.}
+\label{fig:human_model}
+\end{figure}
 
 
 From \todo{figure} the dynamic equations can be derived as \eqref{eq:force_endo_hand2} and \eqref{eq:force_endow_hand}.
