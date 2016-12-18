@@ -13,7 +13,6 @@
 % By removing the names from the string and compressing a data, the string can become 70 percents shorter, which is a valuable increase in efficiency.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\todo{maked with red is Christoffer}
 
 There are two elements that impact greatly the size of the exchanged messages: the number of character added by the JSON format and the length of the numbers.
 As detailed in ~\secref{subsec:JSON}, the JSON format add numerous characters for the structure and require a name for each value. The first modification made in order to minimize the size of the messages was to remove the JSON format. One way of doing this is to define a fixed format for the messages. For simplicity, it was decided to keep a format similar to the original one, composed of a vectors of positions, velocities and efforts. All of these vectors contain the same number of elements and each elements must have the same length to make it possible to read. 
