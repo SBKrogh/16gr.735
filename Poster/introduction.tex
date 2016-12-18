@@ -1,8 +1,68 @@
-%The surgeon controlling the currently commercially available da Vinci teleoperated surgical robot has to rely solely on a 3D visual feed when assessing the force output by the robot's end-effector. The lack of any kind of haptic feedback can lead to surgical accidents. 
-The present project aims to implement position control equipped with force feedback for teleoperating a surgical robot end-effector. %in order to reduce the number of surgical errors. %The original controller is substituted by a haptic device.
-Challenges arise from the fact that the force affecting the end-effector cannot be measured directly, it needs to be estimated based on the measurable motor current.
-\begin{itemize}
-	
-	\item Efforts were made to increase the communication speed as much as possible in order to minimize the stability problems arising from communication delay and provide haptic feedback with high sampling frequency.
-\item A position controller based implementation of the force feedback is analysed.
-\end{itemize} 
+
+% The present project aims to implement position control equipped with force feedback for teleoperating a surgical robot end-effector. 
+
+% Challenges arise from the fact that the force affecting the end-effector cannot be measured directly, it needs to be estimated based on the measurable motor current.
+% \begin{itemize}
+% \item Efforts were made to increase the communication speed as much as possible in order to minimize the stability problems arising from communication delay and provide haptic feedback with high sampling frequency.
+% \item A position controller based implementation of the force feedback is analysed.
+% \end{itemize} 
+
+
+
+
+
+In \cite{} it states that force feedback increases the precision of RMIS, thus minimizing the risk of error from the surgeon.  As no sensors can be implemented at the surgical tool the force has to be estimated through the actuators. Due to the nonlinearities of the tool, force cannot be directly computed from the current applied to the actuators, thus, an estimation model is required. 
+Since the human hand is very sensitive, a high refresh rate is required for the feedback loop.
+From \cite{} it is stated that a minimum of 550 Hz is required. 
+
+In this study, an attempt to implement force feedback on an existing setup is made. Emphasis is placed on increasing the refresh rate and estimating of the force. A generalized block diagram of the system is presented in Fig. \ref{fig:overview1}.
+
+%\input{fig}
+
+\begin{minipage}{\textwidth}
+    \begin{figure}[H]
+        \resizebox{\textwidth}{!}{
+            \tikzstyle{box} = [draw,rounded corners, minimum height=10mm, minimum width=15mm, align=center, text centered]
+            
+            \begin{tikzpicture}
+            %\draw (-1.5,-2.5) rectangle (13.5,2.5);
+            
+            
+            \node[box] (Opt) at (0,0) {Surgeon};
+            \node[box] (Geo) at ($(2.5,0) + (Opt)$) { Haptic\\device};
+            \node[box] (ros) at ($(2.5,0) + (Geo)$) {Computer};
+            \node[box] (davin) at ($(2.5,0) + (ros)$) {Embedded \\system};
+            \node[box] (end) at ($(2.5,0) + (davin)$) { End-effector};
+            
+            
+            \draw[->, ultra thick] ([yshift=0.3cm]Opt.east) -- ([yshift=0.3cm]Geo.west);
+            \draw[->, ultra thick] ([yshift=0.3cm]Geo.east) -- ([yshift=0.3cm]ros.west);
+            \draw[->, ultra thick] ([yshift=0.3cm]ros.east) -- ([yshift=0.3cm]davin.west);
+            \draw[->, ultra thick] ([yshift=0.3cm]davin.east) -- ([yshift=0.3cm]end.west);
+            
+            
+            \draw[<-, ultra thick] ([yshift=-0.3cm]Opt.east) -- ([yshift=-0.3cm]Geo.west);
+            \draw[<-, ultra thick] ([yshift=-0.3cm]Geo.east) -- ([yshift=-0.3cm]ros.west);
+            \draw[<-, ultra thick] ([yshift=-0.3cm]ros.east) -- ([yshift=-0.3cm]davin.west);
+            %\draw[<-, ultra thick] ([yshift=-0.3cm]davin.east) -- ([yshift=-0.3cm]end.west);
+            
+            \node at (1.35,0.95) {Position};
+            \node at (3.7,0.9) {Position};
+            % \node at (7.5,1) {yes};
+            % \node at (10.5,1) {yes};
+            
+            \node at (1.35,-0.95) {\small Force};
+            \node at (3.75,-0.95) {\small Force};
+            \node at (8.7,0.85) {\small Torque};
+            % \node at (10.5,1) {yes};
+            \node at (6.2,0.9) {\small Position};
+            \node at (6.3,-0.95) {\small Position};
+            \node at (6.3,-1.3) {\small Speed};
+            \node at (6.3,-1.6) {\small Current};
+            
+            \end{tikzpicture}
+        }
+        \footnotesize\caption{System overview}
+        \label{fig:overview1}
+    \end{figure}
+\end{minipage}\hfil

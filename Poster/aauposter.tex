@@ -273,16 +273,20 @@
 %\input{overview}
 \end{posterbox}
 
-\begin{posterbox}[name=overview,column=0,below=intro]{System Overview}
-\begin{center}
-\input{overview.tex} 
-\end{center}
-\end{posterbox}
+% \begin{posterbox}[name=overview,column=0,below=intro]{System Overview}
+% \begin{center}
+% \input{overview.tex} 
+% \end{center}
+% \end{posterbox}
 
-\begin{posterbox}[name=asd,below=overview]{Communication}
+\begin{posterbox}[name=asd,below=intro]{Communication}
 	
-The present project is based on a previous one in which the ROS communicated with the embedded system through TCP/IP using JSON packets at 100 Hz. 
-The encoding was changed to bitcode resulting in a \textbf{86\%} packet size decrease. TCP was substituted by UDP as it does not retransmit any obsolete data and omits the unnecessary handshaking, resulting in increased speed.
+The previous communication protocol used TCP to transmit JSON files between the embedded system and the computer. The refresh rate of this communication cannot exceed 100 Hz.
+To improve the refresh rate, two modifications are made:
+The size of the packet was reduced by sending binary representation of the numerical values instead of JSON files. By doing so, the size of the packets was reduced by 85%.
+The transport protocol is replaced by UDP as it allows higher bandwidth than TCP
+
+To evaluate the performance of the communication, the refresh rate, jitter and packet loss are measured.
 
 \begin{center}
 	\resizebox{\textwidth}{!}{
