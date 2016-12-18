@@ -100,6 +100,7 @@
 \usepackage{amsmath}
 % Adds new math symbols
 \usepackage{amssymb}
+\usepackage[font=footnotesize]{caption}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Colours
@@ -279,15 +280,16 @@
 % \end{center}
 % \end{posterbox}
 
-\begin{posterbox}[name=asd,below=intro]{Communication}
-	
+\begin{posterbox}[name=communication,below=intro,above=bottom]{Communication}
+	\vspace{5mm}
 The previous communication protocol used TCP to transmit JSON files between the embedded system and the computer. The refresh rate of this communication cannot exceed 100 Hz.\\
 To improve the refresh rate, two modifications are made:
+\vspace{5mm}
 \begin{itemize}
 \item The size of the packet was reduced by sending binary representation of the numerical values instead of JSON files. By doing so, the size of the packets was reduced by 85\%.
 \item The transport protocol is replaced by UDP as it allows higher bandwidth than TCP.
 \end{itemize}
-
+\vspace{5mm}
 To evaluate the performance of the communication, the refresh rate, jitter and packet loss are measured.
 
 
@@ -311,19 +313,19 @@ To evaluate the performance of the communication, the refresh rate, jitter and p
 
 \end{posterbox}
 
-\begin{posterbox}[name=results_and_simulations,column=1,span=2,below=Control]{Results and simulations}
-\input{results.tex} 
+\begin{posterbox}[name=results_and_simulations,column=1,span=2,below=Control,above=bottom]{Results and simulations}
+%\input{results.tex} 
 \end{posterbox}
 
 \begin{posterbox}[name=discussion,column=3]{Discussion}
 \input{discussion}
 \end{posterbox}
 
-\begin{posterbox}[name=conclusion,column=3,below=discussion]{Conclusion}
-\input{conclusion.tex} 
-\end{posterbox}
+%\begin{posterbox}[name=conclusion,column=3,below=discussion,above=bottom]{Conclusion}
+%\input{conclusion.tex} 
+%\end{posterbox}
 
-\begin{posterbox}[name=references,column=3,above=bottom,,below=conclusion]{References}
+\begin{posterbox}[name=references,column=3,above=bottom,below=discussion]{References}
 \bibliography{bibliography}
 \end{posterbox}
 
