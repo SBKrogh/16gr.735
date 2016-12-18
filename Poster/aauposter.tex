@@ -281,31 +281,17 @@
 
 \begin{posterbox}[name=asd,below=intro]{Communication}
 	
-The previous communication protocol used TCP to transmit JSON files between the embedded system and the computer. The refresh rate of this communication cannot exceed 100 Hz.
+The previous communication protocol used TCP to transmit JSON files between the embedded system and the computer. The refresh rate of this communication cannot exceed 100 Hz.\\
 To improve the refresh rate, two modifications are made:
-The size of the packet was reduced by sending binary representation of the numerical values instead of JSON files. By doing so, the size of the packets was reduced by 85%.
-The transport protocol is replaced by UDP as it allows higher bandwidth than TCP
+\begin{itemize}
+\item The size of the packet was reduced by sending binary representation of the numerical values instead of JSON files. By doing so, the size of the packets was reduced by 85\%.
+\item The transport protocol is replaced by UDP as it allows higher bandwidth than TCP.
+\end{itemize}
 
 To evaluate the performance of the communication, the refresh rate, jitter and packet loss are measured.
 
-\begin{center}
-	\resizebox{\textwidth}{!}{
-	$\begin{tabular}{|c|c|c|c|c|c|}
-	\hline
-	\text{Frequency (Hz)} & \text{delay (ms)} & \text{Jitter ($\mu$s)} & \text{Packet loss (\%)}\\
-	\hline
-	99 & 10.1 & 4.66E-2 & 0 \\
-	\hline
-	474 & 2.1 & 5.51E-2 & 0.2 \\
-	\hline
-	638 & 1.6 & 1.16E-2 & 1.2 \\
-	\hline
-	\end{tabular}$
-}
-	%\captionof{table}{Measurements of the UDP performances}
-	\label{tab:UDPMeasurements}
-\end{center}
-The new communication system is able to reach a speed of \textbf{638 Hz}. 
+
+%The new communication system is able to reach a speed of \textbf{638 Hz}. 
 	
 \end{posterbox}
 
