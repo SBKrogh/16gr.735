@@ -273,16 +273,13 @@
 %\input{overview}
 \end{posterbox}
 
-%\begin{posterbox}[name=methods,column=0,below=intro]{System overview}
-%
-%%\begin{center}
-%%\input{overview.tex} 
-%%
-%%\end{center}
-%
-%\end{posterbox}
+\begin{posterbox}[name=overview,column=0,below=intro]{System overview}
+\begin{center}
+\input{overview.tex} 
+\end{center}
+\end{posterbox}
 
-\begin{posterbox}[name=asd,below=intro]{Communication}
+\begin{posterbox}[name=asd,below=overview]{Communication}
 	
 The present project is based on a previous one in which the ROS communicated with the embedded system through TCP/IP using JSON packets at 100 Hz. 
 The encoding was changed to bitcode resulting in a \textbf{86\%} packet size decrease. TCP was substituted by UDP as it does not retransmit any obsolete data and omits the unnecessary handshaking, resulting in increased speed.
@@ -310,7 +307,7 @@ The new communication system is able to reach a speed of \textbf{638 Hz}.
 
 
 
-\begin{posterbox}[name=Control,column=1,span=2]{Control}
+\begin{posterbox}[name=Control,column=1,span=2]{Force Estimation Control}
 
 
 \begin{center}
