@@ -15,20 +15,22 @@
   	note ={Downloadet: 21-10-2016}
   }
 
-  @misc{Chris_Surgical,
-    author ={Karl Damkjær Hansen, Simon Jensen, Christoffer Soth, Rafal Wisniewski},
-    title ={Instrumentation of the da Vinci Robotic Surgical System},
-    howpublished={\url{http://vbn.aau.dk/files/224392713/The_3rd_AAU_Workshop_on_Robotics_2014.pdf}},
-    year ={2015},
-    note ={Downloadet: 04-11-2016}
-  }
 
-  @misc{JSON_IETF,
+
+@inproceedings{Chris_Surgical,
+  title={Instrumentation of the da Vinci Robotic Surgical System},
+  author={Hansen, Karl Damkj{\ae}r and Jensen, Simon and Sloth, Christoffer and Wisniewski, Rafal},
+  booktitle={3rd Aau Workshop on Robotics},
+  year={2015},
+  organization={Aalborg Universitetsforlag}
+}
+
+  @article{JSON_IETF,
     author ={T. Bray, Ed.},
     title ={The JavaScript Object Notation (JSON) Data Interchange Format},
     howpublished={\url{https://www.rfc-editor.org/info/rfc7159}},
     year ={2014},
-    note ={Accessed: 09-11-2016}
+    journal = {RFC 7159, Google, Inc.}
   }
 
   @misc{UDT,
@@ -45,6 +47,13 @@
     howpublished={\url{https://github.com/lsalzman/enet}},
     year ={2012},
     note ={Accessed: 09-11-2016}
+  }
+
+    @online{cisco_jitter,
+    author ={Cisco},
+    title ={Understanding Jitter in Packet Voice Networks (Cisco IOS Platforms)},
+    howpublished={\url{http://www.cisco.com/c/en/us/support/docs/voice/voice-quality/18902-jitter-packet-voice.pdf}},
+    note ={Document ID: 18902, Accessed: 16-12-2016}
   }
 
   @misc{ESCON_motor_controller,
@@ -118,3 +127,105 @@
   organization={IEEE}
 }
 
+@article{kim2014dynamic,
+  title={Dynamic modeling of coupled tendon-driven system for surgical robot instrument},
+  author={Kim, Chi Yen and Lee, Min Cheol and Wicker, Ryan Blaine and Yoon, Sung-Min},
+  journal={International Journal of Precision Engineering and Manufacturing},
+  volume={15},
+  number={10},
+  pages={2077--2084},
+  year={2014},
+  publisher={Springer}
+}
+
+
+@article{coles2011role,
+  title={The role of haptics in medical training simulators: a survey of the state of the art},
+  author={Coles, Timothy R and Meglan, Dwight and John, Nigel W},
+  journal={IEEE Transactions on Haptics},
+  volume={4},
+  number={1},
+  pages={51--66},
+  year={2011},
+  publisher={IEEE}
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      @misc{forbes,
+    author ={Trefis},
+    title ={Intuitive Surgical Expects Q4 Growth On Rising da Vinci Xi Sales},
+    howpublished={\url{http://www.forbes.com/sites/greatspeculations/2015/01/15/intuitive-surgical-expects-q4-growth-on-rising-da-vinci-xi-sales/#433ce1a26d7c}},
+    note ={Accessed: 24-11-2016}
+    }
+
+
+@article{lee2015grip,
+  title={A grip force model for the da Vinci end-effector to predict a compensation force},
+  author={Lee, Chiwon and Park, Yong Hyun and Yoon, Chiyul and Noh, Seungwoo and Lee, Choonghee and Kim, Youdan and Kim, Hee Chan and Kim, Hyeon Hoe and Kim, Sungwan},
+  journal={Medical \& biological engineering \& computing},
+  volume={53},
+  number={3},
+  pages={253--261},
+  year={2015},
+  publisher={Springer}
+}
+@manual{catalog_davinci,
+  organization = {Intuitive Surgery},
+  year = {2014},
+  title = {EndoWrist/Single-Site Instrument \& Accessory Catalog},
+  howpublished = {\url{http://www.intuitivesurgical.com/products/871145_Instrument_Accessory_%20Catalog.pdf}}
+}
+
+@article{tactile1,
+	title={A tactile feedback system for robotic surgery},
+	author={Culjat MO1, King CH, Franco ML, Lewis CE, Bisley JW, Dutson EP, Grundfest WS},
+	journal={Engineering in Medicine and Biology Society},
+	year={2008},
+	publisher={IEEE}
+}
+
+@article{tactile2,
+	title={Assessment of Vibrotactile Feedback in a Needle-Insertion Task
+	using a Surgical Robot},
+	author={Sumanth Peddamatham, William Peine and Hong Z. Tan},
+	journal={Haptic interfaces for virtual environment and teleoperator systems},
+	year={2008},
+	publisher={IEEE}
+}
+
+@article{tactile3,
+	title={Vibrotactile stimuli for augmented haptic feedback
+	in robot-assisted surgery},
+	author={Adrian Ramos Peon, Claudio Pacchierotti, Domenico Prattichizzo},
+	journal={ World Haptics Conference},
+	year={2013},
+	publisher={IEEE}
+}
+
+@article{tactile_summary,
+	title={Haptic Feedback in Robot-Assisted Minimally Invasive Surgery},
+	author={Allison M. Okamura},
+	journal={Current opinion in urology},
+	year={2009}
+}
+
+@article{force_feedback_surgery,
+	title={Robot assisted force feedback surgery},
+	author={Ortmaier T, Deml B, Kuebler B, et al.},
+	journal={Springer Tracts in Advanced Robotics (STAR)},
+	volume={31},
+	pages={341--358},
+	year={2007},
+	publisher={Springer}
+}
+
+@article{IEEE_754,
+  title={754-2008 IEEE standard for floating-point arithmetic},
+  author={IEEE Standards Committee and others},
+  journal={IEEE Computer Society Std},
+  volume={2008},
+  year={2008}
+}

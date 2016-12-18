@@ -172,6 +172,8 @@ In addition to the transport protocol, another factor that influence the speed o
 \end{figure}
 %{\color{green}
 To investigate the quality of the communication as a function of frequency three parameters were measured: the delay between two packets received, the jitter and the error rate. Since the computation time for force estimation and on the embedded system are very small compared to the frequency of the communication, inferior to 3 $\mu$s, if the communication can reach the aimed frequency of 1kHz, the goal for the feedback loop is reached.
+
+ In order to evalutate the performance of the new communication protocol between the embedded system and the computer, different frequencies were experimented. For each of them the delays between two received packets are measured and the from those measurements the jitter and packet loss can be computed. 
 %}
 % {\color{red}
 % To investigate the quality of the communication as a function of frequency three parameters are measured: the round-time trip delay, the jitter and the error rate. However, as the software does not have a way of directly setting the frequency of the communication it is the delay in the communication loop that is modified through the experiment. The computation time and transmission time of the packets being non negligible, the frequency of the communication is not equal to the inverse of this delay.
