@@ -191,6 +191,8 @@
 % *** CITATION PACKAGES ***
   \usepackage[square, numbers, comma, sort&compress]{natbib}      
   \bibliographystyle{ieeetr}
+  
+  \tikzstyle{box} = [draw,rounded corners, minimum height=13mm, minimum width=20mm, align=center, text centered]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   
@@ -220,7 +222,7 @@
 \begin{poster}{
   %general options for the poster
   grid=false,
-  columns=3,
+  columns=4,
 %  colspacing=4.2mm,
   headerheight=0.1\textheight,
   background=user,
@@ -268,18 +270,19 @@
 
 \begin{posterbox}[name=intro,column=0]{Introduction}
 \input{introduction}
+%\input{overview}
 \end{posterbox}
 
-\begin{posterbox}[name=methods,column=0,below=intro]{System overview}
+%\begin{posterbox}[name=methods,column=0,below=intro]{System overview}
+%
+%%\begin{center}
+%%\input{overview.tex} 
+%%
+%%\end{center}
+%
+%\end{posterbox}
 
-\begin{center}
-\input{overview.tex} 
-
-\end{center}
-
-\end{posterbox}
-
-\begin{posterbox}[name=asd,below=methods,above=bottom]{Communication}
+\begin{posterbox}[name=asd,below=intro]{Communication}
 	
 The present project is based on a previous one in which the ROS communicated with the embedded system through TCP/IP using JSON packets at 100 Hz. 
 The encoding was changed to bitcode resulting in a \textbf{86\%} packet size decrease. TCP was substituted by UDP as it does not retransmit any obsolete data and omits the unnecessary handshaking, resulting in increased speed.
@@ -325,15 +328,15 @@ The new communication system is able to reach a speed of \textbf{638 Hz}.
 \input{results.tex} 
 \end{posterbox}
 
-\begin{posterbox}[name=discussion,column=1,below=results_and_simulations,above=bottom]{Discussion}
-
+\begin{posterbox}[name=discussion,column=3]{Discussion}
+\input{discussion}
 \end{posterbox}
 
-\begin{posterbox}[name=conclusion,column=2,below=results_and_simulations]{Conclusion}
+\begin{posterbox}[name=conclusion,column=3,below=discussion]{Conclusion}
 \input{conclusion.tex} 
 \end{posterbox}
 
-\begin{posterbox}[name=references,column=2,above=bottom,,below=conclusion]{References}
+\begin{posterbox}[name=references,column=3,above=bottom,,below=conclusion]{References}
 \bibliography{bibliography}
 \end{posterbox}
 
