@@ -30,7 +30,7 @@ The system identification proces used in this project can be described in three 
 \item Model validation
 \end{enumerate}
 
-\subsection{Model structure}
+\subsection{Model structure}\label{se:ms}
 The first choice regarding model structure pertains to linearity.
 Since our system is nonlinear , a straightforward approach would involve choosing a nonlinear model structure for identification.
 On the other hand, stability analysis of nonlinear models is difficult and due to the nature of the system only general trends in force need to be represented.
@@ -74,12 +74,12 @@ The nonlinearity estimators at the inputs and outputs of the system can be model
 A deadzone nonlinearity on the input allows us to represent the effects of friction on the force, and is used in this model.
 Different output nonlinearities are also utilized and compared.
 
-Two approaches were chosen in the matter of inputs and outputs of the model.
-The first approach considered the possible correlation between the motor velocity and end-effector force during impact, so a model that outputs both force and velocity as a function of current could be corrected (as an observer) with actual velocity measurements and provide correction of the force model.
-The second approach has the models output force as a function of current and velocity and thus cant be corrected.
+The approach considered utilizes the possible correlation between the position error and end-effector force during impact. 
+A model that outputs both force and position error as a function of current could be used as an observer with only position error measurments and provide correction of the force model.
 
-The same modeling process was used for both the yaw and pitch models, while the roll model is explained in section \ref{se:mdval}.
-For clarity, the results of each step in the process will only be presented for the yaw model, while the final results will be presented for both the yaw and pitch models.
+The same modeling process was used for both the yaw and pitch force models, while the roll torque model is explained in section \ref{se:mdval}.
+For clarity, the results of each step in the process will only be presented for the yaw model, while the final results will be presented for both the yaw and pitch models. 
+Aditionally, only force estimates will be presented in the sections pertaining to parameter Identification and validation, while the position error output will be examined in the later section on designing an observer.
 
 \section{Parameter identification}
 Once a general model structure has been chosen, parameter identification algorithms can be utilized.
@@ -232,3 +232,23 @@ The relation \ref{eq: roll} can also be interpreted as a feedthrough component i
 \end{align}
 
 This is a useful way to view the system since the force feedback loop can be veiwed as a single system with state feedback and input/output nonlinearities.
+
+\section{State estimator design}
+As mentioned in section \ref{se:ms}, an approach was taken towards designing an state estimator which could correct the force estimate.
+This method would involve designing a steady-state Kalman filter \cite{brown1997introduction} for a model that outputs both force and position error.
+
+The choice of a Kalman filter over the Luenberger observer \cite{friedland2012control} is based on the fact that the Kalman filter takes into account the stochastic nature of measurments.
+
+Before implementing an observer, it is neccessary to check our system for observeability.
+A state-space system is observable only if it's observeability matrix has the same rank as it's $\mathbf{A}$ matrix.
+Formally, a system is said to be observable if, for any possible sequence of state and control vectors, the current state can be determined in finite time.
+The observability matrix is defined as:
+
+\begin{align}
+
+\end{align}
+
+
+
+\subsection{Kalman filter }
+
