@@ -13,7 +13,6 @@
 % By removing the names from the string and compressing a data, the string can become 70 percents shorter, which is a valuable increase in efficiency.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\todo{maked with red is Christoffer}
 
 There are two elements that impact greatly the size of the exchanged messages: the number of character added by the JSON format and the length of the numbers.
 As detailed in ~\secref{subsec:JSON}, the JSON format add numerous characters for the structure and require a name for each value. The first modification made in order to minimize the size of the messages was to remove the JSON format. One way of doing this is to define a fixed format for the messages. For simplicity, it was decided to keep a format similar to the original one, composed of a vectors of positions, velocities and efforts. All of these vectors contain the same number of elements and each elements must have the same length to make it possible to read. 
@@ -21,44 +20,98 @@ With the original \gls{JSON} format it is possible to specify the content of the
 
 As mentioned, all the numbers in the vectors should have the same length. In the original format, not only the numbers were long (18 digits) but the length would vary from one message to another. Different solutions were considered. The first one would be to fix the number of digits but that would still imply a conversion to string. The second solution considered was the compression of the characters sent. 
 
- However the compression rate generally is not higher than 50\% for random data and the computation time induced by compression would results in an additional delay instead of decreasing the existing one \cite{simple_compression}\cite{fast_ZIV}. The third and last option was to send the binary representation directly without any encoding. The numerical values being stored as floats, each of them requires 4 bytes. It have the advantage of having a fixed length without having to round the value. The last solution was chosen as it has the lowest computation time, since no encoding is used. The only issue is that the endianness of both devices is not the same, this is corrected in the implementation on the ROS side. The packets obtained with the new format are shown in \tabref{fig:received_packet} and \tabref{fig:sent_packet}
+ However the compression rate generally is not higher than 50\% for random data and the computation time induced by compression would results in an additional delay instead of decreasing the existing one \cite{simple_compression}\cite{fast_ZIV}. The third and last option was to send the binary representation directly without any encoding. The numerical values being stored as floats, each of them requires 4 bytes. It have the advantage of having a fixed length without having to round the value. The last solution was chosen as it has the lowest computation time, since no encoding is used. The only issue is that the endianness of both devices is not the same, this is corrected in the implementation on the ROS side. The packets obtained with the new format are shown in \figref{fig:new_packets}.%The packets obtained with the new format are shown in \tabref{fig:received_packet} and \tabref{fig:sent_packet}
 
-With the original format, one message such as the one in ~\secref{subsec:JSON} contained 583 characters (583 bytes) for 7 motors. With the new format the message that contains the same information is 85 bytes. Therefore, the messages following the new format uses only 15\% of the original size.
+With the original format, the packet contained 346 characters, see \secref{subsec:JSON}. With the new format, the packet that contains the same information is 49 bytes. Therefore, the packets following the new format uses 15\% of the original size.
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+    \matrix(dict)[matrix of nodes,%below=of game,
+        nodes={align=center,text width=1.5cm},
+        row 1/.style={anchor=south}%,
+        column 1/.style={nodes={text width = 0.5cm, align=right}}
+    ]{
+		0 	& position1 & position2 & position3 & position4\\
+		16 	& velocity1 & velocity2 & velocity3 & velocity4\\
+		32 	& effort1 	& effort2 	& effort3 	& effort4\\
+		48	\\
+    };
+    %horizontal
+    \draw(dict-1-2.north west)--(dict-1-5.north east);
+    \draw(dict-1-2.south west)--(dict-1-5.south east);
+    \draw(dict-2-2.south west)--(dict-2-5.south east);
+    \draw(dict-3-2.south west)--(dict-3-5.south east);
+	%vertical
+    \draw(dict-1-1.north east)--(dict-4-1.south east);
+    \draw(dict-1-2.north east)--(dict-3-2.south east);
+    \draw(dict-1-3.north east)--(dict-3-3.south east);
+    \draw(dict-1-4.north east)--(dict-3-4.south east);
+    \draw(dict-1-5.north east)--(dict-3-5.south east);
+
+    %small at bottom
+    \draw(dict-4-1.south east)--($(0.5,0)+(dict-4-1.south east)$);
+    \draw($(0.5,0)+(dict-4-1.south east)$)--($(0.5,0.49)+(dict-4-1.south east)$);
+
+    %numbers on top
+    \node at ($(0,0.3)+(dict-1-1.north east)$) {0};
+    \node at ($(0,0.3)+(dict-1-2.north east)$) {4};
+    \node at ($(0,0.3)+(dict-1-3.north east)$) {8};
+    \node at ($(0,0.3)+(dict-1-4.north east)$) {12};
+    \node at ($(0,0.3)+(dict-1-5.north east)$) {16};
+
+    \node at ($(0,0.3)+(dict-1-1.north)$) {bytes};
+    \node at ($(0,0.6)+(dict-1-1.north)$) {Offset};
+
+    %The zoom on the last byte
+    \node (zoom) at (1,-2) {XXXX 4 booleans};
+    \draw(zoom.north east)--(zoom.north west);
+    \draw(zoom.north east)--(zoom.south east);
+    \draw(zoom.north west)--(zoom.south west);
+    \draw(zoom.south east)--(zoom.south west);
+    \draw($(zoom.north)+(-0.25,0)$)--($(zoom.south)+(-0.25,0)$);
+    \draw(zoom.north east)--($(1,0)+(dict-4-1)$);
+    \draw(zoom.north west)--($(1,0)+(dict-4-1)$);
+    \node at ($(zoom.north east)+(0,0.3)$) {1};
+    \node at ($(zoom.north west)+(0,0.3)$) {0};
+
+\end{tikzpicture}
+\caption{Packet using the binary representation}
+\label{fig:new_packets}
+\end{figure}
+% With the original format, one message such as the one in ~\secref{subsec:JSON} contained 583 characters (583 bytes) for 7 motors. With the new format the message that contains the same information is 85 bytes. Therefore, the messages following the new format uses only 15\% of the original size.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[H]
-\centering
-\begin{tabular}{| l | l | l | l | l |}
-  \hline			
-  				 & Positions & Velocities & Efforts & Active\\ \hline
-Number of floats & 7 		 & 7 		  & 7 		& 		\\ \hline
-Number of bytes  & 4$\cdot$7 		 & 4$\cdot$7 		  & 4$\cdot$7 	& 1		\\
-\hline  
-%\caption{Packet from the sbRIO to ROS for one arm, with a payload size of 85 bytes.}
-%\label{fig:received_packet}
-\end{tabular}
-\caption{Packet from the sbRIO to ROS for one arm, with a payload size of 85 bytes.}
-\label{fig:received_packet}
-\end{table}
-\todo{What is the resolution of the encoders compared to the representation
-	\\ the sbrio can provide 2048 ticks per rotation. it comes down to around 18000 ticks between the two endpoints of the motor}
+% \begin{table}[H]
+% \centering
+% \begin{tabular}{| l | l | l | l | l |}
+%   \hline			
+%   				 & Positions & Velocities & Efforts & Active\\ \hline
+% Number of floats & 7 		 & 7 		  & 7 		& 		\\ \hline
+% Number of bytes  & 4$\cdot$7 		 & 4$\cdot$7 		  & 4$\cdot$7 	& 1		\\
+% \hline  
+% %\caption{Packet from the sbRIO to ROS for one arm, with a payload size of 85 bytes.}
+% %\label{fig:received_packet}
+% \end{tabular}
+% \caption{Packet from the sbRIO to ROS for one arm, with a payload size of 85 bytes.}
+% \label{fig:received_packet}
+% \end{table}
+% %\todo{What is the resolution of the encoders compared to the representation
+% 	%\\ the sbrio can provide 2048 ticks per rotation. it comes down to around 18000 ticks between the two endpoints of the motor}
 
-\begin{table}[H]
-\centering
-\begin{tabular}{| l | l | l |}
-\hline			
-					& Set points	 & Enabled\\ \hline
-Number of floats	& 7				 &		  \\ \hline
-Number of bytes		& 7$\cdot$4 bytes		 & 1 byte \\
-\hline  
-%\caption{Packet from ROS to the sbRIO for one arm, with a payload size of 29 bytes.}
-%\label{fig:sent_packet}
-\end{tabular}
-\caption{Packet from ROS to the sbRIO for one arm, with a payload size of 29 bytes.}
-\label{fig:sent_packet}
-\end{table}
-
-
+% \begin{table}[H]
+% \centering
+% \begin{tabular}{| l | l | l |}
+% \hline			
+% 					& Set points	 & Enabled\\ \hline
+% Number of floats	& 7				 &		  \\ \hline
+% Number of bytes		& 7$\cdot$4 bytes		 & 1 byte \\
+% \hline  
+% %\caption{Packet from ROS to the sbRIO for one arm, with a payload size of 29 bytes.}
+% %\label{fig:sent_packet}
+% \end{tabular}
+% \caption{Packet from ROS to the sbRIO for one arm, with a payload size of 29 bytes.}
+% \label{fig:sent_packet}
+% \end{table}
 
 
 % \begin{figure}[H]

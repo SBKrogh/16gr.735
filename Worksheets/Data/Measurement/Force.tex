@@ -1,15 +1,16 @@
 \section{Force measurements for the end-effector} % \label{app:...}
 
-As the Endowrist tool is highly nonlinear, measurement of how the end-effector responds to external force should is made. These measurements are made for the model estimation of the EndoWrist.  
+As the Endowrist tool is highly nonlinear, measurement of how the end-effector responds to external force is made. These measurements are made for the model estimation of the EndoWrist.  
 
 \subsection*{Purpose:}
-The purpose is to measure the relationship between the current consumption and force acting at the end-effector.
+The purpose is to define a dynamic model for the EndoWrist.
 
-The force estimations are done on four different setups:
+The measurements are done on three different setups:
 \begin{itemize}
-\item Pull/push force for each clamp on the end-effector (yaw),
-\item Pull/push of two clamps where the force for both clamps is applied in the same direction (yaw),
-\item Pull/push of the pitch on the end-effector (pitch)
+%\item Pull/push force for each clamp on the end-effector (yaw),
+%\item Pull/push of two clamps where the force for both clamps is applied in the same direction (yaw),
+\item Grip force of the clamps (yaw),
+\item Down/upwards force of the pitch on the end-effector (pitch),
 \item and the rotation of the end-effector (roll).
 \end{itemize}
 \todo{The reader don't know what we mean about push pull, maybe include a graphic}
@@ -19,30 +20,30 @@ In the following subsections the different tests defined in the itemizer above a
 \todo{not in use}
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{.32\textwidth}
+	\begin{subfigure}{.48\textwidth}
 		\centering
 		\vspace{-12pt}
-		\includegraphics[width=\linewidth]{One_clamp.jpg}
-		\caption{One clamp is attached to the load cell, so the pull/push force of one clamp can be made.}
+		\includegraphics[width=\linewidth,height=5.4cm]{clamp_mes.png}
+		\caption{Upper clamp which is allowed to add or release force applied to the load-cell.}
 		\label{fig:one_clamp}
 	\end{subfigure}
-	\begin{subfigure}{.32\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{Two_clamp.jpg}
-		\caption{The clamps are put together and connected to the load-cell such that the pull/push force can be measured.}
-		\label{fig:two_clamp}
-	\end{subfigure}
-	\begin{subfigure}{.32\textwidth}
+	% \begin{subfigure}{.32\textwidth}
+	% 	\centering
+	% 	\includegraphics[width=\linewidth]{Two_clamp.jpg}
+	% 	\caption{The clamps are put together and connected to the load-cell such that the pull/push force can be measured.}
+	% 	\label{fig:two_clamp}
+	% \end{subfigure}
+	\begin{subfigure}{.48\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{Pitch_clamp.jpg}
-		\caption{The end-effector are turned $90^\circ$ and attached to the load-cell, such that the pitch force can be measured.}
+		\caption{The end-effectors two clamps are attached to the load-cell, such that the pitch force can be measured.}
 		\label{fig:pitch_force}
 	\end{subfigure}
 \caption{Attachments between the end-effector and the load-cell used for force measurements}
 \label{fig:Overview_endowrist_attachment}
 \end{figure}
 
-\subsection*{Electrical }
+\subsection*{Electrical circuit}
 For making the force measurement for the EndoWrist a simple hardware construction was build. This was made due to the lack of the hardware available at Aalborg university. A simple block diagram of setup can be seen on \figref{fig:arduino_loadcell}
 
 \begin{figure}[H]
@@ -55,7 +56,7 @@ For making the force measurement for the EndoWrist a simple hardware constructio
 
 \draw [ultra thick] (-3,0) rectangle (-1,2);
 \node at (-2,1) {Amplifier};
-\draw [->,ultra thick] (-3,1) -- (-4,1);
+\draw [<->,ultra thick] (-3,1) -- (-4,1);
 
 \draw [ultra thick] (3,3) rectangle (5,5);
 \node at (4,4) {Motor};
@@ -78,9 +79,9 @@ For making the force measurement for the EndoWrist a simple hardware constructio
 \label{fig:arduino_loadcell}
 \end{figure}
 
-The load-cell's output is amplified and send to an Arduino which calculate the force applied to the load-cell. The force is then translated to a corresponding voltage output, $4\cdot\frac{mV}{g}$. Since the Arduino does not have a digital to analog converter (DAC), the voltage is translated to a binary code and send to a "Max531 DAC" through a serial peripheral interface (SPI). The voltage output from the DAC is read at the sbRIO board which also samples the current send to the motor, motor position and time stamps.
+The load-cell's output is amplified and send to an Arduino which calculate the force applied to the load-cell. The force is then translated to a corresponding voltage output, $mV\cdot\frac{g}{4\cdot mV}$. Since the Arduino does not have a digital to analog converter (DAC), the voltage is translated to a binary code and send to a "Max531 DAC" through a serial peripheral interface (SPI). The voltage output from the DAC is read at the sbRIO board which also samples the current send to the motor, motor position and time stamps.
 
-As explained, an Arduino is used for the data samples. This was done since a library for the HX711 amplifier was made for the Arduino IDE\cite{Git_HX711}. This library included features such as calibration, reset and averaging of the load-cell. 
+As explained, an Arduino is used for the translation of force applied to the load-cell. This was done since a library for the HX711 amplifier was made for the Arduino IDE\cite{Git_HX711}. This library included features such as calibration, reset and averaging of the load-cell. 
 
 
 \todo{We probaly have to go through the mA applied in each section as 1200 mA and the figures does not seem to fit each other.}
@@ -89,7 +90,7 @@ As explained, an Arduino is used for the data samples. This was done since a lib
 You should put the figures and an explanation of the test in the main report}
 
 %\todo{not in use}
-%\input{Data/Measurement/Pull_clamp}
+\input{Data/Measurement/Pull_clamp}
 %\todo{not in use}
 %\input{Data/Measurement/Pull_clampp}
 

@@ -1,5 +1,12 @@
-\subsection{Pitch inwards and outwards force} % \label{app:...}
-This test uses the test setup seen on \figref{fig:pitch_force}. The positive force is defined as a downwards direction on the load-cell.
+\subsection{Pitch down and upwards force} % \label{app:...}
+This test uses the test setup seen on \figref{fig:pitch_force}. The positive force is defined as a downwards direction on the load-cell, see \figref{fig:mes_up_down}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\linewidth]{load_cell_mes.png}
+	\caption{Load-cell with defined upwards- downwars force.}
+	\label{fig:mes_up_down}
+\end{figure}
 
 
 \subsection*{Test equipment:}
@@ -16,19 +23,19 @@ This test uses the test setup seen on \figref{fig:pitch_force}. The positive for
 The following procedure was made:\\
 Downwards force measurements:
 \begin{enumerate}
-\item The end-effector is rotated $90^\circ$ and attached perpendicular to the load cell. 
+\item The end-effector is attached perpendicular to the load cell. 
 \item The scale is reset to zero.
 \item Current is applied to the motor which control the pitch of the end-effector, at different current levels and the force is measured (downwards direction).
-\item Current is increased until 1200 mA is applied.
+\item Current is increased until 680 mA is applied.
 \end{enumerate}
 Step two to four is repeated five times, where the current and force is measured in respect to each other. 
 
 Upwards force measurements:
 \begin{enumerate}
-\item The end-effector is rotated $90^\circ$ and attached perpendicular to the load cell. 
+\item The end-effector is attached perpendicular to the load cell. 
 \item The scale is reset to zero.
 \item Current is applied to the motor which control the pitch of the end-effector, at different current levels and the force is measured (upwards direction).
-\item Current is increased until 1200 mA is applied.
+\item Current is increased until 680 mA is applied.
 \end{enumerate}
 Step two to four is repeated five times, where the current and force is measured in respect to each other. 
 
@@ -60,7 +67,7 @@ Six of the data measurements can be seen on \figref{fig:pitch_down} and \figref{
 
 
 \subsection*{Results:}
-From \figref{fig:pitch_down} and \figref{fig:pitch_up} a similar pattern between the measurements can be seen. From each measurement it can be seen that the force growth for the different measurements are similar. Force is generated on the end-effector from the same current start point on both upwards and downwards measurements, approx $\pm$100 mA. It can be seen that the current is decreasing for each measurements. This is due to the controller implemented on the motor controller as it gets a setpoint and current is applied until the setpoint is reached and then decreased.
+From \figref{fig:pitch_down} and \figref{fig:pitch_up} a similar pattern between the measurements can be seen. From each measurement it can be seen that the force growth for the different measurements are similar. Force is generated on the end-effector from almost the same current start point on both downwards and upwards measurements. For downwards the force is applied between -131 mA to -148 mA and upwards between 151 mA to 191 mA. It can be seen that the current is decreasing for each measurements. This is due to the controller implemented on the motor controller as it gets a setpoint and current is applied until the setpoint is reached and then decreased.
 %It can be seen from the graph on \figref{endo_force_mes} that the force on the end-effector is highly nonlinear. The friction from the gearing and the Endowrist does that the force first has an exponential growth at the start. Around the 800 mA and 1200 mA step it can be seen that a drop in force is happening. What causes this drop is not identified but it can be seen that it appears for all the data sequences. \todor{better explanation?}
 
 
@@ -73,4 +80,4 @@ From \figref{fig:pitch_down} and \figref{fig:pitch_up} a similar pattern between
 \end{itemize}
 
 \subsection*{Conclusion:}
-Force is generated at the end-effector when a current higher than 100 mA is applied to the motor. This is identical for all measurements. 
+Force is generated at the end-effector when a current higher than -131 mA for downwards force and 151 mA for upwards.
