@@ -282,13 +282,26 @@
 \begin{posterbox}[name=asd,below=methods,above=bottom]{Communication}
 	
 The present project is based on a previous one in which the ROS communicated with the embedded system through TCP/IP using JSON packets at 100 Hz. 
-\begin{itemize}
-\item The encoding was changed to bitcode resulting in a \textbf{86\%} packet size decrease.
-\item In order to increase communication speed it was decided to use UDP instead of TCP as it does not retransmit any packets or implement any features to improve long distance communications. In our system, retransmission of packets would lead to retransmitting obsolete data instead of transmitting new ones. 
+The encoding was changed to bitcode resulting in a \textbf{86\%} packet size decrease. TCP was substituted by UDP as it does not retransmit any obsolete data and omits the unnecessary handshaking, resulting in increased speed.
 
-\end{itemize}
-\bigskip
-The new communication system is able to reach a speed of \textbf{637 Hz}. 
+\begin{center}
+	\resizebox{0.8\textwidth}{!}{
+	$\begin{tabular}{|c|c|c|c|c|c|}
+	\hline
+	\text{Frequency (Hz)} & \text{delay (ms)} & \text{Jitter ($\mu$s)} & \text{Packet loss (\%)}\\
+	\hline
+	99 & 10.1 & 4.66E-2 & 0 \\
+	\hline
+	474 & 2.1 & 5.51E-2 & 0.2 \\
+	\hline
+	638 & 1.6 & 1.16E-2 & 1.2 \\
+	\hline
+	\end{tabular}$
+}
+	%\captionof{table}{Measurements of the UDP performances}
+	\label{tab:UDPMeasurements}
+\end{center}
+The new communication system is able to reach a speed of \textbf{638 Hz}. 
 	
 \end{posterbox}
 
