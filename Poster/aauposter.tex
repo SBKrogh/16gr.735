@@ -49,6 +49,16 @@
 \usepackage{float}
 \input{../Worksheets/Clean_up/tikz_magi}
 
+%%%% NICE LOOKING REFERENCE %%%%
+
+\newcommand{\itref}[1]{\textit{\ref{#1}}}
+\newcommand{\chapref}[1]{Chapter \textit{\ref{#1}: \nameref{#1}}}
+\newcommand{\secref}[1]{Section \textit{\ref{#1}: \nameref{#1}}}
+\newcommand{\figref}[1]{\emph{Figure \ref{#1}}}
+\newcommand{\appref}[1]{\emph{Appendix: \ref{#1}}}
+\newcommand{\tabref}[1]{\emph{Table: \ref{#1}}}
+\newcommand{\coderef}[1]{\emph{Listings: \ref{#1}}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Graphics and Tables
 % http://en.wikibooks.org/wiki/LaTeX/Importing_Graphics
@@ -260,7 +270,7 @@
 \input{introduction}
 \end{posterbox}
 
-\begin{posterbox}[name=methods,column=0,below=intro,above=bottom]{System overview}
+\begin{posterbox}[name=methods,column=0,below=intro]{System overview}
 
 \begin{center}
 \input{overview.tex} 
@@ -269,8 +279,22 @@
 
 \end{posterbox}
 
-\begin{posterbox}[name=results,span=1,column=2,row=0]{Results}
+\begin{posterbox}[name=asd,below=methods,above=bottom]{Communication}
+	
+The present project is based on a previous one in which the ROS communicated with the embedded system through TCP/IP using JSON packets at 100 Hz. 
+\begin{itemize}
+\item The encoding was changed to bitcode resulting in a \textbf{86\%} packet size decrease.
+\item In order to increase communication speed it was decided to use UDP instead of TCP as it does not retransmit any packets or implement any features to improve long distance communications. In our system, retransmission of packets would lead to retransmitting obsolete data instead of transmitting new ones. 
 
+\end{itemize}
+\bigskip
+The new communication system is able to reach a speed of \textbf{637 Hz}. 
+	
+\end{posterbox}
+
+
+\begin{posterbox}[name=results,span=1,column=2,row=0]{Results}
+	
 \end{posterbox}
 
 \begin{posterbox}[name=Control,column=1]{Control}
