@@ -1,81 +1,40 @@
-%\begin{figure}
-\resizebox{\textwidth}{!}{
-\begin{tikzpicture}
-
-\draw  (0,0) rectangle (1.5,1)node[pos=.5]{\large H};
-\draw  (0,3.5) rectangle (1.5,4.5)node[pos=.5]{\large GT};
-\draw  (6.5,3.5) rectangle (8,4.5)node[pos=.5]{\large K};
-\draw  (2.5,0) rectangle (4,1)node[pos=.5]{\large T};
-\draw  (6.5,0) rectangle (8,1)node[above,pos=.5]{ Position}node[below,pos=.5]{ Control};
-
-
-\draw [->,line width=1pt] (0.75,3.5) -- (0.75,1) node [pos=0.5,left] {F*};
-\draw [->,line width=1pt] (1.5,0.5) -- (2.5,0.5) node [pos=0.5,above] {P};
-\draw [->,line width=1pt] (4,0.5) -- (5,0.5) node [pos=0.5,above] (v1) {$\theta_d$};
-
-\draw [<-,line width=1pt] (1.5,4) -- (6.5,4) node [pos=0.5,above] {$\hat{F}$};
-\draw [<-,line width=1pt] (8,4) -- (13.9,4) node [pos=0.1,above] {$\hat{x}$};
-
-
-;
-
-
-\draw  (5.25,0.5) ellipse (0.25 and 0.25) node  [ left=-0.5mm]{\tiny$+$} node  [below =-0.5mm]{\tiny$-$};
-\draw [->,line width=1pt] (5.5,0.5) -- (6.5,0.5) node [pos=0.5,above] (v1) {$\theta_e$};
-
-
-
-\draw [->,line width=1pt] (8,0.5) -- (9,0.5) node [pos=0.5,above] (v1) {$\dot\theta_d$};
-\draw  (9.25,0.5) ellipse (0.25 and 0.25) node  [ left=-0.5mm]{\tiny$+$} node  [below =-0.5mm]{\tiny$-$};
-\draw  (10.5,0) rectangle (12,1)node[above,pos=.5]{ Speed}node[below,pos=.5]{ Control};
-\draw [->,line width=1pt] (9.5,0.5) -- (10.5,0.5) node [pos=0.5,above] (v1) {$\dot\theta_e$};
-
-\draw [->,line width=1pt] (12,0.5) -- (13,0.5) node [pos=0.5,above] (v1) {$I_d$};
-\draw  (13.25,0.5) ellipse (0.25 and 0.25) node  [ left=-0.5mm]{\tiny$+$} node  [below =-0.5mm]{\tiny$-$};
-\draw  (14.5,0) rectangle (16,1)node[above,pos=.5]{ Current}node[below,pos=.5]{ Control};
-\draw [->,line width=1pt] (13.5,0.5) -- (14.5,0.5) node [pos=0.5,above] (v1) {$I_e$};
-
-\draw [->,line width=1pt] (16,0.5) -- (17,0.5) node [pos=0.5,above] (v1) {$I_a$};
-
-
-\draw  [line width=2pt] (17.05,0) rectangle (18.55,2.5)node[pos=.5]{Plant};
-
-\draw [->,line width=1pt](16.5,0.5) -- (16.5,-0.5) -- (13.25,-0.5) -- node [pos=0.5,left] {$I_a$} (13.25,0.25);
-\draw  [->,line width=1pt](18.5,0.5) -- (19,0.5) -- (19,-1) --(9.25,-1) --  node [pos=0.5,left]{$\dot\theta_a$}  (9.25,0.25);
-\draw [->,line width=1pt] (18.5,1) -- (19.5,1) node (v2) {} -- (19.5,-1.5) -- (5.25,-1.5) --   node [pos=0.5,left]{$\theta_a$}(5.25,0.25);
-
-\draw  (12.5,3.25) rectangle (13,3.75)node[pos=.5]{\large B};
+\begin{minipage}{0.5\linewidth}
+	asdaegedf
+\end{minipage}\hfil
+\begin{minipage}{0.5\linewidth}
+	\begin{figure}[H]
+		%		\begin{flushright}
+		\resizebox{\textwidth}{!}{
+			\begin{tikzpicture}
+			% We start by placing the blocks
+			\node [box] (Geomagic) {\small{Geomagic Touch}};
+			\node [box, right of=Geomagic, node distance = 3.4cm] (Computer) {Computer};
+			\node [box, below of=Computer, node distance=3.3cm] (Sbrio) {Embedded\\System};
+			\node [box, left of=Sbrio, node distance=2.5cm] (Driver) {Motor driver};
+			\node [box, left of=Driver, node distance=2.5cm] (EndoWrist) {EndoWrist};
+			% We draw an edge between the controller and system block to
+			% calculate the coordinate u. We need it to place the measurement block.
+			\draw [<->] (Geomagic) -- node {} (Computer);
+			\draw [<->] (Computer) -- node {} (Sbrio);    
+			% \draw [<->] (Geomagic) -- node[label=above:\small{UDP}] {} (Computer);
+			% \draw [<->] (Computer) -- node [label=right:\small{UDP}] {} (Sbrio);
+			\draw [<->] (Sbrio) -- node {} (Driver);
+			\draw [->] (Driver) -- node {} (EndoWrist);
+			
+			\draw[thick,dashed] ($(-1.5,1)+(Geomagic)$) -- ($(1.5,1)+(Computer)$) -- ($(1.5,-1)+(Computer)$) -- ($(-1.5,-1)+(Geomagic)$)-- ($(-1.5,1)+(Geomagic)$);
+			\draw[thick,dashed] ($(-1.5,1)+(EndoWrist)$) -- ($(1.5,1)+(Sbrio)$) -- ($(1.5,-1)+(Sbrio)$) -- ($(-1.5,-1)+(EndoWrist)$)-- ($(-1.5,1)+(EndoWrist)$);
+			
+			\node at (2,1.7) {\textbf{Console}};
+			\node at (1.5,-2) {\textbf{da Vinci robot}};
+			\end{tikzpicture}
+			
+		}
+		%\end{flushright}
+		\caption{Block diagram representing the system.}
+		\label{fig:full_setup}
+	\end{figure}
+\end{minipage}
 
 
 
-\draw [<-,line width=1pt](12.75,3.25) -- node [pos=0.5,left]{$I_a$} (12.75,1.5) -- (16.75,1.5) -- (16.75,0.5);
-\draw  (14,3.5) ellipse (0.25 and 0.25) node  [ left=-0.5mm]{\tiny$+$} node  [below =-0.5mm]{\tiny$+$} node  [above =-0.5mm]{\tiny$-$};
-\draw [->,line width=1pt](13,3.5) -- (13.75,3.5);
 
-
-\draw  (14.8,3.25) rectangle (15.3,3.75)node[pos=.5]{$ \frac{1}{s}$};
-\draw [->,line width=1pt](14.25,3.5) -- (14.8,3.5);
-
-\draw  (16.25,3.25) rectangle (16.75,3.75)node[pos=.5]{\large C};
-\draw [->,line width=1pt](15.3,3.5) -- (16.25,3.5);
-
-
-\draw  (14.8,2.25) rectangle (15.3,2.75)node[pos=.5]{\large A};
-
-\draw [->,line width=1pt] (15.8,3.5) -- (15.8,2.5) -- (15.3,2.5);
-
-\draw [->,line width=1pt] (14.8,2.5) -- (14,2.5) -- (14,3.25);\draw  (17.55,4.5) ellipse (0.25 and 0.25) node  [below =-0.5mm]{\tiny$-$} node  [right =-0.5mm]{\tiny$+$};
-
-\draw  (16.25,4.25) rectangle (16.75,4.75)node[pos=.5]{ $M_n$};
-\draw [->,line width=1pt](16.75,3.5) --node[above,pos=.5]{ $\hat y$} (17.5,3.5) -- (17.5,4.25);
-\draw [->,line width=1pt](17.3,4.5) -- (16.75,4.5);
-\draw[->,line width=1pt](16.25,4.5) -- (14,4.5) -- (14,3.75);
-\draw  [->,line width=1pt](19.5,1) -- (19.5,4.5) --node[above,pos=.5]{ $\hat y$} (17.8,4.5);
-\draw [line width=1pt] (15.8,3.5) -- (15.8,4) -- (14.1,4);
-
-
-
-\draw[line width=1pt]  (14.1,4) arc (0:180:0.1);
-\end{tikzpicture}
-}
-%\end{figure}

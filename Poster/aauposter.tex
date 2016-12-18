@@ -29,6 +29,7 @@
 % Notice that you can manually change the input
 % encoding of your files by selecting "save as"
 % an select the desired input encoding. 
+
 \usepackage[utf8]{inputenc}
 % Make latex understand and use the typographic
 % rules of the language used in the document.
@@ -44,6 +45,10 @@
 \usepackage[font=small,labelfont=bf]{caption}
 \DeclareCaptionFont{tiny}{\footnotesize}
 \usepackage{enumitem}
+\usepackage{showframe}
+\usepackage{float}
+\input{../Worksheets/Clean_up/tikz_magi}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Graphics and Tables
 % http://en.wikibooks.org/wiki/LaTeX/Importing_Graphics
@@ -64,11 +69,15 @@
 % For creating beautiful plots
 \usepackage{pgfplots}
 
+\usepackage{wrapfig}
+
 \usepackage{graphicx}
 \usepackage{nicefrac}
 \usepackage{mathtools}
 \usepackage{tabularx,booktabs,ragged2e}
 \usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{lipsum}
 %\usepackage{showframe}
 \usepackage[framemethod=tikz]{mdframed}
 
@@ -230,11 +239,11 @@
 }
 %the poster title
 {\color{white}\bf
-  Control of photovoltaic system and diesel hybrid system
+  Teleoperation of surgical robot using force feedback
 }
 %the author(s)
 {\vspace{0.3em}\color{white}\small
-  \textit{\vspace{0.1em}Daniel B. Andersen, Jacob N. Pedersen, Krisztian M. Balla, Nicolaj V. Christensen and Thomas H. Pilgaard.\\
+  \textit{\vspace{0.1em}Dániel Bolgár, Simon Krogh, Filip Marić, Nicolas Silvani\\
   Department of Control Engineering, Aalborg University, Fredrik Bajers Vej 7C}
 }
 %the logo (the logo on the right)
@@ -268,7 +277,8 @@
 
 
 \begin{center}
-    \input{Tikz/controlstructure.tex} 
+    \input{control.tex} 
+    
     \vspace{-2mm}
     \captionsetup{font=tiny}
     \captionof{figure}{Block diagram of the control design.}
@@ -278,7 +288,7 @@
 \end{posterbox}
 
 \begin{posterbox}[name=results_and_simulations,column=1,below=Control]{Results and simulations}
-
+\input{results.tex} 
 \end{posterbox}
 
 \begin{posterbox}[name=discussion,column=2,below=results]{Discussion}
