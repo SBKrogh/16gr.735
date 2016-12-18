@@ -1,8 +1,8 @@
 \section{Results}
 
 \subsection{Communication}
- In order to evalutate the performance of the new communication protocol between the embedded system and the computer, different frequencies were experimented. For each of them the delays between two received packets are measured and the from those measurements the jitter and packet loss can be computed. These measurements are gathered in \ref{tab:UDPMeasurements}.\\
- As the frequency increases, so does \todo{do?} the jitter and packet loss which was expected as these parameters are highly correlated to the network congestion\ref{there is a ref about that in worksheets}. However when the frequency is set to its maximum functioning value, namely 638 Hz, the jitter sharply decreases while the packet loss increases. That phenomenon is due to the rejection of the packets that have a delay superior to 1 ms. In the driver a trade-off is made between the deadline set to receive a packet and the frequency of the communication. 
+
+The measurements of the communication's performance are gathered in \ref{tab:UDPMeasurements}. As the frequency increases, so does \todo{do?} the jitter and packet loss which was expected as these parameters are highly correlated to the network congestion\ref{cisco_jitter}. However when the frequency is set to its maximum functioning value, namely 638 Hz, the jitter sharply decreases while the packet loss increases. That phenomenon is due to the rejection of the packets that have a delay superior to 1 ms. In the driver a trade-off is made between the deadline set to receive a packet and the frequency of the communication. 
  % It was stated before that the requirements for our system was to get to at least 550 Hz and to reach 1000Hz if possible. As shown in Table \ref{tab:UDPMeasurements}, the connection can go up to almost 1000Hz using UDP which fulfills the requirements. However, the jitter should not be neglected as the frequency get closer to 1000Hz the jitter increases and becomes high compared to the period and may cause unexpected behavior in real time operation. It is though that as the period become smaller, the system becomes more sensitive to the preemption of other processes.
 \begin{center}
   $\begin{tabular}{|c|c|c|c|c|c|}
@@ -20,13 +20,13 @@
   \label{tab:UDPMeasurements}
 \todo{2 columns are redundant, maybe put the set frequency instead}
 \end{center}
-The goal of 1000 Hz could not be reached when running the entire system. However, as the original communication could not exceed the refresh rate of 100Hz a significant improvment is to be noted.
+The goal of 1000 Hz could not be reached when running the entire system. However, as the original communication could not exceed the refresh rate of 100Hz a significant improvement is to be noted.
 
 \begin{figure}[h]
   \input{../Worksheets/rapport/pictures/feedback_measurements}
-  \caption{Measurements of the reponse of the force feedback for the clamp}
+  \caption{Measurements of the response of the force feedback for the clamp}
 \end{figure}
-
+\todo{should we remove the current?}
 % \begin{figure}[h]
 %   \centering
 %   \begin{subfigure}{.45\linewidth}
