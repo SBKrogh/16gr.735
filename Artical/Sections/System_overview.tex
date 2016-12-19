@@ -1,7 +1,7 @@
 \section{System overview}\label{sec:system_overview}
 %{\color{green}
 A da Vinci robot with connected EndoWrists has four arms with 6 - 7 actuated Degrees Of Freedom (DOF) each. Each arm has its own drivers and an embedded system controlling it. %\textcolor{red}{The embedded systems receive the desired position of the end-effector from the console from which the surgeon operates.}
-The surgeon sends the commands to the embedded system by controlling the \textcolor{red}{haptic} console.
+The surgeon sends the commands to the embedded system by controlling the console.
 
 As mentioned in Section \ref{sec:introduction}, the EndoWrist is highly nonlinear and constitute most of the challenge in the modelization of one arm of the robot, thus, if the force feedback can effectively be applied to the tool, it can be extended to the arm. As each arm is independent, the system designed for one arm can be extended to the full arm, the same applies to the tool. The setup used in the present project only controls one EndoWrist which has 4 DOF and is further described in Section \ref{sec:EndoWrist}.%\color{red}{As each arm is independent, the system designed for one arm can be extended to the full robot. This paper will focus on implementing a force feedback on one EndoWrist.} \\ 
  To control the EndoWrist, the embedded system of the robot is used. On a da Vinci robot the surgeon performs the operation from a console that communicates with the robot. The manipulators for the robot do not implement an interface for haptic feedback, thus, a haptic device, a Geomagic Touch (GT), is used in this setup instead of the device used on the official console. This device is further described in Section \ref{sec:Geomagic_touch}.\\
