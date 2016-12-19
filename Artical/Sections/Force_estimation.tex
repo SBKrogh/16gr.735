@@ -43,22 +43,30 @@ For this reason it was decided to identify a linear state-space model which is t
 The roll force, which is determined by the roll actuator and directly rotates the entire tool, making it independent to the rest of the system.
 By simple measurement with the setup as seen in (SETUP PICTURE) we can interpret the roll force as determined by a feedthrough component in the state space model of the system.
 
-\begin{align}\label{eq:allSS}
-\mathbf{x}(k+1) &= 
+
+
+\begin{equation}
+\resizebox{0.91\hsize}{!}{
+$\mathbf{x}(k+1) = 
 \begin{bmatrix} \mathbf{0} & \mathbf{0} & \mathbf{0}\\
- \mathbf{0} & \mathbf{A}_{pitch} &\mathbf{0}\\
- \mathbf{0} &\mathbf{0} & \mathbf{A}_{yaw}  \end{bmatrix} 
- \mathbf{x}(k) + 
+\mathbf{0} & \mathbf{A}_{pitch} &\mathbf{0}\\
+\mathbf{0} &\mathbf{0} & \mathbf{A}_{yaw}  \end{bmatrix} 
+\mathbf{x}(k) + 
 \begin{bmatrix} \mathbf{B}_{roll} & \mathbf{0} & \mathbf{0}\\
- \mathbf{0} & \mathbf{B}_{pitch} &\mathbf{0}\\
- \mathbf{0} &\mathbf{0} & \mathbf{B}_{yaw}  \end{bmatrix} 
- \mathbf{u}(k)\\
-\mathbf{y}(k+1) &= 
-\begin{bmatrix} \mathbf{C}_{roll} & \mathbf{0} & \mathbf{0}\\
- \mathbf{0} & \mathbf{C}_{pitch} &\mathbf{0}\\
- \mathbf{0} &\mathbf{0} & \mathbf{C}_{yaw}  \end{bmatrix} 
-\mathbf{x}(k) 
-\end{align}
+\mathbf{0} & \mathbf{B}_{pitch} &\mathbf{0}\\
+\mathbf{0} &\mathbf{0} & \mathbf{B}_{yaw}  \end{bmatrix} 
+\mathbf{u}(k)$
+}
+\end{equation}
+
+\begin{equation}\label{eq:allSS}
+\resizebox{0.5\hsize}{!}{
+	$\mathbf{y}(k+1) = 
+	\begin{bmatrix} \mathbf{C}_{roll} & \mathbf{0} & \mathbf{0}\\
+	\mathbf{0} & \mathbf{C}_{pitch} &\mathbf{0}\\
+	\mathbf{0} &\mathbf{0} & \mathbf{C}_{yaw}  \end{bmatrix} 
+	\mathbf{x}(k) $}
+\end{equation}
 
 \subsubsection{Pitch and yaw forces}
 The pitch and yaw force state space models were determined using subspace identification  \cite{van2012subspace}. This algorithm combines concepts from system theory, linear algebra and statistics in order to provide a state-space model of the system, which makes it useful for MIMO system identification. 
