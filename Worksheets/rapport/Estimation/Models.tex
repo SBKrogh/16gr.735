@@ -3,7 +3,7 @@ In order to have a representation of the reaction force on the EndoWrist, estima
 Because of the reasons mentioned in chapter \ref{introduction}, the force cannot be measured real-time using sensors and thus we have to rely on mathematical models as functions of actuator measurements.
 
 The main challenge faced in making a model lies in the fact that the pulley system on the EndoWrist is nonlinear, and thus its full dynamics cannot be modeled in a straightforward manner. 
-In other words, to have an accurate representation of Cartesian force a higher order model is required.
+In other words, to have an accurate representation of Cartesian force a strongly nonlinear model is required.
 
 Another method of tackling this problem is to create multiple mathematical models pertaining to forces output by actions performed with the EndoWrist.
 In this manner, the feedback vector is transformed from Cartesian space to a task space in which the chosen actions form a basis.
@@ -19,9 +19,10 @@ Ideally a mathematical model derived from classical mechanics would be used to d
 However, deriving this model precisely enough for grey-box identification has been proven difficult and time consuming due to the nonlinear nature of the dynamics \cite{kim2014dynamic}.
 
 The nonlinearity of EndoWrist dynamics emerges from friction forces between the pulley strings controlling the end-effector, which causes multiple pulleys to move in cases where we only want to move one. 
-Also, the strings themselves are elastic, which adds another dimension of nonlinearity.
+Additionally, the strings themselves are elastic, which adds another dimension of nonlinearity.
 
-For these reasons it was decided to test out different black box identification algorithms which only provide a general model structure where parameters don't have any physical meaning. Parameters are then identified using different variations of these algorithms and checked for accuraccy.
+For these reasons it was decided on using black box identification algorithms which only provide a general model structure where parameters don't have any physical meaning. 
+Parameters are then identified using different variations of these algorithms and checked for accuraccy.
 
 The system identification proces used in this project can be described in three steps:
 \begin{enumerate}
@@ -36,6 +37,7 @@ Since our system is nonlinear , a straightforward approach would involve choosin
 On the other hand, stability analysis of nonlinear models is difficult and due to the nature of the system only general trends in force need to be represented.
 For this reason it was decided to identify a linear state-space model which is then used as a part of Hammerstein-Weiner nonlinear model \cite{zhu2002estimation}.
 
+\subsubsection{State-space model}
 A state-space model separates the dynamics of a system into a set of first-order differential equations.
 Additionally, if the dynamical system is linear, time-invariant, and finite-dimensional, then the differential and algebraic equations may be written in matrix form. The general structure of such models is presented in equations \ref{eq:ssc}and \ref{eq:ssd} for the continous and discrete variants, respectively.
 
@@ -49,10 +51,11 @@ Additionally, if the dynamical system is linear, time-invariant, and finite-dime
 \mathbf{y}(k+1) &= \mathbf{C}\mathbf{x}(k) + \mathbf{D}\mathbf{u}(k)
 \end{align}
 
-This representation of a system is especially useful in MIMO systems as it maintains the same form for any number of inputs and outputs, as opposed to transfer functions.
+This representation of a system is especially useful in linear MIMO systems as it maintains the same form for any number of inputs and outputs, as opposed to transfer functions.
 
-An identified state-space model can then be used as the linear part of an Hammerstein-Weiner model.
-Hammerstein-Wiener models are useful when the output of the system depends nonlinearly on it's inputs, in this case it is possible to decompose the system into linear and nonlinear parts, as seen in \figref{weiner}. 
+\subsubsection{Hammerstein-Wiener model}
+An identified state-space model can then be used as the linear part of an Hammerstein-Weiner model (\figref{weiner}).
+Hammerstein-Wiener models are useful when the output of the system depends nonlinearly on it's inputs, in this case it is possible to decompose the system into linear and nonlinear parts. 
 The nonlinearity estimators at the inputs and outputs of the system can be modeled by a variety of nonlinear systems, such as deadzones, saturations or even neural networks.
 
 \begin{figure} 
@@ -67,19 +70,27 @@ The nonlinearity estimators at the inputs and outputs of the system can be model
 \draw [->] (5.45,2) -- (7.45,2) node [pos=0.5,above] {y(t)};
 \end{tikzpicture}
 }
-\caption{Block diagram of a Hammerstein-Wiener model\ref{fig:weiner}}
+\caption{Block diagram of a Hammerstein-Wiener model.}
 \label{weiner}
 \end{figure}
 
 A deadzone nonlinearity on the input allows us to represent the effects of friction on the force, and is used in this model.
 Different output nonlinearities are also utilized and compared.
 
-The approach considered utilizes the possible correlation between the position error and end-effector force during impact. 
-A model that outputs both force and position error as a function of current could be used as an observer with only position error measurments and provide correction of the force model.
+\subsubsection{Inputs and outputs}
+Multiple approaches had been considered when taking into account inputs and outputs of the system.
+
+The most direct approach would have all the available data as inputs to a single output system (that outputs a force estimate).
+Ideally, this would provide enough information to identify an accurate force model.
+However , the imperfect nature of measuring equipment and the experiments performed, as well as limits in computing power and optimization algorithms prevent us from fully using this information.
+
+Perhaps a more robust approach would be to have the system estimate some measurable values in addition to force.
+If the system is observable and the model captures the dynamics sufficently, it could be possible to correct the model states using output errors.
+
+Both of these approaches are examined and simulated in this chapter.
 
 The same modeling process was used for both the yaw and pitch force models, while the roll torque model is explained in section \ref{se:mdval}.
 For clarity, the results of each step in the process will only be presented for the yaw model, while the final results will be presented for both the yaw and pitch models. 
-Aditionally, only force estimates will be presented in the sections pertaining to parameter Identification and validation, while the position error output will be examined in the later section on designing an observer.
 
 \section{Parameter identification}
 Once a general model structure has been chosen, parameter identification algorithms can be utilized.
@@ -235,9 +246,9 @@ This is a useful way to view the system since the force feedback loop can be vei
 
 \section{State estimator design}
 As mentioned in section \ref{se:ms}, an approach was taken towards designing an state estimator which could correct the force estimate.
-This method would involve designing a steady-state Kalman filter \cite{brown1997introduction} for a model that outputs both force and position error.
+This method would involve designing a steady-state Kalman filter \cite{brown1997introduction} and/or a Luenberger observer  \cite{friedland2012control} for a model that outputs both force and velocity.
 
-The choice of a Kalman filter over the Luenberger observer \cite{friedland2012control} is based on the fact that the Kalman filter takes into account the stochastic nature of measurments.
+The difference between the Kalman filter and the Luenberger observer is based on the fact that the Kalman filter takes into account the stochastic nature of measurments and processes. On the other hand, the Luenberger observer is based on determinstic systems and does not "weigh" data according to reliability.
 
 Before implementing an observer/estimator, it is neccessary to check our system for observeability.
 Formally, a system is said to be observable if, for any possible sequence of state and control vectors, the current state can be determined in finite time.
@@ -249,5 +260,36 @@ We determine observability by ascertaining that the rank of the observability ma
 
 Checking the matrices for the linear parts of our models, we find that this is indeed true and an observer gain exists.
 
-\subsection{Kalman filter }
+\subsection{Kalman filter}
+The Kalman filter is an estimation algorithm that uses a series of measurments observed over time to produce estimates of uknown variables in the system.
+Estimation is carried out in two steps, the prediction step and the update step.
+
+The prediction step consists of calculating \textit{a priori} estimates of the current state and covariance using the updated state estimates from the last step. 
+The $\mathbf{P}$ matrix is the so called covariance matrix and represents the estimated accuracy of the state estimate.
+The $\mathbf{Q}$ and $\mathbf{R}$ matrices represent the covariances of the measurement noise, respectively.
+
+\begin{gather}
+\hat{\mathbf{x}}_{k\mid k-1} = \mathbf{A}_{k}\hat{\mathbf{x}}_{k-1\mid k-1} + \mathbf{B}_{k} \mathbf{u}_{k} \\
+\mathbf{P}_{k\mid k-1} =  \mathbf{A}_{k} \mathbf{P}_{k-1\mid k-1} \mathbf{A}_{k}^{\text{T}} + \mathbf{Q}_{k} 
+\end{gather}
+
+In the update step, the Kalman gain is calculated, which is then used to multiply the output differences in order to update our state and $\mathbf{P}$  estimates.
+
+\begin{gather}
+\tilde{\mathbf{y}}_k = \mathbf{z}_k - \mathbf{H}_k\hat{\mathbf{x}}_{k\mid k-1}\\
+\mathbf{S}_k = \mathbf{H}_k \mathbf{P}_{k\mid k-1} \mathbf{H}_k^T + \mathbf{R}_k\\
+\mathbf{K}_k = \mathbf{P}_{k\mid k-1}\mathbf{H}_k^T \mathbf{S}_k^{-1}\\
+\hat{\mathbf{x}}_{k\mid k} = \hat{\mathbf{x}}_{k\mid k-1} + \mathbf{K}_k\tilde{\mathbf{y}}_k \\
+\mathbf{P}_{k|k} = (I - \mathbf{K}_k \mathbf{H}_k) \mathbf{P}_{k|k-1} 
+\end{gather}
+
+If the noise characteristic does not change with time, the Kalman gain reaches a steady state.
+This Kalman gain can then be used without the need for recalculation, this gives us the steady state Klaman filter.
+
+\subsection{Luenberger observer}
+For comparison, a Luenberger observer was also developed.
+For an obesrvable system, a Luenberger observer reconstructs the states based on the measurment error.
+The gain is calculated based on the desired error dynamics instead of being based on covariances.
+
+
 
