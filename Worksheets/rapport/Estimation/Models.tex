@@ -296,21 +296,36 @@ This Kalman gain can then be used without the need for recalculation, this gives
 For a model with a sufficiently accurate  description of the system dynamics, a steady-state Kalman filter should provide a powerful state estimation capability.
 Moreover, the stochastic nature of measurements can be compensated for, thus providing an even better estimate.
 
+In order for the Kalman filter to work on the system it needs to use the available measurments.
+The $\mathbf{R}$ matrix requires the estimates of covariances in the output measurements, which are easily calculated from the experiment data.
+On the other hand, the process noise $\mathbf{Q}$ cannot be determined, as it's value is mostly used to change the degree of trust we have in the model. 
+Higher values in the $\mathbf{Q}$ matrix indicate that the Kalman gain should be calculated in a way that the system outputs follow the measurments to a greater degree than the model.
+
+A model has been generated that estimates force and the position error as a function of effort and velocity.
 To validate the theory, it was assumed that force measurements were avilable for our system.
-This situation was simulated and compared with the results of the open-loop model.
+This situation was simulated and compared with the results of the open-loop model (\figref{kl1}).
 
 \begin{figure}[H]
 \centering
 \hspace{-2.5em}\includegraphics[width=0.49\linewidth]{kl1}
 \hspace{-2.5em}\includegraphics[width=0.49\linewidth]{kl1mse}
-\caption{Hammerstein-Wiener model with deadzone nonlinearities on the output.}
+\caption{Left: Response of the model and the filter estimate compared to measurments. Right: Comparison of mean-square errors.}
 \label{fig:kl1}
 \end{figure}
 
-\begin{figure} 
-	\resizebox{\textwidth}{!}{
-		\input{rapport/pictures/simulation_diagram}
-	}
-	\caption{Block diagram of a Hammerstein-Wiener model.}
-	\label{weiner}
+As seen on (\figref{kl1}), the Kalman filter surpasses the open-loop model when all the measurements are available.
+Both the force and position error estimates havea really low error which can be reduced further by recalculating the gain for higher values in the $\mathbf{Q}$ matrix.
+With this proof of concept, the same simulation is attempted for only the position error measurement.
+
+\begin{figure}[H]
+\centering
+\hspace{-2.5em}\includegraphics[width=0.49\linewidth]{kl2}
+\hspace{-2.5em}\includegraphics[width=0.49\linewidth]{kl2mse}
+\caption{Left: Response of the model and the filter estimate compared to measurments. Right: Comparison of mean-square errors.}
+\label{fig:kl2}
 \end{figure}
+
+As seen on \figref{kl2}, when the only measurement is the position error, system state estimation isn't nearly as accurate.
+The states are estimated in a way that makes the position error output converge twoards the measurments, but it doesn't reduce (or significantly increase) the force estimate error.
+It is concluded that this is mostly to the lack of accuracy in the model itself, and as such a Kalman filter wouldn't bring any advantages to the system.
+Nontheless, the Kalman filter is included in the software implementation, so that higher accuracy models can be tested.
