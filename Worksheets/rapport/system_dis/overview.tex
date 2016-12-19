@@ -7,7 +7,6 @@ Although the test setup only controls four motors, it can manipulate the surgica
 The sbRIO board controls the test setup and as such represents the onboard computer on the DaVinci robot.
 In order to perform higher level functions such as force feedback control, it is necessary to remotely handle data and send high-level commands.
 This is handled by an external computer system that is connected to the Geomagic Touch device.
-\todo{should we include the computer in the system description or is this to little a subject to cover?}
 
 The sbRIO board and the Geomagic Touch both communicate with the computer using UDP. The computer handles the force estimation using a dynamical model of the test setup (or EndoWrist, more precisely), this is vital for force feedback.
 Connecting software components responsible for communicating with hardware and the ones responsible for the control algorithm and estimation is necessary.
