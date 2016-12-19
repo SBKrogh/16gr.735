@@ -14,7 +14,13 @@
   	year ={2014},
   	note ={Downloadet: 21-10-2016}
   }
-
+  @article{fast_ZIV,
+  author = {Williams N. Ross},
+  title = {An Extremely Fast ZIV-Lempel Data Compression Algorithm}, 
+  journal = {Proceedings of Data Compression Conference},
+  pages = {362--371},
+  year = {1991}
+  }
 
 
 @inproceedings{Chris_Surgical,
@@ -228,4 +234,48 @@
   journal={IEEE Computer Society Std},
   volume={2008},
   year={2008}
+}
+
+@book{van2012subspace,
+  title={Subspace identification for linear systems: Theory—Implementation—Applications},
+  author={Van Overschee, Peter and De Moor, BL},
+  year={2012},
+  publisher={Springer Science \& Business Media}
+}
+
+@article{kim2014dynamic,
+  title={Dynamic modeling of coupled tendon-driven system for surgical robot instrument},
+  author={Kim, Chi Yen and Lee, Min Cheol and Wicker, Ryan Blaine and Yoon, Sung-Min},
+  journal={International Journal of Precision Engineering and Manufacturing},
+  volume={15},
+  number={10},
+  pages={2077--2084},
+  year={2014},
+  publisher={Springer}
+}
+
+@article{zhu2002estimation,
+  title={Estimation of an N--L--N Hammerstein--Wiener model},
+  author={Zhu, Yucai},
+  journal={Automatica},
+  volume={38},
+  number={9},
+  pages={1607--1614},
+  year={2002},
+  publisher={Elsevier}
+}
+
+@article{brown1997introduction,
+  title={Introduction to random signals and applied Kalman filtering: with MATLAB exercises and solutions},
+  author={Brown, Robert Grover and Hwang, Patrick YC},
+  journal={Introduction to random signals and applied Kalman filtering: with MATLAB exercises and solutions, by Brown, Robert Grover.; Hwang, Patrick YC New York: Wiley, c1997.},
+  volume={1},
+  year={1997}
+}
+
+@book{friedland2012control,
+  title={Control system design: an introduction to state-space methods},
+  author={Friedland, Bernard},
+  year={2012},
+  publisher={Courier Corporation}
 }
