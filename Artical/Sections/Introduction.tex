@@ -26,7 +26,7 @@ The purpose of haptic feedback in Robotic MIS (RMIS) is to restore the sense of 
 % {\color{purple}
 % The purpose of haptic feedback in Robotic MIS (RMIS) is to restore the sense of touch of the surgeon. One way of doing so is by applying forces on the controller of the surgeon that replicate the forces applied on the end-effector. This method is named force feedback and in an ideal case would give the same feeling as if directly holding a surgical tool. There have been attempts to aid the surgeon using vibrotactile\cite{tactile1}\cite{tactile2} and kinesthetic force feedback \cite{force_feedback_surgery}\cite{tactile_summary}. The possibility of combining kinesthetic and vibrotactile feedback is a subject of research\cite{tactile3}.}
 
-  \textcolor{red}{The direct force feedback calculates} \textcolor{green}{Direct force feedback method involves calculating} the feedback from the resistance affecting the actuators. %\textcolor{red}{However, as the tool is highly nonlinear, a significant part of the force applied to the controller of the operator corresponds to the nonlinearities.}
+Direct force feedback method involves calculating the feedback from the resistance affecting the actuators. %\textcolor{red}{However, as the tool is highly nonlinear, a significant part of the force applied to the controller of the operator corresponds to the nonlinearities.}
 However, as the tool is highly nonlinear, the output power is lower than the input power, due to the tool's inherent damping.
 Any forces related to the construction of the robot are not desired in the feedback as the operator would not feel them when holding a tool. In order for the operator to feel as if he was directly holding the tool the control system should be transparent to him.
 
@@ -42,7 +42,7 @@ The haptic feedback could be done as direct force feedback calculated from the r
 %\textcolor{green}{
 In this paper, an attempt is made to implement a force feedback on a setup emulating the essential parts of the da Vinci Robot without implementing new hardware. To do so, a dynamic model is derived and a control strategy is proposed. The aimed frequency for the feedback loop is 550 Hz, to reach that goal analysis of the communication protocol is provided. In section II, we will take an overview of our proposed control system as a whole, briefly presenting each of the components and their interaction.
 Section III will cover the methods used to create a dynamic model of the EndoWrist and proposed methods of translating the estimated force to actual force fed back to the operator.
-Section IV \textcolor{purple}{contains descriptions of various problems pertaining the requirement of transparency and explanations of methods used to address them.}
+Section IV \textcolor{green}{contains descriptions of the modification made in order to improve the refresh rate of the communication between devices.}\textcolor{purple}{contains descriptions of various problems pertaining the requirement of transparency and explanations of methods used to address them.}
 Finally,  we present the experimental results in Section V and and draw a short conclusion in Section VI.
 
 
