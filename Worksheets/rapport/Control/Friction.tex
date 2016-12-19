@@ -1,6 +1,8 @@
 \section{Friction model}
 
-The current effort measured by the ESCON controller is \textcolor{green}{proportional} to the sum of the force required to overcome the nonlinearities of the EndoWrist and the external forces applied to the end-effector. One of the main nonlinearities is the friction. For the system to be transparent, the force required to overcome friction should not be fed back as this force would not be felt if the teleoperator was holding the tool directly. In order to isolate the external forces, a friction model is required. The model built is based on the one derived in \cite{force_reflection} that describe the friction in a motor. However in the model it was decided to consider the motor and the EndoWrist as one element as no dynamic model for the motor alone is derived. Thus, the model estimates the sum of the friction in the EndoWrist and in the motor.
+In \secref{}\todo{ref to the results of estimation}, some small forces are fed back to the human leading to oscillations when no external forces are applied. It is suspected that accurately modeling the nonlinearities of the system would improve the transparency of the feedback.  
+%The current effort measured by the ESCON controller is \textcolor{green}{proportional} to the sum of the force required to overcome the nonlinearities of the EndoWrist and the external forces applied to the end-effector.
+ One of the main nonlinearities is the friction. For the system to be transparent, the force required to overcome friction should not be fed back as this force would not be felt if the teleoperator was holding the tool directly. In order to isolate the external forces, a friction model is required. The model built is based on the one derived in \cite{force_reflection} that describe the friction in a motor. However in the model it was decided to consider the motor and the EndoWrist as one element as no dynamic model for the motor alone is derived. Thus, the model estimates the sum of the friction in the EndoWrist and in the motor.
 
 \subsection{Model}
 The total friction acting on the actuator can be written as:
@@ -154,5 +156,14 @@ The values for the static friction constants have been measured and used to buil
 \label{fig:new_friction_model}
 \end{figure}
 
+\subsection{Applying the model to data}
 
-\todo{an extra representation of the implementation can be made (the switch model) in the model part}
+The model derived was not applied to the input of the system but used to detect external forces. If external forces are applied to the end effector, the output of the force estimation is fed back, if not no feedback is sent. The estimated force is fed back as long as the value of the current is sufficient to overcome friction.
+
+The model was applied to the data presented in \secref{}\todo{ref to the results of estimation}. As it can be seen on \figref{fig:friction_validation}, the oscillations are removed from the feedback when no strong current is applied. The negative force fed back from 12 to 14 seconds is due to the operator trying to open the clamp more than it is possible. 
+\begin{figure}[H]
+\input{rapport/pictures/clamp_feedback_friction}
+\caption{Friction model applied to the clamping response}
+\label{fig:friction_validation}
+\end{figure}
+\todo{better caption}
