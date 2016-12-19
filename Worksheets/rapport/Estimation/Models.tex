@@ -108,8 +108,6 @@ As seen on figure (), the diminishing returns of increasing the state-space orde
 
 %figure of subspace singular value analysis
 
-The ch
-
 \subsection{Identification data}
 Both of these approaches are possible to realize on the data sets acquired in the manner described in chapter \ref{cha:measurement}.
 However, the data contains various irregularities caused by the imperfect measuring process as well as the hardware.
@@ -130,9 +128,9 @@ A sample of original and modified data can be seen on \figref{figlowpass}.
 \label{figlowpass}
 \end{figure}
 
-Aditionally, linear models can also be fitted in the frequency domain so the data is transformed using fast fourier transform.
-\subsection{Linear model identification}
+Aditionally, linear models can also be fitted in the frequency domain so the data is transformed using fast Fourier transform \cite{van1992computational}.
 
+\subsection{Linear model identification}
 The System Identification Toolbox provides 3 different subspace identification algorithms which often provide different results depending on the chosen system order \cite{van1994n4sid}. 
 For this reason all 3 algorithms are attempted in the identification process, and the best one is chosen depending on the average fit.
 The algorithm which provides the best result varies heavily on the data set and the chosen order of the model (\figref{fig:ssid1}).
@@ -144,7 +142,18 @@ The algorithm which provides the best result varies heavily on the data set and 
 \label{fig:ssid1}
 \end{figure}
 
-Comparing the responses of these models it is clear that having current and velocity as inputs provides a much better estimate than when the only input is effort.
+The choice of inputs, outputs and data domain also heavily affect the model quality in a nonpredictable way \figref{fits}.
+It is assumed that the cause of this is a limited number of iterations, since a higher order model should always represent dynamics better than a lower level one.
+
+\begin{figure}[H]
+\hspace{-2.5em}\includegraphics[width=\linewidth]{fits}
+\caption{Best average fit of models to validation data depending on the order and domain of data used in identification.}
+\label{fig:fits}
+\end{figure}
+
+This fact makes a brute force approach in combining inputs and outputs with data somewhat necessary in picking the best model for estimation.
+Comparing the responses of these models it is clear that having effort and velocity as inputs provides a much better estimate than when the only output is effort.
+This is true for both the time and frequency data sets.
 
 \begin{figure}[H]
 \centering
@@ -152,6 +161,7 @@ Comparing the responses of these models it is clear that having current and velo
 \caption{Second order yaw force models identified by different subspace identification algorithms.}
 \label{fig:1LMI2}
 \end{figure}
+
 \subsection{Hammerstein-Weiner model identification}
 
 Once the linear model is identified we can estimate the nonlinearities with the Hammerstein-Wiener model.
