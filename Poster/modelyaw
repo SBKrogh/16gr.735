@@ -22,7 +22,7 @@ ylabel style={font=\color{white!15!black}},
 ylabel={Force [N]},
 axis background/.style={fill=white},
 title style={font=\bfseries},
-title={Force model},
+title={Force estimation model},
 xmajorgrids,
 ymajorgrids,
 legend style={at={(0.33,0.8)}, anchor=east, legend cell align=right, align=right, draw=white!15!black}
