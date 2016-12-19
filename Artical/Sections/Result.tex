@@ -22,7 +22,7 @@ As shown in TABLE \ref{tab:UDPMeasurements}, when the frequency increases from 1
 \end{center}
 The goal of 1000 Hz could not be reached when running the entire system. However, as the original communication could not exceed the refresh rate of 100Hz a significant improvement is to be noted.
 
-\begin{figure}[h]
+\begin{figure}[h]\label{fbkm}
   \input{../Worksheets/rapport/pictures/feedback_measurements}
   \caption{Measurements of the response of the force feedback for the clamp}
 \end{figure}
@@ -45,7 +45,9 @@ The goal of 1000 Hz could not be reached when running the entire system. However
 % \caption{distribution of the RTT delay for different parameters}
 % \label{fig:histograms}
 % \end{figure}
-
+\subsection{Force feedback}
+As seen in Fig. \ref{fbkm}, the yaw force fed back to the user by the Geomagic Touch dynamically corresponds to both the current increase and the position error.
+We have found that applying a gain to the feedback provides the user with a better sense of the force exerted by the EndoWrist.
 
 
 
