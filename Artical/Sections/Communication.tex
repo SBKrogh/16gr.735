@@ -1,5 +1,5 @@
 \section{Communication}
-The embedded system controls the motors for one EndoWrist. The desired positions of the motors and the list of the enabled motors are sent to the board from the computer using an Ethernet cable\todo{Could you use other than Ethernet}. To perform force estimation, the computer needs to receive the list of motors currently actuated as well as the position, velocity and effort for each of them.
+The embedded system controls the motors for one EndoWrist. The desired positions of the motors and the list of the enabled motors are sent to the board from the computer using an Ethernet cable. To perform force estimation, the computer needs to receive the list of motors currently actuated as well as the position, velocity and effort for each of them.
 
 %{\color{green}
 As mentioned in Section \ref{sec:introduction} the frequency aimed for the force feedback loop is 550 Hz. However this loop not only includes communication between the embedded system and the computer but also computation time for force estimation and communication between the GT and the computer. Thus, the communications with the computer must be faster than 550 Hz.
