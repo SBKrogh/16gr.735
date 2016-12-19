@@ -62,3 +62,19 @@
 
 \includegraphics[width=\textwidth]{../Worksheets/rapport/pictures/control.pdf}
 
+
+\begin{minipage}{0.5\linewidth}
+\subsection*{Control}
+\begin{itemize}
+\item As shown in Fig. 2, the computer sends references to both the controller and the robot. The local controllers handle it.
+\item To control the position of the tool, cascade control of position, velocity and current is used.
+\end{itemize}
+\end{minipage}
+
+\begin{minipage}{0.5\linewidth}
+\subsection*{Force estimation}
+\begin{itemize}
+	\item The force has to be estimated through the measurement of the current, velocity and position. As the tool is highly nonlinear, a linear model is not sufficient to have a good estimation of the force.
+	\item The model is built using the Hammerstein-Wiener method. The linear model required for this method is built through black-box identification using the subspace method.
+\end{itemize}
+\end{minipage}
