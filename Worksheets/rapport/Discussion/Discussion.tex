@@ -1,4 +1,4 @@
-\chapter{Discussion}\label{cha:discussion}
+\chapter{Results and Discussion}\label{cha:discussion}
 
 % \todo{we managed to get a closed loop, to increase speed and to estimate the force. 
 
@@ -14,6 +14,36 @@
 % Consider implementing a real time system like RTAI.
 
 % }
+
+\section{Results}
+
+
+\todo{The results about communication were already stated in Communication, should they be moved?}
+
+
+As seen in Fig. \ref{fig:fbkm}, the yaw force fed back to the user by the Geomagic Touch dynamically corresponds to both the current increase and the position error.
+We have found that applying a gain to the feedback provides the user with a better sense of the force exerted by the EndoWrist.
+
+\begin{figure}[h]\label{fig:fbkm}
+  \input{../Worksheets/rapport/pictures/feedback_measurements}
+  \caption{Measurements of the response of the force feedback for the clamp with a refresh rate of 638 Hz for the communication}
+\end{figure}
+
+\begin{figure}[h]\label{fig:fbkm_100}
+  \input{../Worksheets/rapport/pictures/clamp_feedback_more_mvt}
+  \caption{Measurements of the response of the force feedback for the clamp with varying command with a refresh rate of 100 Hz for the communication}
+\end{figure}
+
+
+
+\begin{figure}[h]\label{fig:fbkm_100}
+  \input{../Worksheets/rapport/pictures/roll_feedback_measurement}
+  \caption{Measurements of the response of the force feedback for the roll with varying command with a refresh rate of 100 Hz for the communication}
+\end{figure}
+
+
+
+\section{Discussion}
 \todo{intro to discussion}
 
 Although the refresh rate of the communication does not allow to reach the goal of 550 Hz for the feedback loop, a significant improvement can be noted.  To further increase the refresh rate three axis are considered: compressing data, optimizing the programs and implementing on a real-time system.\\
