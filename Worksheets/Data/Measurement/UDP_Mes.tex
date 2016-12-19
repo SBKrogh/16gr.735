@@ -17,7 +17,7 @@ The sbRIO 9636 is connected to a computer running Ubuntu 14.04 LTS via an Ethern
 	\item Once the Wireshark recording is done the ROS node is stopped.
 	\item The log files are retrieved to be analyzed using Matlab and Wireshark.
 \end{enumerate}
-Those steps are repeated for both the serial and parallel case for the following settings: 10 ms, 2 ms and 1 ms.
+Those steps are repeated for both the serial and parallel case for the following settings: 100 Hz, 500 Hz and 1000 Hz. These settings do not account for computation time and the period of waiting to receive a packet, thus it is expected that the real frequency is lower than the one set.
 
 
 \subsection*{Measuring data:}
@@ -34,7 +34,7 @@ Those steps are repeated for both the serial and parallel case for the following
     638 & 1.6 & 1.16E-2 & 1.2 \\
     \hline
   \end{tabular}$
-	\captionof{table}{Measurements of the UDP performances}
+	\captionof{table}{Measurements of the performances for the new communication protocol}
 \end{center}
 % \begin{figure}[H]
 % 	\centering
@@ -79,6 +79,6 @@ The data for the maximum frequency of the driver could not be collected as the c
 
 \subsection*{Conclusion:}
 
-The communication cannot reach frequencies higher than 638 Hz due to congestion which does not meet the requirements. However  compared to the original communication that used JSON and TCP the frequency is increased by 638\%. 
-To improve the communication to 1000 Hz, two axis are considered. The first one is to implement a protocol that has a congestion control feature as congestion seemed to be the cause of the behavior. The second one is to have the computer running only the code dedicated to the project as it is possible for the driver to reach 981 Hz when force estimation and the communication with the Geomagic Touch are not running. This could be done by using a real-time operating system like RTAI. Those solutions were not investigated any further because of the time available for the project.
-\todo{should i mention RTAI or is it useless?}
+The communication cannot reach frequencies higher than 638 Hz due to congestion which does not meet the requirements. However by implementing the new communication protocol the refresh was increased from 100 Hz to 638 Hz. Solutions to further improve the refresh rate are discussed in \chapref{cha:discussion}
+% To improve the communication to 1000 Hz, two axis are considered. The first one is to implement a protocol that has a congestion control feature as congestion seemed to be the cause of the behavior. The second one is to have the computer running only the code dedicated to the project as it is possible for the driver to reach 981 Hz when force estimation and the communication with the Geomagic Touch are not running. This could be done by using a real-time operating system like RTAI. Those solutions were not investigated any further because of the time available for the project.
+% \todo{should i mention RTAI or is it useless?}
