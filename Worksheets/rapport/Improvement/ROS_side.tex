@@ -19,7 +19,7 @@ As shown in ~\figref{fig:new_driver}, the new driver starts with an initializati
 
  As explained before, when the \gls{JSON} Stream was removed it was decided that only send numerical data would be sent. And as goal 3. is kept in mind, it is needed to receive the position, velocity and effort as float and one boolean for each motor and to send a setpoint as a double and a boolean for each motor. The received values must be made available as double for the higher levels by storing them in the vector of doubles. For simplicity it was decided that the packet should be following the structure described in \figref{fig:new_packets}. To reach the desired vectors, the received bitcode stored in an array of char is copied in a float variable that is converted in a double and then the value in the vector is updated using this double. As the endianness of the sbRIO is not the same as the one used on most computer, when the bitcode is copied to the float variable the order of the bytes is reversed (the first byte becomes the last one).
 
-\todo{handle that figref}The structure of the sent packet is shown in~\figref{fig:sent_packet}. To build the packet, the same logic as before is used. The bitcode of the numerical values is copied into an array and the array is sent.
+The sent packets follow the same structure as the received packets, however only one vector of numerical values containing the setpoints is required. The bitcode of the numerical values is copied into an array and the array is sent.
 In regards to the boolean values, they are stored in a byte with 1 bit per value which is possible only because the number of motors for one arm is 7 (i.e inferior to 8 which is the maximum amount of booleans that could be stored in 1 byte).
 
 \begin{figure}[H]
