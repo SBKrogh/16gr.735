@@ -8,15 +8,18 @@ The sbRIO has an implemented cascade position-speed-current control, see \figref
 The chosen controller parameters are listed in \tabref{tab:control_param}:
 
 \begin{center}
+	\begin{table}[h]
 	\begin{tabular}{ c | c | c | c }
 		\hline
 		Controller type & P gain & I time constant & Sampling rate \\ \hline
 		Position controller & 10 & $\emptyset$ & 2 kHz \\ \hline
 		Speed controller & 426 & 28 ms & 5.36 kHz \\ \hline
 		Position controller & 1121 & $38 \mu s$ & 53.6 kHz \\ \hline
+		
 	\end{tabular}
 	\caption{Cascade position control parameters}
 	\label{tab:control_param}
+	\end{table}
 \end{center}
 
 The speed and current controller parameters were calibrated automatically by ESCON Studio. The program queries the motor parameters, desired current limits and maximum acceleration values and calculates the controller parameters based on those. The EndoWrist can not handle high speeds and high acceleration, thus speed was not the main priority in tuning the position PID control. We focused on precision and avoiding overshoot. By running experiments, we decided upon a P controller of 10 for each motor. A lower gain would result in slower motion, a higher gain would result in overshoots. The EndoWrist-motor system has inherent damping in the form of friction, inertia and elasticity, thus the system is stable even without integral and differential controller. For the experiments with free-running EndoWrist, see \figref{square_excite}. The setpoints square signals moving jumping between the limits the EndoWrist can move between. This is a movement that would never happen in normal operation. The delay defined in these graphs is the time it takes for the positions to reach the setpoints with an error of 5\%.
