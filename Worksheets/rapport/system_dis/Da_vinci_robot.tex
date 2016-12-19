@@ -1,4 +1,4 @@
-\section{Da vinci robot}\label{sec:da_vin_rob}
+\section{Da Vinci robot}\label{sec:da_vin_rob}
 
 The da Vinci robot is a minimal invasive surgery (MSI) robot used in surgeries such as cardiac, coloretal and gynecologic surgeries\cite{daVinciSurgery}. The version available at Aalborg University is a member of the first generation of da Vinci robots, see \figref{fig:fulldavinci}.
 
@@ -27,9 +27,6 @@ It consists of two main parts, a master console, see \figref{fig:mastermani}, an
 \item The surgeon uses the master console to control the slave manipulator. It consists of two eye pieces, which display a high resolution 3D view of the surgery for the surgeon. 
 \item The slave manipulator is the robot which is controlled from the master console by the surgeon. It consists of four arms that with 6-7 actuated \gls{DOF} each, depending on the tool attached.
 \end{itemize}
-
-\textcolor{red}{The master console and three of the slave manipulator arms are disabled from the system. The console is disabled from the system, since force feedback is not an option on this device. The three arms are disabled since the control on these will be identical. The master console will not be further analyzed. To control the last arm on the slave manipulator, the Geomagic Touch, see \secref{sec:geo_magic}, has been implemented as replacement for the original master consol.}
-
 
 
 %a replacement master controller called a Geo magic touch is implemented, see \secref{sec:geo_magic}.
@@ -60,7 +57,5 @@ The hand is at the end of the arm and has three \gls{DOF}, two rotational and on
 The end-effector tool is connected to the hand, it is only capable of doing rotational movement on its own. Together the tool and the hand have 6 - 7 movable \gls{DOF} that can be actuated. The tool is the instrument which interacts with the patient during surgery. There are several different tools available, each with their own functionality. 
 \end{enumerate}
 
-\textcolor{green}{The present project concentrates on implementing haptic feedback control for the end-effector called EndoWrist. Controlling the robot arm is not a subject of this project. The end-effector was separated from the da Vinci system. }
-	\textcolor{green}{
-The da Vinci's master console controller lacks actuation. In order to be able to provide haptic feedback, a Geomagic Touch, see \secref{sec:geo_magic}, has been implemented as a replacement. The original master console will not be further analyzed. 	
-}
+The present project concentrates on implementing haptic feedback control for the end-effector called EndoWrist. Controlling the robot arm is not a subject of this project. The end-effector was separated from the da Vinci system.
+The da Vinci's master console controller lacks actuation. In order to be able to provide haptic feedback, a Geomagic Touch, see \secref{sec:geo_magic}, has been implemented as a replacement. The original master console will not be further analyzed. 

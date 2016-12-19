@@ -24,7 +24,7 @@
 % user base, which makes the process of learning the system
 % considerably easier.
 
-In a high level overview, our system could structurally be represented in several components.
+In a high level overview, see \figref{fig:soft_architect}, our system could structurally be represented in several components.
 The sBRio board controls the actuators on the DaVinci robot arm and the rest of the system communicates with it via drivers contained in the Davinci\_ros package. The Phantom Omni communicates with the system via the Open Haptics API, and connects to ROS through the phantom\_omni package.
 
 Connecting all the system components requires an architecture based on a central node which handles communication between the two packages and has access to all the other methods required for control.
@@ -72,5 +72,6 @@ Forming the node in an object-oriented manner gives the added advantage of modul
 
 
 \end{tikzpicture}%
-\caption{simple Tikz figure}
+\caption{Overview of the software architecture}
+\label{fig:soft_architect}
 \end{figure}

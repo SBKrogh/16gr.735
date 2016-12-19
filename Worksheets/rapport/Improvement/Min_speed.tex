@@ -1,16 +1,13 @@
 %\section{Minimum refresh speed}\label{sec:min_speed}
 
-The refresh rate for the force feedback has an influence on the transparency of the controller. An ideal situation is that there is no delay in the system and the system is perfectly modeled, thus give the user a direct feedback of the forces the tool is exposed to.\\ 
-The force can also be scaled if high precision task is to be made, thus increase the resistance the operator is fed from the feedback.
+The refresh rate for the force feedback has an influence on the transparency of the controller. An ideal situation is that there is no delay in the system and the system is perfectly modelled, thus give the user a direct feedback of the forces the tool is exposed to.\\ 
+The force can also be scaled if high precision tasks need to be performed, thus increasing the resistance the operator is fed through the feedback.
+
 \todo{maybe scaled? and Update rate vs. delay. Also jitter should be considered} 
 
-{\color{green}
-As one of the goals for this project is to implement a force feedback controller, the requirement for the force feedback speed should be met. Thus the bandwidth of the communication speed should be increased.
-} 
 
-{\color{red} 
-As one of the goals for this project is to increase the bandwidth for the communication and thereby enable the opportunity of making a force feedback control, the required refresh rate of a 1000 Hz should be met.
-}
+As one of the goals for this project is to implement a force feedback controller, the requirement for the force feedback speed should be met. Thus the bandwidth of the communication speed should be increased.
+
 % From the article \textit{The role of haptics in medical training simulators: a survey of the state of the art}\cite{coles2011role}, it is said that the minimum refresh rate of haptic feedback is wildly debated to be between 300 Hz and 600 Hz, but for a realistic force feedback it is commonly accepted to be at least 1000 Hz, thus it is not defined. \todo{This is just marked with a "!" sign by Christoffer}
 
 From \secref{sec:prev_communication} the communication between the sbRIO and the computer was in the previous setup running at 100 Hz, which does not meet the requirement of a 1000 Hz. Therefore the speed should be raised with at least a factor of ten. It is however preferable to exceed this so the system does not run on the limit, thus having the ability to make complex calculations.

@@ -5,7 +5,7 @@
 It is imperative to create a controller which minimizes the effects of communication delay. Therefore the aim was to implement as much of the motion control on the embedded system as possible. The human operator  inputs the required position by moving the GT. These positions are sent as position reference to the sbRIO. 
 The sbRIO has an implemented cascade position-speed-current control, see \figref{cascade_fig}, which takes care of the EndoWrist positioning tasks. The P position control that tracks the setpoint is running on the sbRIO FPGA. The FPGA sends the speed reference to the Escon controller in the form of PWM signals. The Escon controller is running the PI speed control with inner PI current control loop. The inner loops are faster than the outer loops.
 
-The chosen controller parameters:
+The chosen controller parameters are listed in \tabref{tab:control_param}:
 
 \begin{center}
 	\begin{tabular}{ c | c | c | c }
@@ -15,6 +15,8 @@ The chosen controller parameters:
 		Speed controller & 426 & 28 ms & 5.36 kHz \\ \hline
 		Position controller & 1121 & $38 \mu s$ & 53.6 kHz \\ \hline
 	\end{tabular}
+	\caption{Cascade position control parameters}
+	\label{tab:control_param}
 \end{center}
 
 The speed and current controller parameters were calibrated automatically by ESCON Studio. The program queries the motor parameters, desired current limits and maximum acceleration values and calculates the controller parameters based on those. The EndoWrist can not handle high speeds and high acceleration, thus speed was not the main priority in tuning the position PID control. We focused on precision and avoiding overshoot. By running experiments, we decided upon a P controller of 10 for each motor. A lower gain would result in slower motion, a higher gain would result in overshoots. The EndoWrist-motor system has inherent damping in the form of friction, inertia and elasticity, thus the system is stable even without integral and differential controller. For the experiments with free-running EndoWrist, see \figref{square_excite}. The setpoints square signals moving jumping between the limits the EndoWrist can move between. This is a movement that would never happen in normal operation. The delay defined in these graphs is the time it takes for the positions to reach the setpoints with an error of 5\%.
@@ -24,7 +26,7 @@ The speed and current controller parameters were calibrated automatically by ESC
 
 
 
-\begin{figure}
+\begin{figure}[H]
 	\begin{subfigure}[b]{0.5\textwidth}
 		\centering
 		\resizebox{\linewidth}{!}{
@@ -62,9 +64,9 @@ The speed and current controller parameters were calibrated automatically by ESC
 %\begin{figure}[h] \label{ fig7} \begin{minipage}[b]{0.50\linewidth}\centering\includegraphics[width=0.70\linewidth]{mild_yaw1.png} \caption{The yaw setpoint tracking lag in this case is 50 ms} \end{minipage} \begin{minipage}[b]{0.50\linewidth}\centering\includegraphics[width=0.70\linewidth]{mild_yaw2.png} \caption{} \end{minipage} \begin{minipage}[b]{0.50\linewidth}\centering\includegraphics[width=0.70\linewidth]{mild_pitch.png} \caption{} \end{minipage}\hfill \begin{minipage}[b]{0.50\linewidth}\centering\includegraphics[width=0.70\linewidth]{mild_roll.png} \caption{} \end{minipage} \end{figure}
 
 
-For the measurements with sinusoidal setpoint signals, see \figref{square_excite}. This is much more similar to normal operations, where instead of jumps, the operator makes continuous moves. The delay defined in these graphs is the time between the setpoints and positions being at the same value.
+For the measurements with sinusoidal setpoint signals, see \figref{sin_excite}. This is much more similar to normal operations, where instead of jumps, the operator makes continuous moves. The delay defined in these graphs is the time between the setpoints and positions being at the same value.
 
-\begin{figure}
+\begin{figure}[H]
 	\begin{subfigure}[b]{0.5\textwidth}
 		\centering
 		\resizebox{\linewidth}{!}{
