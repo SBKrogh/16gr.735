@@ -11,7 +11,7 @@
 
 \begin{axis}[%
 width=0.8\columnwidth,
-height=0.6\columnwidth,
+height=0.4\columnwidth,
 at={(2.512in,1.147in)},
 scale only axis,
 unbounded coords=jump,
@@ -30,7 +30,7 @@ xmajorgrids,
 ymajorgrids,
 legend style={legend cell align=left, align=left, draw=white!15!black}
 ]
-\addplot [color=mycolor1, draw=none, mark=*, mark options={solid, mycolor1}]
+\addplot [color=mycolor1, draw=none, mark=*, mark size=1, mark options={solid, mycolor1}]
   table[row sep=crcr]{%
 0	nan\\
 0.0508143901824951	0.040583486\\
@@ -452,7 +452,7 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 };
 \addlegendentry{Position Error}
 
-\addplot [color=mycolor2]
+\addplot [color=mycolor2, thick]
   table[row sep=crcr]{%
 0	-0\\
 0.0508143901824951	-0.120667\\
@@ -874,7 +874,7 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 };
 \addlegendentry{Force feedback [N]}
 
-\addplot [color=green, dashed]
+\addplot [color=green, dashed, very thick]
   table[row sep=crcr]{%
 0	0\\
 0.0508143901824951	-0.0402222\\
