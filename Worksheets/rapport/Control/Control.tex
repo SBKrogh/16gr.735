@@ -1,15 +1,22 @@
 \chapter{Models and control}
 %http://tex.stackexchange.com/questions/13933/drawing-mechanical-systems-in-latex
-In this chapter the derivative of the models used for this project is described. Furthermore the controller implemented will be described after the models has been introduced. The overview of the control system is shown on \figref{control_block} and \figref{fig:simple_control}  \todo{We need a another introduction.}
-
-\input{rapport/Control/control_system_tikz}
-\todo{elaborate on the block diagram}
-
+In this chapter the derivation of the models used for this project is described. Furthermore the controller implemented will be described after the models has been introduced. The overview of the control system is shown on \figref{fig:control_block} and \figref{fig:simple_control}.
+ 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{rapport/pictures/control.pdf} 
 	\caption{Simplified block diagram of the control design.}
 	\label{fig:simple_control}
 \end{figure}
+
+The implemented control loop is essentially made up of two closed loops sending updating the references of each other from time to time. The two main loops are the position control of the robot and the force control of the haptic device. The haptic device's manufacturer did not publish the control architecture of the GT, thus it is treated as a black box which tracks the force references sent to it. The surgeon controlling the GT sets the references for the position loop. The position controller tracks the setpoints and propagate the measured currents to the force estimator. The estimated force is then sent back to the GT as a force reference. 
+
+
+\todo{Is this a sufficient introduction?}
+
+
+
+
+\input{rapport/Control/control_system_tikz}
 
 \input{rapport/Control/Human}
 \input{rapport/Control/Friction}
