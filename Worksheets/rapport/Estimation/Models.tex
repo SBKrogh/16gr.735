@@ -138,7 +138,7 @@ The algorithm which provides the best result varies heavily on the data set and 
 \begin{figure}[H]
 \centering
 \hspace{-2em}\includegraphics[width=0.7\linewidth]{sscomparison1}
-\caption{Second order yaw force models identified by different subspace identification algorithms.}
+\caption{Second and sixth order yaw force models identified by different subspace identification algorithms.}
 \label{fig:ssid1}
 \end{figure}
 
@@ -152,13 +152,13 @@ It is assumed that the cause of this is a limited number of iterations, since a 
 \end{figure}
 
 This fact makes a brute force approach in combining inputs and outputs with data somewhat necessary in picking the best model for estimation.
-Comparing the responses of these models it is clear that having effort and velocity as inputs provides a much better estimate than when the only output is effort.
-This is true for both the time and frequency data sets.
+Comparing the responses of these models it is clear that having effort and velocity as inputs provides a somewhat better estimate than when the only input is effort.
+Aditionally , both the frequency and time data models seem to peak in accuracy at the 6th order.
 
 \begin{figure}[H]
 \centering
 \hspace{-2em}\includegraphics[width=0.7\linewidth]{comparisonp1p2}
-\caption{Second order yaw force models identified by different subspace identification algorithms.}
+\caption{Comparison of 6th order linear models with force and force and velocity as outputs to measured data}
 \label{fig:1LMI2}
 \end{figure}
 
@@ -291,6 +291,19 @@ In the update step, the Kalman gain is calculated, which is then used to multipl
 If the noise characteristic does not change with time, the Kalman gain reaches a steady state.
 This Kalman gain can then be used without the need for recalculation, this gives us the steady state Klaman filter.
 
-Simulation results 
+\subsection{Simulation}
+For a model with a sufficiently accurate  description of the system dynamics, a steady-state Kalman filter should provide a powerful state estimation capability.
+Moreover, the stochastic nature of measurements can be compensated for, thus providing an even better estimate.
+
+To validate the theory, it was assumed that force measurements were avilable for our system.
+This situation was simulated and compared with the results of the open-loop model.
+
+\begin{figure}[H]
+\centering
+\hspace{-2.5em}\includegraphics[width=0.49\linewidth]{kl1}
+\hspace{-2.5em}\includegraphics[width=0.49\linewidth]{kl1mse}
+\caption{Hammerstein-Wiener model with deadzone nonlinearities on the output.}
+\label{fig:kl1}
+\end{figure}
 
 
