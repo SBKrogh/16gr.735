@@ -15,8 +15,8 @@ Our hypothesis is that full reference following capability can be added to the n
 \caption{Simulation setup.}
 \end{figure}
 
-We can see that the outer part of the system consists of a sinusoidal force reference, which is affected by oscilations from the human model. 
-This represents the operators reaction to force feedback while giving a force reference.
+We can see that the outer part of the system consists of a sinusoidal force reference, which is affected by oscillations from the human model. 
+This represents the operator's reaction to force feedback while giving a force reference.
 
 The input nonlinearities in the system represent the effects of friction on effort and velocity, as they are the inputs to the plant (EndoWrist).
 Only the position error measurement is used as an input to the kalman filter, along with the inputs.
@@ -41,5 +41,5 @@ The offset and amplitude can be corrected by implementing a gain and offset to t
 \label{fig:freffl2}
 \end{figure}
 
-In \figref{freffl2} we can see that the modified reference indeed only leaves a delay in response of the system of about 0.3 seconds.
-While this delay is significant in a surgery scenario, we believe it can be further reduced using various state space methods.
+In \figref{fig:freffl2} we can see that the modified reference indeed only leaves a delay in response of the system of about 0.3 seconds.
+While this delay is significant in a surgery scenario, we believe it can be further reduced using various state-space methods.
