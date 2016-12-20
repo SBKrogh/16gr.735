@@ -158,16 +158,10 @@ The values for the static friction constants have been measured and used to buil
 \end{figure}
 
 \subsection{Applying the model to data}
-\todo{Check coherence since no data were introduced yet}
 
 The model derived was not applied to the input of the system but used to detect external forces. If external forces are applied to the end effector, the output of the force estimation is fed back, if not, no feedback is sent. The estimated force is fed back as long as the value of the current is sufficient to overcome friction.
 
-The model was applied to data recorded while an operator was attempting to start at a point where the feedback is zero, slowly clamp a finger and release it to return at the zero point
-%The model was applied to the data presented in \secref{sec:estimation}. 
-As it can be seen on \figref{fig:friction_validation}, the oscillations are removed from the feedback when no strong current is applied. The negative force fed back from 12 to 14 seconds is due to the operator trying to open the clamp more than it is possible. 
-\begin{figure}[H]
-\input{rapport/pictures/clamp_feedback_friction}
-\caption{Friction model applied to the clamping response}
-\label{fig:friction_validation}
-\end{figure}
+% The model was applied to data recorded while an operator was attempting to start at a point where the feedback is zero, slowly clamp a finger and release it to return at the zero point
+% %The model was applied to the data presented in \secref{sec:estimation}. 
+% As it can be seen on \figref{fig:friction_validation}, the oscillations are removed from the feedback when no strong current is applied. The negative force fed back from 12 to 14 seconds is due to the operator trying to open the clamp more than it is possible. 
 
