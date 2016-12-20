@@ -22,7 +22,7 @@ As mentioned, all the numbers in the vectors should have the same length. In the
 
  However the compression rate generally is not higher than 50\% for random data and the computation time induced by compression would results in an additional delay instead of decreasing the existing one \cite{simple_compression}\cite{fast_ZIV}. The third and last option was to send the binary representation directly without any encoding. The numerical values being stored as floats, each of them requires 4 bytes. It have the advantage of having a fixed length without having to round the value. The last solution was chosen as it has the lowest computation time, since no encoding is used. The only issue is that the endianness of both devices is not the same, this is corrected in the implementation on the ROS side. The packets obtained with the new format are shown in \figref{fig:new_packets}.%The packets obtained with the new format are shown in \tabref{fig:received_packet} and \tabref{fig:sent_packet}
 
-With the original format, the packet described in \secref{subsec:JSON}contained 346 characters. With the new format, the packet that contains the same information is 49 bytes. Therefore, the packets following the new format uses 15\% of the original size.
+With the original format, the packet described in \secref{subsec:JSON} contained 346 characters. With the new format, the packet that contains the same information is 49 bytes. Therefore, the packets following the new format uses 15\% of the original size.
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}
