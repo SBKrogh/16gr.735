@@ -3,6 +3,13 @@
 % The reference under this line is those we are sure on how to ref to %
 %                                                                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@online{million_packets,
+  title = {How to receive a million packets per second},
+  author = {Marek Majkowski},
+  howpublished = {\url{https://blog.cloudflare.com/how-to-receive-a-million-packets/}},
+  year = {2015}
+}
+
 @book{spong2008robot,
   title={Robot dynamics and control},
   author={Spong, Mark W and Vidyasagar, Mathukumalli},
@@ -41,15 +48,16 @@
   organization={IEEE}
 }
 
-  @article{Chris_Surgical,
-    author ={Karl Damkjær Hansen, Simon Jensen, Christoffer Sloth, Rafal Wisniewski},
-    title ={Instrumentation of the da Vinci Robotic Surgical System},
-    howpublished={\url{http://vbn.aau.dk/files/224392713/The_3rd_AAU_Workshop_on_Robotics_2014.pdf}},
-    year ={2015},
-    journal = {The 3rd AAU Workshop on Robotics : Proceedings},
-    pages = {15-18}
- 
-  }
+
+  @inproceedings{Chris_Surgical,
+  title={Instrumentation of the da Vinci Robotic Surgical System},
+  author={Hansen, Karl Damkj{\ae}r and Jensen, Simon and Sloth, Christoffer and Wisniewski, Rafal},
+  booktitle={3rd Aau Workshop on Robotics},
+  year={2015},
+  organization={Aalborg Universitetsforlag},
+  pages = {15-18}
+}
+
 
   @article{JSON_IETF,
     author ={T. Bray, Ed.},
@@ -134,12 +142,13 @@
 Pages 61-73 of Lazeroms, M.C.J., Force Reflection for Telemanipulation - applied to Minimally Invasive Surgery, PhD Thesis, 1999. http://repository.tudelft.nl/islandora/object/uuid:5223046c-9998-4e1d-94f3-dd07e2714ca9?collection=research
 
 
-@article{burdea1996force,
-  title={Force and Touch Feedback for Virtual Reality. JohnWiley \& Sons},
-  author={Burdea, GC},
-  journal={New York},
-  year={1996}
+@book{burdea1996force,
+  title={Force and touch feedback for virtual reality},
+  author={Burdea, Grigore C and Brooks, Frederick P},
+  year={1996},
+  publisher={Wiley New York}
 }
+
 
 @inproceedings{booth2003influence,
   title={The influence of changing haptic refresh-rate on subjective user experiences-lessons for effective touch-based applications},
@@ -148,6 +157,7 @@ Pages 61-73 of Lazeroms, M.C.J., Force Reflection for Telemanipulation - applied
   pages={374--383},
   year={2003}
 }
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                         %
@@ -250,7 +260,7 @@ Pages 61-73 of Lazeroms, M.C.J., Force Reflection for Telemanipulation - applied
 
       @manual{daVinciSurgery,
     organization ={da Vinci surgery},
-    title ={The da Vinci surfical system},
+    title ={The da Vinci surgical system},
     howpublished={\url{http://www.davincisurgery.com/da-vinci-general-surgery/da-vinci-surgical-system/}},
     note = {Downloadet: 05-12-2016},
     year= "November 2015"
@@ -292,18 +302,21 @@ http://image.dfrobot.com/image/data/SEN0160/hx711_english.pdf
   
   
   @article{lack_fb,
-    author ={Bethea BT, Okamura AM, Kitagawa M, Fitton TP, Cattaneo SM, Gott VL, Baumgartner WA, Yuh DD.},
-    title ={Application of Haptic Feedback to Robotic Surgery},
-    howpublished={\url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1283126/}},    
-    journal={J Laparoendosc Adv Surg Tech A.},
-    year ={2004},
-    volume = {14},
-    pages = {191–195}
-  }
+  title={Application of haptic feedback to robotic surgery},
+  author={Bethea, Brian T and Okamura, Allison M and Kitagawa, Masaya and Fitton, Torin P and Cattaneo, Stephen M and Gott, Vincent L and Baumgartner, William A and Yuh, David D},
+  journal={Journal of Laparoendoscopic \& Advanced Surgical Techniques},
+  volume={14},
+  number={3},
+  pages={191--195},
+  year={2004},
+  publisher={Mary Ann Liebert, Inc.}
+}
+
   
     @misc{rec_time,
     title ={Bladder Cancer Surgery - Robotic Cystectomy},
     howpublished={\url{http://www.roboticoncology.com/laparoscopic-cystectomy/}},
+    author = {{Lenox Hill Hospital}},
     note ={Accessed: 12-12-2016}
   }
   
@@ -366,6 +379,8 @@ http://image.dfrobot.com/image/data/SEN0160/hx711_english.pdf
   publisher={Springer}
 }
 
+
+
 @article{zhu2002estimation,
   title={Estimation of an N--L--N Hammerstein--Wiener model},
   author={Zhu, Yucai},
@@ -390,4 +405,12 @@ http://image.dfrobot.com/image/data/SEN0160/hx711_english.pdf
   author={Friedland, Bernard},
   year={2012},
   publisher={Courier Corporation}
+}
+
+@book{van1992computational,
+  title={Computational frameworks for the fast Fourier transform},
+  author={Van Loan, Charles},
+  volume={10},
+  year={1992},
+  publisher={Siam}
 }

@@ -1,4 +1,4 @@
-\chapter{Force Estimation}
+\chapter{Force Estimation} \label{ch:fem}
 In order to have a representation of the reaction force on the EndoWrist, estimation is needed. 
 In \secref{introduction}, it is stated why force measurement can not be directly measured due to the lack of sensors. Thus the force has to be estimated by mathematical models as functions of actuator measurements.
 
@@ -141,14 +141,10 @@ Both approaches discussed in \secref{sec:para_iden} are possible to realize on t
 However, the data contains various irregularities caused by the imperfect measuring process as well as the hardware. 
 For this reason, parts of the data needed to be removed before identification, which required interpretation of results.
 
-Also, linear model identification showed the best results when done on data in which the strongly nonlinear effects of friction were "cropped".
-\todo{not really sure what this line is for?}
-%figure showing shitty data
-
 \todo{This paragraph}
 Noise is also present and can be removed from the identification data using a low pass filter.
-Since most of the dynamics are captured in the frequency band of 0 to 20 rad-1 , this frequency range was chosen for identification.
-Also, it is useful to remove the offsets (means) on output data.
+Since most of the dynamics are captured in the frequency band of 0 to 20 Hz, this frequency range was chosen for identification.
+Offsets were also removed from the output data as they reduced model quality.
 A sample of original and modified data can be seen on \figref{figlowpass}.
 
 \begin{figure}[H]
@@ -158,22 +154,23 @@ A sample of original and modified data can be seen on \figref{figlowpass}.
 \label{figlowpass}
 \end{figure}
 
-Aditionally, linear models can also be fitted in the frequency domain so the data is transformed using fast Fourier transform \cite{van1992computational}.\todo{Okay??}
+Linear models can also be fitted in the frequency domain so the data is transformed using fast Fourier transform \cite{van1992computational} and used in the identification process.
 
 \subsection{Linear model identification}
 The System Identification Toolbox provides 3 different subspace identification algorithms which often provide different results depending on the chosen system order \cite{van1994n4sid}. 
 For this reason all 3 algorithms are attempted in the identification process, and the best one is chosen depending on the average fit.
 The algorithm which provides the best result varies heavily on the data set and the chosen order of the model, see \figref{fig:ssid1}.
-\todo{what can be concluded from that figure?}
+It can be see that second order models have slightly different dynamics depending on the algorithms, while in certain cases some models lose stability.
 
 \begin{figure}[H]
 \centering
 \hspace{-2em}\includegraphics[width=\linewidth]{sscomparison1}
-\caption{Second order yaw force models identified by different subspace identification algorithms.}
+\caption{Second and sixth order yaw force models identified by different subspace identification algorithms. 
+The lower plot shows only two methods as the SSARX method is not stable for this order and data set.}
 \label{fig:ssid1}
 \end{figure}
 
-The choice of inputs, outputs and data domain\todo{data domain?} is heavily affecting the model quality in a unpredictable way, see \figref{fig:fits}.
+The choice of inputs, outputs and the domain of identification data heavily affects the model quality in a unpredictable way, see \figref{fig:fits}.
 It is assumed that the cause of this is a limited number of iterations, since a higher order model should always represent dynamics better than a lower order one.
 
 \begin{figure}[H]
@@ -182,9 +179,9 @@ It is assumed that the cause of this is a limited number of iterations, since a 
 \label{fig:fits}
 \end{figure}
 
-This fact makes a brute force approach in combining inputs and outputs with data somewhat necessary in picking the best model for estimation.\todo{what?}
-Comparing the responses of these models it is clear that having effort and velocity as inputs provides a much better estimate than when the only output is effort.
-This is true for both the time and frequency data sets. \todo{What is this concluded from?}
+This fact makes an approach consisting of testing various inputs and outputs somewhat necessary in picking the best model for estimation.
+Comparing the responses of these models it is clear that having effort and velocity as inputs provides a much better estimate than when the only input is effort.
+As seen in \figref{fits} his is true for both the time and frequency data sets. \todo{What is this concluded from?}
 
 \begin{figure}[H]
 \centering
@@ -296,7 +293,7 @@ The relation \ref{eq: roll} can also be interpreted as a feed-through component 
 
 This is a useful way to view the system since the force feedback loop can be veiwed as a single system with state feedback and input/output nonlinearities.
 
-\section{State estimator design}
+\section{State estimator design} \label{se:est}
 As mentioned in section \secref{se:ms}, an approach was taken towards designing a state estimator which could correct the force estimates.
 This method would involve designing a steady-state Kalman filter \cite{brown1997introduction} and/or a Luenberger observer \cite{friedland2012control} for a model that outputs both force and velocity.
 
