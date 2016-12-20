@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+%Peripheral
+\node[fill = white,box] (Sensor) at (0,0) {Sensor};
+\node[fill = white,box] (RC) at ($(0,-2)+(Sensor)$) {Remote};
+%FPGA
+\node[fill = white,box] (Reg) at ($(3.5,0)+(Sensor)$) {Regulator};
+\node[fill = white,box] (Cont) at ($(0,-2)+(Reg)$) {Control};
+\node[fill = white,box] (PWM) at ($(3,0)+(Cont)$) {PWM};
+\node[fill = white,box] (Mot) at ($(3.5,0)+(PWM)$) {Motor \\ Driver};
+
+\draw[->, ultra thick] (RC) -- (Cont);
+\draw[->, ultra thick] (Cont) -- (PWM);
+\draw[->, ultra thick] (PWM) -- (Mot);
+\draw[->, ultra thick] (Sensor) -- (Reg);
+\draw[->, ultra thick] (Reg) -- (Cont);
+
+\draw[thick,dashed] ($(-1.5,2)+(Reg)$) -- ($(1.5,4)+(PWM)$) -- ($(1.5,-1.5)+(PWM)$) -- ($(-1.5,-1.5)+(Cont)$) -- ($(-1.5,2)+(Reg)$);
+\node[] at ($(1.5,1.5)+(Reg)$) {\textbf{FPGA}};
+\end{tikzpicture}%
