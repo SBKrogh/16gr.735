@@ -134,7 +134,7 @@ As seen on \figref{hankel}, the diminishing returns of increasing the state-spac
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.5\textwidth]{hankel}
+\includegraphics[width=0.7\textwidth]{hankel}
 \caption{Comparison of Hankel sigular values for different system orders.}
 \label{hankel}
 \end{figure}
@@ -186,7 +186,7 @@ It is assumed that the cause of this is a limited number of iterations, since a 
 
 This fact makes an approach consisting of testing various inputs and outputs somewhat necessary in picking the best model for estimation.
 Comparing the responses of these models it is clear that having effort and velocity as inputs provides a much better estimate than when the only input is effort.
-As seen in \figref{fits} his is true for both the time and frequency data sets.
+As seen in \figref{fig:fits} his is true for both the time and frequency data sets.
 
 \newpage
 \subsection{Hammerstein-Weiner model identification}
@@ -257,7 +257,7 @@ Thus, the linear model is used in estimation until a better model is developed.
 
 The roll torque, which is determined by the roll actuator and directly rotates the entire tool, making it independent to the rest of the system.
 We can model the roll torque as a state that only depends on input in the state-space model of the system \ref{eq:allSS}.
-The final model is derived by simple measurement, as described in \figref{fig:entire_force_testsetup} and \figref{fig:endeffector_force}.
+The final model is derived by simple measurement, as described \chapref{cha:measurement}.
 %\begin{align}\label{eq: roll}
 %F_{roll} = 20e_{roll}
 %\end{align}
