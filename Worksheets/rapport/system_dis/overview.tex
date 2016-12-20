@@ -17,12 +17,6 @@ A general overview of the system that will be developed can be seen on \figref{s
 
 \input{rapport/pictures/First_feedback_block}
 
-\todo{The figure: We need to make sure that we actually uses the data required from the ES.}
+The operator is setting the Geomagic Touch position, which then is send to the main computer. The computer sends the position to the embedded system, which handles the position of the EndoWrist.
 
-\todo{Don't know if the text below the figure should be included or not. Thought it was needed as the figure else is standing without explanation}
-
-From left to the right on \figref{sec:summering_model}.\\ 
-The operator are setting the Geomagic Touch position, which then are send to the main computer. The computer sends the position to the embedded system, which handles the position of the EndoWrist.
-
-From right to left on \figref{sec:summering_model}.\\
 The embedded system sends back the position, velocity and current applied to the motor. The computer computes a force from the received data and sends it to the Geomagic Touch, which generate a force in a counter direction of the force applied by the human.
