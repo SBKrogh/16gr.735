@@ -3,7 +3,7 @@ The embedded system controls the motors for one EndoWrist. The desired positions
 
 %{\color{green}
 As mentioned in Section \ref{sec:introduction} the frequency aimed for the force feedback loop is 550 Hz. However this loop not only includes communication between the embedded system and the computer but also computation time for force estimation and communication between the GT and the computer. Thus, the communications with the computer must be faster than 550 Hz.
-The drivers for the GT have a refresh rate of 1000 Hz. From experimentation it was found that the embedded system's built-in UDP library cannot handle refresh rates higher than 1000 Hz. Thus the resulting feedback loop have a refresh rate of 500 Hz and not 550 Hz has it was aimed. This study aims at reaching the maximum frequency of the embedded system which is 1000 Hz.
+The drivers for the GT have a refresh rate of 1000 Hz. From experimentation it was found that the embedded system's built-in UDP library cannot handle refresh rates higher than 1000 Hz. Thus the resulting feedback loop have a refresh rate of 500 Hz and not 550 Hz as it was aimed. This study aims at reaching the maximum frequency of the embedded system which is 1000 Hz.
 
 % {\color{red}
 % It is said that the minimum refresh rate of haptic feedback is widely debated to
@@ -168,7 +168,7 @@ In addition to the transport protocol, another factor that influence the speed o
 \label{fig:new_packets}
 \end{figure}
 %{\color{green}
-To investigate the quality of the communication as a function of frequency three parameters were measured: the delay between two packets received, the jitter and the error rate. Since the computation time for force estimation and on the embedded system are very small compared to the frequency of the communication, i.e. inferior to 3 $\mu$s.%, if the communication can reach the aimed frequency of 1kHz, the goal for the feedback loop is reached.
+To investigate the quality of the communication as a function of frequency three parameters were measured: the delay between two packets received, the jitter and the error rate. Since the computation time on the computer and on the embedded system are very small compared to the frequency of the communication, i.e. inferior to 3 $\mu$s.%, if the communication can reach the aimed frequency of 1kHz, the goal for the feedback loop is reached.
 
  % In order to evalutate the performance of the new communication protocol between the embedded system and the computer, different frequencies were experimented. For each of them the delays between two received packets are measured and the from those measurements the jitter and packet loss can be computed. 
 %}
