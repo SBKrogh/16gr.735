@@ -14,7 +14,7 @@ using the velocity and current measured on the actuator. Even though the model c
 
 % The estimator derived dynamically corresponds to the variations in current and position. Although a delay is present in the feedback, the model is stable and can perform independently of the velocity of the human hand.
 
-It was observed that the force was fed back during movement, even when no external forces were applied to the end-effector. This was due to the nonlinear friction in the EndoWrist that had to be overcome before any movement could be made. A simple friction model has been derived to compensate for this feedback. The friction model has only been simulated on existing data, but has given promising results. 
+It was observed that force was fed back during movement, even when no external forces were applied to the end-effector. This was due to the nonlinear friction in the EndoWrist that had to be overcome before any movement could be made. A simple friction model has been derived to compensate for this feedback. The friction model has only been simulated on existing data, but has given promising results. 
 
 
 An attempt has been made on implementing a Kalman filter for improving the estimation of the force. However no significant improvement was observed.
