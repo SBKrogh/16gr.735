@@ -99,17 +99,17 @@ A deadzone nonlinearity is used for this project to represent the friction effec
 Different output nonlinearities are also utilized and compared.
 % A deadzone nonlinearity on the input allows us to represent the effects of friction on the force, and is used in this model.
 Different output nonlinearities are also utilized and compared.
-\todo{Filip?}
+%\todo{Filip?}
 
 \subsubsection{Inputs and outputs}
-\todo{This section is more a discussion of next approch?}
+%\todo{This section is more a discussion of next approch?}
 Multiple approaches have been considered when taking into account inputs and outputs of the system.
 
 The most direct approach would have all the available data as inputs to a single output system, which outputs a force estimate.
 Ideally, this would provide enough information to identify an accurate force model.\\
 However, the imperfect nature of measuring equipment and the experiments performed, as well as limits in computing power and optimization algorithms prevent a fully utilization of this information.
 
-A more robust approach could be a system that estimates some measurable values in addition to force.\todo{don't understand this paragrapfh}
+A more robust approach could be a system that estimates some measurable values in addition to force.%\todo{don't understand this paragrapfh}
 If the system is observable and the model captures the dynamics sufficiently, it could be possible to correct the model states using output errors.
 
 Both of these approaches are examined and simulated in this chapter.
@@ -130,7 +130,7 @@ The most important achievement in subspace identification is that Kalman filter 
 Although the algorithm itself is complex, it is implemented in the System Identification Toolbox as a part of MATLAB.
 
 The order of the identified model was picked using Hankel singular values \cite{gawronski1990model}, which determine the amount of data dynamics a model can describe at a given order.
-As seen on \figref{hankel}, the diminishing returns of increasing the state-space order are visible for different subspace identification algorithms.\todo{This line?}
+As seen on \figref{hankel}, the diminishing returns of increasing the state-space order are visible for different subspace identification algorithms.%\todo{This line?}
 
 \begin{figure}[H]
 \centering
@@ -140,13 +140,13 @@ As seen on \figref{hankel}, the diminishing returns of increasing the state-spac
 \end{figure}
 
 \subsection{Identification data}
-\todo{In gerneal we need a concluding text to each figure}
+%\todo{In gerneal we need a concluding text to each figure}
 
 Both approaches discussed in \secref{sec:para_iden} are possible to realize on the data sets acquired in \chapref{cha:measurement}.
 However, the data contains various irregularities caused by the imperfect measuring process as well as the hardware. 
 For this reason, parts of the data needed to be removed before identification, which required interpretation of results.
 
-\todo{This paragraph}
+%\todo{This paragraph}
 Noise is also present and can be removed from the identification data using a low pass filter.
 Since most of the dynamics are captured in the frequency band of 0 to 20 Hz, this frequency range was chosen for identification.
 Offsets were also removed from the output data as they reduced model quality.
@@ -310,7 +310,7 @@ Estimation is carried out in two steps:
 \item Update step.
 \end{itemize} 
 
-The prediction step consists of calculating \textit{a priori} estimates of the current state and covariance using the updated state estimates from the last step. \todo{don't understand}
+The prediction step consists of calculating \textit{a priori} estimates of the current state and covariance using the updated state estimates from the last step. %\todo{don't understand}
 The $\mathbf{P}$ matrix is the so called covariance matrix and represents the estimated accuracy of the state estimate.
 The $\mathbf{Q}$ and $\mathbf{R}$ matrices represent the covariances of the measurement noise, respectively.
 
