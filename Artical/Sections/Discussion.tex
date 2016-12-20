@@ -1,29 +1,54 @@
 \section{Discussion}
 
 When increasing the refresh rate, increasing jitter and packet loss were expected as these parameters are highly correlated to the network congestion\cite{cisco_jitter}. The drop in jitter when reaching for higher frequency can be explained by the functioned of the communication driver. In order to reach high frequencies, a trade-off was made by setting a deadline to receive a packet, if the packet does not meet the deadline, it is discarded. Thus, when the jitter increases, more packets are discarded, increasing the packet loss.
-\todo{The procedure used to measure jitter was flawed?}
 The maximum refresh rate reached does not meet the goal previously set. However, compared to the original system, the refresh rate has been increased by more than six folds. Furthermore, the goal of 1 kHz was reached when only the communication with the embedded system was enabled, thus it is expected that optimizing the program could lead to reaching the goal even with the entire system running.
 To further increase the refresh rate, compression of the data was considered and it is believed that implementing a fast compression algorithm such as the one described in \cite{fast_ZIV} could reduce the time required to transmit a packet.
 
-{\color{purple}By choosing UDP as a transport protocol, every network reliability feature was removed from the connection which matches the demands of our system in term of bandwidth. 
+By choosing UDP as a transport protocol, every network reliability feature was removed from the connection which matches the demands of our system in term of bandwidth. 
 However, safety needs to be considered for such a system. 
-As such a feature was implemented on both side of the communication in order to detect packet loss and connection timeout. 
+As such a feature was implemented on both sides of the communication in order to detect packet loss and connection timeout. 
 The detection of those events allows to stop moving the end-effector and to notify the operator. 
 In the future, additional steps such as protection against external cyber-attacks and handling of packet losses should be taken in order to improve the overall safety of the system.
-}\todo{if we have any space problem remove the purple}
 
-Due to the structure of the EndoWrist, we have split the dynamical model of the force into separate submodels pertaining to the actions most commonly performed.
-A model was defined both for the grip, radial and tangential forces of the clamping tool.
 
-The grip and tangential force models parameters are still to be defined through experiments performed using a load cell for grip force measurement.
-Based on earlier results \cite{kim2014dynamic} we expect an approximation of grip force adequate for feedback.
+Due to the EndoWrists structure, we have chosen to model the dynamics of the tool in a task space consisting of roll torque and pitch and yaw forces.
+As we have chosen a data-based approach towards force modeling, all imperfections in the data acquisition process can affect the result.
+Roll torque estimation was simple as the data showed its linear dependence on the actuator effort.
 
-For the radial force, the linear model parameters are defined and we expect the model to be precise in action since it fits the experimental results well.
-Additionally, it is simple to calculate so it doesn't introduce noticeable delays in the system.
+The yaw (grip) force model has shown an average 77\% fit to validation data.
+While the errors in the model output exist, they usually involve the estimate being slightly lower than the actual force.
+This is mostly due to the saturation nonlinearity implemented in the model output, which prevents the linear part of the model from overshooting the estimate.
 
-For usable information to be provided , the representations of feedback from these three models need to be mutually independent.
-This means that the feedback force vector representing the e.g. yaw mechanism on the Geomagic Touch needs to be linearly independent of the ones resulting from the other two mechanisms. 
-We can easily do this by pairing individual actions with horizontal and vertical movement of the Geomagic Touch end effector, as well as the rotation of it's first joint .
+Unlike the yaw model, data acquisition for the pitch model was more difficult, as the EndoWrists structure affected measurements.
+This results in additional nonlinearities in the measurements, since force wasn't always applied to an angle perpendicular to the load cell.
+As a consequence, the model underestimates the applied force.
+
+An attempt was made to implement state estimation the correct the force estimate.
+The steady-state Kalman filter was implemented, with position error and velocity measurements used for state estimation.
+Simulation results have shown that such us system would not improve the systems, as the current models do not capture the dynamics adequatley.
+
+In the future, an improved model could be utilized with state estimation to provide state feedback control of the outputed force.
+The force reference could be directly mapped to the Geomagic Touch movement axes, providing a greater degree of control to the system.
+
+
+
+
+
+
+
+
+%Due to the structure of the EndoWrist, we have split the dynamical model of the force into separate submodels pertaining to the actions most commonly performed.
+%A model was defined both for the grip, radial and tangential forces of the clamping tool.
+
+%The grip and tangential force models parameters are still to be defined through experiments performed using a load cell for grip force measurement.
+%Based on earlier results \cite{kim2014dynamic} we expect an approximation of grip force adequate for feedback.
+
+%For the radial force, the linear model parameters are defined and we expect the model to be precise in action since it fits the experimental results well.
+%Additionally, it is simple to calculate so it doesn't introduce noticeable delays in the system.
+
+%For usable information to be provided , the representations of feedback from these three models need to be mutually independent.
+%This means that the feedback force vector representing the e.g. yaw mechanism on the Geomagic Touch needs to be linearly independent of the ones resulting from the other two mechanisms. 
+%We can easily do this by pairing individual actions with horizontal and vertical movement of the Geomagic Touch end effector, as well as the rotation of it's first joint .
 
 %In the communication between the embedded system and the computer, it was decided to not compress transmitted data as the size of the packets is small (maximum of 49 bytes of payload). It is he implementation of a fast compression algorithm like the one described in \ref{very fast algo from worksheets} could improve the performances of the communication.
 %{\color{red}
