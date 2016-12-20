@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+
+\draw  (-2,-1) rectangle (0,0);
+\node at (-1,-0.5) {$m_L$};
+\draw[->,thick] (-3,0.75) -- (-3,0.25) -- (-3,0.5) -- (-2.5,0.5);
+\node at (-2,0.5) {$x_L$};
+\draw[->,thick] (-2.5,-0.25) -- (-2,-0.25);
+\node at (-3,-0.25) {$F_{Bx_p}$};
+\draw[->,thick] (-2.5,-0.75) -- (-2,-0.75);
+\node at (-3,-0.75) {$F_{sx_p}$};
+%\draw [fill = white] (0.5,-2) -- (1,-2);
+\end{tikzpicture}

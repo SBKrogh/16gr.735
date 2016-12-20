@@ -1,0 +1,280 @@
+\section{Model opstilling}
+%%%%%%%%%%%% MID WAY AGENDA %%%%%%%%%%%%%%
+\begin{frame}<beamer>
+\frametitle{Daniel Bähner Andersen}
+\tableofcontents[currentsection]
+\end{frame}
+%%%%%%%%%%%% MID WAY AGENDA %%%%%%%%%%%%%%
+
+
+\subsection{Trolley- og pendulmodel}
+\begin{frame}{Model opstilling}{Trolley- og pendulmodel}
+  \begin{minipage}[t]{0.50\linewidth}
+    \begin{itemize}
+      	\item<1->[] {
+              \begin{figure}[H]
+              \centering
+              \scalebox{0.75}{\input{Billeder/Daniel/mechanicalSystem.ralf}}
+              \end{figure}}
+        \item<3->[] {
+     		\begin{equation*}
+				m_t \ddot{x} = F_a - F_{sx_p} - F_{Bt} = F_a - F_s \cdot \sin(\theta) - B_t\dot{x}
+			\end{equation*}}      
+    \end{itemize}           
+  \end{minipage}
+  \begin{minipage}[t]{0.45\linewidth}
+\bigskip
+\bigskip 
+\bigskip
+	\begin{itemize}
+    	\item<2->[] Fritlegeme diagram for trolley  
+	\end{itemize}    
+\medskip 
+    \begin{itemize}            
+	\item<2->[] {
+              \begin{figure}[H]
+              \centering
+              \scalebox{0.75}{\input{Billeder/Daniel/FBDtrolley.ralf}}
+              \end{figure}}	     	
+    \end{itemize}           
+  \end{minipage}
+\end{frame} 
+%%%%%%%%%%%%%%%%
+
+\begin{frame}{Model opstilling}{Trolley- og pendulmodel}
+  \begin{minipage}[t]{0.50\linewidth}
+    \begin{itemize}
+      	\item<1->[] {
+              \begin{figure}[H]
+              \centering
+              \scalebox{0.75}{\input{Billeder/Daniel/mechanicalSystem.ralf}}
+              \end{figure}}
+        \item<3->[] {
+     		\begin{equation*}
+				m_L \ddot{x_L} = m_L(\ddot{x} - \ddot{x_p}) =  F_{sx_p} + F_{Bx_p} = F_s \cdot \sin(\theta) + \frac{1}{L} B_p \dot{\theta} \cos(\theta)
+			\end{equation*}} 
+		\item<4->[] {
+     		\begin{equation*}
+				x_p = \sin(\theta) \cdot L \Rightarrow \ddot{x_p} = -\sin(\theta)\cdot \dot{\theta}^2 \cdot L + \cos(\theta)\cdot \ddot{\theta} \cdot L
+			\end{equation*}}  	     
+    \end{itemize}           
+  \end{minipage}
+  \begin{minipage}[t]{0.45\linewidth}
+\bigskip
+\bigskip 
+\bigskip
+	\begin{itemize}
+    	\item<2->[] Fritlegeme diagram for pendulet i x-aksen  
+	\end{itemize}    
+\medskip 
+    \begin{itemize}            
+	\item<2->[] {
+              \begin{figure}[H]
+              \centering
+              \scalebox{0.75}{\input{Billeder/Daniel/FBDPenX.ralf}}
+              \end{figure}}	     	
+    \end{itemize}           
+  \end{minipage}
+\end{frame} 
+%%%%%%%%%%%%%%%%
+
+\begin{frame}{Model opstilling}{Trolley- og pendulmodel}
+  \begin{minipage}[t]{0.50\linewidth}
+    \begin{itemize}
+      	\item<1->[] {
+              \begin{figure}[H]
+              \centering
+              \scalebox{0.75}{\input{Billeder/Daniel/mechanicalSystem.ralf}}
+              \end{figure}}
+        \item<3->[] {
+     		\begin{equation*}
+				m_L \ddot{y} =  F_{By_p} + F_g - F_{sy_p}  = \frac{1}{L} B_p \dot{\theta} \sin(\theta) + F_g - F_s \cdot \cos(\theta)
+			\end{equation*}}
+		\item<4->[] {
+     		\begin{equation*}
+				y = \cos(\theta) \cdot L \Rightarrow \ddot{y} = -\cos(\theta) \cdot \dot{\theta}^2 \cdot L - \sin(\theta) \cdot \ddot{\theta} \cdot L
+			\end{equation*}}  	      
+    \end{itemize}           
+  \end{minipage}
+  \begin{minipage}[t]{0.45\linewidth}
+\bigskip
+\bigskip 
+\bigskip
+	\begin{itemize}
+    	\item<2->[] Fritlegeme diagram for pendulet i y-aksen  
+	\end{itemize}    
+\medskip 
+    \begin{itemize}            
+	\item<2->[] {
+              \begin{figure}[H]
+              \centering
+              \scalebox{0.75}{\input{Billeder/Daniel/FBDPenY.ralf}}
+              \end{figure}}	     	
+    \end{itemize}           
+  \end{minipage}
+\end{frame} 
+%%%%%%%%%%%%%%%%
+% Resulterende modeller
+%%%%%%%%%%%%%%%%
+
+\begin{frame}{Model opstilling}{Trolley- og pendulmodel}
+    \begin{itemize}
+      	\item<1-> Overføringsfunktioner 
+      	\begin{itemize}
+      		\item<2-> Lineariseret 
+      		\item<2-> Laplace tranformeret  
+      	\end{itemize}	       
+    \end{itemize}  
+\bigskip
+\bigskip             
+  \begin{minipage}[t]{0.3\linewidth} 
+    \begin{itemize}            
+	\item<3->[] {\begin{equation*}
+             		\frac{X(s)}{F_a(s)}   
+                \end{equation*}}	
+    \end{itemize}           
+  \end{minipage}
+  \begin{minipage}[t]{0.3\linewidth} 
+    \begin{itemize}            
+	\item<4->[] {\begin{equation*}
+             		\frac{\Theta(s)}{F_a(s)} 
+                \end{equation*}}	
+    \end{itemize}           
+  \end{minipage}
+  \begin{minipage}[t]{0.3\linewidth} 
+    \begin{itemize}            
+	\item<5->[] {\begin{equation*}
+             		\frac{X_L(s)}{F_a(s)}  
+                \end{equation*}}	
+    \end{itemize}           
+  \end{minipage}
+
+%%%%%%%%%%%%%%%%
+
+\end{frame}
+\begin{frame}{Model opstilling}{Trolley- og pendulmodel}
+  \begin{minipage}[t]{0.48\linewidth}
+    \begin{itemize}
+      	\item<1->[] {
+              \begin{figure}[H]
+              \centering
+              \input{Billeder/Daniel/VerX.tex}
+              \end{figure}}  
+        \item<2-> Dæmper 
+        \item<2-> Inerti / masse       
+    \end{itemize}           
+  \end{minipage}
+  \begin{minipage}[t]{0.48\linewidth} 
+    \begin{itemize}            
+	\item<3->[] {
+              \begin{figure}[H]
+              \centering
+              \input{Billeder/Daniel/senstools_X-axis_2A.tex}
+              \end{figure}}	     	
+    \end{itemize}           
+  \end{minipage}
+\end{frame} 
+%%%%%%%%%%%%%%%%
+
+\begin{frame}{Model opstilling}{Trolley- og pendulmodel}
+  \begin{minipage}[t]{0.48\linewidth}
+    \begin{itemize}
+      	\item<1->[] {
+              \begin{figure}[H]
+              \centering
+              \input{Billeder/Daniel/Ver_theta.tex}
+              \end{figure}} 
+        \item<2-> Pendul længde 
+        \item<2-> Pendul dæmper        
+    \end{itemize}           
+  \end{minipage}
+  \begin{minipage}[t]{0.48\linewidth} 
+    \begin{itemize}            
+	\item<3->[] {
+              \begin{figure}[H]
+              \centering
+              \input{Billeder/Daniel/senstool_theta.tex}
+              \end{figure}}	     	
+    \end{itemize}           
+  \end{minipage}
+\end{frame} 
+%%%%%%%%%%%%%%%%
+
+\begin{frame}{Model opstilling}{Trolley- og pendulmodel}
+  \begin{minipage}[t]{0.48\linewidth}
+    \begin{itemize}
+      	\item<1->[] {
+              \begin{figure}[H]
+              \centering
+              \input{Billeder/Daniel/Ver_x_L.tex}
+              \end{figure}}     
+    \end{itemize}           
+  \end{minipage}
+  \begin{minipage}[t]{0.48\linewidth} 
+    \begin{itemize}            
+	\item<2->[] {
+              \begin{figure}[H]
+              \centering
+              \input{Billeder/Daniel/x_L_maunel_senstools.tex}
+              \end{figure}}	     	
+    \end{itemize}           
+  \end{minipage}
+\end{frame} 
+%%%%%%%%%%%%%%%%
+% Hoist model
+%%%%%%%%%%%%%%%%
+
+\subsection{Hejsningsmodel}
+\begin{frame}{Model opstilling}{Hejsningsmodel}
+  \begin{minipage}[t]{0.45\linewidth}
+    \begin{itemize}
+    	\item<1->[] Fritlegeme diagram for y-aksen 
+      	\item<1->[] {
+              \begin{figure}[H]
+              \centering
+              \scalebox{0.75}{\input{Billeder/Daniel/FBDhoist.ralf}}
+              \end{figure}}    
+    \end{itemize}           
+  \end{minipage}
+  \begin{minipage}[t]{0.48\linewidth}
+\begin{itemize}
+    	\item<2->[] Resulterende kraft  
+    	\item<2->[] {
+    		\begin{equation*}
+				m_y \ddot{y} = F_g - F_a - F_B = F_g - F_a - B_y \dot{y}
+			\end{equation*}}
+	\end{itemize}
+	\bigskip
+	\begin{itemize}
+	    	\item<3->[] Overføringsfunktion
+    		\item<3->[] {
+    		\begin{equation*}
+				\frac{Y(s)}{F_a(s)} = \frac{1}{m_y s^2 + B_y s}
+			\end{equation*}}
+	\end{itemize}                
+  \end{minipage}
+\end{frame} 
+%%%%%%%%%%%%%%%%
+
+\begin{frame}{Model opstilling}{Hejsningsmodel}
+  \begin{minipage}[t]{0.48\linewidth}
+    \begin{itemize}
+      	\item<1->[] {
+              \begin{figure}[H]
+              \centering
+              \input{Billeder/Daniel/y_ver.tex}
+              \end{figure}}  
+        \item<2-> Dæmper       
+    \end{itemize}           
+  \end{minipage}
+  \begin{minipage}[t]{0.48\linewidth} 
+    \begin{itemize}            
+	\item<3->[] {
+              \begin{figure}[H]
+              \centering
+              \input{Billeder/Daniel/senstool_y.tex}
+              \end{figure}}	     	
+    \end{itemize}           
+  \end{minipage}
+\end{frame} 
+%%%%%%%%%%%%%%%%

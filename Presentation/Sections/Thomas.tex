@@ -1,0 +1,279 @@
+%\section{Afsnit}
+%\subsection{Thomas}
+%% the license
+%\begin{frame}{Afsnit}{Thomas}
+%  \begin{itemize}
+%    \item<1-> TEST
+%  \end{itemize}
+%\end{frame}
+%%%%%%%%%%%%%%%%%
+
+\section{Regulatorer}
+%%%%%%%%%%%% MID WAY AGENDA %%%%%%%%%%%%%%
+\begin{frame}<beamer>
+\frametitle{Thomas Holm Pilgaard}
+\tableofcontents[currentsection]
+\end{frame}
+%%%%%%%%%%%% MID WAY AGENDA %%%%%%%%%%%%%%
+
+
+% \begin{frame}{Regulator}{Klassisk regulator design}
+
+
+% \begin{columns}[T]
+% \begin{column}{.35\textwidth}
+% \vspace{2cm}
+%   \begin{itemize}
+%     \item<1-> S domænet
+%         \begin{itemize}
+%           \item<1-> 
+%           \item<1-> bla bla bla
+%         \end{itemize}
+%   \end{itemize}
+% \end{column}%
+% \hfill%
+% \begin{column}{.65\textwidth}
+
+% \end{column}
+% \end{columns}
+
+%   \end{frame}
+
+
+
+
+
+
+
+\begin{frame}{Regulatorer}{Blok diagram}
+
+
+   % \centering
+   % \begin{minipage}[t]{0.75\linewidth}
+   %   \begin{itemize}
+   %     \item<1->[] {
+   %             \begin{figure}[H]
+   %             \centering
+   %             \scalebox{0.65}{\input{Billeder/Thomas/regulatorblock4.ralf}}
+   %             \end{figure}
+   %     }
+   %   \end{itemize}           
+   % \end{minipage}
+   % \\
+  
+   % \centering   
+   % \begin{minipage}[t]{0.55\linewidth}
+    
+   %   \begin{itemize}
+   %     \item<1->[] {
+   %             \begin{figure}[H]
+   %             \centering
+   %             \scalebox{0.65}{\input{Billeder/Thomas/regulatorblocky.ralf}}
+   %             \end{figure}
+   %     }
+   %   \end{itemize}           
+   % \end{minipage}
+
+ \begin{figure}[H]
+   \centering
+   \scalebox{0.65}{\input{Billeder/Thomas/regulatorblock3.ralf}}
+ \end{figure}
+
+ \vspace{5.3}
+
+ \begin{figure}[H]
+   \centering
+   \scalebox{0.65}{\input{Billeder/Thomas/regulatorblocky.ralf}}
+ \end{figure}
+
+
+% \begin{figure}[H]
+%   \centering
+%   \onslide<1-> \scalebox{0.65}{\input{Billeder/Thomas/regulatorblock3.ralf}}
+% \end{figure}
+
+% \vspace{5.3}
+
+% \begin{figure}[H]
+%   \centering
+%   \onslide<2-> \scalebox{0.65}{\input{Billeder/Thomas/regulatorblocky.ralf}}
+% \end{figure}
+
+
+
+\end{frame}
+
+\begin{frame}{Regulatorer}{Root locus vinkel}
+\vspace{1cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{billeder/Thomas/AngleConRL11}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}{Regulatorer}{Root locus vinkel}
+\vspace{1cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{Billeder/Thomas/AngleOpenLoop}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Regulatorer}{Closed loop step respons vinkel}
+\begin{figure}[H]
+\vspace{1.5cm}
+\centering
+%\includegraphics[width=0.9\textwidth]{Billeder/Thomas/AngleClosedloopstep}
+%\scalebox{0.8} {
+\input{Billeder/Thomas/cl_vinkel_step}
+%}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Regulatorer}{Root locus trolley}
+\vspace{1cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{Billeder/Thomas/Simon}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Regulatorer}{Root locus trolley}
+\vspace{1cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{Billeder/Thomas/Trolleyopenloop}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Regulatorer}{Closed loop step respons trolley}
+
+\begin{figure}[H]
+\centering
+%\scalebox{0.8} {
+\input{Billeder/Thomas/cl_x_step}
+%}
+%\includegraphics[width=1.1\textwidth]{Billeder/Thomas/cl_x_step}
+\end{figure}
+
+
+\vspace{0.2cm}
+\begin{description}
+    \item[\textbf{(E)}] : x-akse settling time, $t_s \leq 17,45 s$
+    \item[\textbf{(F)}] : x-akse steady-state-error, $e_{ss} = 0,0\%$ 
+    \item[\textbf{(G)}] : x-akse overshoot, $M_p \leq 6,4\%$
+\end{description}
+\vspace{0.6cm}
+
+\end{frame}
+
+\begin{frame}{Regulatorer}{Simulering af closed loop med statisk friktion kompensering}
+\vspace{1.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{Billeder/Thomas/100mA}
+\end{figure}
+\end{frame}
+
+
+%\subsection{Trolley og pendul model}
+% \begin{frame}{Regulator}{Block diagram}
+
+
+%\begin{columns}[T]
+% \begin{column}{.35\textwidth}
+
+%   \begin{itemize}
+%     \item<1-> Trolley
+%     \vspace{0.8cm}
+%     \item<2-> Electromagnetic head 
+%     \vspace{1.5cm}
+%     \item<3-> Angle sensor
+%   \end{itemize}
+% \end{column}%
+% \hfill%
+%\begin{column}{.65\textwidth}
+
+%\vspace{-0.9cm}
+%\begin{figure}[H]
+%  \centering
+% \onslide<1->  \begin{subfigure}{0.98\textwidth}
+%         \centering
+%         \includegraphics[width=0.5\textwidth]{Billeder/Papilio_DUO}
+%         \end{subfigure}
+
+% \onslide<2-> \scalebox{0.8}{ \begin{subfigure}{0.98\textwidth}
+%         \centering
+%         \begin{figure}[H]
+
+%         \onslide<2-> \scalebox{0.7}{\input{Billeder/Thomas/regulatorblock3.ralf}}
+%         \end{figure
+
+%         }
+
+%       \vspace{0.2cm}
+
+%         \begin{figure}[H]
+
+%         \onslide<3-> \scalebox{0.7}{\input{Billeder/Thomas/regulatorblock3.ralf}}
+%         \end{figure
+
+%         }
+
+
+
+
+% \onslide<3->  \begin{subfigure}{0.98\textwidth}
+%         \centering
+%         \includegraphics[width=0.5\textwidth]{Billeder/AngleSensor}
+%         \end{subfigure}     
+% \end{figure}
+
+%\end{column}
+%\end{columns}
+
+%\end{frame}
+
+%       \item<1->[] {
+%               \begin{figure}[H]
+%               \centering
+%               \scalebox{0.65}{\input{Billeder/Thomas/regulatorblock3.ralf}}
+%               \end{figure}
+%       }
+%     \end{itemize}           
+%   \end{minipage}
+%   \\
+
+% %  \input{Billeder/Thomas/regulatorblock3.ralf}
+  
+% %  \input{Billeder/Thomas/regulatorblock4.ralf}
+	  
+%   \centering
+%   \begin{minipage}[t]{0.75\linewidth}
+%     \begin{itemize}
+%       \item<1->[] {
+%               \begin{figure}[H]
+%               \centering
+%               \scalebox{0.65}{\input{Billeder/Thomas/regulatorblock4.ralf}}
+%               \end{figure}
+%       }
+%     \end{itemize}           
+%   \end{minipage}
+%   \\
+  
+% 	\centering   
+%   \begin{minipage}[t]{0.55\linewidth}
+    
+%     \begin{itemize}
+%       \item<1->[] {
+%               \begin{figure}[H]
+%               \centering
+%               \scalebox{0.65}{\input{Billeder/Thomas/regulatorblocky.ralf}}
+%               \end{figure}
+%       }
+%     \end{itemize}           
+%   \end{minipage}
+  
+  
+%\end{frame} 

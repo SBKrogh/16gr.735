@@ -1,0 +1,122 @@
+\section{Implementering}
+%%%%%%%%%%%% MID WAY AGENDA %%%%%%%%%%%%%%
+\begin{frame}<beamer>
+\frametitle{Ralf Victor Lømand Ravgård Christiansen}
+\tableofcontents[currentsection]
+\end{frame}
+%%%%%%%%%%%% MID WAY AGENDA %%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%Implementering%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%System Blokke%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{System blokke}
+\begin{frame}{Implementering}{System blokke}
+\vspace{1.5cm}
+\begin{figure}[H]
+  \centering
+  \scalebox{0.75}{\input{Billeder/Ralf/overall_system.tex}}
+\end{figure}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%Sensorer%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Sensor}
+\begin{frame}{Implementering}{Sensor}
+
+  \begin{itemize}
+    \item<1-> Tre sensorer
+    \item<2-> Sensor støj
+    \item<3-> 30. ordens FIR filter med Hamming vindue
+  \end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \onslide<2-> \scalebox{0.7}{\input{Billeder/Ralf/step_noise.tex}}
+\end{figure}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%Regulatorer%%%%%%%%%%%%%%%%%%%%
+\subsection{Regulatorer}
+\begin{frame}{Implementering}{Regulatorer}
+
+\begin{itemize}
+  \item<1-> Lead kompensatorer
+  \item<2-> $y[n] = K_1 \cdot x[n] - K_2 \cdot x[n-1] + K_3 \cdot y[n-1]$ 
+  \item<3-> Delay håndtering
+  \item<4-> Eksekveres sekventielt
+  \item<5-> Tuning
+\end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%Accept test%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Accept test}
+%%%%%%%%%%%% MID WAY AGENDA %%%%%%%%%%%%%%
+\begin{frame}<beamer>
+\frametitle{Ralf Victor Lømand Ravgård Christiansen}
+\tableofcontents[currentsection]
+\end{frame}
+%%%%%%%%%%%% MID WAY AGENDA %%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%Accepttest metode%%%%%%%%%%%%%%%%
+\subsection{Metode}
+\begin{frame}{Accepttest}{Metode}
+\begin{itemize}
+	\item<1-> Praktisk test
+\end{itemize}
+\begin{figure}[H]
+  \centering
+  \onslide<2-> \scalebox{0.75}{\input{Billeder/Ralf/appAcceptXLPlusNoCon.tex}}
+\end{figure}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%Accepttest resultater%%%%%%%%%
+\subsection{Resultater}
+\begin{frame}{Accepttest}{Resultater}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|} \hline
+\rowcolor{lightgray}  Nr.  & \bfseries Krav                   &\bfseries Resultat               &\bfseries Opfyldt\\ 
+\rowcolor{lightgray}            &                                         &                               &           \\ \hline
+  
+\textbf{(A)}                    & y-akse settling time positiv retning & $t_s = 5,31\:\s $             & $\surd$   \\ 
+                                & $t_s \leq 6,75 \:\s$                    &                               &           \\ \hline
+
+ \textbf{(B)}                    & y-akse settling time negativ retning & $t_s = 5,47\:\s $             & $\surd$   \\ 
+                                 & $t_s \leq 5,58\: \s$                    &                               &           \\ \hline
+ %
+\textbf{(C)}                    & y-akse steady-state error               & $e_{ss} = 1,88\:\%$           & $\times$  \\ 
+                                 & $e_{ss} = 0,0\:\%$                      &                               &           \\ \hline
+ %
+ \textbf{(D)}                    & y-akse overshoot                        & $M_p =  4,11\:\% $            & $\times$  \\ 
+                                 & $M_p = 0,0\:\%$                         &                               &           \\ \hline
+ %                 
+ \textbf{(E)}                    & x-akse settling time                    & $t_s = 13,46\:\s$             & $\surd$   \\ 
+                                 & $t_s \leq 17,45\: \s$                   &                               &           \\ \hline
+ %
+ \textbf{(F)}                    & x-akse steady-state error               & $e_{ss} \!=\! 2,\!66\:\%$     & $\times$  \\ 
+                                 & $e_{ss} = 0,0\:\%$                      &                               &           \\ \hline
+ %
+ \textbf{(G)}                    & x-akse overshoot                        & $M_p = 4,79\:\% $             & $\surd$   \\
+                                 & $M_p \leq 6,4\:\%$                      &                               &           \\ \hline
+\end{tabular}
+\end{table}
+\end{frame}
+
+
+
+
+
+
+
+
+
