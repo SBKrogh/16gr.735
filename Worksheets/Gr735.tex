@@ -8,7 +8,7 @@
 
 % Forindhold - Kun romer tal
 
-\frontmatter.
+%\frontmatter.
 
 %Formalia
 \include{rapport/introduktion/main} %%%%%%%     <->    Front page, synopsis and preface included in this
@@ -58,8 +58,12 @@
 
 
 \appendix
-\part*{Appendix}
-\addcontentsline{toc}{part}{Appendix}
+% \addcontentsline{toc}{part}{Appendix}
+
+
+\addtocontents{toc}{\protect\contentsline{part}{\appendixname}{}{}}
+
+%\chapter{Appendix}
 
 
 \include{Appendix/Setup_system}
