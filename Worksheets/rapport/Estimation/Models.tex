@@ -74,7 +74,7 @@ Additionally, if the dynamical system is linear, time-invariant, and finite-dime
 
 This representation of a system is especially useful in linear MIMO systems as it maintains the same form for any number of inputs and outputs, as opposed to transfer functions.
 
-\subsubsection{Hammerstein-Wiener model}
+\subsubsection{Hammerstein-Wiener model}\label{hammerWeinmodeid}
 An identified state-space model can be used as the linear part of an Hammerstein-Weiner model, see \figref{weiner}.
 Hammerstein-Wiener models are useful when the output of the system depends nonlinearly on its inputs, in this case it is possible to decompose the system into linear and nonlinear parts. 
 The nonlinearity estimators at the inputs and outputs of the system can be modeled by a variety of nonlinear systems, e.g deadzones, saturations or neural networks.
@@ -183,7 +183,7 @@ Comparing the responses of these models it is clear that having effort and veloc
 As seen in \figref{fig:fits} his is true for both the time and frequency data sets.
 
 \newpage
-\subsection{Hammerstein-Weiner model identification}\label{hammerWeinmodeid}
+\subsection{Hammerstein-Weiner model identification}
 
 A linear model is identified and the estimate of the deadzone nonlinearities with the Hammerstein-Wiener model can be made.
 
@@ -251,7 +251,7 @@ Thus, the linear model is used in estimation until a better model is developed.
 
 The roll torque, which is determined by the roll actuator and directly rotates the entire tool, making it independent to the rest of the system.
 We can model the roll torque as a state that only depends on input in the state-space model of the system \ref{eq:allSS}.
-The final model is derived by simple measurment, as described in \figref{fig:entire_force_testsetup} and \figref{fig:endeffector_force}.
+The final model is derived by simple measurement, as described in \figref{fig:entire_force_testsetup} and \figref{fig:endeffector_force}.
 %\begin{align}\label{eq: roll}
 %F_{roll} = 20e_{roll}
 %\end{align}
