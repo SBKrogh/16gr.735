@@ -414,3 +414,13 @@ http://image.dfrobot.com/image/data/SEN0160/hx711_english.pdf
   year={1992},
   publisher={Siam}
 }
+
+@inproceedings{yue2004state,
+  title={State feedback controller design of networked control systems},
+  author={Yue, Dong and Han, Qing-Long and Peng, Chen},
+  booktitle={Control Applications, 2004. Proceedings of the 2004 IEEE International Conference on},
+  volume={1},
+  pages={242--247},
+  year={2004},
+  organization={IEEE}
+}
