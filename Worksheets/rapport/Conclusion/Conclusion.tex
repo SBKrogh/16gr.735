@@ -1,19 +1,20 @@
 \chapter{Conclusion}\label{cha:conclusion}
 
 
-A new communication protocol between the embedded system and the processing unit have been implemented. Furthermore a new communication protocol have been implemented. THe old JSON format have been discarded and replaced by a binary representation of the data. This have made a decrease in the data size send between the embedded system and the processing unit with 85 \%.\\ 
-The change from TCP to UDP and the change from JSON to a binary representation of the data send, have increased the communication speed from 100 Hz to 638 Hz. This was however not enough to fulfill the goal of 1000 Hz between the embedded system and the processing unit.\\
+A new communication protocol between the embedded system and the processing unit has been implemented. The old JSON format has been discarded and replaced by a binary representation of the data. This decreased the data size sent between the embedded system and the processing unit by 85 \%.\\ 
+The change from TCP to UDP and the change from JSON to a binary representation of the data sent, have increased the communication speed from 100 Hz to 638 Hz. This was however not enough to fulfill the goal of 1000 Hz between the embedded system and the processing unit.\\
 The theoretical communication speed from the embedded system to the Geomagic Touch have increased from 91 Hz to 390 Hz, which is 160 Hz lower than the goal of this project. 
 
 
 % The communication protocol has significantly increased the refresh rate of the communication between the embedded system and the processing unit. This protocol includes a new format for exchanging data and modified the transport protocol used. However the desired refresh rate could not be reached.
 
-A Hammer Stein Weiner model has been implemented for estimating the force applied to the End-effector. This model is capable of estimating the trend of the force applied to the end-effector, by utilizing the velocity and effort available, which also is available on the da Vinci robot. Even though the model can estimate the trend of the force, a short delay appear between the end-effector and the force fed back. This delay was between 0.2 to 0.7 seconds, depending on force applied of released. 
+A Hammerstein Wiener model has been implemented for estimating the force applied to the end-effector. This model is capable of estimating the trend of the force applied to the end-effector, by
+using the velocity and current measured on the actuator. Even though the model can estimate the trend of the force, a short delay appears between the force affecting the end-effector and the force fed back to the haptic device. This delay was between 0.2 to 0.7 seconds, depending on if the force is applied or released. 
 
 
 % The estimator derived dynamically corresponds to the variations in current and position. Although a delay is present in the feedback, the model is stable and can perform independently of the velocity of the human hand.
 
-It was observed that that force was fed back under movement, even when no external force was applied to the End-effector. This was due to the nonlinear friction in the EndoWrist that had to be overcome before any movement. A simple friction model has been derived to compensate for this feedback. The friction model has only been simulated on existing data, but have given promising results. 
+It was observed that force was fed back during movement, even when no external forces were applied to the end-effector. This was due to the nonlinear friction in the EndoWrist that had to be overcome before any movement could be made. A simple friction model has been derived to compensate for this feedback. The friction model has only been simulated on existing data, but has given promising results. 
 
 
 An attempt has been made on implementing a Kalman filter for improving the estimation of the force. However no significant improvement was observed.
