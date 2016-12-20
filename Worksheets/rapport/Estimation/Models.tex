@@ -122,20 +122,15 @@ For clarity, the results of each step in the process will only be presented for 
 
 For parameter identification to be performed on the Hammerstein-Weiner model, a linear model needs to be defined.
 This means that it is first necessary to identify the linear state-space model of the system.
-Linear state-space model fitting can be done using various methods, but for this purpose it has been chosen to use a subspace identification algorithm.
+Linear state-space model fitting can be done using various methods , but for this purpose it has been chosen to to use a subspace identification algorithm.
 %we have chosen the subspace identification algorithm.
 
 Subspace identification is an algorithm that combines concepts from system theory, linear algebra and statistics in order to provide a state-space model of the system, which makes it useful for MIMO system identification \cite{van2012subspace}. 
 The most important achievement in subspace identification is that Kalman filter states can be obtained from input-output data using linear algebra methods.
 Although the algorithm itself is complex, it is implemented in the System Identification Toolbox as a part of MATLAB.
 
-<<<<<<< HEAD
 The order of the identified model was picked using Hankel singular values \cite{gawronski1990model}, which determine the amount of data dynamics a model can describe at a given order.
-As seen on \figref{hankel], the diminishing returns of increasing the state-space order are visible for different subspace identification algorithms.\todo{This line?}
-=======
-One advantage of subspace identification algorithms is the ability to estimate how much of the data dynamics a state-space model of a certain order can represent. 
-As seen on figure \figref{fig:ssid1}, the diminishing returns of increasing the state-space order are visible for different subspace identification algorithms.\todo{This line?}
->>>>>>> 565a69c22773191d09a788f01944a975d201045f
+As seen on \figref{hankel}, the diminishing returns of increasing the state-space order are visible for different subspace identification algorithms.\todo{This line?}
 
 \begin{figure}[H]
 \centering
@@ -147,7 +142,7 @@ As seen on figure \figref{fig:ssid1}, the diminishing returns of increasing the 
 \subsection{Identification data}
 \todo{In gerneal we need a concluding text to each figure}
 
-Both approaches discussed in \secref{se:ms} are possible to realize on the data sets acquired in \chapref{cha:measurement}.
+Both approaches discussed in \secref{sec:para_iden} are possible to realize on the data sets acquired in \chapref{cha:measurement}.
 However, the data contains various irregularities caused by the imperfect measuring process as well as the hardware. 
 For this reason, parts of the data needed to be removed before identification, which required interpretation of results.
 
@@ -167,7 +162,7 @@ A sample of original and modified data can be seen on \figref{figlowpass}.
 Linear models can also be fitted in the frequency domain so the data is transformed using fast Fourier transform \cite{van1992computational} and used in the identification process.
 
 \subsection{Linear model identification}
-The System Identification Toolbox provides three different subspace identification algorithms which often provide different results depending on the chosen system order \cite{van1994n4sid}. 
+The System Identification Toolbox provides 3 different subspace identification algorithms which often provide different results depending on the chosen system order \cite{van1994n4sid}. 
 For this reason all 3 algorithms are attempted in the identification process, and the best one is chosen depending on the average fit.
 The algorithm which provides the best result varies heavily on the data set and the chosen order of the model, see \figref{fig:ssid1}.
 It can be see that second order models have slightly different dynamics depending on the algorithms, while in certain cases some models lose stability.
@@ -189,9 +184,9 @@ It is assumed that the cause of this is a limited number of iterations, since a 
 \label{fig:fits}
 \end{figure}
 
-This fact makes an approach consisting of testing various inputs and outputs  necessary in picking the best model for estimation.
+This fact makes an approach consisting of testing various inputs and outputs somewhat necessary in picking the best model for estimation.
 Comparing the responses of these models it is clear that having effort and velocity as inputs provides a much better estimate than when the only input is effort.
-As seen in \figref{fig:fits} his is true for both the time and frequency data sets.
+As seen in \figref{fits} his is true for both the time and frequency data sets.
 
 \newpage
 \subsection{Hammerstein-Weiner model identification}\label{hammerWeinmodeid}
