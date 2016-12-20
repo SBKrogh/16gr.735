@@ -9,7 +9,7 @@ The last decades were characterized by rapidly developing information technology
 
 The da Vinci robot is controlled by a specially trained surgeon. The robot extends the capabilities of the surgeon. It assists in performing minimally invasive surgeries (MIS) and minimizing the insertion cut inflicted on the patient.
 %i.e. it sets the surgical tools in the patient's body using thin tubes, thus minimizing the required cut inflicted. 
-This results in faster recovery time for the patient\cite{rec_time}. The surgical tools are teleoperated by the surgeon using a control station equipped with spatial controllers and 3D video feed from the tools. The robot is able to improve on the surgeon's precision. A further advantage of the da Vinci robot is the possibility of remote control. The surgeon can be hundreds of kilometers away from the robot, still able to control it through the internet. This characteristic can prove to be quite useful in rural areas, where medical care is limited. Whenever an operation needs to be executed, a specialist from the specific field can sign into the robot and conduct a surgery. The technology can even be adjusted for military purposes. If an injured soldier needs treatment in a highly dangerous zone, the medic can send the robot to the soldier and conduct the required surgery, without risking their life. The main issue in increasing the distance is the delay in the communication also increases, which eventually can lead to an unstable behavior in the system.  
+This results in faster recovery time for the patient\cite{rec_time}. The surgical tools are teleoperated by the surgeon using a control station equipped with spatial controllers and 3D video feed from the tools. The robot is able to improve on the surgeon's precision. A further advantage of the da Vinci robot is the possibility of remote control. The surgeon can be hundreds of kilometers away from the robot, still able to control it through the internet. This characteristic can prove to be quite useful in rural areas, where medical care is limited. Whenever an operation needs to be executed, a specialist from the specific field can sign into the robot and conduct a surgery. The technology can even be adjusted for military purposes. If an injured soldier needs treatment in a highly dangerous zone, the medic can send the robot to the soldier and conduct the required surgery, without risking their life. The main issue in increasing the distance is the delay in the communication also increases, which eventually can lead to an unstable behaviour in the system.  
 
 With all these advantages there comes a significant drawback compared to classical direct surgery. The operator has to solely rely on what is seen on the 3D video feed, since the controller lacks force feedback feature\cite{lack_fb}. This means losing kinesthetic sense during operation, which sets back the accuracy of the surgeon and can lead to surgical accidents.
 
@@ -92,9 +92,5 @@ In this project two main challenges were addressed in order to implement force f
 
 \begin{itemize}
 \item Increasing the refresh rate of the communication between the embedded system and the computer.
-\item Deriving and implementing a model that estimates the force applied to the end effector using only the data available on a da Vinci robot.  
+\item Deriving and implementing a model that estimates the force applied to the end effector using only the data available on a da Vinci robot. A model that reliably reproduces the trend of the force without precisely giving back the absolute value is deemed to be sufficient.
 \end{itemize}
-
-%\end{document}
-\todo{state that we don't need to reprecent the force applied 100 \% correct but only needs to reprecent the trend of the force. Remember a reference..
-If this is not't done, we have to redo some things in the "model structure"}
