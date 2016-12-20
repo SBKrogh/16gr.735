@@ -10,26 +10,25 @@ As force estimation requires computational power and an interface is required to
 \centering
 \scalebox{0.97}{
 \begin{tikzpicture}
-    % We start by placing the blocks
-    \node [box] (Geomagic) {\small{Geomagic Touch}};
-    \node [box, right of=Geomagic, node distance = 3.4cm] (Computer) {Computer};
-    \node [box, below of=Computer, node distance=3.3cm] (Sbrio) {Embedded\\System};
-    \node [box, left of=Sbrio, node distance=2.5cm] (Driver) {Motor driver};
-    \node [box, left of=Driver, node distance=2.5cm] (EndoWrist) {EndoWrist};
-    % We draw an edge between the controller and system block to
-    % calculate the coordinate u. We need it to place the measurement block.
-    \draw [<->] (Geomagic) -- node {} (Computer);
-    \draw [<->] (Computer) -- node {} (Sbrio);    
-    % \draw [<->] (Geomagic) -- node[label=above:\small{UDP}] {} (Computer);
-    % \draw [<->] (Computer) -- node [label=right:\small{UDP}] {} (Sbrio);
-    \draw [<->] (Sbrio) -- node {} (Driver);
-    \draw [->] (Driver) -- node {} (EndoWrist);
-
-    \draw[thick,dashed] ($(-1.5,1.5)+(Geomagic)$) -- ($(1.5,1.5)+(Computer)$) -- ($(1.5,-1)+(Computer)$) -- ($(-1.5,-1)+(Geomagic)$)-- ($(-1.5,1.5)+(Geomagic)$);
-    \draw[thick,dashed] ($(-1.5,1)+(EndoWrist)$) -- ($(1.5,1)+(Sbrio)$) -- ($(1.5,-1.5)+(Sbrio)$) -- ($(-1.5,-1.5)+(EndoWrist)$)-- ($(-1.5,1)+(EndoWrist)$);
-
-    \node at (2,1.7) {\textbf{Console}};
-    \node at (1.5,-2) {\textbf{da Vinci robot}};
+        \node [box] (Geomagic) {\small{Geomagic Touch}};
+        \node [box, right of=Geomagic, node distance = 3.4cm] (Computer) {Computer};
+        \node [box, below of=Computer, node distance=3.3cm] (Sbrio) {Embedded\\System};
+        \node [box, left of=Sbrio, node distance=2.5cm] (Driver) {Motor driver};
+        \node [box, left of=Driver, node distance=2.5cm] (EndoWrist) {EndoWrist};
+        % We draw an edge between the controller and system block to
+        % calculate the coordinate u. We need it to place the measurement block.
+        \draw [<->] (Geomagic) -- node {} (Computer);
+        \draw [<->] (Computer) -- node {} (Sbrio);    
+        % \draw [<->] (Geomagic) -- node[label=above:\small{UDP}] {} (Computer);
+        % \draw [<->] (Computer) -- node [label=right:\small{UDP}] {} (Sbrio);
+        \draw [<->] (Sbrio) -- node {} (Driver);
+        \draw [->] (Driver) -- node {} (EndoWrist);
+        
+        \draw[thick,dashed] ($(-1.5,1)+(Geomagic)$) -- ($(1.5,1)+(Computer)$) -- ($(1.5,-1)+(Computer)$) -- ($(-1.5,-1)+(Geomagic)$)-- ($(-1.5,1)+(Geomagic)$);
+        \draw[thick,dashed] ($(-1.5,1)+(EndoWrist)$) -- ($(1.5,1)+(Sbrio)$) -- ($(1.5,-1)+(Sbrio)$) -- ($(-1.5,-1)+(EndoWrist)$)-- ($(-1.5,1)+(EndoWrist)$);
+        
+        \node at (2,1.4) {\textbf{Console}};
+        \node at (1.5,-2) {\textbf{da Vinci robot}};
 \end{tikzpicture}
 }
 \caption{Block diagram representing the system.}
