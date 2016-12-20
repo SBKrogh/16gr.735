@@ -9,10 +9,11 @@ Even though the current models do not allow for useable state estimates of the E
 As seen in \figref{mdle} our simulation model assumes that the EndoWrist yaw force dynamics consists of the linear system and input nonlinearities identified in chapter \ref{ch:fem}.
 Our hypothesis is that full reference following capability can be added to the nonlinear system using only position error measurements and the linear model as part of a Kalman filter.
 
-\begin{figure}[H]\label{mdle}
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{simsim.pdf}
 \caption{Simulation setup.}
+\label{mdle}
 \end{figure}
 
 We can see that the outer part of the system consists of a sinusoidal force reference, which is affected by oscillations from the human model. 
