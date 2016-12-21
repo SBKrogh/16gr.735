@@ -30,19 +30,186 @@
 
 
   \begin{itemize}
-  \item Requirement for force feedback: 1000 Hz
-
-  \item Maximum for the initial system: 100 Hz
-  \item Our approach:
+  \item<1-> Maximum for the initial system: 100 Hz
+  \item<1-> Our approach:
       \begin{itemize}
-        \item Reducing the size of exchanged data
-        \item Changing the transport protocol
+        \item<1-> Reducing the size of exchanged data
+        \item<1-> Changing the transport protocol
       \end{itemize}
-  \item Results: maximum of 638 Hz
   \end{itemize}
-
-
 \end{frame}
+
+\begin{frame}<beamer>
+\frametitle{Reducing the size of the packet}
+\begin{figure}[h]
+\centering
+\begin{minipage}{.45\textwidth}
+\resizebox{\textwidth}{!}{
+  \begin{tikzpicture}
+      \matrix(dict1)[matrix of nodes,ampersand replacement=\&, %below=of game,
+          nodes={align=center,text width=2.5cm},
+          row 1/.style={anchor=south},
+          column 1/.style={nodes={text width = 1.5cm}}
+      ]{
+      0   \& \{"p4\_primary":\{\\
+      };
+
+
+      \matrix(dict2)[matrix of nodes,ampersand replacement=\&,%below=of game,
+          nodes={align=center,text width=2.5cm},
+          row 1/.style={anchor=south},
+          column 1/.style={nodes={text width = 1.5cm}},
+          column 3/.style={nodes={text width = 4cm}}
+      ] at ($(dict1)+ (2.1,-1)$){
+      15  \& "positions": \& array of 4 positions\\
+      };
+
+      \matrix(dict3)[matrix of nodes,ampersand replacement=\&,%below=of game,
+          nodes={align=center,text width=2.5cm},
+          row 1/.style={anchor=south},
+          column 1/.style={nodes={text width = 1.5cm}},
+          column 3/.style={nodes={text width = 4cm}}
+      ] at ($(dict2)+ (0,-1)$){
+      125 \& ,"velocities": \& array of 4 velocities\\
+      };
+
+      \matrix(dict4)[matrix of nodes,ampersand replacement=\&,%below=of game,
+          nodes={align=center,text width=2.5cm},
+          row 1/.style={anchor=south},
+          column 1/.style={nodes={text width = 1.5cm}},
+          column 3/.style={nodes={text width = 4cm}}
+      ] at ($(dict3)+ (0,-1)$){
+      236 \& ,"efforts": \& array of 4 efforts\\
+      };
+
+      \matrix(dict5)[matrix of nodes,ampersand replacement=\&,%below=of game,
+          nodes={align=center,text width=2.5cm},
+          row 1/.style={anchor=south},
+          column 1/.style={nodes={text width = 1.5cm}}
+      ] at ($(dict4)+ (-2.1,-1)$){
+      344 \& \}\} \\
+      };
+
+  %Boxes
+      \draw(dict1-1-2.north east)--(dict1-1-2.north west)--(dict1-1-2.south west)--(dict1-1-2.south east)--(dict1-1-2.north east);
+      \draw(dict2-1-2.north east)--(dict2-1-2.north west)--(dict2-1-2.south west)--(dict2-1-2.south east)--(dict2-1-2.north east);
+      \draw(dict3-1-2.north east)--(dict3-1-2.north west)--(dict3-1-2.south west)--(dict3-1-2.south east)--(dict3-1-2.north east);
+      \draw(dict4-1-2.north east)--(dict4-1-2.north west)--(dict4-1-2.south west)--(dict4-1-2.south east)--(dict4-1-2.north east);
+      \draw(dict5-1-2.north east)--(dict5-1-2.north west)--(dict5-1-2.south west)--(dict5-1-2.south east)--(dict5-1-2.north east);
+
+
+      \draw(dict2-1-3.north east)--(dict2-1-3.north west)--(dict2-1-3.south west)--(dict2-1-3.south east)--(dict2-1-3.north east);
+      \draw($(dict3-1-3.north east)+(0,-0.03)$)--($(dict3-1-3.north west)+(0,-0.03)$)--(dict3-1-3.south west)--(dict3-1-3.south east)--($(dict3-1-3.north east)+(0,-0.03)$);
+      \draw($(dict4-1-3.north east)+(0,-0.03)$)--($(dict4-1-3.north west)+(0,-0.03)$)--(dict4-1-3.south west)--(dict4-1-3.south east)--($(dict4-1-3.north east)+(0,-0.03)$);
+
+  %curly braces
+    \draw [decorate,decoration={brace,amplitude=10pt, mirror},xshift=-4pt,yshift=0pt]
+    ($(dict2.north west)+(0.5,0)$) -- ($(dict4.south west)+(0.5,0)$) node [black,midway,xshift=-0.9cm] {\footnotesize Data};
+
+    \draw [decorate,decoration={brace,amplitude=5pt, mirror},xshift=-4pt,yshift=0pt]
+    ($(dict1.north west)+(0.5,0)$) -- ($(dict1.south west)+(0.5,0)$) node [black,midway,xshift=-0.9cm] {\footnotesize Head};
+
+    \draw [decorate,decoration={brace,amplitude=5pt, mirror},xshift=-4pt,yshift=0pt]
+    ($(dict5.north west)+(0.5,0)$) -- ($(dict5.south west)+(0.5,0)$) node [black,midway,xshift=-0.9cm] {\footnotesize Tail};
+
+  %numbers
+    \node at ($(dict1-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+    \node at ($(dict1-1-2.north east)+(0,0.2)$) {\footnotesize 15};
+
+    \node at ($(dict2-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+    \node at ($(dict2-1-2.north east)+(0,0.2)$) {\footnotesize 12};
+    \node at ($(dict2-1-3.north east)+(0,0.2)$) {\footnotesize 110};
+
+    \node at ($(dict3-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+    \node at ($(dict3-1-2.north east)+(0,0.2)$) {\footnotesize 14};
+    \node at ($(dict3-1-3.north east)+(0,0.2)$) {\footnotesize 112};
+
+    \node at ($(dict4-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+    \node at ($(dict4-1-2.north east)+(0,0.2)$) {\footnotesize 11};
+    \node at ($(dict4-1-3.north east)+(0,0.2)$) {\footnotesize 111};
+
+    \node at ($(dict5-1-1.north east)+(0,0.2)$) {\footnotesize 0};
+    \node at ($(dict5-1-2.north east)+(0,0.2)$) {\footnotesize 2};
+
+      \node at ($(0,0.3)+(dict1-1-1.north)$) {bytes};
+      \node at ($(0,0.6)+(dict1-1-1.north)$) {Offset};
+
+  \end{tikzpicture}
+  }
+  \caption{Packet built using JSON}
+  \label{fig:old_packets}
+\end{minipage}
+\begin{minipage}{.45\textwidth}
+\centering
+\resizebox{\textwidth}{!}{
+  \begin{tikzpicture}
+      \matrix(dict)[matrix of nodes,ampersand replacement=\&, %below=of game,
+          nodes={align=center,text width=1.5cm},
+          row 1/.style={anchor=south}%,
+          column 1/.style={nodes={text width = 0.5cm, align=right}}
+      ]{
+      0   \& position1 \& position2 \& position3 \& position4\\
+      16  \& velocity1 \& velocity2 \& velocity3 \& velocity4\\
+      32  \& effort1   \& effort2   \& effort3   \& effort4\\
+      48  \\
+      };
+      %horizontal
+      \draw(dict-1-2.north west)--(dict-1-5.north east);
+      \draw(dict-1-2.south west)--(dict-1-5.south east);
+      \draw(dict-2-2.south west)--(dict-2-5.south east);
+      \draw(dict-3-2.south west)--(dict-3-5.south east);
+    %vertical
+      \draw(dict-1-1.north east)--(dict-4-1.south east);
+      \draw(dict-1-2.north east)--(dict-3-2.south east);
+      \draw(dict-1-3.north east)--(dict-3-3.south east);
+      \draw(dict-1-4.north east)--(dict-3-4.south east);
+      \draw(dict-1-5.north east)--(dict-3-5.south east);
+
+      %small at bottom
+      \draw(dict-4-1.south east)--($(0.5,0)+(dict-4-1.south east)$);
+      \draw($(0.5,0)+(dict-4-1.south east)$)--($(0.5,0.49)+(dict-4-1.south east)$);
+
+      %numbers on top
+      \node at ($(0,0.3)+(dict-1-1.north east)$) {0};
+      \node at ($(0,0.3)+(dict-1-2.north east)$) {4};
+      \node at ($(0,0.3)+(dict-1-3.north east)$) {8};
+      \node at ($(0,0.3)+(dict-1-4.north east)$) {12};
+      \node at ($(0,0.3)+(dict-1-5.north east)$) {16};
+
+      \node at ($(0,0.3)+(dict-1-1.north)$) {bytes};
+      \node at ($(0,0.6)+(dict-1-1.north)$) {Offset};
+
+      %The zoom on the last byte
+      \node (zoom) at (1,-2) {XXXX 4 booleans};
+      \draw(zoom.north east)--(zoom.north west);
+      \draw(zoom.north east)--(zoom.south east);
+      \draw(zoom.north west)--(zoom.south west);
+      \draw(zoom.south east)--(zoom.south west);
+      \draw($(zoom.north)+(-0.35,0)$)--($(zoom.south)+(-0.35,0)$);
+      \draw(zoom.north east)--($(1,0)+(dict-4-1)$);
+      \draw(zoom.north west)--($(1,0)+(dict-4-1)$);
+      \node at ($(zoom.north east)+(0,0.3)$) {1};
+      \node at ($(zoom.north west)+(0,0.3)$) {0};
+
+  \end{tikzpicture}
+  }
+  \caption{Packet built using the binary representation}
+  \label{fig:new_packets}
+\end{minipage}
+\end{figure}
+\begin{center}
+  Size reduced by 85\%
+  \end{center}
+\end{frame}
+
+
+\begin{frame}<beamer>
+\frametitle{Communication}
+   Results: maximum of 638 Hz
+\end{frame}
+
+
+
 % \begin{frame}<beamer>
 % \frametitle{Friction model}
 %   \begin{figure}[h]
