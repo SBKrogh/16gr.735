@@ -1,0 +1,26 @@
+\section{Improvements}
+%%%%%%%%%%%% MID WAY AGENDA %%%%%%%%%%%%%%
+\begin{frame}<beamer>
+\frametitle{State estimation}
+  \begin{itemize}
+    \item<1-> Modeling for additional outputs allows correction of the model using an estimator
+    \item<2->  A multiple output model that adequatley captures the dynamics of the system could be used in a Kalman filter to create a state estimate
+    \item<3-> The state estimates can be used in a state feedback loop to change system dynamics
+    \item<4-> This means that reference following capabilities can be added to the system, dispite the nonlinear characteristics of the dynamics
+  \end{itemize}
+\end{frame}
+
+\begin{frame}<beamer>
+\frametitle{State estimation}
+  \begin{itemize}
+    \item<1-> The hypothesis was tested in simulation
+    \item<2-> Simulation results show that full reference following is possible despite the input nonlinearities in the system
+    \item<3-> While the transient behaviour of the reference value is replicated, offsets and parasitic gains need to be compensated
+    \item<4-> Could be implemented with improved model, doesn't improve estimate of current one.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}<beamer>
+\frametitle{Friction}
+	Friction model
+\end{frame}
