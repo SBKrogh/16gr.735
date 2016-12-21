@@ -1,5 +1,28 @@
 \section{Communication}
 %%%%%%%%%%%% MID WAY AGENDA %%%%%%%%%%%%%%
+\begin{frame}<beamer>
+\frametitle{Communication}
+  \begin{figure}
+  \begin{tikzpicture}
+
+  \draw  (-3,0) ellipse (1.5 and 1)node (v1) {\LARGE Computer};
+  \draw  (-7,0) ellipse (1.5 and 1)node{\huge GT};
+  \draw  (1,0) ellipse (1.5 and 1)node{\huge sbRIO};
+
+
+  \draw [->,line width=2pt](-6.5321,0.9356) arc (139.9997:40:2);
+  \draw [<-,line width=2pt](-6.5321,-0.9356) arc (-139.9997:-40:2);
+  \draw [<-,line width=2pt](-2.6321,-0.9356) arc (-139.9997:-40:2);
+  \draw [->,line width=2pt](-2.5821,0.9356) arc (139.9997:40:2);
+
+
+  \node at (-5,1) {\large 1000 Hz};
+  \node at (-1,1) {\large 1000 Hz};
+  \draw  (v1) ellipse (6 and 3);
+  \node at (-3,-3.5) {\Huge 500 Hz};
+  \end{tikzpicture}
+  \end{figure}
+\end{frame}
 
 % the license
 \begin{frame}<beamer>
@@ -18,9 +41,8 @@
   \item<6-> Results: maximum of 638 Hz
   \end{itemize}
 
+
 \end{frame}
-
-
 % \begin{frame}<beamer>
 % \frametitle{Friction model}
 %   \begin{figure}[h]
