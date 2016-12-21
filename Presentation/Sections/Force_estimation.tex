@@ -1,22 +1,29 @@
 \section{Force estimation}
 %%%%%%%%%%%% MID WAY AGENDA %%%%%%%%%%%%%%
-\begin{frame}<beamer>
-\frametitle{Filip Maric}
-\tableofcontents[currentsection]
+\begin{frame}{Forces}
+\begin{itemize}
+  	\item Roll, pitch and yaw forces
+\end{itemize}
+ \begin{figure}[h]
+ \centering
+ \includegraphics[scale = 0.5]{Endowrist31}
+ \label{fig:ewr}
+ \end{figure}
 \end{frame}
 
 
 % the license
-\begin{frame}{Force estimation model}{}
+\begin{frame}{Force estimation}{Model structure}
 
 %\begin{columns}[T]
 %\begin{column}{\textwidth}
 
   \begin{itemize}
-    \item<1-> Model approach
-    \item Nonlinearities in the EndoWrist dynamics    
+    \item Nonlinearities in the EndoWrists dynamics (yaw, pitch)   
+    \item Roll force linear
+    \item Black-box identification
     \begin{itemize}
-      \item Hammerstein Wiener Models
+      \item Hammerstein Wiener Model
     \end{itemize}
   \end{itemize}
 %\end{column}%
@@ -50,7 +57,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Force estimation model}{Linear model}
+\begin{frame}{Force estimation}{Linear model}
 \begin{itemize}
 \item Linear model
   \begin{itemize}
@@ -69,30 +76,12 @@
 
 %%%%%%%%%%
 
-
-\begin{frame}{Force estimation model}{Hammerstein Wiener Models}
-\begin{itemize}
-\item Input and output nonlinearities
-  \begin{itemize}
-  \item Effort 
-  \item Force
-  \end{itemize}
-\end{itemize}
-\end{frame}
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
 \begin{frame}{Force estimation model}{Hammerstein Wiener Models}
 \begin{itemize}
   \item Nonlinearities
   \begin{itemize}
-    \item Deadzone nonlinearities
-    \item Input/Output -saturation 
+    \item Deadzone nonlinearities on input 
+    \item Saturation nonlinearities on output
   \end{itemize}
 \end{itemize}
 
