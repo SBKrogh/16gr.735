@@ -14,18 +14,10 @@
 
   \begin{itemize}
     \item<1-> Model approach
-    \item Nonlinearities
-    
+    \item Nonlinearities in the EndoWrist dynamics    
     \begin{itemize}
       \item Hammerstein Wiener Models
     \end{itemize}
-    % \item<2-> Elektromagnet  
-    % \vspace{1.5cm}
-    % \item<3-> Vinkel sensor
-    % \vspace{1cm}
-    % \item<4-> Approximation af container vægt 
-    % \vspace{0.5cm}
-    % \item<5-> Statisk friktion
   \end{itemize}
 %\end{column}%
 %\hfill%
@@ -58,13 +50,19 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Force estimation model}{Hammerstein Wiener Models}
+\begin{frame}{Force estimation model}{Linear model}
 \begin{itemize}
 \item Linear model
   \begin{itemize}
-  \item Effort 
-  \item Force
+  \item Choice of inputs affects model quality
+  \item Inputs: effort, velocity 
+  \item Outputs: force
   \end{itemize}
+\item Black-box identification
+	\begin{itemize}
+	\item Subspace identification
+	\item Hankel singular value analysis
+	\end{itemize}
 \end{itemize}
 
 Include picture with effort force fit here!! 
@@ -84,7 +82,7 @@ Include picture with effort force fit here!!
 
 \begin{frame}{Force estimation model}{Hammerstein Wiener Models}
 \begin{itemize}
-\item Linear model
+\item Input and output nonlinearities
   \begin{itemize}
   \item Effort 
   \item Force
