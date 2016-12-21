@@ -23,6 +23,7 @@
 # .pdf
 Article.pdf
 aauposter.pdf
+AAUsidebartheme.pdf
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
