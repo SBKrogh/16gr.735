@@ -1,0 +1,210 @@
+%Miniproject 1b
+% Flow | Min/Mean Cycle time [ms] | Size [B] | Priority | D/P
+%-------------------------------------------------------------
+% W1   | 40                       | 20       | 1        | D
+% W2   | 40                       | 20       | 1        | D
+% W3   | 40                       | 20       | 1        | D
+% W4   | 40                       | 20       | 1        | D
+% ESC  | 400                      | 8        | 1        | D
+
+%1MbpS CANbus which is not preemptive and runs with priorities
+
+%Question 1 - Make a DNC/RTC (deterministic network calculus / real-time calculus) arrival-model of the periodic external traffic
+%sources of the in-car network
+
+
+%% Periodic part 
+clear all;
+WPacketSize = (20*8);                               %packet size for wheels scaled 
+ESCPacketSize = (8*8);                              %for ESC
+
+
+W1 = rtcpjd(40,20,0); %Wheel 1 with period of 40ms and a jitter of 20ms
+W2 = rtcpjd(40,20,0); %Wheel 2 with period of 40ms and a jitter of 20ms
+W3 = rtcpjd(40,20,0); %Wheel 3 with period of 40ms and a jitter of 20ms
+W4 = rtcpjd(40,20,0); %Wheel 4 with period of 40ms and a jitter of 20ms
+ESC = rtcpjd(400,200,0); %ESC with period of 400ms and a jitter of 200ms
+
+
+%% Component model and performance analysis - periodic part
+
+CBS_in1 = rtcfs(1000); %service curve with 1Mbit bandwidth = 1000bit/ms
+CBS_in2 = rtcfs(1000);
+
+W1_in = rtctimes(W1,WPacketSize);%scale curve with packet size
+W2_in = rtctimes(W2,WPacketSize);
+W3_in = rtctimes(W3,WPacketSize);
+W4_in = rtctimes(W4,WPacketSize);
+ESC_in = rtctimes(ESC,ESCPacketSize);
+
+%% Token bucket design! for RC
+L = 10;%L is queue size
+M = 5;%M =bucket
+lambda = 1/40;%mean arrival time = 40ms => mean arrival rate 1/40
+T = 55;%Token period of 55ms
+
+A = zeros(1,L+M);
+for j = 1:L+M
+    i = j-1;
+    A(j) = (lambda*T)^i*exp(-lambda*T)/factorial(i);
+end
+
+%transition matrix for periodic transfer
+H = zeros(L+M,L+M);
+for i=1:L+M
+    if(i==1) %first run
+        for j=1:L+M-1
+            if(j==1)
+                H(i,j) = A(1)+A(2);
+            else
+                H(i,j) = A(j+1);
+            end
+        end
+    else %for subsecuent rows
+        for j=i-1:L+M-1
+            H(i,j) = A(j+2-i);
+        end
+    end
+end
+
+%compute last column of H so row sum is one!
+C = H*ones(L+M,1);
+H(:,end) = 1-C;
+
+%solving for stationary probability
+a = [eye(L+M)-H ones(L+M,1)];
+b = [zeros(1,L+M) 1];
+pie = a'\b';
+pie = pie';
+
+
+%discounting tokens probability for 0 in queue = probabilities for 0
+%= probability for tokens+queue
+ppie = zeros(1,L);
+for j=2:L
+    ppie(j)=pie(j+M);
+end
+ppie(1)=sum(pie(1:M+1));
+
+%probability for blocking (queue full)
+PLoss = ppie(L)
+
+%mean backlog (mean queue length)
+Q = ppie*(0:L-1)';
+
+%mean wait time
+mWaitTime = (1-PLoss)*lambda*1/Q;
+%aggregated delay
+
+DaggRC = mWaitTime;%total delay in filter
+
+%% Token bucket design! for Multimedia
+L = 10;%L is queue size
+M = 5;%M =bucket - lasses choice
+lambda = 1/50;%mean arrival time = 50ms => mean arrival rate 1/50
+T = 49;%Token period of 49ms
+
+A = zeros(1,L+M);
+for j = 1:L+M
+    i = j-1;
+    A(j) = (lambda*T)^i*exp(-lambda*T)/factorial(i);
+end
+
+%transition matrix for periodic transfer
+H = zeros(L+M,L+M);
+for i=1:L+M
+    if(i==1) %first run
+        for j=1:L+M-1
+            if(j==1)
+                H(i,j) = A(1)+A(2);
+            else
+                H(i,j) = A(j+1);
+            end
+        end
+    else %for subsecuent rows
+        for j=i-1:L+M-1
+            H(i,j) = A(j+2-i);
+        end
+    end
+end
+
+%compute last column of H so row sum is one!
+C = H*ones(L+M,1);
+H(:,end) = 1-C;
+
+%solving for stationary probability
+a = [eye(L+M)-H ones(L+M,1)];
+b = [zeros(1,L+M) 1];
+pie = a'\b';
+pie = pie';
+
+
+%discounting tokens probability for 0 in queue = probabilities for 0
+%= probability for tokens+queue
+ppie = zeros(1,L);
+for j=2:L
+    ppie(j)=pie(j+M);
+end
+ppie(1)=sum(pie(1:M+1));
+
+%probability for blocking (queue full)
+PLoss = ppie(L);
+
+%mean backlog (mean queue length)
+Q = ppie*(0:L-1)';
+
+%mean wait time
+mWaitTime = (1-PLoss)*lambda * 1/Q;
+
+%aggregated delay
+DaggMM = mWaitTime;%total delay in filter
+
+%% Poisson part
+RCPacketSize = (1400*8);%
+MMPacketSize = (1400*8);%
+
+%% Join streams
+%switch 1
+[W1_out CBS_out1 del1 buf1] = rtcgpc(W1_in, CBS_in1, 1);
+[W2_out CBS_out2 del2 buf2] = rtcgpc(W2_in, CBS_out1, 1);
+
+RC = rtcpjd(55,0,0);%RC with period of DaggRC and a jitter of 0ms
+RC_in = rtctimes(RC,RCPacketSize);
+[RC_out CBS_out7 del7 buf7] = rtcgpc(RC_in, CBS_out2, 1);
+
+MM = rtcpjd(49,0,0);%MM with period of DaggMM and a jitter of 0ms
+MM_in = rtctimes(MM,MMPacketSize);
+CBS_out7 = rtcapprox(CBS_out7,100,0);
+[MM_out CBS_out8 del8 buf8] = rtcgpc(MM_in, CBS_out7, 1);
+
+%join the arrival curves from W1 and W2
+[gate1_in ecc1 ecc2] = rtcjoin(W1_out, W2_out);
+%Approximate and join the arrival curves from RC and MM
+RC_out_p = rtcapprox(RC_out,0,0);
+MM_out_p = rtcapprox(MM_out,0,0);
+CBS_out8_p = rtcapprox(CBS_out8,0,0);
+gate2_in_p = rtcplus(RC_out_p, MM_out_p);
+
+%switch 2
+[W3_out CBS_out3 del3 buf3] = rtcgpc(W3_in, CBS_in2, 1);
+[W4_out CBS_out4 del4 buf4] = rtcgpc(W4_in, CBS_out3, 1);
+[gate1_out CBS_out5 del5 buf5] = rtcgpc(gate1_in, CBS_out4, 1);%stream from gate1 (W1 and W2)
+[ESC_out CBS_out6 del6 buf6] = rtcgpc(ESC_in, CBS_out5, 1);
+[gate2_out CBS_out9 del9 buf9] = rtcgpc(gate2_in_p, CBS_out8_p, 1);%stream from gate1 (RC and MM)
+
+%% delay and buffer requirements
+disp(['Wheel 1: delay = ',num2str(del1), ';  buffer size = ',num2str(buf1)]);
+disp(['Wheel 2: delay = ',num2str(del2), ';  buffer size = ',num2str(buf2)]);
+disp(['Wheel 3: delay = ',num2str(del3), ';  buffer size = ',num2str(buf3)]);
+disp(['Wheel 3: delay = ',num2str(del4), ';  buffer size = ',num2str(buf4)]);
+disp(['Gate 1 input 1 (W1 + W2): delay = ',num2str(del5), ';  buffer size = ',num2str(buf5)]);
+disp(['Gate 2 input 2 (RC + MM): delay = ',num2str(del9), ';  buffer size = ',num2str(buf9)]);
+disp(['ESC: Delay = ',num2str(del6), ';  buffer size = ',num2str(buf6)]);
+disp(['RC token bucket: Delay = ',num2str(del7), ';  buffer size = ',num2str(buf7)]);
+disp(['MM token bucket: Delay = ',num2str(del8), ';  buffer size = ',num2str(buf8)]);
+disp(['MM: Prob of full queue = ',num2str(PLoss)]);
+disp(['MM: Mean queue length = ',num2str(Q)]);
+disp(['MM: Mean Waiting Time = ',num2str(mWaitTime)]);
+disp(['RC: Prob of full queue = ',num2str(PLoss)]);
+disp(['RC: Mean queue length = ',num2str(Q)]);
+disp(['RC: Mean Waiting Time = ',num2str(mWaitTime)]);
